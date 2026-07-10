@@ -269,6 +269,7 @@ def run_stage(
                 temperature=float(model_cfg.get("temperature", 0.0) or 0.0),
                 top_p=model_cfg.get("top_p"),
                 top_k=model_cfg.get("top_k"),
+                extra_body=model_cfg.get("extra_body"),
                 max_retries=int(model_cfg.get("max_retries", 3) or 3),
             )
             raw_text = str(result.get("raw_text") or "")

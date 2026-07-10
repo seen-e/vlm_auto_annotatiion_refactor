@@ -59,6 +59,12 @@ model:
   # 0 表示不显式传入 top_k；大于 0 时会通过 extra_body 传给服务端。
   top_k: 0
 
+  # extra_body: 透传给 OpenAI-compatible 服务端的额外请求体。
+  # Qwen thinking 模型如需避免长时间只生成 reasoning，可在 vLLM 支持时关闭 thinking。
+  extra_body:
+    chat_template_kwargs:
+      enable_thinking: false
+
   # max_retries: 模型请求失败时的最大重试次数。
   max_retries: 3
 
@@ -92,7 +98,7 @@ stages:
     output_key: "scene"
     
     generation:
-       max_tokens: 16384
+       max_tokens: 1024
 
     video:
       # input_mode: 传给 VLM 的视觉输入形式。
@@ -111,7 +117,7 @@ stages:
 
       # max_frames: 当前 stage 最多采样多少帧。
       # 多视角 merge_views=True 时，通常表示时间点数量，而不是视角子图数量。
-      max_frames: 64
+      max_frames: 16
 
       # resize_width: 每个视角图像在拼接/编码前的目标宽度，保持宽高比。
       resize_width: 336
@@ -132,7 +138,7 @@ stages:
       # draw_montage_axes: 是否在多视角 timeline montage 外侧绘制坐标轴标签。
       # 仅当 merge_views=true 且 timeline_grid 实际合并超过 1 个时间点时生效。
       # 顶部按列标注时间戳，左侧按行标注视角名称。
-      draw_montage_axes: false
+      draw_montage_axes: true
 
       # min_api_frames: 尽量保证送入模型的最少帧数。
       # 当视频足够长时会尽量满足；视频过短时不会越界强行补帧。
@@ -152,7 +158,7 @@ stages:
       # merge_length: timeline_grid 模式下每张 montage 合并的连续时间点数量。
       # 小于 1 表示把当前 stage 采样到的全部时间点合成一整张图。
       # 等于 1 表示每张 montage 只包含一个时间点；大于 1 表示按该长度分组。
-      merge_length: 16
+      merge_length: -1
 
       # view_names: 需要使用/合并的视角名称及顺序。
       # 对 dict 多视角输入，应与 video_path 的 key 对应。
@@ -172,7 +178,7 @@ stages:
     # generation: 可选字段，用于覆盖顶层 model 参数。
     # 示例：
     generation:
-       max_tokens: 16384
+       max_tokens: 2048
     #   temperature: 0.0
     video:
       input_mode: "image_sequence"
@@ -183,12 +189,13 @@ stages:
       max_frames: 128
       resize_width: 336
       jpeg_quality: 90
-      draw_timestamps: false
-      draw_view_names: false
+      draw_timestamps: true
+      draw_view_names: true
+      draw_montage_axes: true
       min_api_frames: 2
-      merge_views: true
-      merge_mode: "timeline_grid"
-      merge_length: 0
+      merge_views: false
+      merge_mode: "per_frame"
+      merge_length: -1
       view_names:
         - camera_top
         - camera_front
@@ -201,24 +208,25 @@ stages:
     output_key: "refinement"
 
     generation:
-       max_tokens: 16384
+       max_tokens: 4096
        
     video:
       input_mode: "image_sequence"
       save_processed: true
       processed_output_path: "outputs/processed_frames"
       # refinement 需要更精细的边界定位，通常使用更高 fps。
-      fps: 0.25
+      fps: 4.0
       max_frames: 128
       resize_width: 336
       # refinement 看边界和接触事件，建议保留较高 JPEG 质量。
       jpeg_quality: 90
       draw_timestamps: true
       draw_view_names: true
+      draw_montage_axes: true
       min_api_frames: 2
       merge_views: true
       merge_mode: "timeline_grid"
-      merge_length: 0
+      merge_length: -1
       view_names:
         - camera_top
         - camera_front
