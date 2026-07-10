@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .json_utils import extract_json
-from .model_client import call_vlm
+from .model_client import call_vlm_with_metadata
 from .prompt_utils import load_stage_prompt, render_template, resolve_input_fields
 from .video_process import build_video_inputs
 
@@ -101,6 +101,44 @@ def _resolve_processed_output_path(
     input_ctx = context.get("input", {})
     episode_id = input_ctx.get("episode_id") or input_ctx.get("video_id") or input_ctx.get("task_index") or "episode"
     return root / _safe_path_name(episode_id, default="episode") / _safe_path_name(stage_name, default="stage")
+
+
+def _save_failure_debug(
+    *,
+    stage_name: str,
+    run_dir: str | Path,
+    exc: Exception,
+    local_values: dict[str, Any],
+) -> None:
+    """Persist enough stage state to debug failures before normal result saving."""
+    try:
+        from .result_io import save_json, save_text
+
+        stage_dir = Path(run_dir) / "stages" / stage_name
+        error: dict[str, Any] = {
+            "stage": stage_name,
+            "exception_type": type(exc).__name__,
+            "exception": str(exc),
+        }
+        api_debug = getattr(exc, "debug_info", None)
+        if api_debug:
+            save_json(api_debug, stage_dir / "api_debug.json")
+            error["api_debug_file"] = "api_debug.json"
+
+        if "system_prompt" in local_values:
+            save_text(local_values.get("system_prompt", ""), stage_dir / "system_prompt.txt")
+        if "user_prompt" in local_values:
+            save_text(local_values.get("user_prompt", ""), stage_dir / "user_prompt.txt")
+        if "raw_text" in local_values:
+            save_text(local_values.get("raw_text", ""), stage_dir / "raw_text.txt")
+        if "video_meta" in local_values:
+            save_json(local_values.get("video_meta", {}), stage_dir / "video_meta.json")
+        if "current_video_layout" in local_values:
+            save_text(local_values.get("current_video_layout", ""), stage_dir / "video_layout.txt")
+
+        save_json(error, stage_dir / "error.json")
+    except Exception:
+        pass
 
 
 def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[str, Any]) -> str:
@@ -205,7 +243,7 @@ def run_stage(
             raw_text = json.dumps(parsed_json, ensure_ascii=False, indent=2)
         else:
             model_cfg = _model_cfg(config, stage_cfg)
-            raw_text = call_vlm(
+            result = call_vlm_with_metadata(
                 base_url=str(model_cfg.get("base_url") or ""),
                 api_key=str(model_cfg.get("api_key") or "EMPTY"),
                 model=str(model_cfg.get("model") or model_cfg.get("name") or ""),
@@ -218,6 +256,8 @@ def run_stage(
                 top_k=model_cfg.get("top_k"),
                 max_retries=int(model_cfg.get("max_retries", 3) or 3),
             )
+            raw_text = str(result.get("raw_text") or "")
+            usage = dict(result.get("usage") or {})
             parsed_json = extract_json(raw_text)
 
         context["stages"][stage_name] = {
@@ -229,6 +269,9 @@ def run_stage(
             "video_layout": current_video_layout,
             "usage": usage,
         }
+        if not dry_run:
+            context["stages"][stage_name]["model"] = result.get("model")
+            context["stages"][stage_name]["finish_reason"] = result.get("finish_reason")
 
         if save_result and run_dir is not None:
             from .result_io import save_stage_result
@@ -238,4 +281,6 @@ def run_stage(
     except StageRunnerError:
         raise
     except Exception as exc:
+        if save_result and run_dir is not None:
+            _save_failure_debug(stage_name=stage_name, run_dir=run_dir, exc=exc, local_values=locals().copy())
         raise StageRunnerError(f"stage {stage_name!r} failed: {exc}") from exc
