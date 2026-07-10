@@ -92,7 +92,7 @@ stages:
     output_key: "scene"
     
     generation:
-       max_tokens: 4096
+       max_tokens: 16384
 
     video:
       # input_mode: 传给 VLM 的视觉输入形式。
@@ -102,7 +102,7 @@ stages:
 
       # save_processed: 是否保存当前 stage 最终送入模型的处理后图像序列。
       # processed_output_path: 保存根目录；实际目录为 <processed_output_path>/<episode_id>/<stage_name>。
-      save_processed: false
+      save_processed: true
       processed_output_path: "outputs/processed_frames"
 
       # fps: 按原始视频时间轴抽帧的目标帧率。
@@ -129,25 +129,30 @@ stages:
       # 对应旧代码中的 draw_viewposition。
       draw_view_names: true
 
+      # draw_montage_axes: 是否在多视角 timeline montage 外侧绘制坐标轴标签。
+      # 仅当 merge_views=true 且 timeline_grid 实际合并超过 1 个时间点时生效。
+      # 顶部按列标注时间戳，左侧按行标注视角名称。
+      draw_montage_axes: false
+
       # min_api_frames: 尽量保证送入模型的最少帧数。
       # 当视频足够长时会尽量满足；视频过短时不会越界强行补帧。
       min_api_frames: 2
 
-      # merge_views: 是否把同一时间点的多个视角拼成一张图。
-      # true: 每个时间点输出一个多视角拼图。
-      # false: 视角图像分别输出，数量会更多。
+      # merge_views: 是否启用多视角输入。
+      # true: 同一时间点的不同视角按 view_names 顺序逐行纵向拼接。
+      # false: 只输出 primary_view，即 view_names 中的第一个视角。
       merge_views: true
 
-      # merge_mode: 多视角/多帧拼接模式。
+      # merge_mode: 时间维度输出模式。
       # 可填写："per_frame" 或 "timeline_grid"。
-      # per_frame: 每个时间点拼接多个视角，最常用。
-      # timeline_grid: 依赖旧 video_utils 支持，用于多时间帧网格拼接。
+      # per_frame: 每个采样时间点单独输出给模型。
+      # timeline_grid: 按时间从左到右合并多个采样时间点后输出给模型。
       merge_mode: "timeline_grid"
 
-      # merge_length: 多时间帧拼接长度。
-      # 0 或 1 通常表示不做时间帧合并；大于 1 表示把连续时间点组成 montage。
-      # 具体语义沿用旧 video_utils 实现。
-      merge_length: 0
+      # merge_length: timeline_grid 模式下每张 montage 合并的连续时间点数量。
+      # 小于 1 表示把当前 stage 采样到的全部时间点合成一整张图。
+      # 等于 1 表示每张 montage 只包含一个时间点；大于 1 表示按该长度分组。
+      merge_length: 16
 
       # view_names: 需要使用/合并的视角名称及顺序。
       # 对 dict 多视角输入，应与 video_path 的 key 对应。

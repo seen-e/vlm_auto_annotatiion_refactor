@@ -32,8 +32,8 @@
 | `compute_sample_timestamps(original_fps, frame_count, target_fps, max_frames, min_api_frames=1, frame_start=0, frame_end=None)` | 主视角 FPS/帧数、采样参数和帧范围 | `(indices, timestamps)` | `build_video_inputs()` | 可用于调试抽帧策略 |
 | `resize_keep_aspect(frame, resize_width)` | OpenCV BGR frame、目标宽度 | 缩放后的 frame | `_build_timepoint_frames()` | 工具函数 |
 | `draw_overlay(frame, timestamp=None, view_name=None, draw_timestamps=True, draw_view_names=True)` | frame、时间戳、视角名和绘制开关 | 带标签的 frame copy | `_build_timepoint_frames()` | 工具函数 |
-| `merge_view_frames(frames, separator=4)` | 同一时间点的多视角 frames | 横向拼接 frame | `_build_timepoint_frames()` | 工具函数 |
-| `merge_temporal_frames(frames, columns=None)` | 连续时间点 frames | 网格 montage frame | `_apply_temporal_merge()` | 工具函数 |
+| `merge_view_frames(frames, separator=4)` | 同一时间点的多视角 frames | 纵向拼接 frame | `_build_timepoint_frames()` | 工具函数 |
+| `merge_temporal_frames(frames, columns=None)` | 连续时间点 frames | 横向时间序列 montage frame | `_apply_temporal_merge()` | 工具函数 |
 | `encode_frame_to_image_part(frame, jpeg_quality)` | BGR frame、JPEG 质量 | OpenAI-compatible `image_url` part | `build_video_inputs()` | 可用于单帧编码 |
 | `save_processed_frames(frames, video_meta, save_processed_path)` | 最终 frames、metadata、目录 | `None` | `build_video_inputs()` | 调试保存入口 |
 | `build_video_inputs(video_path, *, fps, max_frames, resize_width, jpeg_quality, draw_timestamps=True, draw_view_names=True, min_api_frames=1, frame_start=0, frame_end=None, merge_views=False, merge_mode="per_frame", merge_length=0, view_names=None, input_mode="image_sequence", save_processed_path=None)` | 视频输入和全部视频参数 | `(parts, video_meta)` | `stage_runner.run_stage()` | 主要公开入口 |
@@ -47,7 +47,7 @@
 | `_read_frame(path, frame_index)` | 用 OpenCV 读取单帧。 |
 | `_pad_to_size(frame, target_h, target_w)` | padding 到指定尺寸。 |
 | `_build_timepoint_frames(...)` | 根据采样时间点读取各视角帧、缩放、绘制标签、按需合并视角。 |
-| `_apply_temporal_merge(frames, groups, merge_length)` | 按 `merge_length` 把连续输出 frame 合成 montage。 |
+| `_apply_temporal_merge(frames, groups, merge_length)` | 按 `merge_length` 把连续输出 frame 合成横向时间序列 montage。 |
 
 依赖：`cv2`、`numpy`、标准库。当前不依赖旧项目代码。
 
@@ -228,4 +228,4 @@ prompt_utils.py
 1. 统一目录名和 Python 包名，避免 examples 中 `vlm_auto_annotation_refactor` 导入失败。
 2. 如果需要 token usage，`stage_runner.py` 可改用 `call_vlm_with_metadata()`。
 3. `input_mode="video"` 当前未实现，建议要么从配置注释中弱化，要么实现 video_url 编码。
-4. `merge_mode="timeline_grid"` 当前和 `merge_length` 的关系需要进一步明确，避免实验者误解。
+4. `merge_mode="timeline_grid"` 会按 `merge_length` 合并时间点；`merge_length < 1` 表示合并全部时间点。

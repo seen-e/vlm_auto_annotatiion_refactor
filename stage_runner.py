@@ -147,11 +147,18 @@ def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[s
     merge_views = bool(video_meta.get("merge_views", video_cfg.get("merge_views", False)))
     merge_mode = str(video_meta.get("merge_mode", video_cfg.get("merge_mode", "per_frame")))
     merge_length = int(video_meta.get("merge_length", video_cfg.get("merge_length", 0)) or 0)
+    effective_merge_length = int(video_meta.get("effective_merge_length", 0) or 0)
     draw_timestamps = bool(video_meta.get("draw_timestamps", video_cfg.get("draw_timestamps", True)))
     draw_view_names = bool(video_meta.get("draw_view_names", video_cfg.get("draw_view_names", True)))
+    draw_montage_axes = bool(video_meta.get("draw_montage_axes", video_cfg.get("draw_montage_axes", False)))
     sampled_count = video_meta.get("num_sampled_frames")
     output_count = video_meta.get("num_output_parts")
     primary_view = video_meta.get("primary_view")
+    if merge_mode == "timeline_grid" and effective_merge_length <= 0:
+        if merge_length < 1 and sampled_count is not None:
+            effective_merge_length = int(sampled_count)
+        else:
+            effective_merge_length = merge_length
 
     lines = [
         "当前视频输入布局说明：",
@@ -165,22 +172,30 @@ def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[s
         lines.append(f"- 主时间轴基于视角 {primary_view}；其他视角按同一时间戳对齐。")
 
     if merge_views and len(view_names) > 1:
-        lines.append("- 同一时间点的多个视角会先横向拼接到同一张图中。")
-        lines.append("- 横向相邻通常表示不同摄像机视角，不表示真实世界中物体一定左右相邻。")
+        lines.append("- 同一时间点的多个视角会按视角顺序自上而下拼接到同一张图中。")
+        lines.append("- 上下相邻通常表示不同摄像机视角，不表示真实世界中物体一定上下相邻。")
     elif len(view_names) > 1:
-        lines.append("- 多个视角不会合并到同一张图；每张图通常只对应一个视角和一个时间点。")
+        lines.append(f"- 未启用多视角拼接；每个采样时间点只使用主视角 {primary_view}。")
     else:
         lines.append("- 每个采样时间点只有一个视角。")
 
-    if merge_length > 1:
-        lines.append(
-            f"- 每 {merge_length} 个连续输出图像会进一步合成为一个时间网格/montage；"
-            "网格按从左到右、从上到下表示时间推进。"
-        )
+    if merge_mode == "timeline_grid" and effective_merge_length > 1:
+        if merge_length < 1:
+            lines.append(
+                "- timeline_grid 会将全部连续时间点合成为一个时间序列 montage；"
+                "时间按从左到右的列方向推进。"
+            )
+        else:
+            lines.append(
+                f"- timeline_grid 会将每 {effective_merge_length} 个连续时间点合成为一个时间序列 montage；"
+                "时间按从左到右的列方向推进。"
+            )
+        if merge_views and draw_montage_axes:
+            lines.append("- montage 外侧会绘制坐标轴标签：顶部列标签表示时间戳，左侧行标签表示视角名称。")
     elif merge_mode == "timeline_grid":
-        lines.append("- 当前配置选择 timeline_grid，但未启用多时间点合并；图像仍按单个时间点输出。")
+        lines.append("- 当前配置选择 timeline_grid，但每个 montage 只包含一个时间点。")
     else:
-        lines.append("- 未启用多时间点 montage；每张图像通常对应一个采样时间点。")
+        lines.append("- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。")
 
     if draw_timestamps:
         lines.append("- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。")

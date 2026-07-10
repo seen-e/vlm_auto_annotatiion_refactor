@@ -75,7 +75,7 @@ scene -> analysis -> refinement
 
 1. 当前 `video_process.py` 是 standalone 实现，不再依赖旧 `utils.video_utils`。
 2. `input_mode="image_sequence"` 已实现；`input_mode="video"` 会在 `build_video_inputs()` 中明确抛错。
-3. `merge_mode` 仍接受 `per_frame` / `timeline_grid`，但当前 standalone 版本的时间维度 montage 主要由 `merge_length > 1` 控制。
+3. `merge_mode` 只控制时间维度：`per_frame` 逐时间点输出，`timeline_grid` 按 `merge_length` 从左到右合并时间点；`merge_length < 1` 表示全部时间点合成一张图。
 4. `dry_run=True` 仍会执行视频处理和 prompt 渲染，只跳过真实 VLM 调用。
 5. `stage_runner.py` 当前调用 `call_vlm()`，不会把 `call_vlm_with_metadata()` 返回的 usage 写入 context，所以 usage 通常是空 dict。
 6. 当前目录名是 `vlm_auto_annotation_refactor_gpt`，但 README、examples 和 config 中的包名是 `vlm_auto_annotation_refactor`。如果没有安装/映射同名包，直接运行 examples 可能导入失败。建议后续统一目录名和包名。

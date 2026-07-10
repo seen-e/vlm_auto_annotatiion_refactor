@@ -243,30 +243,30 @@ def _pad_to_size(frame: np.ndarray, target_h: int, target_w: int) -> np.ndarray:
 
 
 def merge_view_frames(frames: list[np.ndarray], *, separator: int = 4) -> np.ndarray:
-    """Horizontally stitch frames from multiple views with visible separators."""
+    """Vertically stitch frames from multiple views with visible separators."""
     if not frames:
         raise VideoProcessError("merge_view_frames received no frames")
     if len(frames) == 1:
         return frames[0]
-    max_h = max(frame.shape[0] for frame in frames)
-    padded = [_pad_to_size(frame, max_h, frame.shape[1]) for frame in frames]
-    sep = np.zeros((max_h, separator, 3), dtype=np.uint8)
+    max_w = max(frame.shape[1] for frame in frames)
+    padded = [_pad_to_size(frame, frame.shape[0], max_w) for frame in frames]
+    sep = np.zeros((separator, max_w, 3), dtype=np.uint8)
     pieces: list[np.ndarray] = []
     for idx, frame in enumerate(padded):
         if idx:
             pieces.append(sep)
         pieces.append(frame)
-    return cv2.hconcat(pieces)
+    return cv2.vconcat(pieces)
 
 
 def merge_temporal_frames(frames: list[np.ndarray], *, columns: int | None = None) -> np.ndarray:
-    """Merge consecutive temporal frames into a grid montage."""
+    """Merge consecutive temporal frames into a left-to-right timeline montage."""
     if not frames:
         raise VideoProcessError("merge_temporal_frames received no frames")
     if len(frames) == 1:
         return frames[0]
     n = len(frames)
-    cols = columns or int(math.ceil(math.sqrt(n)))
+    cols = columns or n
     rows = int(math.ceil(n / cols))
     max_h = max(frame.shape[0] for frame in frames)
     max_w = max(frame.shape[1] for frame in frames)
@@ -276,6 +276,70 @@ def merge_temporal_frames(frames: list[np.ndarray], *, columns: int | None = Non
         cells.append(blank.copy())
     row_imgs = [cv2.hconcat(cells[r * cols : (r + 1) * cols]) for r in range(rows)]
     return cv2.vconcat(row_imgs)
+
+
+def _format_axis_timestamp(value: Any) -> str:
+    try:
+        return f"t={float(value):.2f}s"
+    except Exception:
+        return f"t={value}"
+
+
+def _ordered_unique(values: list[Any]) -> list[Any]:
+    seen: set[Any] = set()
+    ordered: list[Any] = []
+    for value in values:
+        if value in seen:
+            continue
+        seen.add(value)
+        ordered.append(value)
+    return ordered
+
+
+def add_montage_axes(
+    frame: np.ndarray,
+    *,
+    column_labels: list[str],
+    row_labels: list[str],
+    cell_width: int,
+    cell_height: int,
+) -> np.ndarray:
+    """Add timeline column labels and view row labels around a montage."""
+    if not column_labels or not row_labels:
+        return frame
+    top_margin = 34
+    left_margin = max(88, min(180, 18 + max(len(label) for label in row_labels) * 9))
+    out_h = frame.shape[0] + top_margin
+    out_w = frame.shape[1] + left_margin
+    out = np.zeros((out_h, out_w, 3), dtype=np.uint8)
+    out[top_margin:, left_margin:] = frame
+
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    scale = 0.45
+    thickness = 1
+    text_color = (255, 255, 255)
+    line_color = (90, 90, 90)
+
+    for col, label in enumerate(column_labels):
+        x0 = left_margin + col * cell_width
+        x1 = min(left_margin + (col + 1) * cell_width, out_w)
+        center_x = (x0 + x1) // 2
+        (tw, th), _ = cv2.getTextSize(label, font, scale, thickness)
+        cv2.putText(out, label, (max(left_margin, center_x - tw // 2), 22), font, scale, text_color, thickness, cv2.LINE_AA)
+        cv2.line(out, (x0, top_margin - 4), (x0, out_h - 1), line_color, 1)
+    cv2.line(out, (out_w - 1, top_margin - 4), (out_w - 1, out_h - 1), line_color, 1)
+
+    row_height = max(1, cell_height // max(1, len(row_labels)))
+    for row, label in enumerate(row_labels):
+        y0 = top_margin + row * row_height
+        y1 = top_margin + (row + 1) * row_height if row + 1 < len(row_labels) else top_margin + cell_height
+        center_y = (y0 + y1) // 2
+        (tw, th), _ = cv2.getTextSize(label, font, scale, thickness)
+        cv2.putText(out, label, (max(4, left_margin - tw - 8), center_y + th // 2), font, scale, text_color, thickness, cv2.LINE_AA)
+        cv2.line(out, (left_margin - 4, y0), (out_w - 1, y0), line_color, 1)
+    cv2.line(out, (left_margin - 4, top_margin + cell_height), (out_w - 1, top_margin + cell_height), line_color, 1)
+    cv2.line(out, (left_margin - 4, top_margin - 4), (left_margin - 4, out_h - 1), line_color, 1)
+    return out
 
 
 def encode_frame_to_image_part(frame: np.ndarray, jpeg_quality: int) -> dict[str, Any]:
@@ -292,6 +356,8 @@ def save_processed_frames(frames: list[np.ndarray], video_meta: dict[str, Any], 
     """Save processed frames and ``video_meta.json`` for debugging."""
     out_dir = Path(save_processed_path)
     out_dir.mkdir(parents=True, exist_ok=True)
+    for old_frame in out_dir.glob("frame_*.jpg"):
+        old_frame.unlink()
     for idx, frame in enumerate(frames):
         ok = cv2.imwrite(str(out_dir / f"frame_{idx:06d}.jpg"), frame)
         if not ok:
@@ -316,11 +382,12 @@ def _build_timepoint_frames(
 ) -> tuple[list[np.ndarray], list[dict[str, Any]]]:
     output_frames: list[np.ndarray] = []
     output_groups: list[dict[str, Any]] = []
+    selected_views = view_map if merge_views else {primary_name: view_map[primary_name]}
 
     for out_idx, (primary_idx, timestamp) in enumerate(zip(primary_indices, timestamps, strict=True)):
         view_frames: list[np.ndarray] = []
         per_view_indices: dict[str, int] = {}
-        for view_name, path in view_map.items():
+        for view_name, path in selected_views.items():
             info = infos[view_name]
             view_index = int(round(timestamp * float(info["fps"])))
             view_index = min(max(0, view_index), int(info["frame_count"]) - 1)
@@ -347,11 +414,11 @@ def _build_timepoint_frames(
                     "primary_frame_indices": [primary_idx],
                     "timestamps": [timestamp],
                     "per_view_frame_indices": per_view_indices,
-                    "views": list(view_map.keys()),
+                    "views": list(selected_views.keys()),
                 }
             )
         else:
-            for view_name, frame in zip(view_map.keys(), view_frames, strict=True):
+            for view_name, frame in zip(selected_views.keys(), view_frames, strict=True):
                 output_frames.append(frame)
                 output_groups.append(
                     {
@@ -370,16 +437,30 @@ def _apply_temporal_merge(
     frames: list[np.ndarray],
     groups: list[dict[str, Any]],
     *,
+    merge_mode: str,
     merge_length: int,
+    draw_montage_axes: bool,
 ) -> tuple[list[np.ndarray], list[dict[str, Any]]]:
-    if merge_length <= 1:
+    if merge_mode != "timeline_grid":
+        return frames, groups
+    effective_merge_length = len(frames) if merge_length < 1 else merge_length
+    if effective_merge_length <= 1:
         return frames, groups
     merged_frames: list[np.ndarray] = []
     merged_groups: list[dict[str, Any]] = []
-    for start in range(0, len(frames), merge_length):
-        chunk_frames = frames[start : start + merge_length]
-        chunk_groups = groups[start : start + merge_length]
-        merged = merge_temporal_frames(chunk_frames)
+    for start in range(0, len(frames), effective_merge_length):
+        chunk_frames = frames[start : start + effective_merge_length]
+        chunk_groups = groups[start : start + effective_merge_length]
+        merged = merge_temporal_frames(chunk_frames, columns=len(chunk_frames))
+        chunk_views = list(chunk_groups[0].get("views", [])) if chunk_groups else []
+        if draw_montage_axes and len(chunk_frames) > 1 and len(chunk_views) > 1:
+            merged = add_montage_axes(
+                merged,
+                column_labels=[_format_axis_timestamp(g.get("timestamps", [""])[0]) for g in chunk_groups],
+                row_labels=[str(view) for view in chunk_views],
+                cell_width=max(frame.shape[1] for frame in chunk_frames),
+                cell_height=max(frame.shape[0] for frame in chunk_frames),
+            )
         merged_frames.append(merged)
         merged_groups.append(
             {
@@ -387,7 +468,7 @@ def _apply_temporal_merge(
                 "source_output_indices": [g["output_index"] for g in chunk_groups],
                 "frame_indices": [idx for g in chunk_groups for idx in g.get("primary_frame_indices", [])],
                 "timestamps": [ts for g in chunk_groups for ts in g.get("timestamps", [])],
-                "views": sorted({view for g in chunk_groups for view in g.get("views", [])}),
+                "views": _ordered_unique([view for g in chunk_groups for view in g.get("views", [])]),
             }
         )
     return merged_frames, merged_groups
@@ -408,6 +489,7 @@ def build_video_inputs(
     merge_views: bool = False,
     merge_mode: str = "per_frame",
     merge_length: int = 0,
+    draw_montage_axes: bool = False,
     view_names: list[str] | None = None,
     input_mode: str = "image_sequence",
     save_processed_path: str | Path | None = None,
@@ -425,10 +507,15 @@ def build_video_inputs(
             ``draw_viewposition`` name.
         min_api_frames: Minimum sampled timepoints when enough source frames exist.
         frame_start/frame_end: Inclusive source-frame range on the primary view.
-        merge_views: Whether to stitch multi-view frames at each sampled timestamp.
-        merge_mode: ``per_frame`` or ``timeline_grid``. Both use temporal grid behavior when
-            ``merge_length > 1`` in this standalone implementation.
-        merge_length: If > 1, merge consecutive processed frames into montage grids.
+        merge_views: If true, stitch all selected views vertically at each sampled timestamp.
+            If false, output only the primary view.
+        merge_mode: ``per_frame`` emits one image per sampled timestamp; ``timeline_grid``
+            merges sampled timestamps into left-to-right timeline montages.
+        merge_length: In ``timeline_grid`` mode, merge this many consecutive processed
+            frames. Values < 1 merge all sampled timestamps into one montage.
+        draw_montage_axes: If true, add timestamp column labels and view row labels
+            after multi-view timeline montage generation. Only applies when
+            ``merge_views`` is true and the effective timeline length is greater than 1.
         view_names: Selected/ordered views. This replaces the legacy ``merge_view_names`` name.
         input_mode: ``image_sequence`` is implemented. ``video`` raises a clear error.
         save_processed_path: Optional directory for final processed images and ``video_meta.json``.
@@ -479,7 +566,17 @@ def build_video_inputs(
         draw_view_names=bool(draw_view_names),
         merge_views=bool(merge_views),
     )
-    frames, groups = _apply_temporal_merge(frames, groups, merge_length=int(merge_length or 0))
+    requested_merge_length = int(merge_length or 0)
+    effective_merge_length = 0
+    if merge_mode == "timeline_grid":
+        effective_merge_length = len(frames) if requested_merge_length < 1 else requested_merge_length
+    frames, groups = _apply_temporal_merge(
+        frames,
+        groups,
+        merge_mode=merge_mode,
+        merge_length=requested_merge_length,
+        draw_montage_axes=bool(draw_montage_axes) and bool(merge_views),
+    )
     parts = [encode_frame_to_image_part(frame, jpeg_quality) for frame in frames]
 
     video_meta: dict[str, Any] = {
@@ -502,7 +599,9 @@ def build_video_inputs(
         "draw_view_names": bool(draw_view_names),
         "merge_views": bool(merge_views),
         "merge_mode": merge_mode,
-        "merge_length": int(merge_length or 0),
+        "merge_length": requested_merge_length,
+        "effective_merge_length": effective_merge_length,
+        "draw_montage_axes": bool(draw_montage_axes),
         "output_groups": groups,
     }
 

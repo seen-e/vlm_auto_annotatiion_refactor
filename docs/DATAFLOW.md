@@ -71,7 +71,7 @@ draw_overlay
   ↓
 merge_view_frames          # merge_views=True
   ↓
-_apply_temporal_merge      # merge_length > 1
+_apply_temporal_merge      # merge_mode == "timeline_grid"
   ↓
 encode_frame_to_image_part
   ↓

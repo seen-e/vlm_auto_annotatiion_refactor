@@ -23,12 +23,13 @@
 | `jpeg_quality` | int | JPEG 编码质量，范围 1-100 |
 | `draw_timestamps` | bool | 是否绘制时间戳，例如 `t=1.25s` |
 | `draw_view_names` | bool | 是否绘制视角名称；对应旧参数 `draw_viewposition` |
+| `draw_montage_axes` | bool | 多视角 timeline montage 外侧是否绘制顶部时间戳和左侧视角标签 |
 | `min_api_frames` | int | 视频足够时尽量保证的最少采样时间点数 |
 | `frame_start` | int | 主视角起始帧索引，包含该帧 |
 | `frame_end` | int/null | 主视角结束帧索引，包含该帧；null 表示到末尾 |
-| `merge_views` | bool | 是否把同一时间点的多视角图像横向拼接成一张图 |
-| `merge_mode` | str | `per_frame` 或 `timeline_grid`；当前 standalone 实现中，时间维度 montage 由 `merge_length` 控制 |
-| `merge_length` | int | 大于 1 时，将连续输出图像合并成网格 montage |
+| `merge_views` | bool | true 时同一时间点的多视角图像按行纵向拼接；false 时只输出主视角 |
+| `merge_mode` | str | `per_frame` 逐时间点输出；`timeline_grid` 按时间从左到右合并输出 |
+| `merge_length` | int | timeline_grid 分组长度；小于 1 表示全部时间点合成一张图 |
 | `view_names` | list[str]/null | 视角名称和顺序；对 dict 输入可用于选择/排序视角；对 list 输入必须与路径数量一致 |
 | `input_mode` | str | 当前实现支持 `image_sequence`；`video` 会给出明确错误 |
 | `save_processed_path` | str/Path/null | 可选保存处理后图像和 `video_meta.json` 的目录 |
@@ -51,8 +52,8 @@ parts, video_meta = build_video_inputs(...)
 | `compute_sample_timestamps(...)` | 基于原始时间轴计算采样帧和时间戳 |
 | `resize_keep_aspect(frame, resize_width)` | 保持宽高比缩放图像 |
 | `draw_overlay(...)` | 绘制时间戳和视角名称 |
-| `merge_view_frames(frames)` | 横向拼接同一时间点的多个视角 |
-| `merge_temporal_frames(frames)` | 将多个时间点图像拼接成网格 montage |
+| `merge_view_frames(frames)` | 纵向拼接同一时间点的多个视角 |
+| `merge_temporal_frames(frames)` | 将多个时间点图像按时间从左到右拼接成 montage |
 | `encode_frame_to_image_part(frame, jpeg_quality)` | 编码为 base64 JPEG `image_url` part |
 | `save_processed_frames(frames, video_meta, save_processed_path)` | 保存最终送入模型前的图像和元信息 |
 

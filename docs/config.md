@@ -92,10 +92,11 @@ prompt 内可使用：
 | `jpeg_quality` | int | `1-100` | JPEG 质量，越低越省 token/带宽 |
 | `draw_timestamps` | bool | true/false | 是否绘制时间戳 |
 | `draw_view_names` | bool | true/false | 是否绘制视角名称 |
+| `draw_montage_axes` | bool | true/false | 多视角 timeline montage 外侧是否绘制顶部时间戳和左侧视角标签 |
 | `min_api_frames` | int | `>=1` | 尽量保证的最小输入帧数 |
-| `merge_views` | bool | true/false | 是否把多视角同一时间点拼成一张图 |
-| `merge_mode` | str | `per_frame` / `timeline_grid` | 拼接模式 |
-| `merge_length` | int | `>=0` | 时间帧 montage 长度，0/1 通常表示不做时间拼接 |
+| `merge_views` | bool | true/false | true 时不同视角按行纵向拼接；false 时只输出主视角 |
+| `merge_mode` | str | `per_frame` / `timeline_grid` | 时间维度输出模式 |
+| `merge_length` | int | `>=0` | timeline_grid 分组长度；小于 1 表示全部时间点合成一张图 |
 | `view_names` | list[str] | 视角名列表 | 多视角选择与顺序，第一个通常为 primary view |
 
 ## generation

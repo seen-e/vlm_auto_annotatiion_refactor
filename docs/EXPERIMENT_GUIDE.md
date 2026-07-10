@@ -150,11 +150,12 @@ video:
 | `max_frames` | temporal montage 前的最大采样时间点数。 |
 | `resize_width` | 每个视角缩放宽度，影响细节和 payload。 |
 | `jpeg_quality` | JPEG 质量，影响图像细节和传输体积。 |
-| `merge_views` | 是否把同一时间点多视角横向拼接。 |
-| `merge_mode` | 接受 `per_frame` / `timeline_grid`；当前时间 montage 主要由 `merge_length` 控制。 |
-| `merge_length` | 大于 1 时，把连续输出图像合成网格 montage。 |
+| `merge_views` | true 时同一时间点多视角按行纵向拼接；false 时只输出主视角。 |
+| `merge_mode` | `per_frame` 逐时间点输出；`timeline_grid` 按时间从左到右合并输出。 |
+| `merge_length` | timeline_grid 分组长度；小于 1 表示全部时间点合成一张图。 |
 | `draw_timestamps` | 是否绘制时间戳，refinement 通常建议开启。 |
 | `draw_view_names` | 是否绘制视角名，多视角输入建议开启。 |
+| `draw_montage_axes` | 多视角 timeline montage 外侧是否绘制顶部时间戳和左侧视角标签。 |
 
 对比重点：
 
