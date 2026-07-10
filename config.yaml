@@ -108,7 +108,7 @@ stages:
 
       # save_processed: 是否保存当前 stage 最终送入模型的处理后图像序列。
       # processed_output_path: 保存根目录；实际目录为 <processed_output_path>/<episode_id>/<stage_name>。
-      save_processed: true
+      save_processed: false
       processed_output_path: "outputs/processed_frames"
 
       # fps: 按原始视频时间轴抽帧的目标帧率。
@@ -178,14 +178,14 @@ stages:
     # generation: 可选字段，用于覆盖顶层 model 参数。
     # 示例：
     generation:
-       max_tokens: 2048
+       max_tokens: 8192
     #   temperature: 0.0
     video:
       input_mode: "image_sequence"
-      save_processed: true
+      save_processed: false
       processed_output_path: "outputs/processed_frames"
       # analysis 需要观察动作顺序，通常比 scene 使用更高 fps 或更多帧。
-      fps: 0.25
+      fps: 2.0
       max_frames: 128
       resize_width: 336
       jpeg_quality: 90
@@ -193,8 +193,8 @@ stages:
       draw_view_names: true
       draw_montage_axes: true
       min_api_frames: 2
-      merge_views: false
-      merge_mode: "per_frame"
+      merge_views: true
+      merge_mode: "timeline_grid"
       merge_length: -1
       view_names:
         - camera_top
@@ -208,11 +208,11 @@ stages:
     output_key: "refinement"
 
     generation:
-       max_tokens: 4096
+       max_tokens: 8192
        
     video:
       input_mode: "image_sequence"
-      save_processed: true
+      save_processed: false
       processed_output_path: "outputs/processed_frames"
       # refinement 需要更精细的边界定位，通常使用更高 fps。
       fps: 4.0
