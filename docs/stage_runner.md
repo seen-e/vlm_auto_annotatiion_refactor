@@ -1,0 +1,79 @@
+# stage_runner.py
+
+## 文件职责
+
+`stage_runner.py` 执行单个配置化 stage。
+
+它把以下模块串起来：
+
+```text
+video_process.py -> prompt_utils.py -> model_client.py -> json_utils.py
+```
+
+它不负责多 stage 顺序调度，多 stage 调度由 `pipeline.py` 负责。
+
+## 异常类
+
+### `StageRunnerError`
+
+stage 配置缺失、视频处理失败、prompt 渲染失败、模型调用失败或 JSON 提取失败时抛出。
+
+## 主要函数
+
+### `run_stage(stage_name, context, config, *, dry_run=False, run_dir=None, save_result=False) -> dict`
+
+执行一个 stage。
+
+#### 参数
+
+| 参数 | 类型 | 说明 |
+|---|---:|---|
+| `stage_name` | str | 要执行的 stage 名称，必须存在于 `config["stages"]` |
+| `context` | dict | 运行上下文，至少包含 `input.video_path` |
+| `config` | dict | 读取后的 `config.yaml` |
+| `dry_run` | bool | true 时不调用模型，仍执行视频处理和 prompt 渲染 |
+| `run_dir` | str/Path/null | 保存结果的运行目录 |
+| `save_result` | bool | 是否调用 `result_io.save_stage_result` |
+
+#### context 输入格式
+
+```python
+context = {
+  "input": {
+    "video_path": "...",
+    "instruction": "...",
+    "video_id": "optional"
+  },
+  "stages": {}
+}
+```
+
+#### context 输出格式
+
+```python
+context["stages"][stage_name] = {
+  "output": parsed_json,
+  "raw_text": raw_text,
+  "system_prompt": system_prompt,
+  "prompt": user_prompt,
+  "video_meta": video_meta,
+  "usage": usage,
+}
+```
+
+## 内部函数
+
+| 函数 | 作用 |
+|---|---|
+| `_model_cfg(config, stage_cfg)` | 合并顶层 `model` 参数和 stage 内 `generation` 覆盖参数 |
+| `_dry_run_output(stage_name)` | 为 dry-run 生成合法的假输出 |
+| `_ensure_context(context)` | 检查并初始化 `context` 必需字段 |
+
+## dry-run 说明
+
+`dry_run=True` 仍会处理视频、解析 prompt 占位符并写入 context，只跳过真实 VLM 请求。适合检查：
+
+1. stage 配置是否正确；
+2. prompt 是否能渲染；
+3. 上游字段路径是否存在；
+4. pipeline 是否能串联。
