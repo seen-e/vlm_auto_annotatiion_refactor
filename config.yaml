@@ -98,7 +98,7 @@ stages:
     output_key: "scene"
     
     generation:
-       max_tokens: 1024
+       max_tokens: 4096
 
     video:
       # input_mode: 传给 VLM 的视觉输入形式。
@@ -121,7 +121,7 @@ stages:
 
       # fps: 按原始视频时间轴抽帧的目标帧率。
       # scene 阶段主要提取稳定上下文，可以较低，例如 0.5 或 1.0。
-      fps: 2.0
+      fps: 1.0
 
       # max_frames: 当前 stage 最多采样多少帧。
       # 多视角 merge_views=True 时，通常表示时间点数量，而不是视角子图数量。
@@ -199,7 +199,7 @@ stages:
       # analysis 需要观察动作顺序，通常比 scene 使用更高 fps 或更多帧。
       fps: 4.0
       max_frames: 128
-      resize_width: 336
+      resize_width: 224
       jpeg_quality: 90
       draw_timestamps: true
       draw_view_names: true
