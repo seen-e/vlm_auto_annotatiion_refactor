@@ -15,7 +15,7 @@ video_process.build_video_inputs
   ↓
 prompt_utils 渲染 system/user prompt
   ↓
-model_client.call_vlm
+model_client.call_vlm_with_metadata
   ↓
 json_utils.extract_json
   ↓
@@ -39,7 +39,7 @@ examples/run_pipeline.py
             -> prompt_utils.render_template
             -> dry_run ?
                  yes: 使用 _dry_run_output
-                 no : call_vlm -> extract_json
+                 no : call_vlm_with_metadata -> extract_json
             -> 写入 context["stages"][stage_name]
        -> 可选 save_context
 ```
@@ -60,6 +60,8 @@ video_path
 normalize_video_input
   ↓
 read_video_info
+  ↓
+_effective_time_window  # max_time / frame range / view duration 交集
   ↓
 compute_sample_timestamps  # primary view 时间轴
   ↓
@@ -84,7 +86,11 @@ image_parts + video_meta
 2. dict 输入时，`view_names` 可选择和排序视角。
 3. 第一个视角作为 primary view，用于抽帧和时间轴。
 4. 其他视角按 primary timestamp 映射到自己的帧。
-5. 当前只实现 `input_mode="image_sequence"`；`input_mode="video"` 会报错。
+5. `max_time` 是每个 stage 独立的视频时长上限，在抽帧、缩放、多视角合并、图像序列生成和编码之前生效。
+6. `max_time=-1` 表示不限制；`max_time>0` 表示只处理原始时间轴 `[0, min(max_time, original_duration))`；`0` 或 `<-1` 会抛配置异常。
+7. 如果同时有 `frame_start/frame_end`，最终处理区间是 `max_time`、帧范围和各视角有效时长的交集。
+8. 多视角输入时不会循环、补帧、减速或修改时间戳；采样时间戳仍对应原始视频起点。
+9. 当前只实现 `input_mode="image_sequence"`；`input_mode="video"` 会报错。
 
 ## `context` 结构
 
@@ -150,7 +156,18 @@ context["stages"][stage_name] = {
 | `system_prompt` | 渲染后的 system prompt。 |
 | `prompt` | 渲染后的 user prompt。 |
 | `video_meta` | 抽帧、视角、拼接、编码等 metadata。 |
-| `usage` | 当前为空 dict，因为 `stage_runner.py` 调用的是 `call_vlm()`。 |
+| `usage` | 模型返回的 token usage metadata；dry-run 时为空 dict。 |
+
+`video_meta` 还会包含用于确认有效处理范围的字段：
+
+```json
+{
+  "original_duration": 120.0,
+  "configured_max_time": 30.0,
+  "effective_duration": 30.0,
+  "was_time_limited": true
+}
+```
 
 ## 上游输出如何传给下游 stage
 
@@ -242,7 +259,7 @@ list/dict 会被转成 pretty JSON 字符串。
 
 会跳过：
 
-1. `model_client.call_vlm()`。
+1. `model_client.call_vlm_with_metadata()`。
 2. `json_utils.extract_json()`。
 
 替代输出来自 `_dry_run_output(stage_name)`：

@@ -1,0 +1,219 @@
+```json
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "single",
+      "object": "blue_cloth",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "机械臂位于蓝色布料上方，夹爪张开，布料平铺在桌面上。",
+          "evidence": "俯视视角显示机械臂末端与布料有距离，前视视角显示布料在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "机械臂向蓝色布料移动，准备进行抓取。",
+          "evidence": "俯视视角显示机械臂位置向布料靠近。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "正在闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "机械臂夹爪接触布料并开始闭合，布料仍受桌面支撑。",
+          "evidence": "前视视角显示夹爪包裹布料，俯视视角显示夹爪闭合动作。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "机械臂提起布料，布料脱离桌面，完全由机械臂支撑。",
+          "evidence": "前视视角显示布料悬空，俯视视角显示布料随机械臂移动。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "携带物体移动",
+          "description": "机械臂携带布料向试管架方向移动。",
+          "evidence": "俯视视角显示机械臂和布料整体向右侧试管架移动。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "执行主体姿态调整",
+          "description": "机械臂在试管架上方调整姿态，准备放置。",
+          "evidence": "俯视视角显示机械臂末端在试管架上方进行微调。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 7,
+          "interaction_state": "抓持",
+          "gripper_state": "正在张开",
+          "support_state": "混合支撑",
+          "motion_state": "静止",
+          "description": "机械臂将布料放置在试管架边缘，夹爪开始张开，布料部分接触试管架。",
+          "evidence": "前视视角显示布料搭在试管架上，夹爪张开。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 8,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "机械臂完全释放布料，布料挂在试管架上。",
+          "evidence": "俯视视角显示夹爪完全张开且未接触布料。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 9,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "机械臂从试管架处撤回。",
+          "evidence": "俯视视角显示机械臂向远离试管架的方向移动。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "single",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "机械臂从静止位置向蓝色布料移动，缩短距离。",
+          "evidence": "俯视视角中机械臂位置变化，向布料靠近。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "抓取",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                2,
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "机械臂接触布料，夹爪闭合，建立抓持关系，并将布料提起。",
+          "evidence": "前视视角显示夹爪闭合包裹布料，布料随后悬空。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "搬运",
+          "object": "blue_cloth",
+          "target": "test_tube_rack",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                4,
+                5,
+                6
+              ]
+            }
+          ],
+          "state_change": "机械臂保持抓持状态，将布料从初始位置移动到试管架上方。",
+          "evidence": "俯视视角显示机械臂携带布料跨越空间到达试管架位置。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "放置",
+          "object": "blue_cloth",
+          "target": "test_tube_rack",
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                6,
+                7,
+                8
+              ]
+            }
+          ],
+          "state_change": "机械臂将布料放置在试管架上，夹爪张开，解除抓持关系。",
+          "evidence": "前视视角显示布料搭在试管架上，夹爪张开。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "撤回",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                8,
+                9
+              ]
+            }
+          ],
+          "state_change": "机械臂在释放布料后，向远离目标的方向移动。",
+          "evidence": "俯视视角显示机械臂离开试管架区域。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": []
+}
+```

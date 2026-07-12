@@ -42,7 +42,7 @@ model:
 
   # model: 模型名称，需要与 /v1/models 返回的 id 一致。
   # 例如："Qwen3-VL-8B-Instruct"、"Qwen3-VL-30B-A3B-Instruct-FP8"。
-  model: "Qwen3.6-27B"
+  model: "Qwen3.5-27B"
 
   # max_tokens: 默认最大输出 token 数。
   # 如果 stage 输出较长，可在对应 stage.generation 中覆盖。
@@ -106,14 +106,22 @@ stages:
       # 当前推荐 image_sequence；video 取决于旧 video_utils 和服务端支持。
       input_mode: "image_sequence"
 
+      # max_time: 当前 stage 参与后续视频处理的最大原始视频时长，单位秒。
+      # -1 表示不限制，使用完整原始视频。
+      # 大于 0 表示只处理原始视频时间轴上的 [0, max_time) 区间；
+      # 如果原始视频更短，则处理完整视频。
+      # 该限制发生在抽帧、缩放、多视角合并和图像序列生成之前；
+      # 不会修改视频播放速度、帧率或时间戳。
+      max_time: -1
+
       # save_processed: 是否保存当前 stage 最终送入模型的处理后图像序列。
       # processed_output_path: 保存根目录；实际目录为 <processed_output_path>/<episode_id>/<stage_name>。
-      save_processed: false
+      save_processed: true
       processed_output_path: "outputs/processed_frames"
 
       # fps: 按原始视频时间轴抽帧的目标帧率。
       # scene 阶段主要提取稳定上下文，可以较低，例如 0.5 或 1.0。
-      fps: 0.25
+      fps: 2.0
 
       # max_frames: 当前 stage 最多采样多少帧。
       # 多视角 merge_views=True 时，通常表示时间点数量，而不是视角子图数量。
@@ -182,10 +190,14 @@ stages:
     #   temperature: 0.0
     video:
       input_mode: "image_sequence"
-      save_processed: false
+      # max_time: 当前 stage 的最大原始视频处理时长，单位秒。
+      # -1 表示不限制；大于 0 表示只处理 [0, max_time)。
+      # 多视角输入时，所有视角使用相同时间上限，较短视角不会补帧。
+      max_time: 30
+      save_processed: true
       processed_output_path: "outputs/processed_frames"
       # analysis 需要观察动作顺序，通常比 scene 使用更高 fps 或更多帧。
-      fps: 2.0
+      fps: 4.0
       max_frames: 128
       resize_width: 336
       jpeg_quality: 90
@@ -212,7 +224,11 @@ stages:
        
     video:
       input_mode: "image_sequence"
-      save_processed: false
+      # max_time: 当前 stage 的最大原始视频处理时长，单位秒。
+      # -1 表示不限制；大于 0 表示只处理 [0, max_time)。
+      # 该参数与 fps、max_frames、frame_start/frame_end 取交集后再抽帧。
+      max_time: 60
+      save_processed: true
       processed_output_path: "outputs/processed_frames"
       # refinement 需要更精细的边界定位，通常使用更高 fps。
       fps: 4.0
@@ -245,6 +261,7 @@ stages:
   #   output_key: "object_state"
   #   video:
   #     input_mode: "image_sequence"
+  #     max_time: -1
   #     save_processed: false
   #     processed_output_path: "outputs/processed_frames"
   #     fps: 1.0

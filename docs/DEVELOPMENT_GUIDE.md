@@ -62,6 +62,7 @@ object_state:
   output_key: "object_state"
   video:
     input_mode: "image_sequence"
+    max_time: -1
     fps: 1.0
     max_frames: 64
     resize_width: 336
@@ -172,13 +173,16 @@ list/dict 会自动转成 pretty JSON 字符串。
 
 1. 输入归一化：`normalize_video_input()`。
 2. 视频信息读取：`read_video_info()`。
-3. 抽帧策略：`compute_sample_timestamps()`。
-4. 帧处理：缩放、绘制时间戳/视角名。
-5. 多视角拼接：`merge_view_frames()`。
-6. 时间 montage：`merge_temporal_frames()` / `_apply_temporal_merge()`。
-7. JPEG base64 编码：`encode_frame_to_image_part()`。
+3. 有效时间区间计算：`_effective_time_window()` 统一处理 `max_time`、多视角时长和 `frame_start/frame_end` 的交集。
+4. 抽帧策略：`compute_sample_timestamps()`。
+5. 帧处理：缩放、绘制时间戳/视角名。
+6. 多视角拼接：`merge_view_frames()`。
+7. 时间 montage：`merge_temporal_frames()` / `_apply_temporal_merge()`。
+8. JPEG base64 编码：`encode_frame_to_image_part()`。
 
 开发时优先在这个文件内保持清晰函数边界，不要把视频逻辑散落到 `stage_runner.py`。
+
+`max_time` 属于 stage 级 `video` 配置，新增或调整视频时长实验时应优先改 `config.yaml`。不要在 `scene`、`analysis`、`refinement` 的 prompt 或 stage 逻辑里分别实现截断；统一入口应保持在 `build_video_inputs()` 内。
 
 ## 何时应修改核心流程
 
@@ -187,13 +191,13 @@ list/dict 会自动转成 pretty JSON 字符串。
 1. 所有 stage 都需要共享的新横切行为。
 2. 顺序 workflow 无法表达需求，需要 DAG 或条件执行。
 3. 需要改变 dry-run、错误处理、保存策略等核心行为。
-4. 需要把模型 metadata/usage 纳入 context。
+4. 需要改变模型 metadata/usage 写入 context 的方式。
 
 如果只是新增 stage、改 prompt、改字段传递或改视频参数，不应修改核心流程。
 
 ## 建议后续优化
 
 1. 统一目录名和包名，避免 `vlm_auto_annotation_refactor_gpt` 与 `vlm_auto_annotation_refactor` 不一致。
-2. 如果需要 token usage，改用 `model_client.call_vlm_with_metadata()`。
+2. 当前 `stage_runner.py` 已写入 `model_client.call_vlm_with_metadata()` 返回的 usage；如果字段口径变化，应同步 `result_io.py` 和相关文档。
 3. 明确 `merge_mode="timeline_grid"` 在 standalone 版本中的语义。
 4. 如果确实需要 `input_mode="video"`，在 `video_process.py` 中实现 video_url 编码，否则配置注释中应明确只推荐 `image_sequence`。

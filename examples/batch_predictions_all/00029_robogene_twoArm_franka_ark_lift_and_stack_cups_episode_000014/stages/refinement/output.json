@@ -1,0 +1,340 @@
+{
+  "timed_executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "左臂从初始位置开始向蓝色纸杯方向移动。",
+          "end_boundary_evidence": "左臂末端到达蓝色纸杯上方，准备进行接触。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 1.75,
+          "start_boundary_evidence": "左臂夹爪下降并接触到蓝色纸杯边缘。",
+          "end_boundary_evidence": "夹爪完全包围纸杯边缘，准备闭合。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 1.75,
+          "end_time": 2.25,
+          "start_boundary_evidence": "左臂夹爪开始闭合，夹紧蓝色纸杯。",
+          "end_boundary_evidence": "夹爪闭合完成，纸杯被稳定夹持。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.25,
+          "end_time": 2.75,
+          "start_boundary_evidence": "左臂向上运动，蓝色纸杯脱离桌面。",
+          "end_boundary_evidence": "纸杯被提升至一定高度，脱离桌面支撑。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.75,
+          "end_time": 4.5,
+          "start_boundary_evidence": "左臂携带蓝色纸杯向画面中央/右侧移动。",
+          "end_boundary_evidence": "左臂到达目标放置位置上方，停止水平移动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 6,
+          "action": "降低",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 4.5,
+          "end_time": 5.25,
+          "start_boundary_evidence": "左臂携带蓝色纸杯垂直向下运动。",
+          "end_boundary_evidence": "纸杯接近桌面或目标位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 7,
+          "action": "放置",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 5.25,
+          "end_time": 5.5,
+          "start_boundary_evidence": "蓝色纸杯底部接触桌面。",
+          "end_boundary_evidence": "纸杯稳定放置在桌面上。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 8,
+          "action": "释放",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 5.5,
+          "end_time": 6.0,
+          "start_boundary_evidence": "左臂夹爪开始张开。",
+          "end_boundary_evidence": "夹爪完全张开，不再接触蓝色纸杯。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 9,
+          "action": "撤回",
+          "object": "blue_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 6.0,
+          "end_time": 8.75,
+          "start_boundary_evidence": "左臂末端从蓝色纸杯处移开，向初始位置或待机位置移动。",
+          "end_boundary_evidence": "左臂停止运动，回到待机位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 10,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "右臂从初始位置开始向黄色纸杯方向移动。",
+          "end_boundary_evidence": "右臂末端到达黄色纸杯上方，准备进行接触。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 11,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 1.75,
+          "start_boundary_evidence": "右臂夹爪下降并接触到黄色纸杯边缘。",
+          "end_boundary_evidence": "夹爪完全包围纸杯边缘，准备闭合。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 12,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 1.75,
+          "end_time": 2.25,
+          "start_boundary_evidence": "右臂夹爪开始闭合，夹紧黄色纸杯。",
+          "end_boundary_evidence": "夹爪闭合完成，纸杯被稳定夹持。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 13,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.25,
+          "end_time": 2.75,
+          "start_boundary_evidence": "右臂向上运动，黄色纸杯脱离桌面。",
+          "end_boundary_evidence": "纸杯被提升至一定高度，脱离桌面支撑。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 14,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.75,
+          "end_time": 4.5,
+          "start_boundary_evidence": "右臂携带黄色纸杯向画面中央/左侧移动。",
+          "end_boundary_evidence": "右臂到达目标放置位置上方，停止水平移动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 15,
+          "executor_step_index": 6,
+          "action": "降低",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 4.5,
+          "end_time": 5.25,
+          "start_boundary_evidence": "右臂携带黄色纸杯垂直向下运动。",
+          "end_boundary_evidence": "纸杯接近桌面或目标位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 16,
+          "executor_step_index": 7,
+          "action": "放置",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 5.25,
+          "end_time": 5.5,
+          "start_boundary_evidence": "黄色纸杯底部接触桌面。",
+          "end_boundary_evidence": "纸杯稳定放置在桌面上。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 17,
+          "executor_step_index": 8,
+          "action": "释放",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 5.5,
+          "end_time": 6.0,
+          "start_boundary_evidence": "右臂夹爪开始张开。",
+          "end_boundary_evidence": "夹爪完全张开，不再接触黄色纸杯。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 18,
+          "executor_step_index": 9,
+          "action": "撤回",
+          "object": "yellow_cup",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 6.0,
+          "end_time": 8.75,
+          "start_boundary_evidence": "右臂末端从黄色纸杯处移开，向初始位置或待机位置移动。",
+          "end_boundary_evidence": "右臂停止运动，回到待机位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        }
+      ]
+    }
+  ],
+  "sequence_issues": [],
+  "uncertainties": []
+}

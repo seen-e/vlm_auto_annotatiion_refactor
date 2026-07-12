@@ -1,0 +1,294 @@
+```json
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "right",
+      "object": "orange_sponge",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "视频开始时，右臂已经夹持着橙色海绵，处于静止状态。",
+          "evidence": "t=0.00s 时，右臂夹爪闭合，海绵悬空被右臂支撑。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "接近目标",
+          "description": "右臂携带海绵向盘子方向移动。",
+          "evidence": "t=0.50s 至 t=1.50s，右臂移动，海绵跟随右臂向盘子靠近。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "推动或拉动物体",
+          "description": "右臂夹持海绵在盘子表面进行擦拭动作。",
+          "evidence": "t=2.00s 至 t=8.50s，右臂在盘子上方往复移动，海绵与盘子接触并产生相对运动。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "远离目标",
+          "description": "右臂携带海绵离开盘子区域。",
+          "evidence": "t=9.00s 至 t=11.13s，右臂将海绵移向画面右侧，远离盘子。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "left",
+      "object": "white_plate",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "视频开始时，左臂未接触盘子，盘子放置在桌面上。",
+          "evidence": "t=0.00s 时，左臂夹爪张开，与盘子保持距离。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "左臂向盘子方向移动，准备进行固定。",
+          "evidence": "t=0.50s 至 t=1.50s，左臂向盘子靠近。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "固定",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂接触并固定盘子，限制其移动。",
+          "evidence": "t=2.00s 时，左臂夹爪闭合接触盘子边缘，随后保持静止。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "固定",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂持续固定盘子，配合右臂的清洁动作。",
+          "evidence": "t=2.50s 至 t=8.50s，左臂保持对盘子的固定状态。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "接触",
+          "gripper_state": "正在张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂解除对盘子的固定。",
+          "evidence": "t=9.00s 时，左臂夹爪张开，但仍轻微接触盘子。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "左臂完全脱离盘子并向后撤回。",
+          "evidence": "t=9.50s 至 t=11.13s，左臂离开盘子区域。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "夹持",
+          "object": "orange_sponge",
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "orange_sponge",
+              "state_indices": [1]
+            }
+          ],
+          "state_change": "持续保持对海绵的抓持状态",
+          "evidence": "视频开始时右臂已夹持海绵并保持闭合状态。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接近",
+          "object": "orange_sponge",
+          "target": "white_plate",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "orange_sponge",
+              "state_indices": [2]
+            }
+          ],
+          "state_change": "携带海绵向盘子移动",
+          "evidence": "右臂携带海绵从初始位置向盘子方向移动。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "推动",
+          "object": "orange_sponge",
+          "target": "white_plate",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "orange_sponge",
+              "state_indices": [3]
+            }
+          ],
+          "state_change": "在盘子表面进行往复擦拭运动",
+          "evidence": "右臂夹持海绵在盘子表面进行清洁动作。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "撤回",
+          "object": "orange_sponge",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "orange_sponge",
+              "state_indices": [4]
+            }
+          ],
+          "state_change": "携带海绵远离盘子",
+          "evidence": "右臂将海绵移离盘子区域。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 5,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "white_plate",
+          "target": "white_plate",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [2]
+            }
+          ],
+          "state_change": "左臂向盘子移动",
+          "evidence": "左臂从静止位置向盘子靠近。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 2,
+          "action": "固定",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "固定",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [3, 4]
+            }
+          ],
+          "state_change": "接触并限制盘子移动",
+          "evidence": "左臂夹爪闭合接触盘子边缘并保持静止，防止盘子在清洁过程中移动。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 3,
+          "action": "解除固定",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [5]
+            }
+          ],
+          "state_change": "从固定状态变为接触状态",
+          "evidence": "左臂夹爪张开，解除对盘子的限制。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 4,
+          "action": "脱离接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [6]
+            }
+          ],
+          "state_change": "从接触状态变为未接触状态",
+          "evidence": "左臂完全离开盘子表面。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 5,
+          "action": "撤回",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [6]
+            }
+          ],
+          "state_change": "远离盘子",
+          "evidence": "左臂向后移动，远离操作区域。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": []
+}
+```

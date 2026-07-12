@@ -1,0 +1,90 @@
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个操作台面，能够清晰观察到左右两侧机械臂的完整运动轨迹以及台面上所有物体的分布情况。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于操作台前方，主要观察机械臂的侧面轮廓、夹爪细节以及物体的高度信息，与主视角形成空间互补。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "left",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面左侧的白色机械臂，底座固定在左侧边缘。",
+      "main_workspace": "主视角画面左侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "executor_id": "right",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面右侧的白色机械臂，底座固定在右侧边缘。",
+      "main_workspace": "主视角画面右侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "white_plate",
+      "description": "位于台面中央偏左位置的白色圆形盘子，是主要的操作目标。",
+      "role": "目标物体",
+      "location": "主视角画面中央偏左",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "blue_cup",
+      "description": "位于台面中央偏左位置的蓝色圆柱形杯子。",
+      "role": "被操作物体",
+      "location": "主视角画面中央偏左，位于盘子左侧",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "white_bowl",
+      "description": "位于台面中央偏右位置的白色碗状容器，内部似乎盛有黄色物体。",
+      "role": "被操作物体",
+      "location": "主视角画面中央偏右",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "fruit_basket",
+      "description": "位于台面右侧的棕色长方形篮子，内部装有红色和黄色的球状物体（疑似水果）。",
+      "role": "容器",
+      "location": "主视角画面右侧",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "utensil_rack",
+      "description": "位于台面左侧边缘的金属网格架，内部放置有若干餐具或工具。",
+      "role": "固定装置",
+      "location": "主视角画面左侧边缘",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "uncertainties": []
+}

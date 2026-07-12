@@ -1,0 +1,5 @@
+{
+  "stage": "refinement",
+  "exception_type": "PromptRenderError",
+  "exception": "Expected list index in context path 'stages.analysis.output.executor_timelines', got 'executor_timelines'"
+}

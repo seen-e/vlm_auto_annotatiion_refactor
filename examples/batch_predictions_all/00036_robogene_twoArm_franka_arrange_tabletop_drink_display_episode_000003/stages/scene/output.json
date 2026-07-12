@@ -1,0 +1,70 @@
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个工作台区域，能够清晰观察到两台机械臂的底座位置、运动轨迹以及桌面上所有饮料瓶的分布情况。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于工作台前方，主要观察机械臂前端的夹爪动作细节以及饮料瓶的侧面特征，能够补充俯视视角中难以观察到的物体高度和抓取姿态。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "left",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面左侧的白色机械臂，底座固定在左侧边缘，主要负责抓取和移动左侧区域的物体。",
+      "main_workspace": "主视角画面左侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "executor_id": "right",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面右侧的白色机械臂，底座固定在右侧边缘，主要负责抓取和移动右侧区域的物体。",
+      "main_workspace": "主视角画面右侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "orange_bottle",
+      "description": "橙色瓶身的饮料瓶，圆柱形，带有白色瓶盖。",
+      "role": "被操作物体",
+      "location": "主视角画面中散布于桌面，部分位于左侧，部分位于中央。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "red_bottle",
+      "description": "红色瓶身的饮料瓶，圆柱形，带有白色瓶盖。",
+      "role": "被操作物体",
+      "location": "主视角画面中散布于桌面，部分位于左侧，部分位于中央。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "blue_bottle",
+      "description": "蓝色瓶身的饮料瓶，圆柱形，带有白色瓶盖。",
+      "role": "被操作物体",
+      "location": "主视角画面中散布于桌面，部分位于左侧，部分位于中央。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "uncertainties": []
+}

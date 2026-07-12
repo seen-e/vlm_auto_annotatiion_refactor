@@ -1,0 +1,136 @@
+{
+  "input_type": "multi_view_dict",
+  "input_mode": "image_sequence",
+  "view_names": [
+    "camera_top",
+    "camera_front"
+  ],
+  "primary_view": "camera_top",
+  "video_info": {
+    "camera_top": {
+      "path": "C:\\Users\\34927\\Desktop\\robot_mind2\\camera_extrinsics_intrinsics\\franka\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_top\\episode_000001.mp4",
+      "fps": 30.0,
+      "frame_count": 203,
+      "width": 640,
+      "height": 480,
+      "duration": 6.766666666666667
+    },
+    "camera_front": {
+      "path": "C:\\Users\\34927\\Desktop\\robot_mind2\\camera_extrinsics_intrinsics\\franka\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_front\\episode_000001.mp4",
+      "fps": 30.0,
+      "frame_count": 203,
+      "width": 640,
+      "height": 480,
+      "duration": 6.766666666666667
+    }
+  },
+  "original_fps": 30.0,
+  "target_fps": 2.0,
+  "frame_start": 0,
+  "frame_end": null,
+  "sampled_frame_indices": [
+    0,
+    15,
+    30,
+    45,
+    60,
+    75,
+    90,
+    105,
+    120,
+    135,
+    150,
+    165,
+    180,
+    195,
+    202
+  ],
+  "sampled_timestamps": [
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    4.0,
+    4.5,
+    5.0,
+    5.5,
+    6.0,
+    6.5,
+    6.733333333333333
+  ],
+  "num_sampled_frames": 15,
+  "num_output_parts": 1,
+  "resize_width": 336,
+  "jpeg_quality": 90,
+  "draw_timestamps": true,
+  "draw_view_names": true,
+  "merge_views": true,
+  "merge_mode": "timeline_grid",
+  "merge_length": -1,
+  "effective_merge_length": 15,
+  "draw_montage_axes": true,
+  "output_groups": [
+    {
+      "output_index": 0,
+      "source_output_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "frame_indices": [
+        0,
+        15,
+        30,
+        45,
+        60,
+        75,
+        90,
+        105,
+        120,
+        135,
+        150,
+        165,
+        180,
+        195,
+        202
+      ],
+      "timestamps": [
+        0.0,
+        0.5,
+        1.0,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        3.5,
+        4.0,
+        4.5,
+        5.0,
+        5.5,
+        6.0,
+        6.5,
+        6.733333333333333
+      ],
+      "views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ]
+}

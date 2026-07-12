@@ -1,0 +1,78 @@
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个工作台区域，能够清晰观察到左右两侧机械臂的底座位置、运动轨迹以及桌面上所有物体的分布情况。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于工作台前方，主要观察机械臂前端的夹爪动作细节以及物体被操作时的侧面状态。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "left",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面左侧的白色机械臂，底座固定在左侧边缘。",
+      "main_workspace": "工作台左侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "executor_id": "right",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面右侧的白色机械臂，底座固定在右侧边缘。",
+      "main_workspace": "工作台右侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "blue_cup",
+      "description": "蓝色的纸杯，作为被操作物体之一。",
+      "role": "被操作物体",
+      "location": "工作台左侧区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "yellow_cup",
+      "description": "黄色的纸杯，作为被操作物体之一。",
+      "role": "被操作物体",
+      "location": "工作台右侧区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "white_cups",
+      "description": "位于画面右上角支架上的白色纸杯，作为待取用的物体。",
+      "role": "被操作物体",
+      "location": "工作台右上角",
+      "best_observation_views": [
+        "camera_top"
+      ]
+    },
+    {
+      "object_id": "white_cup",
+      "description": "位于画面左下角支架上的白色纸杯，作为待取用的物体。",
+      "role": "被操作物体",
+      "location": "工作台左下角",
+      "best_observation_views": [
+        "camera_front"
+      ]
+    }
+  ],
+  "uncertainties": []
+}

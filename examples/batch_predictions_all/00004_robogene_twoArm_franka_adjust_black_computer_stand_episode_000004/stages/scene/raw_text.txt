@@ -1,0 +1,62 @@
+```json
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个工作台区域，能够清晰观察到左右两个机械臂的底座位置、相对方位以及工作台上所有物体的平面布局。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于工作台前方，能够观察到机械臂的侧面轮廓、夹爪细节以及物体（如笔记本电脑）的垂直高度和姿态变化。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "left",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面左侧的白色机械臂，底座固定在左侧，主要负责操作笔记本电脑支架。",
+      "main_workspace": "工作台左侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "executor_id": "right",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面右侧的白色机械臂，底座固定在右侧，主要负责抓取和放置笔记本电脑。",
+      "main_workspace": "工作台右侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop",
+      "description": "银灰色的笔记本电脑，呈闭合状态，放置在桌面上。",
+      "role": "被操作物体",
+      "location": "工作台中央偏左位置",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "laptop_stand",
+      "description": "黑色的笔记本电脑支架，具有底座和支撑结构。",
+      "role": "支撑物",
+      "location": "工作台中央偏下位置",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "uncertainties": []
+}
+```

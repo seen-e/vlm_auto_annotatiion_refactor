@@ -86,6 +86,7 @@ prompt 内可使用：
 | 参数 | 类型 | 可填写内容 | 说明 |
 |---|---:|---|---|
 | `input_mode` | str | `image_sequence` / `video` | 当前推荐 `image_sequence` |
+| `max_time` | float/int | `-1` 或 `>0` | 当前 stage 最大原始视频处理时长，单位秒；`-1` 表示不限制，`0` 或 `<-1` 非法 |
 | `fps` | float | `>0` | 按原始时间轴采样 FPS |
 | `max_frames` | int | `>0` | 最大采样帧/时间点数 |
 | `resize_width` | int | `>0` | 单视角图像缩放宽度，保持比例 |
@@ -96,8 +97,47 @@ prompt 内可使用：
 | `min_api_frames` | int | `>=1` | 尽量保证的最小输入帧数 |
 | `merge_views` | bool | true/false | true 时不同视角按行纵向拼接；false 时只输出主视角 |
 | `merge_mode` | str | `per_frame` / `timeline_grid` | 时间维度输出模式 |
-| `merge_length` | int | `>=0` | timeline_grid 分组长度；小于 1 表示全部时间点合成一张图 |
+| `merge_length` | int | 任意 int | timeline_grid 分组长度；小于 1 表示全部时间点合成一张图 |
 | `view_names` | list[str] | 视角名列表 | 多视角选择与顺序，第一个通常为 primary view |
+
+### `max_time` 处理语义
+
+`max_time` 是每个 stage 独立配置的视频时长上限：
+
+```yaml
+scene:
+  video:
+    max_time: -1
+
+analysis:
+  video:
+    max_time: 30
+
+refinement:
+  video:
+    max_time: 60
+```
+
+规则：
+
+1. `max_time: -1` 表示不限制，使用完整原始视频。
+2. `max_time > 0` 的单位是秒，只处理原始视频时间轴上的 `[0, min(max_time, original_duration))`。
+3. `max_time: 0` 或小于 `-1` 会抛出明确配置异常，不会静默回退。
+4. 截断发生在抽帧、缩放、多视角合并、图像序列生成或编码之前。
+5. `max_time` 不改变 `fps`、`max_frames`、`frame_start`、`frame_end`、`resize_width`、多视角合并等配置语义；如果同时存在其他时间或帧范围限制，会取所有限制的交集。
+6. 多视角输入时，每个视角使用相同的上限：`min(该视角原始时长, max_time)`；较短视角不会被循环、补帧、减速或改时间戳。
+7. 输出帧时间戳保留其相对于原始视频起点的真实时间戳。
+
+`video_meta.json` 会记录实际处理范围，例如：
+
+```json
+{
+  "original_duration": 120.0,
+  "configured_max_time": 30.0,
+  "effective_duration": 30.0,
+  "was_time_limited": true
+}
+```
 
 ## generation
 

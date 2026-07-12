@@ -36,14 +36,16 @@
 | `merge_temporal_frames(frames, columns=None)` | 连续时间点 frames | 横向时间序列 montage frame | `_apply_temporal_merge()` | 工具函数 |
 | `encode_frame_to_image_part(frame, jpeg_quality)` | BGR frame、JPEG 质量 | OpenAI-compatible `image_url` part | `build_video_inputs()` | 可用于单帧编码 |
 | `save_processed_frames(frames, video_meta, save_processed_path)` | 最终 frames、metadata、目录 | `None` | `build_video_inputs()` | 调试保存入口 |
-| `build_video_inputs(video_path, *, fps, max_frames, resize_width, jpeg_quality, draw_timestamps=True, draw_view_names=True, min_api_frames=1, frame_start=0, frame_end=None, merge_views=False, merge_mode="per_frame", merge_length=0, view_names=None, input_mode="image_sequence", save_processed_path=None)` | 视频输入和全部视频参数 | `(parts, video_meta)` | `stage_runner.run_stage()` | 主要公开入口 |
+| `build_video_inputs(video_path, *, fps, max_frames, resize_width, jpeg_quality, max_time=-1, draw_timestamps=True, draw_view_names=True, min_api_frames=1, frame_start=0, frame_end=None, merge_views=False, merge_mode="per_frame", merge_length=0, view_names=None, input_mode="image_sequence", save_processed_path=None)` | 视频输入和全部视频参数 | `(parts, video_meta)` | `stage_runner.run_stage()` | 主要公开入口 |
 
 内部函数，不建议外部直接调用：
 
 | 函数 | 作用 |
 |---|---|
 | `_normalize_jpeg_quality(value)` | JPEG quality 转 int 并校验 1-100。 |
-| `_validate_video_config(...)` | 校验 fps、max_frames、resize_width、input_mode、merge_mode、min_api_frames。 |
+| `_normalize_max_time(value)` | 将 `max_time` 归一化为 float，并校验只能是 `-1` 或 `>0`。 |
+| `_validate_video_config(...)` | 校验 fps、max_frames、max_time、resize_width、input_mode、merge_mode、min_api_frames。 |
+| `_effective_time_window(...)` | 计算 `max_time`、多视角原始时长、`frame_start/frame_end` 的交集，并生成处理区间 metadata。 |
 | `_read_frame(path, frame_index)` | 用 OpenCV 读取单帧。 |
 | `_pad_to_size(frame, target_h, target_w)` | padding 到指定尺寸。 |
 | `_build_timepoint_frames(...)` | 根据采样时间点读取各视角帧、缩放、绘制标签、按需合并视角。 |
@@ -56,7 +58,9 @@
 1. 多视角 dict 输入可用 `view_names` 选择和排序视角。
 2. 第一个视角是 primary view，采样时间轴基于它。
 3. 其他视角按 primary timestamp 映射到各自帧索引。
-4. `input_mode="video"` 会抛 `VideoProcessError`，当前只实现 `image_sequence`。
+4. `max_time` 是 stage 级视频参数，在抽帧和后续视频处理前统一生效；输出时间戳仍对应原始视频时间轴。
+5. 多视角输入会对各视角使用同一个 `max_time` 上限，但不会补齐较短视角。
+6. `input_mode="video"` 会抛 `VideoProcessError`，当前只实现 `image_sequence`。
 
 ## `model_client.py`
 
@@ -64,8 +68,8 @@
 
 | 函数 | 输入参数 | 返回值 | 被谁调用 | 外部调用建议 |
 |---|---|---|---|---|
-| `call_vlm(...)` | base_url、api_key、model、system/user prompt、image_parts、生成参数 | `raw_text` 字符串 | `stage_runner.run_stage()` | 公开入口 |
-| `call_vlm_with_metadata(...)` | 同上 | dict：`raw_text`、`model`、`usage`、`finish_reason` | `call_vlm()` | 需要 usage 时使用 |
+| `call_vlm(...)` | base_url、api_key、model、system/user prompt、image_parts、生成参数 | `raw_text` 字符串 | 兼容/简化调用场景 | 需要纯文本时使用 |
+| `call_vlm_with_metadata(...)` | 同上 | dict：`raw_text`、`model`、`usage`、`finish_reason` | `stage_runner.run_stage()`、`call_vlm()` | stage 执行入口默认使用 |
 
 内部函数：
 
@@ -137,7 +141,7 @@ run_stage
   -> prompt_utils.resolve_input_fields
   -> prompt_utils.load_stage_prompt
   -> prompt_utils.render_template
-  -> model_client.call_vlm        # dry_run=False
+  -> model_client.call_vlm_with_metadata  # dry_run=False
   -> json_utils.extract_json      # dry_run=False
   -> result_io.save_stage_result  # save_result=True
 ```
@@ -226,6 +230,6 @@ prompt_utils.py
 ## 建议后续优化
 
 1. 统一目录名和 Python 包名，避免 examples 中 `vlm_auto_annotation_refactor` 导入失败。
-2. 如果需要 token usage，`stage_runner.py` 可改用 `call_vlm_with_metadata()`。
+2. 当前 `stage_runner.py` 已写入 `call_vlm_with_metadata()` 返回的 usage；后续如调整 usage 字段口径，应同步 `result_io.py` 和文档。
 3. `input_mode="video"` 当前未实现，建议要么从配置注释中弱化，要么实现 video_url 编码。
 4. `merge_mode="timeline_grid"` 会按 `merge_length` 合并时间点；`merge_length < 1` 表示合并全部时间点。

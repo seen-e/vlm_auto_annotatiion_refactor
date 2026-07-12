@@ -1,0 +1,398 @@
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "left",
+      "object": "blue_cloth",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂位于蓝色布料左侧，未接触布料，布料平铺在桌面上。",
+          "evidence": "俯视视角显示左臂末端与蓝色布料之间存在明显间隙，布料静止在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "左臂向蓝色布料移动，准备进行抓取。",
+          "evidence": "俯视视角显示左臂末端逐渐靠近蓝色布料，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "正在闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂末端接触蓝色布料，夹爪开始闭合。",
+          "evidence": "俯视视角显示左臂末端与蓝色布料接触，夹爪正在收拢。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂稳定抓持蓝色布料，但布料仍位于桌面上。",
+          "evidence": "俯视视角显示左臂夹爪已闭合并夹住布料，布料位置未发生明显变化。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "携带物体移动",
+          "description": "左臂提起蓝色布料，将其从桌面拿起并向右移动。",
+          "evidence": "俯视视角显示蓝色布料随左臂移动，脱离了桌面的支撑，被左臂悬空携带。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "左臂停止移动，保持抓持蓝色布料悬停在空中。",
+          "evidence": "俯视视角显示左臂和蓝色布料在空间中保持静止，布料未接触桌面。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "object": "blue_cloth",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂位于蓝色布料右侧，未接触布料，布料平铺在桌面上。",
+          "evidence": "俯视视角显示右臂末端与蓝色布料之间存在明显间隙，布料静止在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "右臂向蓝色布料移动，准备进行抓取。",
+          "evidence": "俯视视角显示右臂末端逐渐靠近蓝色布料，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "正在闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂末端接触蓝色布料，夹爪开始闭合。",
+          "evidence": "俯视视角显示右臂末端与蓝色布料接触，夹爪正在收拢。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂稳定抓持蓝色布料，但布料仍位于桌面上。",
+          "evidence": "俯视视角显示右臂夹爪已闭合并夹住布料，布料位置未发生明显变化。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "携带物体移动",
+          "description": "右臂提起蓝色布料，将其从桌面拿起并向左移动。",
+          "evidence": "俯视视角显示蓝色布料随右臂移动，脱离了桌面的支撑，被右臂悬空携带。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "右臂停止移动，保持抓持蓝色布料悬停在空中。",
+          "evidence": "俯视视角显示右臂和蓝色布料在空间中保持静止，布料未接触桌面。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "左臂从静止状态开始向蓝色布料移动，缩短距离。",
+          "evidence": "俯视视角显示左臂末端向蓝色布料方向移动，未发生接触。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "左臂末端与蓝色布料发生物理接触。",
+          "evidence": "俯视视角显示左臂末端到达布料位置并接触。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "左臂夹爪闭合，建立对蓝色布料的稳定抓持关系。",
+          "evidence": "俯视视角显示夹爪从张开变为闭合，布料被夹住。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                4,
+                5
+              ]
+            }
+          ],
+          "state_change": "左臂将蓝色布料从桌面提起，支撑状态由环境支撑变为执行主体支撑。",
+          "evidence": "俯视视角显示布料随左臂向上移动并离开桌面。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                5
+              ]
+            }
+          ],
+          "state_change": "左臂携带蓝色布料在空间中移动。",
+          "evidence": "俯视视角显示左臂和布料发生位置变化。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 6,
+          "action": "夹持",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                6
+              ]
+            }
+          ],
+          "state_change": "左臂保持对蓝色布料的抓持状态，悬停在空中。",
+          "evidence": "俯视视角显示左臂和布料保持静止，夹爪保持闭合。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 7,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "右臂从静止状态开始向蓝色布料移动，缩短距离。",
+          "evidence": "俯视视角显示右臂末端向蓝色布料方向移动，未发生接触。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "右臂末端与蓝色布料发生物理接触。",
+          "evidence": "俯视视角显示右臂末端到达布料位置并接触。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "右臂夹爪闭合，建立对蓝色布料的稳定抓持关系。",
+          "evidence": "俯视视角显示夹爪从张开变为闭合，布料被夹住。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                4,
+                5
+              ]
+            }
+          ],
+          "state_change": "右臂将蓝色布料从桌面提起，支撑状态由环境支撑变为执行主体支撑。",
+          "evidence": "俯视视角显示布料随右臂向上移动并离开桌面。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 11,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                5
+              ]
+            }
+          ],
+          "state_change": "右臂携带蓝色布料在空间中移动。",
+          "evidence": "俯视视角显示右臂和布料发生位置变化。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 12,
+          "executor_step_index": 6,
+          "action": "夹持",
+          "object": "blue_cloth",
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "blue_cloth",
+              "state_indices": [
+                6
+              ]
+            }
+          ],
+          "state_change": "右臂保持对蓝色布料的抓持状态，悬停在空中。",
+          "evidence": "俯视视角显示右臂和布料保持静止，夹爪保持闭合。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": []
+}

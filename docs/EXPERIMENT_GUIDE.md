@@ -131,6 +131,7 @@ python vlm_auto_annotation_refactor/examples/run_pipeline.py \
 
 ```yaml
 video:
+  max_time: 30
   fps: 1.0
   max_frames: 128
   resize_width: 336
@@ -146,6 +147,7 @@ video:
 
 | 参数 | 影响 |
 |---|---|
+| `max_time` | 当前 stage 最大原始视频处理时长，单位秒；`-1` 不限制，`>0` 只处理 `[0, max_time)`，在抽帧和后续视频处理前生效。 |
 | `fps` | 抽帧密度，基于 primary view 原始时间轴。 |
 | `max_frames` | temporal montage 前的最大采样时间点数。 |
 | `resize_width` | 每个视角缩放宽度，影响细节和 payload。 |
@@ -166,6 +168,8 @@ outputs/<run>/stages/<stage>/user_prompt.txt
 ```
 
 注意：当前 standalone 版本只支持 `input_mode: "image_sequence"`。不要把实验配置改成 `video`，否则会明确报错。
+
+`max_time` 与 `fps`、`max_frames`、`frame_start/frame_end` 同时配置时，采样只发生在最终有效区间内；输出帧时间戳仍然是原始视频时间轴上的真实时间戳。多视角实验中，较短视角不会被补齐，建议同时查看 `video_meta.json` 中的 `original_duration`、`effective_duration`、`per_view_effective_durations` 和 `was_time_limited`。
 
 ## 实验 5：dry_run 检查 prompt 注入
 

@@ -1,0 +1,391 @@
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "left",
+      "object": "laptop_stand",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂处于初始位置，未接触支架。",
+          "evidence": "俯视视角显示左臂末端与支架底座之间存在明显距离。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "左臂向支架底座移动。",
+          "evidence": "左臂末端在俯视视角中逐渐靠近支架底座。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂末端接触支架底座边缘，准备固定。",
+          "evidence": "左臂末端与支架底座边缘发生接触，但未完全闭合夹爪。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "固定",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂夹持并固定支架底座，限制其移动。",
+          "evidence": "左臂夹爪闭合，且在整个后续过程中保持位置不变，支架底座未发生位移。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "object": "laptop",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂处于初始位置，未接触笔记本电脑。",
+          "evidence": "俯视视角显示右臂末端与笔记本电脑之间存在距离。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "右臂向笔记本电脑移动。",
+          "evidence": "右臂末端在俯视视角中逐渐靠近笔记本电脑。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "正在闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂接触笔记本电脑边缘并闭合夹爪。",
+          "evidence": "右臂末端接触笔记本，夹爪开始闭合。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂稳定抓持笔记本电脑。",
+          "evidence": "夹爪完全闭合，右臂与笔记本形成稳定连接。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "携带物体移动",
+          "description": "右臂提起笔记本电脑并将其搬运至支架上方。",
+          "evidence": "笔记本电脑离开桌面，随右臂移动至支架上方区域。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "物体姿态变化",
+          "description": "右臂调整笔记本电脑的姿态，准备放置。",
+          "evidence": "笔记本电脑在支架上方发生角度调整，对准支架槽位。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 7,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "混合支撑",
+          "motion_state": "静止",
+          "description": "右臂将笔记本电脑放置在支架上，物体获得部分支撑。",
+          "evidence": "笔记本电脑接触支架表面，但仍被右臂抓持。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 8,
+          "interaction_state": "接触",
+          "gripper_state": "正在张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂松开笔记本电脑，物体完全由支架支撑。",
+          "evidence": "右臂夹爪张开，笔记本电脑稳定停留在支架上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 9,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "右臂从笔记本电脑处撤回。",
+          "evidence": "右臂末端离开笔记本电脑，向初始位置或空闲位置移动。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "laptop_stand",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "laptop_stand",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "运动状态从静止变为接近目标，交互状态保持未接触。",
+          "evidence": "左臂末端向支架底座移动，距离缩短。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "laptop_stand",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "laptop_stand",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "交互状态从未接触变为接触。",
+          "evidence": "左臂末端触碰到支架底座边缘。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "固定",
+          "object": "laptop_stand",
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "固定",
+          "source_state_refs": [
+            {
+              "object": "laptop_stand",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "交互状态从接触变为固定，夹爪闭合，限制物体移动。",
+          "evidence": "左臂夹持支架底座并保持静止，支架未发生位移。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 4,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "运动状态从静止变为接近目标，交互状态保持未接触。",
+          "evidence": "右臂末端向笔记本电脑移动，距离缩短。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 2,
+          "action": "抓取",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                2,
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "交互状态从未接触变为接触，再变为抓持；夹爪闭合。",
+          "evidence": "右臂接触笔记本并闭合夹爪，建立稳定控制。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 3,
+          "action": "提起",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                4,
+                5
+              ]
+            }
+          ],
+          "state_change": "支撑状态从环境支撑变为执行主体支撑，物体离开桌面。",
+          "evidence": "笔记本电脑被右臂抬离桌面。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 4,
+          "action": "搬运",
+          "object": "laptop",
+          "target": "laptop_stand",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                5
+              ]
+            }
+          ],
+          "state_change": "执行主体携带物体移动，位置发生变化。",
+          "evidence": "右臂携带笔记本电脑移动至支架上方。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 5,
+          "action": "调整末端姿态",
+          "object": "laptop",
+          "target": "laptop_stand",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                5,
+                6
+              ]
+            }
+          ],
+          "state_change": "物体姿态发生变化，对准目标位置。",
+          "evidence": "笔记本电脑在支架上方调整角度。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 6,
+          "action": "放置",
+          "object": "laptop",
+          "target": "laptop_stand",
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                6,
+                7
+              ]
+            }
+          ],
+          "state_change": "支撑状态从执行主体支撑变为混合支撑，物体接触目标。",
+          "evidence": "笔记本电脑被放置在支架上，获得支撑。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 7,
+          "action": "释放",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                7,
+                8
+              ]
+            }
+          ],
+          "state_change": "交互状态从抓持变为接触，夹爪张开，物体由环境支撑。",
+          "evidence": "右臂松开笔记本电脑，夹爪张开。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 11,
+          "executor_step_index": 8,
+          "action": "撤回",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "laptop",
+              "state_indices": [
+                8,
+                9
+              ]
+            }
+          ],
+          "state_change": "交互状态从接触变为未接触，运动状态变为远离目标。",
+          "evidence": "右臂末端离开笔记本电脑并向后移动。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": []
+}

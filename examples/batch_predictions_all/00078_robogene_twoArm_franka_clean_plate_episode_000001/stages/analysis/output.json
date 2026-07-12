@@ -1,0 +1,318 @@
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "left",
+      "object": "white_plate",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂位于盘子左侧，未接触盘子，夹爪张开。",
+          "evidence": "俯视视角显示左臂末端与盘子之间有明显距离，盘子静止在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "左臂向盘子方向移动，逐渐缩短距离。",
+          "evidence": "俯视视角显示左臂末端向盘子靠近，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "推动或拉动物体",
+          "description": "左臂末端接触盘子边缘，并施加推力使盘子在桌面上滑动。",
+          "evidence": "俯视视角显示左臂末端抵住盘子边缘，盘子位置发生微小变化，呈现被推动的状态。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "左臂停止推动，从盘子边缘撤回。",
+          "evidence": "俯视视角显示左臂末端离开盘子，向左侧移动，与盘子恢复间隔。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "object": "white_plate",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂位于盘子右侧，未接触盘子，夹爪张开。",
+          "evidence": "俯视视角显示右臂末端与盘子之间有明显距离，盘子静止在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "右臂向盘子方向移动，逐渐缩短距离。",
+          "evidence": "俯视视角显示右臂末端向盘子靠近，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "推动或拉动物体",
+          "description": "右臂末端接触盘子边缘，并施加推力使盘子在桌面上滑动。",
+          "evidence": "俯视视角显示右臂末端抵住盘子边缘，盘子位置发生微小变化，呈现被推动的状态。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "右臂停止推动，从盘子边缘撤回。",
+          "evidence": "俯视视角显示右臂末端离开盘子，向右侧移动，与盘子恢复间隔。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "运动状态从静止变为接近目标，交互状态保持未接触。",
+          "evidence": "俯视视角显示左臂末端向盘子方向移动，距离缩短。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "交互状态从未接触变为接触。",
+          "evidence": "俯视视角显示左臂末端抵住盘子边缘。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "推动",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3
+              ]
+            }
+          ],
+          "state_change": "交互状态保持接触，运动状态为推动或拉动物体。",
+          "evidence": "俯视视角显示左臂末端抵住盘子，盘子位置发生微小变化。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "脱离接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "交互状态从接触变为未接触。",
+          "evidence": "俯视视角显示左臂末端离开盘子。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "撤回",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                4
+              ]
+            }
+          ],
+          "state_change": "交互状态保持未接触，运动状态变为远离目标。",
+          "evidence": "俯视视角显示左臂向左侧移动，远离盘子。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 6,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "运动状态从静止变为接近目标，交互状态保持未接触。",
+          "evidence": "俯视视角显示右臂末端向盘子方向移动，距离缩短。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "交互状态从未接触变为接触。",
+          "evidence": "俯视视角显示右臂末端抵住盘子边缘。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 3,
+          "action": "推动",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3
+              ]
+            }
+          ],
+          "state_change": "交互状态保持接触，运动状态为推动或拉动物体。",
+          "evidence": "俯视视角显示右臂末端抵住盘子，盘子位置发生微小变化。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 4,
+          "action": "脱离接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "交互状态从接触变为未接触。",
+          "evidence": "俯视视角显示右臂末端离开盘子。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 5,
+          "action": "撤回",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                4
+              ]
+            }
+          ],
+          "state_change": "交互状态保持未接触，运动状态变为远离目标。",
+          "evidence": "俯视视角显示右臂向右侧移动，远离盘子。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": [
+    "任务指令为清洁盘子，但视频中未观察到明显的擦拭动作，仅观察到机械臂推动盘子使其发生微小位移，随后撤回。动作语义判定为'推动'而非'清洁'，因为缺乏清洁工具或擦拭轨迹的视觉证据。"
+  ]
+}

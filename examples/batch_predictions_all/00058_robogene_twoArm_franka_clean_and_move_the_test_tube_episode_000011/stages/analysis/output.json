@@ -1,0 +1,566 @@
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "left",
+      "object": "test_tube",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂位于试管左侧，未接触试管，试管放置在白色支架上。",
+          "evidence": "俯视视角显示左臂末端与试管之间存在明显间隙，试管位于支架孔位中。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "左臂向试管方向移动，准备进行抓取。",
+          "evidence": "左臂末端在俯视视角中逐渐靠近试管，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "正在闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂末端接触试管，夹爪开始闭合。",
+          "evidence": "左臂末端与试管接触，夹爪位置发生变化，试管仍位于支架上。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂稳定抓持试管，试管仍位于支架上。",
+          "evidence": "夹爪闭合，左臂与试管保持相对静止，试管未发生位移。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "左臂提起试管，使其脱离支架支撑。",
+          "evidence": "试管随左臂向上移动，脱离支架孔位，由左臂完全支撑。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "携带物体移动",
+          "description": "左臂携带试管向右侧移动，与右臂协同。",
+          "evidence": "左臂携带试管在俯视视角中向右平移，试管位置发生变化。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 7,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "左臂停止移动，保持抓持试管。",
+          "evidence": "左臂和试管在俯视视角中保持静止。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 8,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂将试管放回支架，试管重新获得环境支撑。",
+          "evidence": "试管被放置回支架孔位，左臂仍抓持试管。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 9,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左臂释放试管，夹爪张开。",
+          "evidence": "左臂夹爪张开，与试管分离，试管位于支架上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 10,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "左臂从试管处撤回。",
+          "evidence": "左臂末端向左侧移动，远离试管。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "object": "test_tube",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂位于试管右侧，未接触试管，试管放置在白色支架上。",
+          "evidence": "俯视视角显示右臂末端与试管之间存在明显间隙，试管位于支架孔位中。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "右臂向试管方向移动，准备进行辅助操作。",
+          "evidence": "右臂末端在俯视视角中逐渐靠近试管，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "正在闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂末端接触试管，夹爪开始闭合。",
+          "evidence": "右臂末端与试管接触，夹爪位置发生变化，试管仍位于支架上。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂稳定抓持试管，试管仍位于支架上。",
+          "evidence": "夹爪闭合，右臂与试管保持相对静止，试管未发生位移。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 5,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "右臂提起试管，使其脱离支架支撑。",
+          "evidence": "试管随右臂向上移动，脱离支架孔位，由右臂完全支撑。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 6,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "携带物体移动",
+          "description": "右臂携带试管向左侧移动，与左臂协同。",
+          "evidence": "右臂携带试管在俯视视角中向左平移，试管位置发生变化。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 7,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "执行主体支撑",
+          "motion_state": "静止",
+          "description": "右臂停止移动，保持抓持试管。",
+          "evidence": "右臂和试管在俯视视角中保持静止。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 8,
+          "interaction_state": "抓持",
+          "gripper_state": "闭合",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂将试管放回支架，试管重新获得环境支撑。",
+          "evidence": "试管被放置回支架孔位，右臂仍抓持试管。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 9,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右臂释放试管，夹爪张开。",
+          "evidence": "右臂夹爪张开，与试管分离，试管位于支架上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 10,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "右臂从试管处撤回。",
+          "evidence": "右臂末端向右侧移动，远离试管。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "左臂从静止状态开始向试管移动，缩短距离。",
+          "evidence": "俯视视角显示左臂末端向试管方向移动，间隙减小。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "左臂末端与试管发生接触。",
+          "evidence": "左臂末端与试管接触，夹爪开始闭合。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "左臂建立对试管的稳定抓持。",
+          "evidence": "夹爪闭合，左臂与试管保持相对静止。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                4,
+                5
+              ]
+            }
+          ],
+          "state_change": "试管脱离支架支撑，由左臂支撑。",
+          "evidence": "试管随左臂向上移动，脱离支架孔位。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                5,
+                6
+              ]
+            }
+          ],
+          "state_change": "左臂携带试管向右移动。",
+          "evidence": "左臂携带试管在俯视视角中向右平移。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 6,
+          "action": "放置",
+          "object": "test_tube",
+          "target": "white_rack",
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                7,
+                8
+              ]
+            }
+          ],
+          "state_change": "试管被放回支架，重新获得环境支撑。",
+          "evidence": "试管被放置回支架孔位。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 7,
+          "action": "释放",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                8,
+                9
+              ]
+            }
+          ],
+          "state_change": "左臂解除对试管的抓持。",
+          "evidence": "左臂夹爪张开，与试管分离。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 8,
+          "action": "撤回",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                9,
+                10
+              ]
+            }
+          ],
+          "state_change": "左臂远离试管。",
+          "evidence": "左臂末端向左侧移动，远离试管。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 9,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "右臂从静止状态开始向试管移动，缩短距离。",
+          "evidence": "俯视视角显示右臂末端向试管方向移动，间隙减小。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "右臂末端与试管发生接触。",
+          "evidence": "右臂末端与试管接触，夹爪开始闭合。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 11,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "右臂建立对试管的稳定抓持。",
+          "evidence": "夹爪闭合，右臂与试管保持相对静止。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 12,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                4,
+                5
+              ]
+            }
+          ],
+          "state_change": "试管脱离支架支撑，由右臂支撑。",
+          "evidence": "试管随右臂向上移动，脱离支架孔位。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 13,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                5,
+                6
+              ]
+            }
+          ],
+          "state_change": "右臂携带试管向左移动。",
+          "evidence": "右臂携带试管在俯视视角中向左平移。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 14,
+          "executor_step_index": 6,
+          "action": "放置",
+          "object": "test_tube",
+          "target": "white_rack",
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                7,
+                8
+              ]
+            }
+          ],
+          "state_change": "试管被放回支架，重新获得环境支撑。",
+          "evidence": "试管被放置回支架孔位。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 15,
+          "executor_step_index": 7,
+          "action": "释放",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                8,
+                9
+              ]
+            }
+          ],
+          "state_change": "右臂解除对试管的抓持。",
+          "evidence": "右臂夹爪张开，与试管分离。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 16,
+          "executor_step_index": 8,
+          "action": "撤回",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "test_tube",
+              "state_indices": [
+                9,
+                10
+              ]
+            }
+          ],
+          "state_change": "右臂远离试管。",
+          "evidence": "右臂末端向右侧移动，远离试管。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": []
+}

@@ -142,12 +142,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"), help="Path to config.yaml.")
     parser.add_argument(
         "--tasks",
-        default=str(SCRIPT_DIR / "robot_mind2_camera_top_tasks.json"),
+        default=str(SCRIPT_DIR / "robogene_twoArm_franka_ark_lift_and_stack_cups.json"),
         help="Path to task JSON list.",
     )
     parser.add_argument(
         "--output-dir",
-        default=str(SCRIPT_DIR / "batch_predictions"),
+        default=str(SCRIPT_DIR / "qwen3.5b_batch_predictions"),
         help="Directory for per-task outputs.",
     )
     parser.add_argument(

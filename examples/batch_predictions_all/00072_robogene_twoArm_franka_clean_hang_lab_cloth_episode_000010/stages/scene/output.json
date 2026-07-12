@@ -1,0 +1,71 @@
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个实验台工作区域，能够清晰观察到机械臂的平面运动轨迹、工作台上所有物体的布局以及机械臂底座的位置。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于工作台前方，主要观察机械臂的垂直运动、夹爪操作细节以及物体的高度信息，能够补充俯视视角中难以观察到的深度和高度细节。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "single",
+      "reference_view": "camera_top",
+      "description": "画面中仅存在一个主要的白色机械臂，底座位于主视角（camera_top）的左下方，夹爪位于机械臂末端。",
+      "main_workspace": "工作台中央及右侧区域，主要涉及放置试管架和蓝色布料的区域。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "blue_cloth",
+      "description": "一块蓝色的布料，质地柔软，在视频中呈现折叠或团状。",
+      "role": "被操作物体",
+      "location": "位于工作台中央偏左区域，靠近试管架。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "test_tube_rack",
+      "description": "一个白色的长方形塑料试管架，内部有多个圆孔，用于放置试管。",
+      "role": "容器",
+      "location": "位于工作台中央，蓝色布料的右侧。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "test_tubes",
+      "description": "若干根细长的透明或半透明试管，部分试管内插有木棒或搅拌棒。",
+      "role": "被操作物体",
+      "location": "放置在试管架的孔位中。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "white_box",
+      "description": "一个白色的长方体盒子，位于画面边缘，可能是设备外壳或收纳盒。",
+      "role": "支撑物",
+      "location": "位于主视角的右上方边缘。",
+      "best_observation_views": [
+        "camera_top"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "任务指令提到双臂协作，但视频画面中仅能清晰识别出一个机械臂，无法确认是否存在第二个机械臂被遮挡或位于视野外。"
+  ]
+}

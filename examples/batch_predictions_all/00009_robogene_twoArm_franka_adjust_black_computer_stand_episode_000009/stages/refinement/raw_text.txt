@@ -1,0 +1,306 @@
+```json
+{
+  "timed_executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "laptop_stand_base",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "左臂从初始静止位置开始向黑色底座移动。",
+          "end_boundary_evidence": "左臂末端到达底座上方，准备进行接触。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "laptop_stand_base",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "左臂夹爪触碰到黑色底座边缘。",
+          "end_boundary_evidence": "左臂夹爪完全闭合，建立稳固的抓持关系。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "固定",
+          "object": "laptop_stand_base",
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "固定",
+          "start_time": 2.0,
+          "end_time": 29.5,
+          "start_boundary_evidence": "左臂夹爪闭合，底座位置不再随重力或外力改变。",
+          "end_boundary_evidence": "左臂夹爪开始张开，解除对底座的限制。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "解除固定",
+          "object": "laptop_stand_base",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 29.5,
+          "end_time": 30.5,
+          "start_boundary_evidence": "左臂夹爪手指开始分离。",
+          "end_boundary_evidence": "左臂夹爪完全张开，不再抓持底座。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "脱离接触",
+          "object": "laptop_stand_base",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 30.5,
+          "end_time": 31.0,
+          "start_boundary_evidence": "左臂末端开始向上抬起，离开底座表面。",
+          "end_boundary_evidence": "左臂与底座之间恢复明显的可见间隔。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 6,
+          "action": "撤回",
+          "object": "laptop_stand_base",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 31.0,
+          "end_time": 33.5,
+          "start_boundary_evidence": "左臂向远离底座的方向移动。",
+          "end_boundary_evidence": "左臂移动到视频结束时的位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 7,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "右臂从初始静止位置开始向银色笔记本移动。",
+          "end_boundary_evidence": "右臂末端到达笔记本上方，准备进行接触。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "右臂夹爪触碰到笔记本边缘。",
+          "end_boundary_evidence": "右臂夹爪完全闭合，建立稳固的抓持关系。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "右臂夹爪开始闭合，接触笔记本。",
+          "end_boundary_evidence": "右臂夹爪完全闭合，能够稳定控制笔记本。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.0,
+          "end_time": 3.5,
+          "start_boundary_evidence": "笔记本随右臂向上移动，脱离桌面支撑。",
+          "end_boundary_evidence": "笔记本完全悬空，达到稳定提起状态。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 11,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "laptop",
+          "target": "laptop_stand_base",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 3.5,
+          "end_time": 10.0,
+          "start_boundary_evidence": "右臂携带笔记本向支架底座方向水平移动。",
+          "end_boundary_evidence": "笔记本到达支架底座上方，停止水平移动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 12,
+          "executor_step_index": 6,
+          "action": "调整末端姿态",
+          "object": "laptop",
+          "target": "laptop_stand_base",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 10.0,
+          "end_time": 12.0,
+          "start_boundary_evidence": "右臂在目标位置上方微调笔记本的角度和位置。",
+          "end_boundary_evidence": "笔记本姿态调整完毕，准备放置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 13,
+          "executor_step_index": 7,
+          "action": "放置",
+          "object": "laptop",
+          "target": "laptop_stand_base",
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 12.0,
+          "end_time": 13.5,
+          "start_boundary_evidence": "右臂携带笔记本向下移动，接触支架。",
+          "end_boundary_evidence": "笔记本完全放置在支架上，获得稳定支撑。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 14,
+          "executor_step_index": 8,
+          "action": "释放",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 13.5,
+          "end_time": 14.5,
+          "start_boundary_evidence": "右臂夹爪手指开始张开。",
+          "end_boundary_evidence": "右臂夹爪完全张开，不再抓持笔记本。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 15,
+          "executor_step_index": 9,
+          "action": "脱离接触",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 14.5,
+          "end_time": 15.0,
+          "start_boundary_evidence": "右臂末端开始向上抬起，离开笔记本。",
+          "end_boundary_evidence": "右臂与笔记本之间恢复明显的可见间隔。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 16,
+          "executor_step_index": 10,
+          "action": "撤回",
+          "object": "laptop",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 15.0,
+          "end_time": 33.5,
+          "start_boundary_evidence": "右臂向远离笔记本的方向移动。",
+          "end_boundary_evidence": "右臂移动到视频结束时的位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "sequence_issues": [],
+  "uncertainties": []
+}
+```

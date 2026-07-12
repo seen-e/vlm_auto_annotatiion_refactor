@@ -1,0 +1,62 @@
+```json
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个操作台面，能够清晰展示双机械臂的相对位置、运动轨迹以及操作物体的平面布局。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于操作台前方，主要展示机械臂的侧面轮廓、关节运动细节以及夹爪与物体的垂直方向交互。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "left",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面左侧的白色机械臂，底座固定在左侧，主要负责抓取和移动试管架。",
+      "main_workspace": "主视角画面左侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "executor_id": "right",
+      "reference_view": "camera_top",
+      "description": "位于主视角画面右侧的白色机械臂，底座固定在右侧，主要负责辅助操作或抓取试管。",
+      "main_workspace": "主视角画面右侧及中央区域",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "test_tube_rack",
+      "description": "白色的长方形多孔试管架，放置在操作台面上。",
+      "role": "容器",
+      "location": "主视角画面中央偏左位置",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "test_tube",
+      "description": "放置在试管架孔位中的细长透明试管。",
+      "role": "被操作物体",
+      "location": "位于试管架内部",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "uncertainties": []
+}
+```

@@ -1,0 +1,198 @@
+```json
+{
+  "timed_executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "视频起始帧（t=0.0s）显示左机械臂开始从静止位置向试管架方向移动。",
+          "end_boundary_evidence": "t=1.5s 时，左机械臂末端到达试管正上方，停止水平移动，准备进行垂直操作。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "t=1.5s 时，左机械臂末端开始下降，夹爪接近试管。",
+          "end_boundary_evidence": "t=2.0s 时，夹爪与试管表面发生物理接触，夹爪开始闭合。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.0,
+          "end_time": 2.5,
+          "start_boundary_evidence": "t=2.0s 时，夹爪接触试管并开始闭合以建立抓持。",
+          "end_boundary_evidence": "t=2.5s 时，夹爪完全闭合，试管被稳定夹持，随夹爪轻微移动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.5,
+          "end_time": 3.5,
+          "start_boundary_evidence": "t=2.5s 时，左机械臂开始向上运动，试管脱离试管架孔位。",
+          "end_boundary_evidence": "t=3.5s 时，试管完全悬空，达到稳定提起高度，不再上升。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "旋转",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 3.5,
+          "end_time": 4.5,
+          "start_boundary_evidence": "t=3.5s 时，左机械臂末端开始旋转，带动试管改变姿态。",
+          "end_boundary_evidence": "t=4.5s 时，旋转动作停止，试管姿态稳定，准备进行搬运。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 6,
+          "action": "搬运",
+          "object": "test_tube",
+          "target": "test_tube_rack",
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 4.5,
+          "end_time": 10.5,
+          "start_boundary_evidence": "t=4.5s 时，左机械臂开始携带试管向右侧试管架方向水平移动。",
+          "end_boundary_evidence": "t=10.5s 时，左机械臂到达右侧试管架上方，停止水平移动，准备放置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 7,
+          "action": "放置",
+          "object": "test_tube",
+          "target": "test_tube_rack",
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 10.5,
+          "end_time": 11.5,
+          "start_boundary_evidence": "t=10.5s 时，左机械臂开始下降，试管下端接近右侧试管架孔位。",
+          "end_boundary_evidence": "t=11.5s 时，试管完全进入孔位，获得试管架支撑。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.85
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 8,
+          "action": "释放",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 11.5,
+          "end_time": 12.0,
+          "start_boundary_evidence": "t=11.5s 时，试管已稳定放置在孔位中，夹爪开始张开。",
+          "end_boundary_evidence": "t=12.0s 时，夹爪完全张开，不再接触试管，解除控制关系。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 9,
+          "action": "撤回",
+          "object": "test_tube",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 12.0,
+          "end_time": 13.5,
+          "start_boundary_evidence": "t=12.0s 时，左机械臂开始向上和向左移动，远离试管。",
+          "end_boundary_evidence": "t=13.5s 时，左机械臂回到初始待机位置附近，停止运动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.9
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 10,
+          "executor_step_index": 1,
+          "action": "等待",
+          "object": null,
+          "target": null,
+          "temporal_type": "持续状态型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 31.275,
+          "start_boundary_evidence": "视频起始帧（t=0.0s）显示右机械臂处于静止状态。",
+          "end_boundary_evidence": "直到视频结束（t=31.275s），右机械臂始终保持静止，未参与任何操作。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "sequence_issues": [],
+  "uncertainties": []
+}
+```

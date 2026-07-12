@@ -1,0 +1,62 @@
+{
+  "primary_view": "camera_top",
+  "view_relations": [
+    {
+      "view_name": "camera_top",
+      "relation_to_primary": "主视角",
+      "description": "俯视视角，覆盖整个工作台区域，能够清晰观察到机械臂的平面运动轨迹、工作区域布局以及所有物体的相对位置。"
+    },
+    {
+      "view_name": "camera_front",
+      "relation_to_primary": "主视角前方",
+      "description": "平视视角，位于工作台前方，能够观察到机械臂的垂直运动、夹爪操作细节以及物体的高度信息，与主视角形成互补。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "single",
+      "reference_view": "camera_top",
+      "description": "画面中仅存在一只白色机械臂，位于工作台左侧，底座固定，负责执行抓取和放置操作。",
+      "main_workspace": "工作台中央及右侧区域，主要涉及放置架和清洁布所在的区域。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "blue_cloth",
+      "description": "一块蓝色的布料，质地柔软，是本次操作的主要目标物体。",
+      "role": "被操作物体",
+      "location": "初始位于工作台左上方，后被移动至右侧放置架。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "white_rack",
+      "description": "一个白色的长条形塑料支架，带有多个插槽，用于放置清洁布。",
+      "role": "容器",
+      "location": "位于工作台右侧。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    },
+    {
+      "object_id": "white_tray",
+      "description": "一个白色的多孔托盘，类似实验室用的试管架或培养皿架。",
+      "role": "支撑物",
+      "location": "位于工作台中央偏左位置。",
+      "best_observation_views": [
+        "camera_top",
+        "camera_front"
+      ]
+    }
+  ],
+  "uncertainties": [
+    "任务指令提及双臂协作，但视频画面中仅能清晰观察到一只机械臂在执行操作，另一只机械臂可能位于视野外或处于静止状态，无法确认其具体身份和动作。"
+  ]
+}

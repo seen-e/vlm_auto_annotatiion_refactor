@@ -1,0 +1,306 @@
+```json
+{
+  "timed_executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "左机械臂从初始位置开始向试管架方向移动。",
+          "end_boundary_evidence": "左机械臂到达试管架上方，准备进行接触。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "左机械臂末端夹爪接触试管架边缘。",
+          "end_boundary_evidence": "左机械臂夹爪完全闭合，建立稳定抓持。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "左机械臂夹爪开始闭合，建立对试管架的控制。",
+          "end_boundary_evidence": "左机械臂夹爪完全闭合，试管架被稳定抓持。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.0,
+          "end_time": 3.0,
+          "start_boundary_evidence": "左机械臂向上运动，试管架开始脱离桌面。",
+          "end_boundary_evidence": "试管架完全悬空，不再接触桌面。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 3.0,
+          "end_time": 10.0,
+          "start_boundary_evidence": "左机械臂携带试管架向右侧目标位置移动。",
+          "end_boundary_evidence": "左机械臂到达目标位置上方，停止水平移动，准备放置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 6,
+          "executor_step_index": 6,
+          "action": "放置",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 10.0,
+          "end_time": 11.0,
+          "start_boundary_evidence": "左机械臂向下运动，试管架接触桌面。",
+          "end_boundary_evidence": "试管架稳定放置在桌面上，不再随机械臂运动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 7,
+          "action": "释放",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 11.0,
+          "end_time": 11.5,
+          "start_boundary_evidence": "左机械臂夹爪开始张开，解除对试管架的抓持。",
+          "end_boundary_evidence": "左机械臂夹爪完全张开，不再接触试管架。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 8,
+          "action": "撤回",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 11.5,
+          "end_time": 13.0,
+          "start_boundary_evidence": "左机械臂向上并向后运动，远离试管架。",
+          "end_boundary_evidence": "左机械臂回到初始待机位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 9,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 0.0,
+          "end_time": 1.5,
+          "start_boundary_evidence": "右机械臂从初始位置开始向试管架方向移动。",
+          "end_boundary_evidence": "右机械臂到达试管架上方，准备进行接触。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "右机械臂末端夹爪接触试管架边缘。",
+          "end_boundary_evidence": "右机械臂夹爪完全闭合，建立稳定抓持。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 11,
+          "executor_step_index": 3,
+          "action": "抓取",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 1.5,
+          "end_time": 2.0,
+          "start_boundary_evidence": "右机械臂夹爪开始闭合，建立对试管架的控制。",
+          "end_boundary_evidence": "右机械臂夹爪完全闭合，试管架被稳定抓持。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 12,
+          "executor_step_index": 4,
+          "action": "提起",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 2.0,
+          "end_time": 3.0,
+          "start_boundary_evidence": "右机械臂向上运动，试管架开始脱离桌面。",
+          "end_boundary_evidence": "试管架完全悬空，不再接触桌面。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 13,
+          "executor_step_index": 5,
+          "action": "搬运",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "抓持",
+          "start_time": 3.0,
+          "end_time": 10.0,
+          "start_boundary_evidence": "右机械臂携带试管架向右侧目标位置移动。",
+          "end_boundary_evidence": "右机械臂到达目标位置上方，停止水平移动，准备放置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 14,
+          "executor_step_index": 6,
+          "action": "放置",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "抓持",
+          "start_time": 10.0,
+          "end_time": 11.0,
+          "start_boundary_evidence": "右机械臂向下运动，试管架接触桌面。",
+          "end_boundary_evidence": "试管架稳定放置在桌面上，不再随机械臂运动。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 15,
+          "executor_step_index": 7,
+          "action": "释放",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "start_time": 11.0,
+          "end_time": 11.5,
+          "start_boundary_evidence": "右机械臂夹爪开始张开，解除对试管架的抓持。",
+          "end_boundary_evidence": "右机械臂夹爪完全张开，不再接触试管架。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        },
+        {
+          "step_id": 16,
+          "executor_step_index": 8,
+          "action": "撤回",
+          "object": "test_tube_rack",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "start_time": 11.5,
+          "end_time": 13.0,
+          "start_boundary_evidence": "右机械臂向上并向后运动，远离试管架。",
+          "end_boundary_evidence": "右机械臂回到初始待机位置。",
+          "boundary_views": [
+            "camera_top",
+            "camera_front"
+          ],
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "sequence_issues": [],
+  "uncertainties": []
+}
+```

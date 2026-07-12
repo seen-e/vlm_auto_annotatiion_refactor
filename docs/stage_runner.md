@@ -58,6 +58,8 @@ context["stages"][stage_name] = {
   "prompt": user_prompt,
   "video_meta": video_meta,
   "usage": usage,
+  "model": model,                 # 非 dry-run 且模型返回时写入
+  "finish_reason": finish_reason, # 非 dry-run 且模型返回时写入
 }
 ```
 

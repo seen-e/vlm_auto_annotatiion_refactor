@@ -35,6 +35,7 @@ def _validate_video_config(
     *,
     fps: float,
     max_frames: int,
+    max_time: float | int,
     resize_width: int,
     input_mode: str,
     merge_mode: str,
@@ -48,10 +49,24 @@ def _validate_video_config(
         raise VideoProcessError(f"resize_width must be > 0, got {resize_width}")
     if min_api_frames <= 0:
         raise VideoProcessError(f"min_api_frames must be > 0, got {min_api_frames}")
+    if max_time != -1 and max_time <= 0:
+        raise VideoProcessError(f"max_time must be -1 or > 0 seconds, got {max_time}")
     if input_mode not in {"image_sequence", "video"}:
         raise VideoProcessError(f"input_mode must be 'image_sequence' or 'video', got {input_mode!r}")
     if merge_mode not in {"per_frame", "timeline_grid"}:
         raise VideoProcessError(f"merge_mode must be 'per_frame' or 'timeline_grid', got {merge_mode!r}")
+
+
+def _normalize_max_time(value: float | int | None) -> float:
+    if value is None:
+        return -1.0
+    try:
+        max_time = float(value)
+    except Exception as exc:  # pragma: no cover - defensive
+        raise VideoProcessError(f"max_time must be -1 or > 0 seconds, got {value!r}") from exc
+    if max_time != -1.0 and max_time <= 0:
+        raise VideoProcessError(f"max_time must be -1 or > 0 seconds, got {value!r}")
+    return max_time
 
 
 def normalize_video_input(
@@ -179,6 +194,77 @@ def compute_sample_timestamps(
 
     timestamps = [idx / original_fps for idx in indices]
     return indices, timestamps
+
+
+def _effective_time_window(
+    *,
+    infos: dict[str, dict[str, Any]],
+    primary_view: str,
+    frame_start: int,
+    frame_end: int | None,
+    max_time: float,
+) -> dict[str, Any]:
+    primary_info = infos[primary_view]
+    primary_fps = float(primary_info["fps"])
+    primary_frame_count = int(primary_info["frame_count"])
+    original_duration = float(primary_info["duration"])
+
+    start_frame = max(0, int(frame_start))
+    if start_frame >= primary_frame_count:
+        raise VideoProcessError(f"frame_start out of range: {frame_start}; primary frame_count={primary_frame_count}")
+    start_time = start_frame / primary_fps
+
+    duration_limits = {name: float(info["duration"]) for name, info in infos.items()}
+    per_view_effective_durations = {
+        name: min(duration, max_time) if max_time > 0 else duration for name, duration in duration_limits.items()
+    }
+
+    end_limits: list[float] = list(per_view_effective_durations.values())
+    frame_range_end_time: float | None = None
+    if frame_end is not None:
+        bounded_frame_end = min(primary_frame_count - 1, int(frame_end))
+        if bounded_frame_end < start_frame:
+            raise VideoProcessError(f"invalid frame range: frame_start={frame_start}, frame_end={frame_end}")
+        frame_range_end_time = (bounded_frame_end + 1) / primary_fps
+        end_limits.append(frame_range_end_time)
+
+    effective_end_time = min(end_limits)
+    if effective_end_time <= start_time:
+        raise VideoProcessError(
+            "effective video interval is empty after applying max_time/frame range/view duration limits: "
+            f"start_time={start_time}, effective_end_time={effective_end_time}"
+        )
+
+    effective_end_frame = min(primary_frame_count - 1, int(math.ceil(effective_end_time * primary_fps) - 1))
+    if effective_end_frame < start_frame:
+        raise VideoProcessError(
+            "effective frame interval is empty after applying max_time/frame range/view duration limits: "
+            f"start_frame={start_frame}, effective_end_frame={effective_end_frame}"
+        )
+
+    min_input_duration = min(duration_limits.values())
+    configured_limit = max_time if max_time > 0 else None
+    configured_limit_applied = configured_limit is not None and any(duration > configured_limit for duration in duration_limits.values())
+    was_limited_by_view_duration = min_input_duration < original_duration
+    was_limited_by_frame_range = frame_range_end_time is not None and frame_range_end_time <= min(
+        per_view_effective_durations.values()
+    )
+
+    return {
+        "original_duration": original_duration,
+        "configured_max_time": max_time if max_time > 0 else -1,
+        "effective_duration": max(0.0, effective_end_time - start_time),
+        "effective_start_time": start_time,
+        "effective_end_time": effective_end_time,
+        "effective_frame_start": start_frame,
+        "effective_frame_end": effective_end_frame,
+        "min_input_duration": min_input_duration,
+        "per_view_durations": duration_limits,
+        "per_view_effective_durations": per_view_effective_durations,
+        "was_time_limited": bool(configured_limit_applied),
+        "was_limited_by_view_duration": bool(was_limited_by_view_duration),
+        "was_limited_by_frame_range": bool(was_limited_by_frame_range),
+    }
 
 
 def _read_frame(path: Path, frame_index: int) -> np.ndarray:
@@ -481,6 +567,7 @@ def build_video_inputs(
     max_frames: int,
     resize_width: int,
     jpeg_quality: int,
+    max_time: float | int = -1,
     draw_timestamps: bool = True,
     draw_view_names: bool = True,
     min_api_frames: int = 1,
@@ -500,6 +587,9 @@ def build_video_inputs(
         video_path: Single video path, list of paths, or dict mapping view names to paths.
         fps: Target sampling FPS on the original time axis.
         max_frames: Maximum sampled timepoints before temporal montage.
+        max_time: Maximum original-video duration in seconds to process for this stage.
+            ``-1`` disables this limit; values greater than 0 limit processing to
+            ``0 <= timestamp < min(max_time, original_duration)`` before sampling.
         resize_width: Per-view resize width before stitching. Aspect ratio is preserved.
         jpeg_quality: JPEG quality in [1, 100]. Lower values reduce payload size but lose detail.
         draw_timestamps: Overlay timestamps before encoding/merging.
@@ -523,9 +613,11 @@ def build_video_inputs(
     Returns:
         ``(image_parts, video_meta)``.
     """
+    max_time = _normalize_max_time(max_time)
     _validate_video_config(
         fps=fps,
         max_frames=max_frames,
+        max_time=max_time,
         resize_width=resize_width,
         input_mode=input_mode,
         merge_mode=merge_mode,
@@ -542,6 +634,13 @@ def build_video_inputs(
     infos = {view_name: read_video_info(path) for view_name, path in view_map.items()}
     primary_view = next(iter(view_map.keys()))
     primary_info = infos[primary_view]
+    time_window = _effective_time_window(
+        infos=infos,
+        primary_view=primary_view,
+        frame_start=int(frame_start),
+        frame_end=frame_end,
+        max_time=max_time,
+    )
 
     primary_indices, timestamps = compute_sample_timestamps(
         original_fps=float(primary_info["fps"]),
@@ -549,8 +648,8 @@ def build_video_inputs(
         target_fps=float(fps),
         max_frames=int(max_frames),
         min_api_frames=int(min_api_frames),
-        frame_start=int(frame_start),
-        frame_end=frame_end,
+        frame_start=int(time_window["effective_frame_start"]),
+        frame_end=int(time_window["effective_frame_end"]),
     )
     if not primary_indices:
         raise VideoProcessError("no frames sampled from video input")
@@ -589,6 +688,7 @@ def build_video_inputs(
         "target_fps": float(fps),
         "frame_start": int(frame_start),
         "frame_end": frame_end,
+        **time_window,
         "sampled_frame_indices": primary_indices,
         "sampled_timestamps": timestamps,
         "num_sampled_frames": len(primary_indices),

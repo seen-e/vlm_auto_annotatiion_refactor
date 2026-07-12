@@ -1,0 +1,319 @@
+{
+  "executor_object_state_sequences": [
+    {
+      "executor": "left",
+      "object": "white_plate",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "左机械臂位于盘子左侧，未接触盘子，盘子放置在桌面上。",
+          "evidence": "俯视视角显示左机械臂末端与盘子之间存在明显距离，盘子静止在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "左机械臂向盘子移动，准备进行清洁操作。",
+          "evidence": "俯视视角显示左机械臂末端逐渐靠近盘子，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "推动或拉动物体",
+          "description": "左机械臂末端接触盘子边缘，并在盘子上方进行擦拭或清洁动作。",
+          "evidence": "俯视视角显示左机械臂末端与盘子边缘接触，并在盘子上方移动，盘子位置基本保持不变。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "左机械臂完成清洁动作后，从盘子处撤回。",
+          "evidence": "俯视视角显示左机械臂末端离开盘子，向左侧移动。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "object": "white_plate",
+      "states": [
+        {
+          "state_index": 1,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "静止",
+          "description": "右机械臂位于盘子右侧，未接触盘子，盘子放置在桌面上。",
+          "evidence": "俯视视角显示右机械臂末端与盘子之间存在明显距离，盘子静止在桌面上。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 2,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "接近目标",
+          "description": "右机械臂向盘子移动，准备进行清洁操作。",
+          "evidence": "俯视视角显示右机械臂末端逐渐靠近盘子，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "state_index": 3,
+          "interaction_state": "接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "推动或拉动物体",
+          "description": "右机械臂末端接触盘子边缘，并在盘子上方进行擦拭或清洁动作。",
+          "evidence": "俯视视角显示右机械臂末端与盘子边缘接触，并在盘子上方移动，盘子位置基本保持不变。",
+          "confidence": 0.9
+        },
+        {
+          "state_index": 4,
+          "interaction_state": "未接触",
+          "gripper_state": "张开",
+          "support_state": "环境支撑",
+          "motion_state": "远离目标",
+          "description": "右机械臂完成清洁动作后，从盘子处撤回。",
+          "evidence": "俯视视角显示右机械臂末端离开盘子，向右侧移动。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "executor_timelines": [
+    {
+      "executor": "left",
+      "actions": [
+        {
+          "step_id": 1,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "左机械臂从静止状态开始向盘子移动，缩短与盘子的距离。",
+          "evidence": "俯视视角显示左机械臂末端逐渐靠近盘子，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 2,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "左机械臂末端从接近状态变为与盘子边缘接触。",
+          "evidence": "俯视视角显示左机械臂末端与盘子边缘发生接触。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 3,
+          "executor_step_index": 3,
+          "action": "推动",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3
+              ]
+            }
+          ],
+          "state_change": "左机械臂在接触盘子的状态下，在盘子上方进行擦拭或清洁动作，盘子位置基本保持不变。",
+          "evidence": "俯视视角显示左机械臂末端在盘子上方移动，进行清洁操作。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 4,
+          "executor_step_index": 4,
+          "action": "脱离接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "左机械臂末端从接触盘子的状态变为未接触状态。",
+          "evidence": "俯视视角显示左机械臂末端离开盘子。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 5,
+          "executor_step_index": 5,
+          "action": "撤回",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                4
+              ]
+            }
+          ],
+          "state_change": "左机械臂在脱离接触后，向左侧移动，远离盘子。",
+          "evidence": "俯视视角显示左机械臂末端向左侧移动，远离盘子。",
+          "confidence": 0.95
+        }
+      ]
+    },
+    {
+      "executor": "right",
+      "actions": [
+        {
+          "step_id": 6,
+          "executor_step_index": 1,
+          "action": "接近",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                1,
+                2
+              ]
+            }
+          ],
+          "state_change": "右机械臂从静止状态开始向盘子移动，缩短与盘子的距离。",
+          "evidence": "俯视视角显示右机械臂末端逐渐靠近盘子，但尚未接触。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 7,
+          "executor_step_index": 2,
+          "action": "接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                2,
+                3
+              ]
+            }
+          ],
+          "state_change": "右机械臂末端从接近状态变为与盘子边缘接触。",
+          "evidence": "俯视视角显示右机械臂末端与盘子边缘发生接触。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 8,
+          "executor_step_index": 3,
+          "action": "推动",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3
+              ]
+            }
+          ],
+          "state_change": "右机械臂在接触盘子的状态下，在盘子上方进行擦拭或清洁动作，盘子位置基本保持不变。",
+          "evidence": "俯视视角显示右机械臂末端在盘子上方移动，进行清洁操作。",
+          "confidence": 0.9
+        },
+        {
+          "step_id": 9,
+          "executor_step_index": 4,
+          "action": "脱离接触",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "状态转换型",
+          "executor_object_relation": "解除控制",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                3,
+                4
+              ]
+            }
+          ],
+          "state_change": "右机械臂末端从接触盘子的状态变为未接触状态。",
+          "evidence": "俯视视角显示右机械臂末端离开盘子。",
+          "confidence": 0.95
+        },
+        {
+          "step_id": 10,
+          "executor_step_index": 5,
+          "action": "撤回",
+          "object": "white_plate",
+          "target": null,
+          "temporal_type": "持续过程型",
+          "executor_object_relation": "无直接接触",
+          "source_state_refs": [
+            {
+              "object": "white_plate",
+              "state_indices": [
+                4
+              ]
+            }
+          ],
+          "state_change": "右机械臂在脱离接触后，向右侧移动，远离盘子。",
+          "evidence": "俯视视角显示右机械臂末端向右侧移动，远离盘子。",
+          "confidence": 0.95
+        }
+      ]
+    }
+  ],
+  "vocabulary_extensions": [],
+  "uncertainties": [
+    "由于视频采样率较低，无法精确判断机械臂末端与盘子接触的具体时刻和清洁动作的细节。",
+    "无法确定机械臂末端是否使用了清洁工具（如抹布或刷子），仅能观察到机械臂末端在盘子上方移动。"
+  ]
+}
