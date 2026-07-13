@@ -26,21 +26,23 @@
 #     - refinement
 workflow:
   - scene
+  - analysis
+  - refinement
 
 # model: 默认模型调用参数。
 # stage 中可以通过 generation 字段覆盖 max_tokens、temperature、top_p、top_k、max_retries 等参数。
 model:
   # base_url: OpenAI-compatible API 地址。
   # 本地 vLLM 示例：http://127.0.0.1:8002/v1
-  base_url: "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260713_olyp/v1"
+  base_url: "http://localhost:8002/v1"
 
   # api_key: API key。
   # 本地 vLLM 通常可以使用 "EMPTY"。
-  api_key: "OTk4NzQ4MTk1ZjQzMTQ5OTRjODIyNWQzMGQyODM5ZGVkNWEyMGQxNQ=="
+  api_key: "EMPTY"
 
   # model: 模型名称，需要与 /v1/models 返回的 id 一致。
   # 例如："Qwen3-VL-8B-Instruct"、"Qwen3-VL-30B-A3B-Instruct-FP8"。
-  model: "Qwen3.5-122B-A10B"
+  model: "Qwen3.5-27B"
 
   # max_tokens: 默认最大输出 token 数。
   # 如果 stage 输出较长，可在对应 stage.generation 中覆盖。
@@ -89,7 +91,7 @@ stages:
       # system: 模块中的 system prompt 变量名，必须是字符串。
       system: "SCENE_SYSTEM_PROMPT"
       # user: 模块中的 user prompt 模板变量名，必须是字符串。
-      user: "SCENE_USER_PROMPT_TEMPLATE"
+      user: "USER_PROMPT_TEMPLATE"
 
     # output_key: 当前 stage 输出的语义名称。
     # 注意：context 中实际仍以 stage 名称 scene 存储，即 ctx.stages.scene.output。
@@ -113,8 +115,9 @@ stages:
       max_time: -1
 
       # save_processed: 是否保存当前 stage 最终送入模型的处理后图像序列。
-      # 保存目录固定为当前 run_dir/stages/<stage_name>/processed_frames。
+      # processed_output_path: 保存根目录；实际目录为 <processed_output_path>/<episode_id>/<stage_name>。
       save_processed: true
+      processed_output_path: "outputs/processed_frames"
 
       # fps: 按原始视频时间轴抽帧的目标帧率。
       # scene 阶段主要提取稳定上下文，可以较低，例如 0.5 或 1.0。
@@ -172,3 +175,105 @@ stages:
       view_names:
         - camera_top
         - camera_front
+
+  analysis:
+    prompt:
+      module: "prompts.analysis"
+      system: "ANALYSIS_SYSTEM_PROMPT"
+      user: "USER_PROMPT_TEMPLATE"
+    output_key: "analysis"
+
+    # generation: 可选字段，用于覆盖顶层 model 参数。
+    # 示例：
+    generation:
+       max_tokens: 8192
+    #   temperature: 0.0
+    video:
+      input_mode: "image_sequence"
+      # max_time: 当前 stage 的最大原始视频处理时长，单位秒。
+      # -1 表示不限制；大于 0 表示只处理 [0, max_time)。
+      # 多视角输入时，所有视角使用相同时间上限，较短视角不会补帧。
+      max_time: 30
+      save_processed: true
+      processed_output_path: "outputs/processed_frames"
+      # analysis 需要观察动作顺序，通常比 scene 使用更高 fps 或更多帧。
+      fps: 4.0
+      max_frames: 128
+      resize_width: 224
+      jpeg_quality: 90
+      draw_timestamps: true
+      draw_view_names: true
+      draw_montage_axes: true
+      min_api_frames: 2
+      merge_views: false
+      merge_mode: "per_frame"
+      merge_length: -1
+      view_names:
+        - camera_top
+        - camera_front
+
+  refinement:
+    prompt:
+      module: "prompts.refinement"
+      system: "REFINEMENT_SYSTEM_PROMPT"
+      user: "USER_PROMPT_TEMPLATE"
+    output_key: "refinement"
+
+    generation:
+       max_tokens: 8192
+       
+    video:
+      input_mode: "image_sequence"
+      # max_time: 当前 stage 的最大原始视频处理时长，单位秒。
+      # -1 表示不限制；大于 0 表示只处理 [0, max_time)。
+      # 该参数与 fps、max_frames、frame_start/frame_end 取交集后再抽帧。
+      max_time: 60
+      save_processed: true
+      processed_output_path: "outputs/processed_frames"
+      # refinement 需要更精细的边界定位，通常使用更高 fps。
+      fps: 4.0
+      max_frames: 128
+      resize_width: 336
+      # refinement 看边界和接触事件，建议保留较高 JPEG 质量。
+      jpeg_quality: 90
+      draw_timestamps: true
+      draw_view_names: true
+      draw_montage_axes: true
+      min_api_frames: 2
+      merge_views: false
+      merge_mode: "per_frame"
+      merge_length: -1
+      view_names:
+        - camera_top
+        - camera_front
+
+  # 自定义 stage 示例。
+  # 需要启用时：
+  # 1. 新建 prompts/object_state.py
+  # 2. 取消下面配置的注释
+  # 3. 在 workflow 中插入 object_state
+  # 4. 下游 prompt 中引用 {{ ctx.stages.object_state.output }}
+  # object_state:
+  #   prompt:
+  #     module: "prompts.object_state"
+  #     system: "SYSTEM_PROMPT"
+  #     user: "USER_PROMPT_TEMPLATE"
+  #   output_key: "object_state"
+  #   video:
+  #     input_mode: "image_sequence"
+  #     max_time: -1
+  #     save_processed: false
+  #     processed_output_path: "outputs/processed_frames"
+  #     fps: 1.0
+  #     max_frames: 64
+  #     resize_width: 336
+  #     jpeg_quality: 85
+  #     draw_timestamps: true
+  #     draw_view_names: true
+  #     min_api_frames: 2
+  #     merge_views: true
+  #     merge_mode: "per_frame"
+  #     merge_length: 8
+  #     view_names:
+  #       - camera_front
+  #       - camera_top

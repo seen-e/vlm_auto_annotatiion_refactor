@@ -35,6 +35,14 @@ stage 配置缺失、视频处理失败、prompt 渲染失败、模型调用失�
 | `run_dir` | str/Path/null | 保存结果的运行目录 |
 | `save_result` | bool | 是否调用 `result_io.save_stage_result` |
 
+当 stage 的 `video.save_processed=true` 且传入了 `run_dir` 时，当前 stage 送入模型的处理后图像会保存到：
+
+```text
+<run_dir>/stages/<stage_name>/processed_frames/
+```
+
+该路径不再通过 `config.yaml` 中的 `processed_output_path` 配置。
+
 #### context 输入格式
 
 ```python

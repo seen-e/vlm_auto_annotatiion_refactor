@@ -83,24 +83,14 @@ def _safe_path_name(value: Any, *, default: str) -> str:
 def _resolve_processed_output_path(
     *,
     stage_name: str,
-    context: dict[str, Any],
     video_cfg: dict[str, Any],
     run_dir: str | Path | None,
 ) -> Path | None:
     if not bool(video_cfg.get("save_processed", False)):
         return None
-
-    configured_root = video_cfg.get("processed_output_path") or video_cfg.get("output_path") or video_cfg.get("save_processed_path")
-    if configured_root:
-        root = Path(str(configured_root))
-    elif run_dir is not None:
-        root = Path(run_dir).parent
-    else:
-        root = Path("outputs")
-
-    input_ctx = context.get("input", {})
-    episode_id = input_ctx.get("episode_id") or input_ctx.get("video_id") or input_ctx.get("task_index") or "episode"
-    return root / _safe_path_name(episode_id, default="episode") / _safe_path_name(stage_name, default="stage")
+    if run_dir is None:
+        return None
+    return Path(run_dir) / "stages" / _safe_path_name(stage_name, default="stage") / "processed_frames"
 
 
 def _save_failure_debug(
@@ -234,7 +224,6 @@ def run_stage(
             raise StageRunnerError(f"stage {stage_name!r} missing video config")
         processed_output_path = _resolve_processed_output_path(
             stage_name=stage_name,
-            context=context,
             video_cfg=video_cfg,
             run_dir=run_dir,
         )

@@ -313,6 +313,10 @@ outputs/<run_name>/
   input.json
   context.json
   stages/<stage_name>/
+    processed_frames/
+      frame_000000.jpg
+      frame_000001.jpg
+      video_meta.json
     system_prompt.txt
     user_prompt.txt
     raw_text.txt

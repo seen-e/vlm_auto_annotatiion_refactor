@@ -91,6 +91,7 @@ prompt 内可使用：
 | `max_frames` | int | `>0` | 最大采样帧/时间点数 |
 | `resize_width` | int | `>0` | 单视角图像缩放宽度，保持比例 |
 | `jpeg_quality` | int | `1-100` | JPEG 质量，越低越省 token/带宽 |
+| `save_processed` | bool | true/false | 是否保存当前 stage 最终送入模型的处理后图像；保存到 `run_dir/stages/<stage_name>/processed_frames` |
 | `draw_timestamps` | bool | true/false | 是否绘制时间戳 |
 | `draw_view_names` | bool | true/false | 是否绘制视角名称 |
 | `draw_montage_axes` | bool | true/false | 多视角 timeline montage 外侧是否绘制顶部时间戳和左侧视角标签 |

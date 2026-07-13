@@ -142,7 +142,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"), help="Path to config.yaml.")
     parser.add_argument(
         "--tasks",
-        default=str(SCRIPT_DIR / "robogene_twoArm_franka_ark_lift_and_stack_cups.json"),
+        default=str(SCRIPT_DIR / "robogene_twoArm_franka_arrange_tabletop_drink_display.json"),
         help="Path to task JSON list.",
     )
     parser.add_argument(

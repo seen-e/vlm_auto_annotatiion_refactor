@@ -2,21 +2,6 @@ JSON_ONLY_RULE = """
 输出内容严格遵循JSON格式，不要输出 Markdown、解释、代码块或额外文本。
 """
 
-ACTION_VOCABULARY = [
-    "approach",
-    "grasp",
-    "lift",
-    "move",
-    "place",
-    "release",
-    "push",
-    "pull",
-    "rotate",
-    "open",
-    "close",
-    "insert",
-    "withdraw",
-]
 
 TIME_BOUNDARY_RULE = """
 时间边界应基于画面中接触、抓取、释放、物体状态变化等可观察事件判断。

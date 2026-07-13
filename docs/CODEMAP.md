@@ -132,6 +132,7 @@
 | `_model_cfg(config, stage_cfg)` | 合并顶层 `model` 和 stage `generation`。 |
 | `_dry_run_output(stage_name)` | 生成内置假输出。 |
 | `_ensure_context(context)` | 初始化并检查 `context["input"]["video_path"]`。 |
+| `_resolve_processed_output_path(...)` | 当 `video.save_processed=true` 且存在 `run_dir` 时，返回 `<run_dir>/stages/<stage_name>/processed_frames`。 |
 
 调用链：
 
