@@ -4,7 +4,8 @@ REFINEMENT_SYSTEM_PROMPT = """
 本阶段依次完成：
 
 1. 为 Analysis 阶段的每个原子动作定位 start_time 和 end_time；
-2. 根据已定位动作，将具有共同局部目标的连续动作组合为 subtask。
+2. 为每个原子动作生成一句 caption，说明“谁对谁做了什么”；
+3. 根据已定位动作，将具有共同局部目标的连续动作组合为 subtask。
 
 视频直接视觉证据优先于 Scene、Analysis、任务指令和动作词表。上游信息仅作候选上下文，不得替代视频证据。
 
@@ -20,6 +21,8 @@ REFINEMENT_SYSTEM_PROMPT = """
 - target；
 - temporal_type；
 - executor_object_relation。
+
+caption 是本阶段新增的动作级自然语言说明，不属于对上游动作的改写。
 
 不得静默增加、删除、拆分、合并、重排或改写原子动作，不得修改实体 ID 或新增 executor="both"。发现上游动作遗漏、重复、粒度、顺序、名称、时间类型、交互关系或实体引用问题时，只记录 sequence_issues。
 
@@ -87,12 +90,33 @@ step_id 是全视频唯一引用 ID，不表示跨 executor 的全局顺序；ex
 
 每个动作必须输出：
 
+- caption；
 - start_boundary_evidence；
 - end_boundary_evidence；
 - boundary_views；
 - confidence。
 
 证据只能描述可见的运动、夹爪开合、接触、跟随、支撑、位移、姿态或包含关系变化，不得使用任务指令、标准流程、力、重量或控制信号。
+
+【动作 caption 规则】
+
+caption 用一句简洁中文描述当前原子动作中“谁对谁做了什么”，必须与 executor、action、object、target 和视频证据一致。
+
+- 必须明确写出 executor 和 action；
+- object 非 null 时必须写出 object；
+- target 非 null 且有助于理解当前动作时，应写出 target；
+- 不使用“它”“该物体”“机械臂”等可能产生歧义的代词；
+- 只描述当前 step_id 对应的原子动作，不合并相邻动作，也不概括完整 subtask；
+- 不写时间、边界证据、置信度或未经确认的动作结果；
+- 不新增 Analysis 中不存在的 executor、object、target 或 action；
+- action、object 或 target 可能有误时，仍按上游字段生成保守 caption，并在 sequence_issues 中报告问题。
+
+推荐表达：
+
+- object 和 target 均非 null：“right 将 part_1 插入 base_1。”
+- 只有 object：“single 抓取 cup_1。”、“left 固定 base_1。”
+- 只有 target：“single 接近桌面右侧区域。”、“right 对准 slot_1。”
+- object 和 target 均为 null：“single 撤回。”、“left 等待。”
 
 【第二步：原子动作组合为 subtask】
 
@@ -202,6 +226,7 @@ sequence_issues 只报告问题，不得修改原动作。
 
 - 严格按照用户给定 JSON Schema 输出，JSON Key 不得修改；
 - action 及所有上游动作字段必须原样复用；
+- caption 必须基于当前动作字段和视频证据生成；
 - executor_id、object_id、step_id 和视角名称可以保留英文，其他自然语言使用中文；
 - confidence 为 0 到 1 的小数；
 - 无 sequence_issues 或 uncertainties 时返回空数组；
@@ -242,7 +267,8 @@ Analysis 阶段原子动作序列：
 请综合完整视频和以上上下文，严格依次完成：
 
 1. 完整复用 Analysis 的 executor_timelines，为每个原子动作独立定位 start_time 和 end_time；
-2. 基于 timed_executor_timelines，将服务于同一局部目标的原子动作组合为 subtasks。
+2. 为每个原子动作生成 caption，简洁说明“哪个 executor 对哪个 object/target 执行了什么 action”；
+3. 基于 timed_executor_timelines，将服务于同一局部目标的原子动作组合为 subtasks。
 
 不得修改、删除、增加、拆分、合并或重排 Analysis 原子动作。发现问题只写入 sequence_issues。subtask 只能引用已有 step_id，但可以组合一个或多个 executor 的动作。
 
@@ -256,6 +282,18 @@ Analysis 阶段原子动作序列：
 - 持续状态型应覆盖完整维持区间，并可与过程型动作重叠；
 - 无法可靠定位时使用 null，并说明原因；
 - 每个动作必须分别给出开始和结束边界的直接视觉证据及使用的真实视角。
+
+【caption 生成】
+
+- caption 必须是一句简洁、事实性的中文动作描述；
+- 必须包含 executor 和 action；
+- object 非 null 时必须包含 object；
+- target 非 null 且与动作语义有关时应包含 target；
+- 只描述当前 step_id 对应的原子动作，不合并相邻动作；
+- 不使用“它”“该物体”等歧义代词；
+- 不添加 Analysis 中不存在的实体、动作、目的或结果；
+- 不在 caption 中写时间、边界证据、置信度或完整 subtask；
+- 示例：“single 抓取 cup_1。”、“left 固定 base_1。”、“right 将 part_1 插入 base_1。”、“single 将 cup_1 搬运至 tray_1。”。
 
 【subtask 组合】
 
@@ -280,6 +318,7 @@ Analysis 阶段原子动作序列：
           "step_id": 1,
           "executor_step_index": 1,
           "action": "完全复用 Analysis 阶段的 action",
+          "caption": "简洁描述当前动作中哪个 executor 对哪个 object/target 执行了什么 action",
           "object": "完全复用 Analysis 阶段的 object 或 null",
           "target": "完全复用 Analysis 阶段的 target 或 null",
           "temporal_type": "完全复用 Analysis 阶段的 temporal_type",
@@ -329,19 +368,21 @@ Analysis 阶段原子动作序列：
     }
   ],
   "uncertainties": [
-    "可能影响动作边界、动作重叠、subtask 组合、任务结果或完成状态判断的问题；没有时返回空数组"
+    "可能影响动作边界、动作 caption、动作重叠、subtask 组合、任务结果或完成状态判断的问题；没有时返回空数组"
   ]
 }
 
 输出前检查：
 
 1. 是否保留 Analysis 的全部 executor、动作、step_id、顺序和字段值；
-2. 是否为每个动作独立定位边界，并保留真实重叠、空隙和持续状态区间；
-3. 所有非 null 时间是否使用原始视频时间轴、位于有效范围且 start_time < end_time；
-4. 是否只报告上游动作问题，而未修改原动作；
-5. 每个 subtask 是否具有单一局部目标、因果连续动作和可验证结果；
-6. source_step_ids 是否全部存在，且没有无关或虚构 step_id；
-7. 多 executor subtask 是否确实共同服务于同一局部目标，而非仅时间重叠；
-8. subtask 的时间、initial_state、final_state 和 completion_status 是否由视频支持；
-9. 输出是否为合法 JSON，且没有额外文字。
+2. 每个 action 是否都生成了与 executor、object、target 和 action 一致的 caption；
+3. caption 是否只描述当前原子动作，且没有合并相邻动作或补充未经确认的信息；
+4. 是否为每个动作独立定位边界，并保留真实重叠、空隙和持续状态区间；
+5. 所有非 null 时间是否使用原始视频时间轴、位于有效范围且 start_time < end_time；
+6. 是否只报告上游动作问题，而未修改原动作；
+7. 每个 subtask 是否具有单一局部目标、因果连续动作和可验证结果；
+8. source_step_ids 是否全部存在，且没有无关或虚构 step_id；
+9. 多 executor subtask 是否确实共同服务于同一局部目标，而非仅时间重叠；
+10. subtask 的时间、initial_state、final_state 和 completion_status 是否由视频支持；
+11. 输出是否为合法 JSON，且没有额外文字。
 """
