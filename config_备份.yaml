@@ -30,19 +30,27 @@ workflow:
   - refinement
 
 # model: 默认模型调用参数。
+
+# model: 默认模型调用参数。
 # stage 中可以通过 generation 字段覆盖 max_tokens、temperature、top_p、top_k、max_retries 等参数。
 model:
   # base_url: OpenAI-compatible API 地址。
   # 本地 vLLM 示例：http://127.0.0.1:8002/v1
-  base_url: "http://localhost:8002/v1"
+  base_url: "http://127.0.0.1:8002/v1"
+  #qwen122B "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260713_olyp/v1"
+  #qwen397B "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260713_ex0m/v1"
 
   # api_key: API key。
   # 本地 vLLM 通常可以使用 "EMPTY"。
   api_key: "EMPTY"
+  #qwen122B"OTk4NzQ4MTk1ZjQzMTQ5OTRjODIyNWQzMGQyODM5ZGVkNWEyMGQxNQ=="
+  #qwen397B"MmFhYjMyOTI1ODE3Yzk2OTE1OWViMGJjMzIxZTkzZjY5MjllY2JmZg=="
 
   # model: 模型名称，需要与 /v1/models 返回的 id 一致。
   # 例如："Qwen3-VL-8B-Instruct"、"Qwen3-VL-30B-A3B-Instruct-FP8"。
   model: "Qwen3.5-27B"
+  #"Qwen3.5-122B-A10B"
+  #"Qwen3.5-397B-A17B-FP8"
 
   # max_tokens: 默认最大输出 token 数。
   # 如果 stage 输出较长，可在对应 stage.generation 中覆盖。
@@ -63,10 +71,11 @@ model:
   # Qwen thinking 模型如需避免长时间只生成 reasoning，可在 vLLM 支持时关闭 thinking。
   extra_body:
     chat_template_kwargs:
-      enable_thinking: false
+      enable_thinking: true
 
   # max_retries: 模型请求失败时的最大重试次数。
   max_retries: 3
+
 
 # stages: 每个 stage 的配置。
 # 每个 stage 的基本结构：

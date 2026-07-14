@@ -147,12 +147,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--output-dir",
-        default=str(SCRIPT_DIR / "qwen3.5b_batch_predictions"),
+        default=str(SCRIPT_DIR / "vlm_annotation_batch_predictions"),
         help="Directory for per-task outputs.",
     )
     parser.add_argument(
         "--summary",
-        default=str(SCRIPT_DIR / "batch_predictions.json"),
+        default=str(SCRIPT_DIR / "trajectory.json"),
         help="Path for aggregate summary JSON.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Run video/prompt pipeline without real model calls.")
