@@ -35,11 +35,17 @@ stage 配置缺失、视频处理失败、prompt 渲染失败、模型调用失�
 | `run_dir` | str/Path/null | 保存结果的运行目录 |
 | `save_result` | bool | 是否调用 `result_io.save_stage_result` |
 
-当 stage 的 `video.save_processed=true` 且传入了 `run_dir` 时，当前 stage 送入模型的处理后图像会保存到：
+当 stage 的 `video.save_processed=true` 且传入了 `run_dir` 时，当前 stage 送入模型的处理后媒体会保存到：
 
 ```text
 <run_dir>/stages/<stage_name>/processed_frames/
 ```
+
+单视角或 `merge_views=true` 时，帧和可选 `processed.mp4` 位于该目录根层。`merge_views=false` 且选中多个视角时，分别保存到 `processed_frames/<view_name>/`。
+
+`build_video_layout_description()` 会把实际消息布局注入 prompt：多视角非合并时明确说明各视角独立采样，并说明每组图像序列或视频前均有视角文字标签。
+
+当 `video.add_frame_tags=true` 且 `input_mode=image_sequence` 时，布局说明还会明确 `<t=...s>` 是原始视频时间戳、`<view_name>` 是拍摄视角；逐帧标签位于对应 `image_url` 前。
 
 该路径不再通过 `config.yaml` 中的 `processed_output_path` 配置。
 

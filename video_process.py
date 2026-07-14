@@ -1,8 +1,8 @@
 """Self-contained lightweight video preprocessing for VLM stage experiments.
 
 This module has no dependency on the original VLM Auto Annotation codebase.
-It converts a single video or time-aligned multi-view videos into
-OpenAI-compatible ``image_url`` message parts and returns sampling metadata.
+It converts a single video or multi-view videos into OpenAI-compatible media
+message parts and returns sampling metadata.
 """
 
 from __future__ import annotations
@@ -11,6 +11,7 @@ import base64
 import json
 import math
 from pathlib import Path
+import tempfile
 from typing import Any
 
 import cv2
@@ -438,9 +439,63 @@ def encode_frame_to_image_part(frame: np.ndarray, jpeg_quality: int) -> dict[str
     return {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}"}}
 
 
-def save_processed_frames(frames: list[np.ndarray], video_meta: dict[str, Any], save_processed_path: str | Path) -> None:
-    """Save processed frames and ``video_meta.json`` for debugging."""
-    out_dir = Path(save_processed_path)
+def encode_frames_to_video_part(
+    frames: list[np.ndarray],
+    *,
+    timestamps: list[float],
+    fallback_fps: float,
+) -> tuple[dict[str, Any], bytes, dict[str, Any]]:
+    """Encode processed frames as an MP4 ``video_url`` message part."""
+    if not frames:
+        raise VideoProcessError("cannot encode an empty frame sequence as video")
+    output_fps = float(fallback_fps)
+    if len(timestamps) > 1 and timestamps[-1] > timestamps[0]:
+        output_fps = (len(timestamps) - 1) / (timestamps[-1] - timestamps[0])
+    output_fps = max(0.01, output_fps)
+    height = max(frame.shape[0] for frame in frames)
+    width = max(frame.shape[1] for frame in frames)
+    height += height % 2
+    width += width % 2
+
+    with tempfile.TemporaryDirectory(prefix="vlm_processed_video_") as temp_dir:
+        video_path = Path(temp_dir) / "processed.mp4"
+        writer = cv2.VideoWriter(
+            str(video_path),
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            output_fps,
+            (width, height),
+        )
+        if not writer.isOpened():
+            raise VideoProcessError("failed to initialize MP4 writer with codec 'mp4v'")
+        try:
+            for frame in frames:
+                writer.write(_pad_to_size(frame, height, width))
+        finally:
+            writer.release()
+        payload = video_path.read_bytes()
+
+    if not payload:
+        raise VideoProcessError("processed MP4 encoding produced an empty payload")
+    b64 = base64.b64encode(payload).decode("utf-8")
+    part = {"type": "video_url", "video_url": {"url": f"data:video/mp4;base64,{b64}"}}
+    return part, payload, {
+        "container": "mp4",
+        "codec": "mp4v",
+        "fps": output_fps,
+        "frame_count": len(frames),
+        "width": width,
+        "height": height,
+    }
+
+
+def _safe_view_dir_name(value: Any) -> str:
+    invalid = '<>:"/\\|?*'
+    text = str(value or "view")
+    cleaned = "".join("_" if ch in invalid or ord(ch) < 32 else ch for ch in text)
+    return cleaned.strip(" .") or "view"
+
+
+def _save_frame_sequence(frames: list[np.ndarray], out_dir: Path) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     for old_frame in out_dir.glob("frame_*.jpg"):
         old_frame.unlink()
@@ -448,6 +503,38 @@ def save_processed_frames(frames: list[np.ndarray], video_meta: dict[str, Any], 
         ok = cv2.imwrite(str(out_dir / f"frame_{idx:06d}.jpg"), frame)
         if not ok:
             raise VideoProcessError(f"failed to save processed frame {idx} to {out_dir}")
+
+
+def save_processed_frames(
+    frames: list[np.ndarray],
+    video_meta: dict[str, Any],
+    save_processed_path: str | Path,
+    *,
+    frames_by_view: dict[str, list[np.ndarray]] | None = None,
+    video_payloads: dict[str, bytes] | None = None,
+) -> None:
+    """Save processed frames/videos and ``video_meta.json`` for debugging."""
+    out_dir = Path(save_processed_path)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    cleanup_dirs = [out_dir, *(path for path in out_dir.iterdir() if path.is_dir())]
+    for cleanup_dir in cleanup_dirs:
+        for old_frame in cleanup_dir.glob("frame_*.jpg"):
+            old_frame.unlink()
+        old_video = cleanup_dir / "processed.mp4"
+        if old_video.exists():
+            old_video.unlink()
+    if frames_by_view:
+        for view_name, view_frames in frames_by_view.items():
+            view_dir = out_dir / _safe_view_dir_name(view_name)
+            _save_frame_sequence(view_frames, view_dir)
+            payload = (video_payloads or {}).get(view_name)
+            if payload is not None:
+                (view_dir / "processed.mp4").write_bytes(payload)
+    else:
+        _save_frame_sequence(frames, out_dir)
+        payload = (video_payloads or {}).get("__combined__")
+        if payload is not None:
+            (out_dir / "processed.mp4").write_bytes(payload)
     (out_dir / "video_meta.json").write_text(
         json.dumps(video_meta, ensure_ascii=False, indent=2, default=str),
         encoding="utf-8",
@@ -560,6 +647,143 @@ def _apply_temporal_merge(
     return merged_frames, merged_groups
 
 
+def _process_view_set(
+    view_map: dict[str, Path],
+    infos: dict[str, dict[str, Any]],
+    primary_view: str,
+    *,
+    fps: float,
+    max_frames: int,
+    max_time: float,
+    resize_width: int,
+    draw_timestamps: bool,
+    draw_view_names: bool,
+    min_api_frames: int,
+    frame_start: int,
+    frame_end: int | None,
+    merge_views: bool,
+    merge_mode: str,
+    merge_length: int,
+    draw_montage_axes: bool,
+) -> dict[str, Any]:
+    """Sample and process one view or one time-aligned merged view set."""
+    time_window = _effective_time_window(
+        infos=infos,
+        primary_view=primary_view,
+        frame_start=frame_start,
+        frame_end=frame_end,
+        max_time=max_time,
+    )
+    primary_info = infos[primary_view]
+    primary_indices, timestamps = compute_sample_timestamps(
+        original_fps=float(primary_info["fps"]),
+        frame_count=int(primary_info["frame_count"]),
+        target_fps=fps,
+        max_frames=max_frames,
+        min_api_frames=min_api_frames,
+        frame_start=int(time_window["effective_frame_start"]),
+        frame_end=int(time_window["effective_frame_end"]),
+    )
+    if not primary_indices:
+        raise VideoProcessError(f"no frames sampled from video view {primary_view!r}")
+
+    frames, groups = _build_timepoint_frames(
+        view_map,
+        infos,
+        primary_view,
+        primary_indices,
+        timestamps,
+        resize_width=resize_width,
+        draw_timestamps=draw_timestamps,
+        draw_view_names=draw_view_names,
+        merge_views=merge_views,
+    )
+    effective_merge_length = 0
+    if merge_mode == "timeline_grid":
+        effective_merge_length = len(frames) if merge_length < 1 else merge_length
+    frames, groups = _apply_temporal_merge(
+        frames,
+        groups,
+        merge_mode=merge_mode,
+        merge_length=merge_length,
+        draw_montage_axes=draw_montage_axes and merge_views,
+    )
+    return {
+        "frames": frames,
+        "frame_groups": groups,
+        "sampled_frame_indices": primary_indices,
+        "sampled_timestamps": timestamps,
+        "num_sampled_frames": len(primary_indices),
+        "effective_merge_length": effective_merge_length,
+        "time_window": time_window,
+    }
+
+
+def _frame_message_tag(frame_group: dict[str, Any]) -> dict[str, Any]:
+    tags: list[str] = []
+    for timestamp in _ordered_unique(list(frame_group.get("timestamps", []))):
+        try:
+            tags.append(f"<t={float(timestamp):.2f}s>")
+        except (TypeError, ValueError):
+            tags.append(f"<t={timestamp}s>")
+    for view_name in _ordered_unique(list(frame_group.get("views", []))):
+        tags.append(f"<{view_name}>")
+    return {"type": "text", "text": " ".join(tags)}
+
+
+def _encode_processed_media(
+    frames: list[np.ndarray],
+    frame_groups: list[dict[str, Any]],
+    *,
+    input_mode: str,
+    jpeg_quality: int,
+    target_fps: float,
+    add_frame_tags: bool,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], bytes | None, dict[str, Any] | None]:
+    if input_mode == "image_sequence":
+        parts: list[dict[str, Any]] = []
+        message_groups: list[dict[str, Any]] = []
+        for frame, frame_group in zip(frames, frame_groups, strict=True):
+            message_group = dict(frame_group)
+            if add_frame_tags:
+                message_group["message_tag_part_index"] = len(parts)
+                parts.append(_frame_message_tag(frame_group))
+            message_group["message_media_part_index"] = len(parts)
+            parts.append(encode_frame_to_image_part(frame, jpeg_quality))
+            message_groups.append(message_group)
+        return parts, message_groups, None, None
+
+    video_timestamps = [float(group.get("timestamps", [idx])[0]) for idx, group in enumerate(frame_groups)]
+    part, payload, encoding_meta = encode_frames_to_video_part(
+        frames,
+        timestamps=video_timestamps,
+        fallback_fps=target_fps,
+    )
+    all_timestamps = [timestamp for group in frame_groups for timestamp in group.get("timestamps", [])]
+    all_frame_indices = [
+        frame_index
+        for group in frame_groups
+        for frame_index in group.get("frame_indices", group.get("primary_frame_indices", []))
+    ]
+    video_group = {
+        "output_index": 0,
+        "message_media_part_index": 0,
+        "source_processed_frame_indices": list(range(len(frames))),
+        "frame_indices": all_frame_indices,
+        "timestamps": all_timestamps,
+        "views": _ordered_unique([view for group in frame_groups for view in group.get("views", [])]),
+    }
+    return [part], [video_group], payload, encoding_meta
+
+
+def _view_message_label(view_name: str, input_mode: str) -> dict[str, Any]:
+    media_name = "图像序列" if input_mode == "image_sequence" else "视频"
+    return {
+        "type": "text",
+        "text": f"以下视觉输入属于视角 {view_name}，是该视角独立处理后的{media_name}。",
+    }
+
+
 def build_video_inputs(
     video_path: str | Path | list[str | Path] | dict[str, str | Path],
     *,
@@ -579,6 +803,7 @@ def build_video_inputs(
     draw_montage_axes: bool = False,
     view_names: list[str] | None = None,
     input_mode: str = "image_sequence",
+    add_frame_tags: bool = False,
     save_processed_path: str | Path | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Build OpenAI-compatible image parts and video metadata.
@@ -598,7 +823,8 @@ def build_video_inputs(
         min_api_frames: Minimum sampled timepoints when enough source frames exist.
         frame_start/frame_end: Inclusive source-frame range on the primary view.
         merge_views: If true, stitch all selected views vertically at each sampled timestamp.
-            If false, output only the primary view.
+            If false, preserve the old behavior for one selected view; multiple selected views
+            are sampled, processed, and encoded independently.
         merge_mode: ``per_frame`` emits one image per sampled timestamp; ``timeline_grid``
             merges sampled timestamps into left-to-right timeline montages.
         merge_length: In ``timeline_grid`` mode, merge this many consecutive processed
@@ -607,11 +833,15 @@ def build_video_inputs(
             after multi-view timeline montage generation. Only applies when
             ``merge_views`` is true and the effective timeline length is greater than 1.
         view_names: Selected/ordered views. This replaces the legacy ``merge_view_names`` name.
-        input_mode: ``image_sequence`` is implemented. ``video`` raises a clear error.
-        save_processed_path: Optional directory for final processed images and ``video_meta.json``.
+        input_mode: ``image_sequence`` emits JPEG image parts; ``video`` encodes processed
+            frames into MP4 ``video_url`` parts.
+        add_frame_tags: If true in ``image_sequence`` mode, insert a text part before every
+            image using ``<t=1.25s> <view_name>`` tags. It has no effect in ``video`` mode.
+        save_processed_path: Optional directory for final processed media and ``video_meta.json``.
 
     Returns:
-        ``(image_parts, video_meta)``.
+        ``(media_parts, video_meta)``. For independent multi-view input, ``media_parts`` also
+        contains text parts that identify the view owning each following media group.
     """
     max_time = _normalize_max_time(max_time)
     _validate_video_config(
@@ -624,59 +854,161 @@ def build_video_inputs(
         min_api_frames=min_api_frames,
     )
     jpeg_quality = _normalize_jpeg_quality(jpeg_quality)
-    if input_mode == "video":
-        raise VideoProcessError(
-            "input_mode='video' is intentionally not implemented in the standalone refactor. "
-            "Use input_mode='image_sequence'."
-        )
-
     view_map, input_type = normalize_video_input(video_path, view_names=view_names)
     infos = {view_name: read_video_info(path) for view_name, path in view_map.items()}
     primary_view = next(iter(view_map.keys()))
     primary_info = infos[primary_view]
-    time_window = _effective_time_window(
-        infos=infos,
-        primary_view=primary_view,
-        frame_start=int(frame_start),
-        frame_end=frame_end,
-        max_time=max_time,
-    )
-
-    primary_indices, timestamps = compute_sample_timestamps(
-        original_fps=float(primary_info["fps"]),
-        frame_count=int(primary_info["frame_count"]),
-        target_fps=float(fps),
-        max_frames=int(max_frames),
-        min_api_frames=int(min_api_frames),
-        frame_start=int(time_window["effective_frame_start"]),
-        frame_end=int(time_window["effective_frame_end"]),
-    )
-    if not primary_indices:
-        raise VideoProcessError("no frames sampled from video input")
-
-    frames, groups = _build_timepoint_frames(
-        view_map,
-        infos,
-        primary_view,
-        primary_indices,
-        timestamps,
-        resize_width=int(resize_width),
-        draw_timestamps=bool(draw_timestamps),
-        draw_view_names=bool(draw_view_names),
-        merge_views=bool(merge_views),
-    )
     requested_merge_length = int(merge_length or 0)
-    effective_merge_length = 0
-    if merge_mode == "timeline_grid":
-        effective_merge_length = len(frames) if requested_merge_length < 1 else requested_merge_length
-    frames, groups = _apply_temporal_merge(
-        frames,
-        groups,
-        merge_mode=merge_mode,
-        merge_length=requested_merge_length,
-        draw_montage_axes=bool(draw_montage_axes) and bool(merge_views),
-    )
-    parts = [encode_frame_to_image_part(frame, jpeg_quality) for frame in frames]
+    separate_view_inputs = not bool(merge_views) and len(view_map) > 1
+    frame_tags_enabled = bool(add_frame_tags) and input_mode == "image_sequence"
+    frames_by_view: dict[str, list[np.ndarray]] | None = None
+    video_payloads: dict[str, bytes] = {}
+    view_outputs: dict[str, dict[str, Any]] = {}
+    top_video_encoding: dict[str, Any] | None = None
+
+    if separate_view_inputs:
+        parts: list[dict[str, Any]] = []
+        frames = []
+        groups: list[dict[str, Any]] = []
+        frames_by_view = {}
+        media_part_count = 0
+
+        for view_name, path in view_map.items():
+            result = _process_view_set(
+                {view_name: path},
+                {view_name: infos[view_name]},
+                view_name,
+                fps=float(fps),
+                max_frames=int(max_frames),
+                max_time=max_time,
+                resize_width=int(resize_width),
+                draw_timestamps=bool(draw_timestamps),
+                draw_view_names=bool(draw_view_names),
+                min_api_frames=int(min_api_frames),
+                frame_start=int(frame_start),
+                frame_end=frame_end,
+                merge_views=False,
+                merge_mode=merge_mode,
+                merge_length=requested_merge_length,
+                draw_montage_axes=False,
+            )
+            media_parts, local_groups, payload, encoding_meta = _encode_processed_media(
+                result["frames"],
+                result["frame_groups"],
+                input_mode=input_mode,
+                jpeg_quality=jpeg_quality,
+                target_fps=float(fps),
+                add_frame_tags=frame_tags_enabled,
+            )
+            label_part_index = len(parts)
+            parts.append(_view_message_label(view_name, input_mode))
+            media_start_part_index = len(parts)
+            parts.extend(media_parts)
+
+            global_groups: list[dict[str, Any]] = []
+            for local_group in local_groups:
+                global_group = dict(local_group)
+                local_output_index = int(local_group.get("output_index", len(global_groups)))
+                global_group["view_name"] = view_name
+                global_group["view_output_index"] = local_output_index
+                global_group["output_index"] = media_part_count + local_output_index
+                for index_key in ("message_tag_part_index", "message_media_part_index"):
+                    if index_key in global_group:
+                        global_group[index_key] = media_start_part_index + int(global_group[index_key])
+                global_groups.append(global_group)
+            groups.extend(global_groups)
+
+            frames_by_view[view_name] = result["frames"]
+            if payload is not None:
+                video_payloads[view_name] = payload
+            view_outputs[view_name] = {
+                "video_info": infos[view_name],
+                "original_fps": float(infos[view_name]["fps"]),
+                "target_fps": float(fps),
+                **result["time_window"],
+                "sampled_frame_indices": result["sampled_frame_indices"],
+                "sampled_timestamps": result["sampled_timestamps"],
+                "num_sampled_frames": result["num_sampled_frames"],
+                "num_output_parts": len(local_groups),
+                "num_message_parts": len(media_parts),
+                "message_label_part_index": label_part_index,
+                "message_media_start_part_index": media_start_part_index,
+                "effective_merge_length": result["effective_merge_length"],
+                "output_groups": local_groups,
+                "video_encoding": encoding_meta,
+            }
+            media_part_count += len(local_groups)
+
+        primary_result = view_outputs[primary_view]
+        time_window = {
+            key: primary_result[key]
+            for key in (
+                "original_duration",
+                "configured_max_time",
+                "effective_duration",
+                "effective_start_time",
+                "effective_end_time",
+                "effective_frame_start",
+                "effective_frame_end",
+                "was_time_limited",
+                "was_limited_by_frame_range",
+            )
+        }
+        time_window.update(
+            {
+                "min_input_duration": min(float(info["duration"]) for info in infos.values()),
+                "per_view_durations": {name: float(info["duration"]) for name, info in infos.items()},
+                "per_view_effective_durations": {
+                    name: float(output["effective_duration"]) for name, output in view_outputs.items()
+                },
+                "was_limited_by_view_duration": False,
+                "was_any_view_time_limited": any(
+                    bool(output["was_time_limited"]) for output in view_outputs.values()
+                ),
+            }
+        )
+        primary_indices = list(primary_result["sampled_frame_indices"])
+        timestamps = list(primary_result["sampled_timestamps"])
+        effective_merge_length = int(primary_result["effective_merge_length"])
+        num_output_parts = media_part_count
+        processed_layout = "per_view_directories"
+    else:
+        result = _process_view_set(
+            view_map,
+            infos,
+            primary_view,
+            fps=float(fps),
+            max_frames=int(max_frames),
+            max_time=max_time,
+            resize_width=int(resize_width),
+            draw_timestamps=bool(draw_timestamps),
+            draw_view_names=bool(draw_view_names),
+            min_api_frames=int(min_api_frames),
+            frame_start=int(frame_start),
+            frame_end=frame_end,
+            merge_views=bool(merge_views),
+            merge_mode=merge_mode,
+            merge_length=requested_merge_length,
+            draw_montage_axes=bool(draw_montage_axes),
+        )
+        frames = result["frames"]
+        parts, groups, payload, encoding_meta = _encode_processed_media(
+            frames,
+            result["frame_groups"],
+            input_mode=input_mode,
+            jpeg_quality=jpeg_quality,
+            target_fps=float(fps),
+            add_frame_tags=frame_tags_enabled,
+        )
+        if payload is not None:
+            video_payloads["__combined__"] = payload
+        top_video_encoding = encoding_meta
+        time_window = result["time_window"]
+        primary_indices = result["sampled_frame_indices"]
+        timestamps = result["sampled_timestamps"]
+        effective_merge_length = result["effective_merge_length"]
+        num_output_parts = len(groups)
+        processed_layout = "flat"
 
     video_meta: dict[str, Any] = {
         "input_type": input_type,
@@ -692,7 +1024,8 @@ def build_video_inputs(
         "sampled_frame_indices": primary_indices,
         "sampled_timestamps": timestamps,
         "num_sampled_frames": len(primary_indices),
-        "num_output_parts": len(parts),
+        "num_output_parts": num_output_parts,
+        "num_message_parts": len(parts),
         "resize_width": int(resize_width),
         "jpeg_quality": jpeg_quality,
         "draw_timestamps": bool(draw_timestamps),
@@ -702,10 +1035,26 @@ def build_video_inputs(
         "merge_length": requested_merge_length,
         "effective_merge_length": effective_merge_length,
         "draw_montage_axes": bool(draw_montage_axes),
+        "separate_view_inputs": separate_view_inputs,
+        "message_view_labels": separate_view_inputs,
+        "add_frame_tags_requested": bool(add_frame_tags),
+        "add_frame_tags": frame_tags_enabled,
+        "processed_layout": processed_layout,
+        "processed_view_directories": {
+            name: _safe_view_dir_name(name) for name in view_map
+        } if separate_view_inputs else {},
+        "view_outputs": view_outputs,
+        "video_encoding": top_video_encoding,
         "output_groups": groups,
     }
 
     if save_processed_path:
-        save_processed_frames(frames, video_meta, save_processed_path)
+        save_processed_frames(
+            frames,
+            video_meta,
+            save_processed_path,
+            frames_by_view=frames_by_view,
+            video_payloads=video_payloads,
+        )
 
     return parts, video_meta

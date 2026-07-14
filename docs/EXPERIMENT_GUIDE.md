@@ -152,12 +152,13 @@ video:
 | `max_frames` | temporal montage 前的最大采样时间点数。 |
 | `resize_width` | 每个视角缩放宽度，影响细节和 payload。 |
 | `jpeg_quality` | JPEG 质量，影响图像细节和传输体积。 |
-| `merge_views` | true 时同一时间点多视角按行纵向拼接；false 时只输出主视角。 |
-| `merge_mode` | `per_frame` 逐时间点输出；`timeline_grid` 按时间从左到右合并输出。 |
+| `merge_views` | true 时同一时间点多视角按行纵向拼接；false 时单视角保持原行为，多视角分别处理并全部发送。 |
+| `merge_mode` | `per_frame` 逐时间点输出；`timeline_grid` 按时间从左到右合并；多视角非合并时对每个视角独立生效。 |
 | `merge_length` | timeline_grid 分组长度；小于 1 表示全部时间点合成一张图。 |
 | `draw_timestamps` | 是否绘制时间戳，refinement 通常建议开启。 |
 | `draw_view_names` | 是否绘制视角名，多视角输入建议开启。 |
 | `draw_montage_axes` | 多视角 timeline montage 外侧是否绘制顶部时间戳和左侧视角标签。 |
+| `add_frame_tags` | image_sequence 下是否在每张图像前插入 `<t=...s> <view_name>` message 标签；不改变图像像素。 |
 
 对比重点：
 
@@ -167,7 +168,9 @@ outputs/<run>/stages/<stage>/output.json
 outputs/<run>/stages/<stage>/user_prompt.txt
 ```
 
-注意：当前 standalone 版本只支持 `input_mode: "image_sequence"`。不要把实验配置改成 `video`，否则会明确报错。
+`input_mode: "video"` 会把处理后帧编码为 MP4 `video_url`。使用前应确认当前模型服务支持视频 content part；框架侧编码成功不等于服务端一定接受该格式。
+
+当 `merge_views=false` 且配置多个 `view_names` 时，对比实验应查看 `video_meta.view_outputs`：每个视角独立受 `fps`、`max_frames`、`max_time` 和帧范围限制，message 中每组媒体前会带视角名称。
 
 `max_time` 与 `fps`、`max_frames`、`frame_start/frame_end` 同时配置时，采样只发生在最终有效区间内；输出帧时间戳仍然是原始视频时间轴上的真实时间戳。多视角实验中，较短视角不会被补齐，建议同时查看 `video_meta.json` 中的 `original_duration`、`effective_duration`、`per_view_effective_durations` 和 `was_time_limited`。
 

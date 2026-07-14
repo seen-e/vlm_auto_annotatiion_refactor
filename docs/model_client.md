@@ -27,7 +27,7 @@
 | `model` | str | 模型 ID |
 | `system_prompt` | str | system prompt |
 | `user_prompt` | str | user prompt |
-| `image_parts` | list[dict]/null | `video_process.build_video_inputs` 返回的 media parts |
+| `image_parts` | list[dict]/null | `video_process.build_video_inputs` 返回的 media parts；名称为兼容旧 API，内容可包含视角 text、`image_url` 和 `video_url` parts |
 | `max_tokens` | int | 最大输出 token |
 | `temperature` | float | 采样温度 |
 | `top_p` | float/null | 可选采样参数 |

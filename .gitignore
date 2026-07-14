@@ -12,6 +12,7 @@ env/
 outputs/
 examples/batch_predictions/
 examples/batch_predictions.json
+examples/test_data/
 
 .pytest_cache/
 .mypy_cache/

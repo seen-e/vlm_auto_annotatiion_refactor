@@ -21,7 +21,7 @@
 
 ## `video_process.py`
 
-职责：standalone 视频预处理层。输入单视频/list/dict 多视角视频，输出 OpenAI-compatible `image_url` parts 和 `video_meta`。
+职责：standalone 视频预处理层。输入单视频/list/dict 多视角视频，输出 OpenAI-compatible image/video media parts 和 `video_meta`。
 
 主要函数：
 
@@ -35,8 +35,9 @@
 | `merge_view_frames(frames, separator=4)` | 同一时间点的多视角 frames | 纵向拼接 frame | `_build_timepoint_frames()` | 工具函数 |
 | `merge_temporal_frames(frames, columns=None)` | 连续时间点 frames | 横向时间序列 montage frame | `_apply_temporal_merge()` | 工具函数 |
 | `encode_frame_to_image_part(frame, jpeg_quality)` | BGR frame、JPEG 质量 | OpenAI-compatible `image_url` part | `build_video_inputs()` | 可用于单帧编码 |
-| `save_processed_frames(frames, video_meta, save_processed_path)` | 最终 frames、metadata、目录 | `None` | `build_video_inputs()` | 调试保存入口 |
-| `build_video_inputs(video_path, *, fps, max_frames, resize_width, jpeg_quality, max_time=-1, draw_timestamps=True, draw_view_names=True, min_api_frames=1, frame_start=0, frame_end=None, merge_views=False, merge_mode="per_frame", merge_length=0, view_names=None, input_mode="image_sequence", save_processed_path=None)` | 视频输入和全部视频参数 | `(parts, video_meta)` | `stage_runner.run_stage()` | 主要公开入口 |
+| `encode_frames_to_video_part(frames, timestamps, fallback_fps)` | 处理后帧、真实时间戳和回退 FPS | MP4 `video_url` part、payload 和编码 metadata | `_encode_processed_media()` | 视频编码入口 |
+| `save_processed_frames(...)` | 最终 frames、逐视角 frames、MP4 payload、metadata、目录 | `None` | `build_video_inputs()` | 调试保存入口 |
+| `build_video_inputs(video_path, *, fps, max_frames, resize_width, jpeg_quality, max_time=-1, draw_timestamps=True, draw_view_names=True, min_api_frames=1, frame_start=0, frame_end=None, merge_views=False, merge_mode="per_frame", merge_length=0, view_names=None, input_mode="image_sequence", add_frame_tags=False, save_processed_path=None)` | 视频输入和全部视频参数 | `(parts, video_meta)` | `stage_runner.run_stage()` | 主要公开入口 |
 
 内部函数，不建议外部直接调用：
 
@@ -50,17 +51,21 @@
 | `_pad_to_size(frame, target_h, target_w)` | padding 到指定尺寸。 |
 | `_build_timepoint_frames(...)` | 根据采样时间点读取各视角帧、缩放、绘制标签、按需合并视角。 |
 | `_apply_temporal_merge(frames, groups, merge_length)` | 按 `merge_length` 把连续输出 frame 合成横向时间序列 montage。 |
+| `_process_view_set(...)` | 对单视角或共同时间轴的合并视角统一执行时间窗、采样和图像处理。 |
+| `_encode_processed_media(...)` | 根据 `input_mode` 编码图像序列或 MP4。 |
+| `_frame_message_tag(...)` | 为单张输出图像生成 `<t=...s> <view_name>` message 标签。 |
+| `_view_message_label(...)` | 为非合并多视角的每组媒体生成视角说明文字 part。 |
 
 依赖：`cv2`、`numpy`、标准库。当前不依赖旧项目代码。
 
 重要行为：
 
 1. 多视角 dict 输入可用 `view_names` 选择和排序视角。
-2. 第一个视角是 primary view，采样时间轴基于它。
-3. 其他视角按 primary timestamp 映射到各自帧索引。
+2. 第一个视角是 primary view；合并多视角时采样时间轴基于它。
+3. 非合并多视角时，每个视角独立采样和编码，并通过 message 文字 part 标识来源。
 4. `max_time` 是 stage 级视频参数，在抽帧和后续视频处理前统一生效；输出时间戳仍对应原始视频时间轴。
 5. 多视角输入会对各视角使用同一个 `max_time` 上限，但不会补齐较短视角。
-6. `input_mode="video"` 会抛 `VideoProcessError`，当前只实现 `image_sequence`。
+6. `input_mode="video"` 编码 MP4 `video_url`；模型服务不支持该 content part 时，错误会发生在真实 API 调用阶段。
 
 ## `model_client.py`
 
@@ -232,5 +237,5 @@ prompt_utils.py
 
 1. 统一目录名和 Python 包名，避免 examples 中 `vlm_auto_annotation_refactor` 导入失败。
 2. 当前 `stage_runner.py` 已写入 `call_vlm_with_metadata()` 返回的 usage；后续如调整 usage 字段口径，应同步 `result_io.py` 和文档。
-3. `input_mode="video"` 当前未实现，建议要么从配置注释中弱化，要么实现 video_url 编码。
+3. `input_mode="video"` 的 `video_url` 兼容性取决于实际 OpenAI-compatible 模型服务，部署切换时应先做小样本验证。
 4. `merge_mode="timeline_grid"` 会按 `merge_length` 合并时间点；`merge_length < 1` 表示合并全部时间点。

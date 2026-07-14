@@ -39,7 +39,7 @@ scene -> analysis -> refinement
 | 模块 | 一句话职责 |
 |---|---|
 | `config.yaml` | 定义 workflow、顶层模型参数、每个 stage 的 prompt 配置、视频参数和可选 generation 覆盖。 |
-| `video_process.py` | standalone 视频输入层，读取单视频/多视角视频，抽帧、缩放、绘制标签、拼接并编码为 OpenAI-compatible `image_url` parts。 |
+| `video_process.py` | standalone 视频输入层，读取单视频/多视角视频，抽帧、缩放、绘制标签、按需拼接，并编码为 OpenAI-compatible `image_url` / `video_url` media parts。 |
 | `model_client.py` | OpenAI-compatible VLM client，构造 chat messages 并返回模型文本。 |
 | `json_utils.py` | 从模型文本中提取 JSON object 或 JSON array。 |
 | `prompt_utils.py` | 加载 prompt 模块，并渲染 `{{ ctx.* }}`、`{{ prompt.* }}`、旧式 `extra_vars` 占位符。 |
@@ -74,8 +74,9 @@ scene -> analysis -> refinement
 ## 重要实现备注
 
 1. 当前 `video_process.py` 是 standalone 实现，不再依赖旧 `utils.video_utils`。
-2. `input_mode="image_sequence"` 已实现；`input_mode="video"` 会在 `build_video_inputs()` 中明确抛错。
+2. `input_mode="image_sequence"` 输出 JPEG parts；`input_mode="video"` 输出处理后 MP4 `video_url` parts，真实调用要求服务端支持该格式。
 3. `merge_mode` 只控制时间维度：`per_frame` 逐时间点输出，`timeline_grid` 按 `merge_length` 从左到右合并时间点；`merge_length < 1` 表示全部时间点合成一张图。
 4. `max_time` 是 stage 级视频处理上限，在抽帧、缩放、多视角合并和编码前统一生效；它限制原始时间轴上的有效区间，不改变 FPS 或时间戳。
+5. `merge_views=false` 时，单视角保持原有消息形状；多视角会分别处理并全部发送，每组媒体前带视角文字标签。
 5. `dry_run=True` 仍会执行视频处理和 prompt 渲染，只跳过真实 VLM 调用。
 6. 当前目录名是 `vlm_auto_annotation_refactor_gpt`，但 README、examples 和 config 中的包名是 `vlm_auto_annotation_refactor`。如果没有安装/映射同名包，直接运行 examples 可能导入失败。建议后续统一目录名和包名。

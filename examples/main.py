@@ -8,8 +8,9 @@ For a quick pipeline check without calling the VLM:
 
     python examples/main.py --dry-run --limit 1
 
-Per-task outputs are saved under ``examples/batch_predictions`` and the
-aggregate summary is saved to ``examples/batch_predictions.json`` by default.
+Per-task outputs are saved under ``examples/vlm_annotation_batch_predictions``.
+After refinement completes, a standardized trajectory JSON is saved to each
+task's ``trajectory_path`` when present, otherwise to ``--summary``.
 """
 
 from __future__ import annotations
@@ -36,16 +37,23 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
+DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "test_add_output_path.json"
 
 
-def _ensure_imports() -> tuple[Any, Any]:
+def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
     """Import pipeline helpers from the current package directory name."""
     if str(PACKAGE_PARENT) not in sys.path:
         sys.path.insert(0, str(PACKAGE_PARENT))
 
     pipeline_module = importlib.import_module(f"{PACKAGE_NAME}.pipeline")
-    result_io_module = importlib.import_module(f"{PACKAGE_NAME}.result_io")
-    return pipeline_module.run_pipeline, result_io_module.save_json
+    trajectory_module = importlib.import_module(f"{PACKAGE_NAME}.trajectory_summary")
+    return (
+        pipeline_module.run_pipeline,
+        trajectory_module.build_trajectory,
+        trajectory_module.resolve_summary_output_path,
+        trajectory_module.save_trajectory,
+        trajectory_module.register_unique_output_path,
+    )
 
 
 def _load_json_list(path: Path) -> list[dict[str, Any]]:
@@ -80,12 +88,26 @@ def _infer_dataset_name(video_path: Any) -> str:
     return "task"
 
 
+def _resolve_video_path(value: Any, base_dir: Path) -> Any:
+    if isinstance(value, dict):
+        return {name: _resolve_video_path(path, base_dir) for name, path in value.items()}
+    if isinstance(value, list):
+        return [_resolve_video_path(path, base_dir) for path in value]
+    if isinstance(value, tuple):
+        return [_resolve_video_path(path, base_dir) for path in value]
+
+    path = Path(str(value))
+    if path.is_absolute():
+        return str(path)
+    return str((base_dir / path).resolve())
+
+
 def _slice_tasks(tasks: list[dict[str, Any]], *, start_index: int, limit: int | None) -> list[tuple[int, dict[str, Any]]]:
     end_index = len(tasks) if limit is None else min(len(tasks), start_index + limit)
     return list(enumerate(tasks[start_index:end_index], start=start_index))
 
 
-def _build_context(item: dict[str, Any], index: int) -> dict[str, Any]:
+def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> dict[str, Any]:
     if "video_path" not in item:
         raise ValueError(f"Task item #{index} missing 'video_path'")
     instruction = item.get("task") or item.get("instruction")
@@ -95,7 +117,7 @@ def _build_context(item: dict[str, Any], index: int) -> dict[str, Any]:
     episode_id = str(item.get("episode_id") or f"item_{index:05d}")
     return {
         "input": {
-            "video_path": item["video_path"],
+            "video_path": _resolve_video_path(item["video_path"], task_base_dir),
             "instruction": str(instruction),
             "video_id": episode_id,
             "task_index": index,
@@ -104,37 +126,9 @@ def _build_context(item: dict[str, Any], index: int) -> dict[str, Any]:
     }
 
 
-def _summary_record(
-    *,
-    item: dict[str, Any],
-    index: int,
-    context: dict[str, Any] | None,
-    status: str,
-    error: str | None = None,
-) -> dict[str, Any]:
-    pipeline = context.get("pipeline", {}) if context else {}
-    workflow = pipeline.get("workflow", [])
-    final_stage = workflow[-1] if workflow else None
-    final_output = None
-    if context and final_stage in context.get("stages", {}):
-        final_output = context["stages"][final_stage].get("output")
-
-    record: dict[str, Any] = {
-        "index": index,
-        "episode_id": item.get("episode_id"),
-        "task": item.get("task") or item.get("instruction"),
-        "status": status,
-        "run_dir": context.get("run_dir") if context else None,
-        "workflow": workflow,
-        "selected_stages": pipeline.get("selected_stages", []),
-        "executed_stages": pipeline.get("executed_stages", []),
-        "skipped_stages": pipeline.get("skipped_stages", []),
-        "final_stage": final_stage,
-        "final_output": final_output,
-    }
-    if error:
-        record["error"] = error
-    return record
+def _refinement_record(context: dict[str, Any]) -> dict[str, Any] | None:
+    record = context.get("stages", {}).get("refinement")
+    return record if isinstance(record, dict) else None
 
 
 def parse_args() -> argparse.Namespace:
@@ -142,7 +136,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"), help="Path to config.yaml.")
     parser.add_argument(
         "--tasks",
-        default=str(SCRIPT_DIR / "robogene_twoArm_franka_arrange_tabletop_drink_display.json"),
+        default=str(DEFAULT_TASKS_PATH),
         help="Path to task JSON list.",
     )
     parser.add_argument(
@@ -176,7 +170,13 @@ def main() -> None:
     if args.limit is not None and args.limit < 0:
         raise ValueError("--limit must be >= 0")
 
-    run_pipeline, save_json = _ensure_imports()
+    (
+        run_pipeline,
+        build_trajectory,
+        resolve_summary_output_path,
+        save_trajectory,
+        register_unique_output_path,
+    ) = _ensure_imports()
 
     config_path = Path(args.config)
     tasks_path = Path(args.tasks)
@@ -185,15 +185,18 @@ def main() -> None:
 
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     tasks = _load_json_list(tasks_path)
+    task_base_dir = tasks_path.resolve().parent
     selected_tasks = _slice_tasks(tasks, start_index=args.start_index, limit=args.limit)
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    summary: list[dict[str, Any]] = []
+    used_trajectory_paths: dict[str, str] = {}
+    ok_count = 0
+    error_count = 0
 
     print(f"Loaded config: {config_path}")
     print(f"Loaded tasks: {tasks_path} ({len(tasks)} total, {len(selected_tasks)} selected)")
     print(f"Saving per-task outputs to: {output_dir}")
-    print(f"Saving summary to: {summary_path}")
+    print(f"Default trajectory output: {summary_path}")
 
     for index, item in selected_tasks:
         context: dict[str, Any] | None = None
@@ -203,7 +206,7 @@ def main() -> None:
 
         print(f"\n[{index + 1}/{len(tasks)}] {run_name}")
         try:
-            context = _build_context(item, index)
+            context = _build_context(item, index, task_base_dir=task_base_dir)
             run_pipeline(
                 context,
                 config,
@@ -215,22 +218,35 @@ def main() -> None:
                 run_name=run_name,
                 save_results=True,
             )
-            summary.append(_summary_record(item=item, index=index, context=context, status="ok"))
+            refinement_record = _refinement_record(context)
+            if refinement_record is not None:
+                refinement_output = refinement_record.get("output")
+                video_meta = refinement_record.get("video_meta")
+                trajectory = build_trajectory(
+                    task=item,
+                    refinement_output=refinement_output,
+                    video_meta=video_meta,
+                )
+                trajectory_path = resolve_summary_output_path(
+                    item,
+                    summary_path,
+                    task_base_dir=task_base_dir,
+                )
+                register_unique_output_path(trajectory_path, episode_id, used_trajectory_paths)
+                save_trajectory(trajectory, trajectory_path)
+                print(f"  trajectory -> {trajectory_path}")
+            else:
+                print("  trajectory skipped -> refinement stage was not completed")
+            ok_count += 1
             print(f"  ok -> {context.get('run_dir')}")
         except Exception as exc:
             error_text = f"{type(exc).__name__}: {exc}"
-            summary.append(_summary_record(item=item, index=index, context=context, status="error", error=error_text))
+            error_count += 1
             print(f"  error -> {error_text}")
             if args.fail_fast:
                 traceback.print_exc()
-                save_json(summary, summary_path)
                 raise
-
-        save_json(summary, summary_path)
-
-    ok_count = sum(1 for item in summary if item.get("status") == "ok")
-    error_count = len(summary) - ok_count
-    print(f"\nDone. ok={ok_count}, error={error_count}, summary={summary_path}")
+    print(f"\nDone. ok={ok_count}, error={error_count}, default_trajectory={summary_path}")
 
 
 if __name__ == "__main__":

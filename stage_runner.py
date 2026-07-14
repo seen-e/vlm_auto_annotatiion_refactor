@@ -144,6 +144,10 @@ def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[s
     sampled_count = video_meta.get("num_sampled_frames")
     output_count = video_meta.get("num_output_parts")
     primary_view = video_meta.get("primary_view")
+    input_mode = str(video_meta.get("input_mode", video_cfg.get("input_mode", "image_sequence")))
+    separate_view_inputs = bool(video_meta.get("separate_view_inputs", False))
+    add_frame_tags = bool(video_meta.get("add_frame_tags", False))
+    view_outputs = video_meta.get("view_outputs") or {}
     if merge_mode == "timeline_grid" and effective_merge_length <= 0:
         if merge_length < 1 and sampled_count is not None:
             effective_merge_length = int(sampled_count)
@@ -152,20 +156,31 @@ def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[s
 
     lines = [
         "当前视频输入布局说明：",
-        f"- 输入模式：{video_meta.get('input_mode', video_cfg.get('input_mode', 'image_sequence'))}。",
+        f"- 输入模式：{input_mode}。",
     ]
     if sampled_count is not None and output_count is not None:
-        lines.append(f"- 共采样 {sampled_count} 个主时间点，最终送入模型 {output_count} 张图像。")
+        media_name = "张图像" if input_mode == "image_sequence" else "个视频"
+        if separate_view_inputs:
+            sampled_summary = "、".join(
+                f"{name}={output.get('num_sampled_frames', 0)}"
+                for name, output in view_outputs.items()
+            )
+            lines.append(f"- 各视角采样点数：{sampled_summary}；最终送入模型 {output_count} {media_name}。")
+        else:
+            lines.append(f"- 共采样 {sampled_count} 个主时间点，最终送入模型 {output_count} {media_name}。")
     if view_names:
         lines.append(f"- 视角顺序：{', '.join(view_names)}。")
-    if primary_view:
+    if primary_view and not separate_view_inputs:
         lines.append(f"- 主时间轴基于视角 {primary_view}；其他视角按同一时间戳对齐。")
+    elif primary_view:
+        lines.append(f"- {primary_view} 仍是 primary_view，但每个视角使用各自原始时间轴独立采样。")
 
     if merge_views and len(view_names) > 1:
         lines.append("- 同一时间点的多个视角会按视角顺序自上而下拼接到同一张图中。")
         lines.append("- 上下相邻通常表示不同摄像机视角，不表示真实世界中物体一定上下相邻。")
-    elif len(view_names) > 1:
-        lines.append(f"- 未启用多视角拼接；每个采样时间点只使用主视角 {primary_view}。")
+    elif separate_view_inputs:
+        lines.append("- 未启用多视角拼图；所有配置视角都会分别处理，不会因较短视角而截断其他视角。")
+        lines.append("- message 中每组图像序列或视频前都有文字标签，明确标识其所属视角。")
     else:
         lines.append("- 每个采样时间点只有一个视角。")
 
@@ -185,7 +200,10 @@ def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[s
     elif merge_mode == "timeline_grid":
         lines.append("- 当前配置选择 timeline_grid，但每个 montage 只包含一个时间点。")
     else:
-        lines.append("- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。")
+        if input_mode == "video":
+            lines.append("- per_frame 模式保留独立采样帧，并按时间顺序编码到视频中。")
+        else:
+            lines.append("- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。")
 
     if draw_timestamps:
         lines.append("- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。")
@@ -193,8 +211,12 @@ def build_video_layout_description(video_cfg: dict[str, Any], video_meta: dict[s
         lines.append("- 图像上没有绘制时间戳，需要根据输入顺序和上下文估计时间推进。")
     if draw_view_names:
         lines.append("- 图像上绘制了视角名称，可用来区分不同摄像机来源。")
+    elif separate_view_inputs:
+        lines.append("- 媒体画面内没有绘制视角名称，但每组媒体前的 message 文字标签会标明视角来源。")
     elif len(view_names) > 1:
         lines.append("- 图像上没有绘制视角名称，需要按上述视角顺序理解不同视角来源。")
+    if add_frame_tags:
+        lines.append("- 每张 image_sequence 图像前都有独立文字标签；<t=...s> 表示原始视频时间轴，<view_name> 表示拍摄视角。")
 
     return "\n".join(lines)
 

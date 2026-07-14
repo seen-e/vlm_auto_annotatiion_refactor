@@ -200,4 +200,4 @@ list/dict 会自动转成 pretty JSON 字符串。
 1. 统一目录名和包名，避免 `vlm_auto_annotation_refactor_gpt` 与 `vlm_auto_annotation_refactor` 不一致。
 2. 当前 `stage_runner.py` 已写入 `model_client.call_vlm_with_metadata()` 返回的 usage；如果字段口径变化，应同步 `result_io.py` 和相关文档。
 3. 明确 `merge_mode="timeline_grid"` 在 standalone 版本中的语义。
-4. 如果确实需要 `input_mode="video"`，在 `video_process.py` 中实现 video_url 编码，否则配置注释中应明确只推荐 `image_sequence`。
+4. `input_mode="video"` 已通过 MP4 `video_url` 实现，但不同模型服务的支持范围可能不同；更换部署时应先验证服务端兼容性。

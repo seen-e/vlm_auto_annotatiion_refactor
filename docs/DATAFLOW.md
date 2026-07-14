@@ -49,7 +49,7 @@ examples/run_pipeline.py
 `stage_runner.py` 调用：
 
 ```python
-image_parts, video_meta = build_video_inputs(context["input"]["video_path"], **video_cfg)
+media_parts, video_meta = build_video_inputs(context["input"]["video_path"], **video_cfg)
 ```
 
 `video_process.py` 内部流程：
@@ -63,7 +63,7 @@ read_video_info
   ↓
 _effective_time_window  # max_time / frame range / view duration 交集
   ↓
-compute_sample_timestamps  # primary view 时间轴
+compute_sample_timestamps  # 合并时用 primary 时间轴；非合并多视角时分别计算
   ↓
 _build_timepoint_frames
   ↓
@@ -73,24 +73,28 @@ draw_overlay
   ↓
 merge_view_frames          # merge_views=True
   ↓
-_apply_temporal_merge      # merge_mode == "timeline_grid"
+_apply_temporal_merge      # 每个待编码序列内部执行 timeline_grid
   ↓
-encode_frame_to_image_part
+encode_frame_to_image_part / encode_frames_to_video_part
   ↓
-image_parts + video_meta
+_frame_message_tag         # image_sequence + add_frame_tags=true
+  ↓
+视角文字标签 + media_parts + video_meta  # 非合并多视角
 ```
 
 重要细节：
 
 1. `video_path` 可是单路径、路径 list 或 `{view_name: path}` dict。
 2. dict 输入时，`view_names` 可选择和排序视角。
-3. 第一个视角作为 primary view，用于抽帧和时间轴。
-4. 其他视角按 primary timestamp 映射到自己的帧。
+3. 第一个视角仍作为 primary view。
+4. `merge_views=true` 时，其他视角按 primary timestamp 映射到自己的帧；`merge_views=false` 且有多个视角时，每个视角按自己的原始时间轴独立处理并全部发送。
 5. `max_time` 是每个 stage 独立的视频时长上限，在抽帧、缩放、多视角合并、图像序列生成和编码之前生效。
 6. `max_time=-1` 表示不限制；`max_time>0` 表示只处理原始时间轴 `[0, min(max_time, original_duration))`；`0` 或 `<-1` 会抛配置异常。
-7. 如果同时有 `frame_start/frame_end`，最终处理区间是 `max_time`、帧范围和各视角有效时长的交集。
+7. 如果同时有 `frame_start/frame_end`，最终处理区间是各限制的交集；非合并多视角对每个视角分别计算，合并多视角再取共同视角交集。
 8. 多视角输入时不会循环、补帧、减速或修改时间戳；采样时间戳仍对应原始视频起点。
-9. 当前只实现 `input_mode="image_sequence"`；`input_mode="video"` 会报错。
+9. `input_mode="image_sequence"` 生成 JPEG `image_url`；`input_mode="video"` 将处理后帧编码为 MP4 `video_url`，目标服务必须支持视频 content part。
+10. 非合并多视角的 message 在每组媒体前插入文字标签说明视角；`video_meta.view_outputs` 保存逐视角采样信息，`output_groups` 保存全局媒体顺序。
+11. `add_frame_tags=true` 时，每个 image_url 前还会插入 `<t=...s> <view_name>` text part；时间来自原始视频时间轴，video 模式不启用逐帧标签。
 
 ## `context` 结构
 

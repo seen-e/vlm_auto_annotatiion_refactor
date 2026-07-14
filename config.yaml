@@ -112,8 +112,16 @@ stages:
     video:
       # input_mode: 传给 VLM 的视觉输入形式。
       # 可填写："image_sequence" 或 "video"。
-      # 当前推荐 image_sequence；video 取决于旧 video_utils 和服务端支持。
+      # image_sequence: 将处理后帧编码为 JPEG image_url parts。
+      # video: 将处理后帧编码为 MP4 video_url part；需要模型服务支持 video_url。
       input_mode: "image_sequence"
+
+      # add_frame_tags: 仅对 input_mode=image_sequence 生效。
+      # true 时，在 message 的每个 image_url 前插入 text part：
+      #   <t=1.25s> <camera_front>
+      # 标签内容与图像叠字格式一致；timeline montage 会列出其中全部时间戳，
+      # 多视角拼图会列出其中全部视角。false 时不增加逐帧文字标签。
+      add_frame_tags: true
 
       # max_time: 当前 stage 参与后续视频处理的最大原始视频时长，单位秒。
       # -1 表示不限制，使用完整原始视频。
@@ -123,7 +131,8 @@ stages:
       # 不会修改视频播放速度、帧率或时间戳。
       max_time: -1
 
-      # save_processed: 是否保存当前 stage 最终送入模型的处理后图像序列。
+      # save_processed: 是否保存当前 stage 最终送入模型的处理后媒体。
+      # merge_views=false 且有多个视角时，会在 processed_frames/<view_name>/ 下分别保存。
       save_processed: true
 
       # fps: 按原始视频时间轴抽帧的目标帧率。
@@ -132,6 +141,7 @@ stages:
 
       # max_frames: 当前 stage 最多采样多少帧。
       # 多视角 merge_views=True 时，通常表示时间点数量，而不是视角子图数量。
+      # merge_views=False 且 view_names 有多个视角时，对每个视角分别应用此上限。
       max_frames: 64
 
       # resize_width: 每个视角图像在拼接/编码前的目标宽度，保持宽高比。
@@ -161,13 +171,16 @@ stages:
 
       # merge_views: 是否启用多视角输入。
       # true: 同一时间点的不同视角按 view_names 顺序逐行纵向拼接。
-      # false: 只输出 primary_view，即 view_names 中的第一个视角。
+      # false + 单视角: 保持原行为，只输出该视角。
+      # false + 多视角: 每个视角独立执行时间限制、抽帧、缩放和 input_mode 编码；
+      #                    message 中会在每组媒体前插入文字，明确标识所属视角。
       merge_views: false
 
       # merge_mode: 时间维度输出模式。
       # 可填写："per_frame" 或 "timeline_grid"。
       # per_frame: 每个采样时间点单独输出给模型。
       # timeline_grid: 按时间从左到右合并多个采样时间点后输出给模型。
+      # merge_views=false 且有多个视角时，时间维度处理在每个视角内部独立执行。
       merge_mode: "per_frame"
 
       # merge_length: timeline_grid 模式下每张 montage 合并的连续时间点数量。
@@ -197,6 +210,8 @@ stages:
     #   temperature: 0.0
     video:
       input_mode: "image_sequence"
+      # 是否在每个 image_url 前加入 <t=...s> <view_name> 文字标签。
+      add_frame_tags: true
       # max_time: 当前 stage 的最大原始视频处理时长，单位秒。
       # -1 表示不限制；大于 0 表示只处理 [0, max_time)。
       # 多视角输入时，所有视角使用相同时间上限，较短视角不会补帧。
@@ -230,6 +245,8 @@ stages:
        
     video:
       input_mode: "image_sequence"
+      # 是否在每个 image_url 前加入 <t=...s> <view_name> 文字标签。
+      add_frame_tags: true
       # max_time: 当前 stage 的最大原始视频处理时长，单位秒。
       # -1 表示不限制；大于 0 表示只处理 [0, max_time)。
       # 该参数与 fps、max_frames、frame_start/frame_end 取交集后再抽帧。
@@ -266,6 +283,7 @@ stages:
   #   output_key: "object_state"
   #   video:
   #     input_mode: "image_sequence"
+  #     add_frame_tags: false
   #     max_time: -1
   #     save_processed: false
   #     fps: 1.0
