@@ -1,0 +1,130 @@
+{
+  "episode_id": "episode_000012",
+  "robot_name": null,
+  "original_dataset_id": null,
+  "duration": 30.5,
+  "start_time": 0.0,
+  "end_time": 30.5,
+  "start_frame": 0,
+  "end_frame": 914,
+  "keyframes": [
+    0,
+    458,
+    914
+  ],
+  "L1_task": "将 laptop_1 搬运并放置到 stand_1 上；left 机械臂完成任务后撤回",
+  "sense": null,
+  "category": null,
+  "segments": [
+    {
+      "segment_id": 0,
+      "phase": "接近",
+      "start_time": 2.0,
+      "end_time": 8.5,
+      "start_frame": 60,
+      "end_frame": 255,
+      "keyframes": [
+        60,
+        158,
+        255
+      ],
+      "caption": "left 接近 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 1,
+      "phase": "接触",
+      "start_time": 8.5,
+      "end_time": 9.5,
+      "start_frame": 255,
+      "end_frame": 285,
+      "keyframes": [
+        255,
+        270,
+        285
+      ],
+      "caption": "left 接触 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 2,
+      "phase": "抓取",
+      "start_time": 9.5,
+      "end_time": 10.5,
+      "start_frame": 285,
+      "end_frame": 315,
+      "keyframes": [
+        285,
+        300,
+        315
+      ],
+      "caption": "left 抓取 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 3,
+      "phase": "搬运",
+      "start_time": 10.5,
+      "end_time": 15.5,
+      "start_frame": 315,
+      "end_frame": 465,
+      "keyframes": [
+        315,
+        390,
+        465
+      ],
+      "caption": "left 将 laptop_1 搬运至 stand_1 上方。",
+      "success": 1
+    },
+    {
+      "segment_id": 4,
+      "phase": "放置",
+      "start_time": 15.5,
+      "end_time": 16.5,
+      "start_frame": 465,
+      "end_frame": 495,
+      "keyframes": [
+        465,
+        480,
+        495
+      ],
+      "caption": "left 将 laptop_1 放置到 stand_1 上。",
+      "success": 1
+    },
+    {
+      "segment_id": 5,
+      "phase": "调整末端位置",
+      "start_time": 16.5,
+      "end_time": 17.5,
+      "start_frame": 495,
+      "end_frame": 525,
+      "keyframes": [
+        495,
+        510,
+        525
+      ],
+      "caption": "left 在 stand_1 上调整 laptop_1 的位置。",
+      "success": 1
+    },
+    {
+      "segment_id": 6,
+      "phase": "撤回",
+      "start_time": 17.5,
+      "end_time": 21.0,
+      "start_frame": 525,
+      "end_frame": 630,
+      "keyframes": [
+        525,
+        578,
+        630
+      ],
+      "caption": "left 从 stand_1 撤回。",
+      "success": 1
+    }
+  ],
+  "quality": {
+    "caption_video_match": null,
+    "object_presence_rate": null,
+    "status": "UNKNOWN"
+  }
+}

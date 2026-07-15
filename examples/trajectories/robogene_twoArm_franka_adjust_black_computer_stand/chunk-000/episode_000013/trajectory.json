@@ -1,0 +1,220 @@
+{
+  "episode_id": "episode_000013",
+  "robot_name": null,
+  "original_dataset_id": null,
+  "duration": 25.733333333333334,
+  "start_time": 0.0,
+  "end_time": 25.733333333333334,
+  "start_frame": 0,
+  "end_frame": 771,
+  "keyframes": [
+    0,
+    390,
+    771
+  ],
+  "L1_task": "将 laptop_1 搬运并放置到 stand_1",
+  "sense": null,
+  "category": null,
+  "segments": [
+    {
+      "segment_id": 0,
+      "phase": "接近",
+      "start_time": 0.0,
+      "end_time": 3.0,
+      "start_frame": 0,
+      "end_frame": 90,
+      "keyframes": [
+        0,
+        45,
+        90
+      ],
+      "caption": "right 接近 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 1,
+      "phase": "接近",
+      "start_time": 0.0,
+      "end_time": 8.0,
+      "start_frame": 0,
+      "end_frame": 240,
+      "keyframes": [
+        0,
+        120,
+        240
+      ],
+      "caption": "left 接近 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 2,
+      "phase": "接触",
+      "start_time": 3.0,
+      "end_time": 4.0,
+      "start_frame": 90,
+      "end_frame": 120,
+      "keyframes": [
+        90,
+        105,
+        120
+      ],
+      "caption": "right 接触 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 3,
+      "phase": "固定",
+      "start_time": 4.0,
+      "end_time": 18.0,
+      "start_frame": 120,
+      "end_frame": 540,
+      "keyframes": [
+        120,
+        330,
+        540
+      ],
+      "caption": "right 固定 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 4,
+      "phase": "接触",
+      "start_time": 8.0,
+      "end_time": 9.0,
+      "start_frame": 240,
+      "end_frame": 270,
+      "keyframes": [
+        240,
+        255,
+        270
+      ],
+      "caption": "left 接触 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 5,
+      "phase": "抓取",
+      "start_time": 9.0,
+      "end_time": 10.0,
+      "start_frame": 270,
+      "end_frame": 300,
+      "keyframes": [
+        270,
+        285,
+        300
+      ],
+      "caption": "left 抓取 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 6,
+      "phase": "搬运",
+      "start_time": 10.0,
+      "end_time": 13.0,
+      "start_frame": 300,
+      "end_frame": 390,
+      "keyframes": [
+        300,
+        345,
+        390
+      ],
+      "caption": "left 将 laptop_1 搬运至 stand_1 上方。",
+      "success": 1
+    },
+    {
+      "segment_id": 7,
+      "phase": "放置",
+      "start_time": 13.0,
+      "end_time": 15.0,
+      "start_frame": 390,
+      "end_frame": 450,
+      "keyframes": [
+        390,
+        420,
+        450
+      ],
+      "caption": "left 将 laptop_1 放置于 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 8,
+      "phase": "释放",
+      "start_time": 15.0,
+      "end_time": 17.0,
+      "start_frame": 450,
+      "end_frame": 510,
+      "keyframes": [
+        450,
+        480,
+        510
+      ],
+      "caption": "left 释放 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 9,
+      "phase": "等待",
+      "start_time": 15.0,
+      "end_time": 18.0,
+      "start_frame": 450,
+      "end_frame": 540,
+      "keyframes": [
+        450,
+        495,
+        540
+      ],
+      "caption": "right 等待。",
+      "success": 1
+    },
+    {
+      "segment_id": 10,
+      "phase": "撤回",
+      "start_time": 17.0,
+      "end_time": 20.0,
+      "start_frame": 510,
+      "end_frame": 600,
+      "keyframes": [
+        510,
+        555,
+        600
+      ],
+      "caption": "left 撤回。",
+      "success": null
+    },
+    {
+      "segment_id": 11,
+      "phase": "释放",
+      "start_time": 18.0,
+      "end_time": 19.0,
+      "start_frame": 540,
+      "end_frame": 570,
+      "keyframes": [
+        540,
+        555,
+        570
+      ],
+      "caption": "right 释放 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 12,
+      "phase": "撤回",
+      "start_time": 19.0,
+      "end_time": 22.0,
+      "start_frame": 570,
+      "end_frame": 660,
+      "keyframes": [
+        570,
+        615,
+        660
+      ],
+      "caption": "right 撤回。",
+      "success": null
+    }
+  ],
+  "quality": {
+    "caption_video_match": null,
+    "object_presence_rate": null,
+    "status": "UNKNOWN"
+  }
+}

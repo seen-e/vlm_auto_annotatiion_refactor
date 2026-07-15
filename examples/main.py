@@ -21,6 +21,7 @@ import json
 import re
 import sys
 import traceback
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -37,7 +38,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
-DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "test_add_output_path.json"
+DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_adjust_black_computer_stand.json"
 
 
 def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
@@ -131,6 +132,81 @@ def _refinement_record(context: dict[str, Any]) -> dict[str, Any] | None:
     return record if isinstance(record, dict) else None
 
 
+def _run_one_task(
+    *,
+    item: dict[str, Any],
+    index: int,
+    total_tasks: int,
+    task_base_dir: Path,
+    config: dict[str, Any],
+    output_dir: Path,
+    summary_path: Path,
+    args: argparse.Namespace,
+    run_pipeline: Any,
+    build_trajectory: Any,
+    resolve_summary_output_path: Any,
+) -> dict[str, Any]:
+    dataset_name = _infer_dataset_name(item.get("video_path"))
+    episode_id = str(item.get("episode_id") or f"item_{index:05d}")
+    run_name = _safe_name(f"{index:05d}_{dataset_name}_{episode_id}")
+    context = _build_context(item, index, task_base_dir=task_base_dir)
+
+    run_pipeline(
+        context,
+        config,
+        dry_run=args.dry_run,
+        start_from=args.start_from,
+        stop_after=args.stop_after,
+        skip_existing=args.skip_existing,
+        output_dir=output_dir,
+        run_name=run_name,
+        save_results=True,
+    )
+
+    trajectory = None
+    trajectory_path = None
+    refinement_record = _refinement_record(context)
+    if refinement_record is not None:
+        trajectory = build_trajectory(
+            task=item,
+            refinement_output=refinement_record.get("output"),
+            video_meta=refinement_record.get("video_meta"),
+        )
+        trajectory_path = resolve_summary_output_path(
+            item,
+            summary_path,
+            task_base_dir=task_base_dir,
+        )
+
+    return {
+        "index": index,
+        "total_tasks": total_tasks,
+        "episode_id": episode_id,
+        "run_name": run_name,
+        "run_dir": context.get("run_dir"),
+        "trajectory": trajectory,
+        "trajectory_path": trajectory_path,
+    }
+
+
+def _handle_task_success(
+    result: dict[str, Any],
+    *,
+    register_unique_output_path: Any,
+    save_trajectory: Any,
+    used_trajectory_paths: dict[str, str],
+) -> None:
+    trajectory = result.get("trajectory")
+    trajectory_path = result.get("trajectory_path")
+    if trajectory is not None and trajectory_path is not None:
+        register_unique_output_path(trajectory_path, str(result["episode_id"]), used_trajectory_paths)
+        save_trajectory(trajectory, trajectory_path)
+        print(f"  trajectory -> {trajectory_path}")
+    else:
+        print("  trajectory skipped -> refinement stage was not completed")
+    print(f"  ok -> {result.get('run_dir')}")
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Batch run configured VLM pipeline on robot_mind2 tasks.")
     parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"), help="Path to config.yaml.")
@@ -155,6 +231,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--start-from", default=None, help="Optional pipeline start stage.")
     parser.add_argument("--stop-after", default=None, help="Optional pipeline stop stage.")
     parser.add_argument("--skip-existing", action="store_true", help="Skip stages already present in context.")
+    parser.add_argument("--workers", type=int, default=1, help="Number of episode pipelines to run concurrently.")
     parser.add_argument(
         "--fail-fast",
         action="store_true",
@@ -169,6 +246,8 @@ def main() -> None:
         raise ValueError("--start-index must be >= 0")
     if args.limit is not None and args.limit < 0:
         raise ValueError("--limit must be >= 0")
+    if args.workers < 1:
+        raise ValueError("--workers must be >= 1")
 
     (
         run_pipeline,
@@ -197,55 +276,74 @@ def main() -> None:
     print(f"Loaded tasks: {tasks_path} ({len(tasks)} total, {len(selected_tasks)} selected)")
     print(f"Saving per-task outputs to: {output_dir}")
     print(f"Default trajectory output: {summary_path}")
+    print(f"Workers: {args.workers}")
 
-    for index, item in selected_tasks:
-        context: dict[str, Any] | None = None
-        dataset_name = _infer_dataset_name(item.get("video_path"))
-        episode_id = str(item.get("episode_id") or f"item_{index:05d}")
-        run_name = _safe_name(f"{index:05d}_{dataset_name}_{episode_id}")
+    def run_selected_task(task_pair: tuple[int, dict[str, Any]]) -> dict[str, Any]:
+        index, item = task_pair
+        return _run_one_task(
+            item=item,
+            index=index,
+            total_tasks=len(tasks),
+            task_base_dir=task_base_dir,
+            config=config,
+            output_dir=output_dir,
+            summary_path=summary_path,
+            args=args,
+            run_pipeline=run_pipeline,
+            build_trajectory=build_trajectory,
+            resolve_summary_output_path=resolve_summary_output_path,
+        )
 
-        print(f"\n[{index + 1}/{len(tasks)}] {run_name}")
-        try:
-            context = _build_context(item, index, task_base_dir=task_base_dir)
-            run_pipeline(
-                context,
-                config,
-                dry_run=args.dry_run,
-                start_from=args.start_from,
-                stop_after=args.stop_after,
-                skip_existing=args.skip_existing,
-                output_dir=output_dir,
-                run_name=run_name,
-                save_results=True,
+    if args.workers == 1:
+        for task_pair in selected_tasks:
+            index, item = task_pair
+            preview_name = _safe_name(
+                f"{index:05d}_{_infer_dataset_name(item.get('video_path'))}_{item.get('episode_id') or f'item_{index:05d}'}"
             )
-            refinement_record = _refinement_record(context)
-            if refinement_record is not None:
-                refinement_output = refinement_record.get("output")
-                video_meta = refinement_record.get("video_meta")
-                trajectory = build_trajectory(
-                    task=item,
-                    refinement_output=refinement_output,
-                    video_meta=video_meta,
+            print(f"\n[{index + 1}/{len(tasks)}] {preview_name}")
+            try:
+                result = run_selected_task(task_pair)
+                _handle_task_success(
+                    result,
+                    register_unique_output_path=register_unique_output_path,
+                    save_trajectory=save_trajectory,
+                    used_trajectory_paths=used_trajectory_paths,
                 )
-                trajectory_path = resolve_summary_output_path(
-                    item,
-                    summary_path,
-                    task_base_dir=task_base_dir,
+                ok_count += 1
+            except Exception as exc:
+                error_text = f"{type(exc).__name__}: {exc}"
+                error_count += 1
+                print(f"  error -> {error_text}")
+                if args.fail_fast:
+                    traceback.print_exc()
+                    raise
+    else:
+        with ThreadPoolExecutor(max_workers=args.workers) as executor:
+            future_to_task = {executor.submit(run_selected_task, task_pair): task_pair for task_pair in selected_tasks}
+            for future in as_completed(future_to_task):
+                index, item = future_to_task[future]
+                preview_name = _safe_name(
+                    f"{index:05d}_{_infer_dataset_name(item.get('video_path'))}_{item.get('episode_id') or f'item_{index:05d}'}"
                 )
-                register_unique_output_path(trajectory_path, episode_id, used_trajectory_paths)
-                save_trajectory(trajectory, trajectory_path)
-                print(f"  trajectory -> {trajectory_path}")
-            else:
-                print("  trajectory skipped -> refinement stage was not completed")
-            ok_count += 1
-            print(f"  ok -> {context.get('run_dir')}")
-        except Exception as exc:
-            error_text = f"{type(exc).__name__}: {exc}"
-            error_count += 1
-            print(f"  error -> {error_text}")
-            if args.fail_fast:
-                traceback.print_exc()
-                raise
+                print(f"\n[{index + 1}/{len(tasks)}] {preview_name}")
+                try:
+                    result = future.result()
+                    _handle_task_success(
+                        result,
+                        register_unique_output_path=register_unique_output_path,
+                        save_trajectory=save_trajectory,
+                        used_trajectory_paths=used_trajectory_paths,
+                    )
+                    ok_count += 1
+                except Exception as exc:
+                    error_text = f"{type(exc).__name__}: {exc}"
+                    error_count += 1
+                    print(f"  error -> {error_text}")
+                    if args.fail_fast:
+                        for pending in future_to_task:
+                            pending.cancel()
+                        traceback.print_exc()
+                        raise
     print(f"\nDone. ok={ok_count}, error={error_count}, default_trajectory={summary_path}")
 
 
