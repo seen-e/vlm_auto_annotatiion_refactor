@@ -1,0 +1,2118 @@
+{
+  "input_type": "multi_view_dict",
+  "input_mode": "image_sequence",
+  "view_names": [
+    "camera_front"
+  ],
+  "primary_view": "camera_front",
+  "video_info": {
+    "camera_front": {
+      "path": "C:\\Users\\34927\\Desktop\\robot_mind2\\robogene_twoArm_franka_adjust_black_computer_stand\\videos\\chunk-000\\observation.rgb_images.camera_front\\episode_000001.mp4",
+      "fps": 30.0,
+      "frame_count": 802,
+      "width": 640,
+      "height": 480,
+      "duration": 26.733333333333334
+    }
+  },
+  "original_fps": 30.0,
+  "target_fps": 4.0,
+  "frame_start": 0,
+  "frame_end": null,
+  "original_duration": 26.733333333333334,
+  "configured_max_time": -1,
+  "effective_duration": 26.733333333333334,
+  "effective_start_time": 0.0,
+  "effective_end_time": 26.733333333333334,
+  "effective_frame_start": 0,
+  "effective_frame_end": 801,
+  "min_input_duration": 26.733333333333334,
+  "per_view_durations": {
+    "camera_front": 26.733333333333334
+  },
+  "per_view_effective_durations": {
+    "camera_front": 26.733333333333334
+  },
+  "was_time_limited": false,
+  "was_limited_by_view_duration": false,
+  "was_limited_by_frame_range": false,
+  "sampled_frame_indices": [
+    0,
+    8,
+    15,
+    22,
+    30,
+    38,
+    45,
+    52,
+    60,
+    68,
+    75,
+    82,
+    90,
+    98,
+    105,
+    112,
+    120,
+    128,
+    135,
+    142,
+    150,
+    158,
+    165,
+    172,
+    180,
+    188,
+    195,
+    202,
+    210,
+    218,
+    225,
+    232,
+    240,
+    248,
+    255,
+    262,
+    270,
+    278,
+    285,
+    292,
+    300,
+    308,
+    315,
+    322,
+    330,
+    338,
+    345,
+    352,
+    360,
+    368,
+    375,
+    382,
+    390,
+    398,
+    405,
+    412,
+    420,
+    428,
+    435,
+    442,
+    450,
+    458,
+    465,
+    472,
+    480,
+    488,
+    495,
+    502,
+    510,
+    518,
+    525,
+    532,
+    540,
+    548,
+    555,
+    562,
+    570,
+    578,
+    585,
+    592,
+    600,
+    608,
+    615,
+    622,
+    630,
+    638,
+    645,
+    652,
+    660,
+    668,
+    675,
+    682,
+    690,
+    698,
+    705,
+    712,
+    720,
+    728,
+    735,
+    742,
+    750,
+    758,
+    765,
+    772,
+    780,
+    788,
+    795,
+    801
+  ],
+  "sampled_timestamps": [
+    0.0,
+    0.26666666666666666,
+    0.5,
+    0.7333333333333333,
+    1.0,
+    1.2666666666666666,
+    1.5,
+    1.7333333333333334,
+    2.0,
+    2.2666666666666666,
+    2.5,
+    2.7333333333333334,
+    3.0,
+    3.2666666666666666,
+    3.5,
+    3.7333333333333334,
+    4.0,
+    4.266666666666667,
+    4.5,
+    4.733333333333333,
+    5.0,
+    5.266666666666667,
+    5.5,
+    5.733333333333333,
+    6.0,
+    6.266666666666667,
+    6.5,
+    6.733333333333333,
+    7.0,
+    7.266666666666667,
+    7.5,
+    7.733333333333333,
+    8.0,
+    8.266666666666667,
+    8.5,
+    8.733333333333333,
+    9.0,
+    9.266666666666667,
+    9.5,
+    9.733333333333333,
+    10.0,
+    10.266666666666667,
+    10.5,
+    10.733333333333333,
+    11.0,
+    11.266666666666667,
+    11.5,
+    11.733333333333333,
+    12.0,
+    12.266666666666667,
+    12.5,
+    12.733333333333333,
+    13.0,
+    13.266666666666667,
+    13.5,
+    13.733333333333333,
+    14.0,
+    14.266666666666667,
+    14.5,
+    14.733333333333333,
+    15.0,
+    15.266666666666667,
+    15.5,
+    15.733333333333333,
+    16.0,
+    16.266666666666666,
+    16.5,
+    16.733333333333334,
+    17.0,
+    17.266666666666666,
+    17.5,
+    17.733333333333334,
+    18.0,
+    18.266666666666666,
+    18.5,
+    18.733333333333334,
+    19.0,
+    19.266666666666666,
+    19.5,
+    19.733333333333334,
+    20.0,
+    20.266666666666666,
+    20.5,
+    20.733333333333334,
+    21.0,
+    21.266666666666666,
+    21.5,
+    21.733333333333334,
+    22.0,
+    22.266666666666666,
+    22.5,
+    22.733333333333334,
+    23.0,
+    23.266666666666666,
+    23.5,
+    23.733333333333334,
+    24.0,
+    24.266666666666666,
+    24.5,
+    24.733333333333334,
+    25.0,
+    25.266666666666666,
+    25.5,
+    25.733333333333334,
+    26.0,
+    26.266666666666666,
+    26.5,
+    26.7
+  ],
+  "num_sampled_frames": 108,
+  "num_output_parts": 108,
+  "num_message_parts": 216,
+  "resize_width": 336,
+  "jpeg_quality": 95,
+  "draw_timestamps": true,
+  "draw_view_names": true,
+  "merge_views": false,
+  "merge_mode": "per_frame",
+  "merge_length": -1,
+  "effective_merge_length": 0,
+  "draw_montage_axes": true,
+  "separate_view_inputs": false,
+  "message_view_labels": false,
+  "add_frame_tags_requested": true,
+  "add_frame_tags": true,
+  "processed_layout": "flat",
+  "processed_view_directories": {},
+  "view_outputs": {},
+  "video_encoding": null,
+  "output_groups": [
+    {
+      "output_index": 0,
+      "primary_frame_indices": [
+        0
+      ],
+      "timestamps": [
+        0.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 0
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 0,
+      "message_media_part_index": 1
+    },
+    {
+      "output_index": 1,
+      "primary_frame_indices": [
+        8
+      ],
+      "timestamps": [
+        0.26666666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 8
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 2,
+      "message_media_part_index": 3
+    },
+    {
+      "output_index": 2,
+      "primary_frame_indices": [
+        15
+      ],
+      "timestamps": [
+        0.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 15
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 4,
+      "message_media_part_index": 5
+    },
+    {
+      "output_index": 3,
+      "primary_frame_indices": [
+        22
+      ],
+      "timestamps": [
+        0.7333333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 22
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 6,
+      "message_media_part_index": 7
+    },
+    {
+      "output_index": 4,
+      "primary_frame_indices": [
+        30
+      ],
+      "timestamps": [
+        1.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 30
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 8,
+      "message_media_part_index": 9
+    },
+    {
+      "output_index": 5,
+      "primary_frame_indices": [
+        38
+      ],
+      "timestamps": [
+        1.2666666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 38
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 10,
+      "message_media_part_index": 11
+    },
+    {
+      "output_index": 6,
+      "primary_frame_indices": [
+        45
+      ],
+      "timestamps": [
+        1.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 45
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 12,
+      "message_media_part_index": 13
+    },
+    {
+      "output_index": 7,
+      "primary_frame_indices": [
+        52
+      ],
+      "timestamps": [
+        1.7333333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 52
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 14,
+      "message_media_part_index": 15
+    },
+    {
+      "output_index": 8,
+      "primary_frame_indices": [
+        60
+      ],
+      "timestamps": [
+        2.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 60
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 16,
+      "message_media_part_index": 17
+    },
+    {
+      "output_index": 9,
+      "primary_frame_indices": [
+        68
+      ],
+      "timestamps": [
+        2.2666666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 68
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 18,
+      "message_media_part_index": 19
+    },
+    {
+      "output_index": 10,
+      "primary_frame_indices": [
+        75
+      ],
+      "timestamps": [
+        2.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 75
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 20,
+      "message_media_part_index": 21
+    },
+    {
+      "output_index": 11,
+      "primary_frame_indices": [
+        82
+      ],
+      "timestamps": [
+        2.7333333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 82
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 22,
+      "message_media_part_index": 23
+    },
+    {
+      "output_index": 12,
+      "primary_frame_indices": [
+        90
+      ],
+      "timestamps": [
+        3.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 90
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 24,
+      "message_media_part_index": 25
+    },
+    {
+      "output_index": 13,
+      "primary_frame_indices": [
+        98
+      ],
+      "timestamps": [
+        3.2666666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 98
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 26,
+      "message_media_part_index": 27
+    },
+    {
+      "output_index": 14,
+      "primary_frame_indices": [
+        105
+      ],
+      "timestamps": [
+        3.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 105
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 28,
+      "message_media_part_index": 29
+    },
+    {
+      "output_index": 15,
+      "primary_frame_indices": [
+        112
+      ],
+      "timestamps": [
+        3.7333333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 112
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 30,
+      "message_media_part_index": 31
+    },
+    {
+      "output_index": 16,
+      "primary_frame_indices": [
+        120
+      ],
+      "timestamps": [
+        4.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 120
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 32,
+      "message_media_part_index": 33
+    },
+    {
+      "output_index": 17,
+      "primary_frame_indices": [
+        128
+      ],
+      "timestamps": [
+        4.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 128
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 34,
+      "message_media_part_index": 35
+    },
+    {
+      "output_index": 18,
+      "primary_frame_indices": [
+        135
+      ],
+      "timestamps": [
+        4.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 135
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 36,
+      "message_media_part_index": 37
+    },
+    {
+      "output_index": 19,
+      "primary_frame_indices": [
+        142
+      ],
+      "timestamps": [
+        4.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 142
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 38,
+      "message_media_part_index": 39
+    },
+    {
+      "output_index": 20,
+      "primary_frame_indices": [
+        150
+      ],
+      "timestamps": [
+        5.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 150
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 40,
+      "message_media_part_index": 41
+    },
+    {
+      "output_index": 21,
+      "primary_frame_indices": [
+        158
+      ],
+      "timestamps": [
+        5.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 158
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 42,
+      "message_media_part_index": 43
+    },
+    {
+      "output_index": 22,
+      "primary_frame_indices": [
+        165
+      ],
+      "timestamps": [
+        5.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 165
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 44,
+      "message_media_part_index": 45
+    },
+    {
+      "output_index": 23,
+      "primary_frame_indices": [
+        172
+      ],
+      "timestamps": [
+        5.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 172
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 46,
+      "message_media_part_index": 47
+    },
+    {
+      "output_index": 24,
+      "primary_frame_indices": [
+        180
+      ],
+      "timestamps": [
+        6.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 180
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 48,
+      "message_media_part_index": 49
+    },
+    {
+      "output_index": 25,
+      "primary_frame_indices": [
+        188
+      ],
+      "timestamps": [
+        6.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 188
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 50,
+      "message_media_part_index": 51
+    },
+    {
+      "output_index": 26,
+      "primary_frame_indices": [
+        195
+      ],
+      "timestamps": [
+        6.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 195
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 52,
+      "message_media_part_index": 53
+    },
+    {
+      "output_index": 27,
+      "primary_frame_indices": [
+        202
+      ],
+      "timestamps": [
+        6.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 202
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 54,
+      "message_media_part_index": 55
+    },
+    {
+      "output_index": 28,
+      "primary_frame_indices": [
+        210
+      ],
+      "timestamps": [
+        7.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 210
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 56,
+      "message_media_part_index": 57
+    },
+    {
+      "output_index": 29,
+      "primary_frame_indices": [
+        218
+      ],
+      "timestamps": [
+        7.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 218
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 58,
+      "message_media_part_index": 59
+    },
+    {
+      "output_index": 30,
+      "primary_frame_indices": [
+        225
+      ],
+      "timestamps": [
+        7.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 225
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 60,
+      "message_media_part_index": 61
+    },
+    {
+      "output_index": 31,
+      "primary_frame_indices": [
+        232
+      ],
+      "timestamps": [
+        7.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 232
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 62,
+      "message_media_part_index": 63
+    },
+    {
+      "output_index": 32,
+      "primary_frame_indices": [
+        240
+      ],
+      "timestamps": [
+        8.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 240
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 64,
+      "message_media_part_index": 65
+    },
+    {
+      "output_index": 33,
+      "primary_frame_indices": [
+        248
+      ],
+      "timestamps": [
+        8.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 248
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 66,
+      "message_media_part_index": 67
+    },
+    {
+      "output_index": 34,
+      "primary_frame_indices": [
+        255
+      ],
+      "timestamps": [
+        8.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 255
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 68,
+      "message_media_part_index": 69
+    },
+    {
+      "output_index": 35,
+      "primary_frame_indices": [
+        262
+      ],
+      "timestamps": [
+        8.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 262
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 70,
+      "message_media_part_index": 71
+    },
+    {
+      "output_index": 36,
+      "primary_frame_indices": [
+        270
+      ],
+      "timestamps": [
+        9.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 270
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 72,
+      "message_media_part_index": 73
+    },
+    {
+      "output_index": 37,
+      "primary_frame_indices": [
+        278
+      ],
+      "timestamps": [
+        9.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 278
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 74,
+      "message_media_part_index": 75
+    },
+    {
+      "output_index": 38,
+      "primary_frame_indices": [
+        285
+      ],
+      "timestamps": [
+        9.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 285
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 76,
+      "message_media_part_index": 77
+    },
+    {
+      "output_index": 39,
+      "primary_frame_indices": [
+        292
+      ],
+      "timestamps": [
+        9.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 292
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 78,
+      "message_media_part_index": 79
+    },
+    {
+      "output_index": 40,
+      "primary_frame_indices": [
+        300
+      ],
+      "timestamps": [
+        10.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 300
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 80,
+      "message_media_part_index": 81
+    },
+    {
+      "output_index": 41,
+      "primary_frame_indices": [
+        308
+      ],
+      "timestamps": [
+        10.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 308
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 82,
+      "message_media_part_index": 83
+    },
+    {
+      "output_index": 42,
+      "primary_frame_indices": [
+        315
+      ],
+      "timestamps": [
+        10.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 315
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 84,
+      "message_media_part_index": 85
+    },
+    {
+      "output_index": 43,
+      "primary_frame_indices": [
+        322
+      ],
+      "timestamps": [
+        10.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 322
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 86,
+      "message_media_part_index": 87
+    },
+    {
+      "output_index": 44,
+      "primary_frame_indices": [
+        330
+      ],
+      "timestamps": [
+        11.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 330
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 88,
+      "message_media_part_index": 89
+    },
+    {
+      "output_index": 45,
+      "primary_frame_indices": [
+        338
+      ],
+      "timestamps": [
+        11.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 338
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 90,
+      "message_media_part_index": 91
+    },
+    {
+      "output_index": 46,
+      "primary_frame_indices": [
+        345
+      ],
+      "timestamps": [
+        11.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 345
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 92,
+      "message_media_part_index": 93
+    },
+    {
+      "output_index": 47,
+      "primary_frame_indices": [
+        352
+      ],
+      "timestamps": [
+        11.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 352
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 94,
+      "message_media_part_index": 95
+    },
+    {
+      "output_index": 48,
+      "primary_frame_indices": [
+        360
+      ],
+      "timestamps": [
+        12.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 360
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 96,
+      "message_media_part_index": 97
+    },
+    {
+      "output_index": 49,
+      "primary_frame_indices": [
+        368
+      ],
+      "timestamps": [
+        12.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 368
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 98,
+      "message_media_part_index": 99
+    },
+    {
+      "output_index": 50,
+      "primary_frame_indices": [
+        375
+      ],
+      "timestamps": [
+        12.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 375
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 100,
+      "message_media_part_index": 101
+    },
+    {
+      "output_index": 51,
+      "primary_frame_indices": [
+        382
+      ],
+      "timestamps": [
+        12.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 382
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 102,
+      "message_media_part_index": 103
+    },
+    {
+      "output_index": 52,
+      "primary_frame_indices": [
+        390
+      ],
+      "timestamps": [
+        13.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 390
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 104,
+      "message_media_part_index": 105
+    },
+    {
+      "output_index": 53,
+      "primary_frame_indices": [
+        398
+      ],
+      "timestamps": [
+        13.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 398
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 106,
+      "message_media_part_index": 107
+    },
+    {
+      "output_index": 54,
+      "primary_frame_indices": [
+        405
+      ],
+      "timestamps": [
+        13.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 405
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 108,
+      "message_media_part_index": 109
+    },
+    {
+      "output_index": 55,
+      "primary_frame_indices": [
+        412
+      ],
+      "timestamps": [
+        13.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 412
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 110,
+      "message_media_part_index": 111
+    },
+    {
+      "output_index": 56,
+      "primary_frame_indices": [
+        420
+      ],
+      "timestamps": [
+        14.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 420
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 112,
+      "message_media_part_index": 113
+    },
+    {
+      "output_index": 57,
+      "primary_frame_indices": [
+        428
+      ],
+      "timestamps": [
+        14.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 428
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 114,
+      "message_media_part_index": 115
+    },
+    {
+      "output_index": 58,
+      "primary_frame_indices": [
+        435
+      ],
+      "timestamps": [
+        14.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 435
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 116,
+      "message_media_part_index": 117
+    },
+    {
+      "output_index": 59,
+      "primary_frame_indices": [
+        442
+      ],
+      "timestamps": [
+        14.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 442
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 118,
+      "message_media_part_index": 119
+    },
+    {
+      "output_index": 60,
+      "primary_frame_indices": [
+        450
+      ],
+      "timestamps": [
+        15.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 450
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 120,
+      "message_media_part_index": 121
+    },
+    {
+      "output_index": 61,
+      "primary_frame_indices": [
+        458
+      ],
+      "timestamps": [
+        15.266666666666667
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 458
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 122,
+      "message_media_part_index": 123
+    },
+    {
+      "output_index": 62,
+      "primary_frame_indices": [
+        465
+      ],
+      "timestamps": [
+        15.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 465
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 124,
+      "message_media_part_index": 125
+    },
+    {
+      "output_index": 63,
+      "primary_frame_indices": [
+        472
+      ],
+      "timestamps": [
+        15.733333333333333
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 472
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 126,
+      "message_media_part_index": 127
+    },
+    {
+      "output_index": 64,
+      "primary_frame_indices": [
+        480
+      ],
+      "timestamps": [
+        16.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 480
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 128,
+      "message_media_part_index": 129
+    },
+    {
+      "output_index": 65,
+      "primary_frame_indices": [
+        488
+      ],
+      "timestamps": [
+        16.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 488
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 130,
+      "message_media_part_index": 131
+    },
+    {
+      "output_index": 66,
+      "primary_frame_indices": [
+        495
+      ],
+      "timestamps": [
+        16.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 495
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 132,
+      "message_media_part_index": 133
+    },
+    {
+      "output_index": 67,
+      "primary_frame_indices": [
+        502
+      ],
+      "timestamps": [
+        16.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 502
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 134,
+      "message_media_part_index": 135
+    },
+    {
+      "output_index": 68,
+      "primary_frame_indices": [
+        510
+      ],
+      "timestamps": [
+        17.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 510
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 136,
+      "message_media_part_index": 137
+    },
+    {
+      "output_index": 69,
+      "primary_frame_indices": [
+        518
+      ],
+      "timestamps": [
+        17.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 518
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 138,
+      "message_media_part_index": 139
+    },
+    {
+      "output_index": 70,
+      "primary_frame_indices": [
+        525
+      ],
+      "timestamps": [
+        17.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 525
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 140,
+      "message_media_part_index": 141
+    },
+    {
+      "output_index": 71,
+      "primary_frame_indices": [
+        532
+      ],
+      "timestamps": [
+        17.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 532
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 142,
+      "message_media_part_index": 143
+    },
+    {
+      "output_index": 72,
+      "primary_frame_indices": [
+        540
+      ],
+      "timestamps": [
+        18.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 540
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 144,
+      "message_media_part_index": 145
+    },
+    {
+      "output_index": 73,
+      "primary_frame_indices": [
+        548
+      ],
+      "timestamps": [
+        18.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 548
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 146,
+      "message_media_part_index": 147
+    },
+    {
+      "output_index": 74,
+      "primary_frame_indices": [
+        555
+      ],
+      "timestamps": [
+        18.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 555
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 148,
+      "message_media_part_index": 149
+    },
+    {
+      "output_index": 75,
+      "primary_frame_indices": [
+        562
+      ],
+      "timestamps": [
+        18.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 562
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 150,
+      "message_media_part_index": 151
+    },
+    {
+      "output_index": 76,
+      "primary_frame_indices": [
+        570
+      ],
+      "timestamps": [
+        19.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 570
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 152,
+      "message_media_part_index": 153
+    },
+    {
+      "output_index": 77,
+      "primary_frame_indices": [
+        578
+      ],
+      "timestamps": [
+        19.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 578
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 154,
+      "message_media_part_index": 155
+    },
+    {
+      "output_index": 78,
+      "primary_frame_indices": [
+        585
+      ],
+      "timestamps": [
+        19.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 585
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 156,
+      "message_media_part_index": 157
+    },
+    {
+      "output_index": 79,
+      "primary_frame_indices": [
+        592
+      ],
+      "timestamps": [
+        19.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 592
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 158,
+      "message_media_part_index": 159
+    },
+    {
+      "output_index": 80,
+      "primary_frame_indices": [
+        600
+      ],
+      "timestamps": [
+        20.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 600
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 160,
+      "message_media_part_index": 161
+    },
+    {
+      "output_index": 81,
+      "primary_frame_indices": [
+        608
+      ],
+      "timestamps": [
+        20.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 608
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 162,
+      "message_media_part_index": 163
+    },
+    {
+      "output_index": 82,
+      "primary_frame_indices": [
+        615
+      ],
+      "timestamps": [
+        20.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 615
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 164,
+      "message_media_part_index": 165
+    },
+    {
+      "output_index": 83,
+      "primary_frame_indices": [
+        622
+      ],
+      "timestamps": [
+        20.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 622
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 166,
+      "message_media_part_index": 167
+    },
+    {
+      "output_index": 84,
+      "primary_frame_indices": [
+        630
+      ],
+      "timestamps": [
+        21.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 630
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 168,
+      "message_media_part_index": 169
+    },
+    {
+      "output_index": 85,
+      "primary_frame_indices": [
+        638
+      ],
+      "timestamps": [
+        21.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 638
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 170,
+      "message_media_part_index": 171
+    },
+    {
+      "output_index": 86,
+      "primary_frame_indices": [
+        645
+      ],
+      "timestamps": [
+        21.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 645
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 172,
+      "message_media_part_index": 173
+    },
+    {
+      "output_index": 87,
+      "primary_frame_indices": [
+        652
+      ],
+      "timestamps": [
+        21.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 652
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 174,
+      "message_media_part_index": 175
+    },
+    {
+      "output_index": 88,
+      "primary_frame_indices": [
+        660
+      ],
+      "timestamps": [
+        22.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 660
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 176,
+      "message_media_part_index": 177
+    },
+    {
+      "output_index": 89,
+      "primary_frame_indices": [
+        668
+      ],
+      "timestamps": [
+        22.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 668
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 178,
+      "message_media_part_index": 179
+    },
+    {
+      "output_index": 90,
+      "primary_frame_indices": [
+        675
+      ],
+      "timestamps": [
+        22.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 675
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 180,
+      "message_media_part_index": 181
+    },
+    {
+      "output_index": 91,
+      "primary_frame_indices": [
+        682
+      ],
+      "timestamps": [
+        22.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 682
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 182,
+      "message_media_part_index": 183
+    },
+    {
+      "output_index": 92,
+      "primary_frame_indices": [
+        690
+      ],
+      "timestamps": [
+        23.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 690
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 184,
+      "message_media_part_index": 185
+    },
+    {
+      "output_index": 93,
+      "primary_frame_indices": [
+        698
+      ],
+      "timestamps": [
+        23.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 698
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 186,
+      "message_media_part_index": 187
+    },
+    {
+      "output_index": 94,
+      "primary_frame_indices": [
+        705
+      ],
+      "timestamps": [
+        23.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 705
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 188,
+      "message_media_part_index": 189
+    },
+    {
+      "output_index": 95,
+      "primary_frame_indices": [
+        712
+      ],
+      "timestamps": [
+        23.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 712
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 190,
+      "message_media_part_index": 191
+    },
+    {
+      "output_index": 96,
+      "primary_frame_indices": [
+        720
+      ],
+      "timestamps": [
+        24.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 720
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 192,
+      "message_media_part_index": 193
+    },
+    {
+      "output_index": 97,
+      "primary_frame_indices": [
+        728
+      ],
+      "timestamps": [
+        24.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 728
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 194,
+      "message_media_part_index": 195
+    },
+    {
+      "output_index": 98,
+      "primary_frame_indices": [
+        735
+      ],
+      "timestamps": [
+        24.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 735
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 196,
+      "message_media_part_index": 197
+    },
+    {
+      "output_index": 99,
+      "primary_frame_indices": [
+        742
+      ],
+      "timestamps": [
+        24.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 742
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 198,
+      "message_media_part_index": 199
+    },
+    {
+      "output_index": 100,
+      "primary_frame_indices": [
+        750
+      ],
+      "timestamps": [
+        25.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 750
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 200,
+      "message_media_part_index": 201
+    },
+    {
+      "output_index": 101,
+      "primary_frame_indices": [
+        758
+      ],
+      "timestamps": [
+        25.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 758
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 202,
+      "message_media_part_index": 203
+    },
+    {
+      "output_index": 102,
+      "primary_frame_indices": [
+        765
+      ],
+      "timestamps": [
+        25.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 765
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 204,
+      "message_media_part_index": 205
+    },
+    {
+      "output_index": 103,
+      "primary_frame_indices": [
+        772
+      ],
+      "timestamps": [
+        25.733333333333334
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 772
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 206,
+      "message_media_part_index": 207
+    },
+    {
+      "output_index": 104,
+      "primary_frame_indices": [
+        780
+      ],
+      "timestamps": [
+        26.0
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 780
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 208,
+      "message_media_part_index": 209
+    },
+    {
+      "output_index": 105,
+      "primary_frame_indices": [
+        788
+      ],
+      "timestamps": [
+        26.266666666666666
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 788
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 210,
+      "message_media_part_index": 211
+    },
+    {
+      "output_index": 106,
+      "primary_frame_indices": [
+        795
+      ],
+      "timestamps": [
+        26.5
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 795
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 212,
+      "message_media_part_index": 213
+    },
+    {
+      "output_index": 107,
+      "primary_frame_indices": [
+        801
+      ],
+      "timestamps": [
+        26.7
+      ],
+      "per_view_frame_indices": {
+        "camera_front": 801
+      },
+      "views": [
+        "camera_front"
+      ],
+      "message_tag_part_index": 214,
+      "message_media_part_index": 215
+    }
+  ],
+  "processed_output_path": "C:\\Users\\34927\\Desktop\\vlm_auto_annotation_refactor_gpt\\examples\\vlm_annotation_batch_predictions\\00001_robogene_twoArm_franka_adjust_black_computer_stand_episode_000001\\stages\\analysis\\processed_frames"
+}

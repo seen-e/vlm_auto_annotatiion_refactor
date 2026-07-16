@@ -1,0 +1,153 @@
+{
+"scene_validation": {
+"scene_primary_view": "camera_front",
+"validated_primary_view": "camera_front",
+"primary_view_reason": "camera_front 视角完整覆盖桌面操作区域，清晰展示双机械臂与笔记本电脑、支架的交互过程，时间戳连续且无遮挡干扰，适合作为动作顺序主轴。",
+"executors": [
+{
+"executor_id": "left",
+"source": "scene",
+"executor_valid_reason": "左侧白色机械臂在视频中真实存在，身份稳定可区分，从 t=3.0s 开始参与抓取、翻转、放置笔记本电脑任务，符合有效 executor 标准。",
+"executor_valid": true
+},
+{
+"executor_id": "right",
+"source": "scene",
+"executor_valid_reason": "右侧白色机械臂在视频中真实存在，身份稳定可区分，从 t=1.5s 开始接触并支撑笔记本电脑，全程参与任务，符合有效 executor 标准。",
+"executor_valid": true
+}
+],
+"objects": [
+{
+"object_id": "laptop_1",
+"source": "scene",
+"object_valid_reason": "银灰色笔记本电脑全程可见，被双机械臂操作，经历抓取、翻转、放置过程，身份稳定且实际参与任务，符合有效 object 标准。",
+"object_valid": true
+},
+{
+"object_id": "stand_1",
+"source": "scene",
+"object_valid_reason": "黑色支架位于桌面中央，笔记本电脑最终被放置其上，全程静止但作为目标支撑面参与任务，符合有效 object 标准。",
+"object_valid": true
+},
+{
+"object_id": "mouse_pad_1",
+"source": "scene",
+"object_valid_reason": "鼠标垫及鼠标全程未被触碰或移动，未参与任何交互，仅作为背景物体，不符合‘实际参与任务’标准，判为无效。",
+"object_valid": false
+}
+]
+},
+"executor_timelines": [
+{
+"executor": "left",
+"events": [
+{
+"event_id": "E003",
+"executor_step_index": 1,
+"global_rough_order": 3,
+"action": "接近",
+"object": "laptop_1",
+"target": null,
+"state_change": "左机械臂从初始位置向笔记本电脑移动，末端执行器逐渐靠近笔记本左侧边缘。",
+"caption": "左机械臂接近笔记本电脑，准备进行抓取操作。"
+},
+{
+"event_id": "E005",
+"executor_step_index": 2,
+"global_rough_order": 5,
+"action": "抓取",
+"object": "laptop_1",
+"target": null,
+"state_change": "左机械臂夹爪闭合，稳定夹持笔记本电脑左侧边缘，笔记本开始脱离桌面。",
+"caption": "左机械臂抓取笔记本电脑，使其悬空并准备翻转。"
+},
+{
+"event_id": "E006",
+"executor_step_index": 3,
+"global_rough_order": 6,
+"action": "翻转",
+"object": "laptop_1",
+"target": null,
+"state_change": "左机械臂带动笔记本电脑绕长轴旋转约 180 度，使其背面朝上。",
+"caption": "左机械臂翻转笔记本电脑，改变其朝向以便放置到支架上。"
+},
+{
+"event_id": "E008",
+"executor_step_index": 4,
+"global_rough_order": 8,
+"action": "放置",
+"object": "laptop_1",
+"target": "stand_1",
+"state_change": "左机械臂将笔记本电脑下压至支架表面，笔记本由支架承托，夹爪随后松开。",
+"caption": "左机械臂将笔记本电脑放置于支架上，完成主要操作。"
+},
+{
+"event_id": "E009",
+"executor_step_index": 5,
+"global_rough_order": 9,
+"action": "撤回",
+"object": null,
+"target": null,
+"state_change": "左机械臂末端执行器离开笔记本电脑和支架区域，返回初始待命位置。",
+"caption": "左机械臂完成操作后撤回，不再与物体接触。"
+}
+]
+},
+{
+"executor": "right",
+"events": [
+{
+"event_id": "E001",
+"executor_step_index": 1,
+"global_rough_order": 1,
+"action": "接近",
+"object": "laptop_1",
+"target": null,
+"state_change": "右机械臂从初始位置向笔记本电脑移动，末端执行器靠近笔记本右侧边缘。",
+"caption": "右机械臂接近笔记本电脑，准备提供支撑。"
+},
+{
+"event_id": "E002",
+"executor_step_index": 2,
+"global_rough_order": 2,
+"action": "支撑",
+"object": "laptop_1",
+"target": null,
+"state_change": "右机械臂末端接触并托住笔记本电脑右侧，防止其在左臂操作时滑动或倾倒。",
+"caption": "右机械臂支撑笔记本电脑，维持其稳定以便左臂抓取和翻转。"
+},
+{
+"event_id": "E004",
+"executor_step_index": 3,
+"global_rough_order": 4,
+"action": "调整末端位置",
+"object": "laptop_1",
+"target": null,
+"state_change": "右机械臂微调末端位置，跟随左臂翻转动作，持续提供侧向支撑。",
+"caption": "右机械臂调整位置以配合左臂翻转，保持对笔记本电脑的稳定支撑。"
+},
+{
+"event_id": "E007",
+"executor_step_index": 4,
+"global_rough_order": 7,
+"action": "释放",
+"object": "laptop_1",
+"target": null,
+"state_change": "右机械臂末端离开笔记本电脑右侧，解除支撑关系，笔记本完全由支架承托。",
+"caption": "右机械臂释放笔记本电脑，结束支撑任务。"
+},
+{
+"event_id": "E010",
+"executor_step_index": 5,
+"global_rough_order": 10,
+"action": "撤回",
+"object": null,
+"target": null,
+"state_change": "右机械臂末端执行器离开操作区域，返回初始待命位置。",
+"caption": "右机械臂完成支撑任务后撤回，不再参与后续操作。"
+}
+]
+}
+]
+}

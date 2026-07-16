@@ -1,0 +1,57 @@
+{
+  "primary_view": "camera_front",
+  "view_relations": [
+    {
+      "view_name": "camera_front",
+      "description": "主视角，从桌面一侧平视拍摄，覆盖桌面中央及两侧机械臂操作区域。"
+    },
+    {
+      "view_name": "camera_top",
+      "description": "位于主视角上方，俯视拍摄整个桌面。能清晰展示物体平面布局、机械臂相对位置及操作路径，补充主视角的深度和遮挡信息。"
+    }
+  ],
+  "executors": [
+    {
+      "executor_id": "left",
+      "category": "机械臂",
+      "description": "白色机械臂，底座位于主视角左侧，主要参与笔记本电脑的抓取、翻转和放置任务。",
+      "position": "camera_front：画面左侧；camera_top：画面左侧",
+      "confidence": 1.0
+    },
+    {
+      "executor_id": "right",
+      "category": "机械臂",
+      "description": "白色机械臂，底座位于主视角右侧，主要参与笔记本电脑的辅助支撑、翻转和放置任务。",
+      "position": "camera_front：画面右侧；camera_top：画面右侧",
+      "confidence": 1.0
+    }
+  ],
+  "interaction_category": "笔记本电脑、支架、鼠标垫",
+  "interaction_region": "主视角桌面中央区域",
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "first_view_time": "0.0s",
+      "category": "笔记本电脑",
+      "best_view_time": "10.0s",
+      "description": "银灰色笔记本电脑，矩形扁平状，背面有标志。在最佳观测时刻被左侧机械臂抓取并悬空，处于翻转过程中。"
+    },
+    {
+      "object_id": "stand_1",
+      "first_view_time": "0.0s",
+      "category": "支架",
+      "best_view_time": "15.0s",
+      "description": "黑色塑料支架，具有镂空结构的矩形框架。在最佳观测时刻位于桌面中央下方，笔记本电脑正被放置于其上。"
+    },
+    {
+      "object_id": "mouse_pad_1",
+      "first_view_time": "0.0s",
+      "category": "鼠标垫",
+      "best_view_time": "0.0s",
+      "description": "黑色矩形鼠标垫，上面放置有一个白色鼠标。全程静止位于桌面右上方区域，未与机械臂或笔记本电脑发生接触。"
+    }
+  ],
+  "uncertainties": [
+    "鼠标垫及上面的鼠标全程未被机械臂触碰，也未承接被移动的笔记本电脑，仅作为背景物体存在，但因其位于操作区域附近且外观显著，在此列出但需注意其非核心交互物体。"
+  ]
+}
