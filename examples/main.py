@@ -207,6 +207,7 @@ def _handle_task_success(
         print(f"  trajectory -> {trajectory_path}")
     else:
         print("  trajectory skipped -> refinement stage was not completed")
+
     elapsed_seconds = result.get("elapsed_seconds")
     if elapsed_seconds is not None:
         print(f"  elapsed -> {float(elapsed_seconds):.2f}s")
@@ -237,7 +238,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--start-from", default=None, help="Optional pipeline start stage.")
     parser.add_argument("--stop-after", default=None, help="Optional pipeline stop stage.")
     parser.add_argument("--skip-existing", action="store_true", help="Skip stages already present in context.")
-    parser.add_argument("--workers", type=int, default=8, help="Number of episode processes to run concurrently.")
+    parser.add_argument("--workers", type=int, default=1, help="Number of episode processes to run concurrently.")
     parser.add_argument(
         "--fail-fast",
         action="store_true",
@@ -332,7 +333,10 @@ def main() -> None:
     else:
         with ProcessPoolExecutor(max_workers=args.workers) as executor:
             future_to_task = {
-                executor.submit(_run_one_task_worker, **build_worker_kwargs(index, item)): (index, item)
+                executor.submit(
+                    _run_one_task_worker,
+                    **build_worker_kwargs(index, item),
+                ): (index, item)
                 for index, item in selected_tasks
             }
             for future in as_completed(future_to_task):
@@ -356,6 +360,7 @@ def main() -> None:
                             pending.cancel()
                         traceback.print_exc()
                         raise
+
     total_elapsed = time.perf_counter() - total_started_at
     processed_count = ok_count + error_count
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0

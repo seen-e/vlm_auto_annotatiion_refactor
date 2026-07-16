@@ -1,0 +1,205 @@
+{
+  "episode_id": "episode_000000",
+  "robot_name": null,
+  "original_dataset_id": null,
+  "duration": 33.6,
+  "start_time": 0.0,
+  "end_time": 33.6,
+  "start_frame": 0,
+  "end_frame": 1007,
+  "keyframes": [
+    0,
+    502,
+    1007
+  ],
+  "L1_task": "将 laptop_1 搬运并放置到 stand_1；固定 mousepad_1 以辅助操作",
+  "sense": null,
+  "category": null,
+  "segments": [
+    {
+      "segment_id": 0,
+      "phase": "接近",
+      "start_time": 1.0,
+      "end_time": 3.0,
+      "start_frame": 30,
+      "end_frame": 90,
+      "keyframes": [
+        30,
+        52,
+        90
+      ],
+      "caption": "right 接近 mousepad_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 1,
+      "phase": "固定",
+      "start_time": 3.0,
+      "end_time": 4.0,
+      "start_frame": 90,
+      "end_frame": 120,
+      "keyframes": [
+        90,
+        105,
+        120
+      ],
+      "caption": "right 固定 mousepad_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 2,
+      "phase": "固定",
+      "start_time": 4.0,
+      "end_time": 26.0,
+      "start_frame": 120,
+      "end_frame": 780,
+      "keyframes": [
+        120,
+        450,
+        780
+      ],
+      "caption": "right 持续固定 mousepad_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 3,
+      "phase": "接近",
+      "start_time": 6.0,
+      "end_time": 9.0,
+      "start_frame": 180,
+      "end_frame": 270,
+      "keyframes": [
+        180,
+        225,
+        270
+      ],
+      "caption": "left 接近 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 4,
+      "phase": "接触",
+      "start_time": 9.0,
+      "end_time": 10.0,
+      "start_frame": 270,
+      "end_frame": 300,
+      "keyframes": [
+        270,
+        285,
+        300
+      ],
+      "caption": "left 接触 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 5,
+      "phase": "抓取",
+      "start_time": 10.0,
+      "end_time": 11.0,
+      "start_frame": 300,
+      "end_frame": 330,
+      "keyframes": [
+        300,
+        308,
+        330
+      ],
+      "caption": "left 抓取 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 6,
+      "phase": "搬运",
+      "start_time": 11.0,
+      "end_time": 14.5,
+      "start_frame": 330,
+      "end_frame": 435,
+      "keyframes": [
+        330,
+        382,
+        435
+      ],
+      "caption": "left 将 laptop_1 搬运至 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 7,
+      "phase": "放置",
+      "start_time": 14.5,
+      "end_time": 16.0,
+      "start_frame": 435,
+      "end_frame": 480,
+      "keyframes": [
+        435,
+        458,
+        480
+      ],
+      "caption": "left 将 laptop_1 放置在 stand_1 上。",
+      "success": 1
+    },
+    {
+      "segment_id": 8,
+      "phase": "释放",
+      "start_time": 16.0,
+      "end_time": 17.0,
+      "start_frame": 480,
+      "end_frame": 510,
+      "keyframes": [
+        480,
+        495,
+        510
+      ],
+      "caption": "left 释放 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 9,
+      "phase": "撤回",
+      "start_time": 17.0,
+      "end_time": 20.0,
+      "start_frame": 510,
+      "end_frame": 600,
+      "keyframes": [
+        510,
+        555,
+        600
+      ],
+      "caption": "left 撤回。",
+      "success": null
+    },
+    {
+      "segment_id": 10,
+      "phase": "解除固定",
+      "start_time": 26.0,
+      "end_time": 27.0,
+      "start_frame": 780,
+      "end_frame": 810,
+      "keyframes": [
+        780,
+        795,
+        810
+      ],
+      "caption": "right 解除对 mousepad_1 的固定。",
+      "success": 1
+    },
+    {
+      "segment_id": 11,
+      "phase": "撤回",
+      "start_time": 27.0,
+      "end_time": 30.0,
+      "start_frame": 810,
+      "end_frame": 900,
+      "keyframes": [
+        810,
+        855,
+        900
+      ],
+      "caption": "right 撤回。",
+      "success": null
+    }
+  ],
+  "quality": {
+    "caption_video_match": null,
+    "object_presence_rate": null,
+    "status": "UNKNOWN"
+  }
+}

@@ -234,7 +234,7 @@ stages:
       merge_length: -1
       view_names:
         - camera_front
-        - camera_top
+       #- camera_top
 
   refinement:
     prompt:

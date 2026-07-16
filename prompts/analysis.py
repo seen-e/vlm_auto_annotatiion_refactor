@@ -336,8 +336,8 @@ object_valid_reason 可引用帧上明确时间戳、sample_index 或视频开�
   "interaction_objects": [
     {
       "object_id": "Scene 阶段 object_id；Scene 漏检时可使用新建的稳定英文 snake_case ID",
+      "object_valid_reason": "说明跨帧、多视角、出现来源、任务参与和身份去重依据；重复 ID 必须写明与哪个 canonical_object_id 为同一实例；必要时注明时间戳、sample_index 或相对时段",
       "oject_valid_analysis": false,
-      "object_valid_reason": "说明跨帧、多视角、出现来源、任务参与和身份去重依据；重复 ID 必须写明与哪个 canonical_object_id 为同一实例；必要时注明时间戳、sample_index 或相对时段"
     }
   ],
   "executor_object_state_sequences": [

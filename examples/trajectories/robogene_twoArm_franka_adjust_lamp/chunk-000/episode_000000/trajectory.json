@@ -1,0 +1,158 @@
+{
+  "episode_id": "episode_000000",
+  "robot_name": null,
+  "original_dataset_id": null,
+  "duration": 6.666666666666667,
+  "start_time": 0.0,
+  "end_time": 6.666666666666667,
+  "start_frame": 0,
+  "end_frame": 199,
+  "keyframes": [
+    0,
+    98,
+    199
+  ],
+  "L1_task": "将 lamp_1 协同搬运并放置到桌面目标位置",
+  "sense": null,
+  "category": null,
+  "segments": [
+    {
+      "segment_id": 0,
+      "phase": "接近",
+      "start_time": 0.0,
+      "end_time": 0.73,
+      "start_frame": 0,
+      "end_frame": 22,
+      "keyframes": [
+        0,
+        8,
+        22
+      ],
+      "caption": "left 接近 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 1,
+      "phase": "抓取",
+      "start_time": 0.73,
+      "end_time": 1.0,
+      "start_frame": 22,
+      "end_frame": 30,
+      "keyframes": [
+        22,
+        30
+      ],
+      "caption": "left 抓取 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 2,
+      "phase": "接近",
+      "start_time": 1.0,
+      "end_time": 1.73,
+      "start_frame": 30,
+      "end_frame": 52,
+      "keyframes": [
+        30,
+        38,
+        52
+      ],
+      "caption": "right 接近 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 3,
+      "phase": "协同搬运",
+      "start_time": 1.0,
+      "end_time": 5.5,
+      "start_frame": 30,
+      "end_frame": 165,
+      "keyframes": [
+        30,
+        98,
+        165
+      ],
+      "caption": "left 协同搬运 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 4,
+      "phase": "固定",
+      "start_time": 1.73,
+      "end_time": 5.5,
+      "start_frame": 52,
+      "end_frame": 165,
+      "keyframes": [
+        52,
+        105,
+        165
+      ],
+      "caption": "right 固定 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 5,
+      "phase": "释放",
+      "start_time": 5.5,
+      "end_time": 5.73,
+      "start_frame": 165,
+      "end_frame": 172,
+      "keyframes": [
+        165,
+        172
+      ],
+      "caption": "right 释放 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 6,
+      "phase": "放置",
+      "start_time": 5.5,
+      "end_time": 6.0,
+      "start_frame": 165,
+      "end_frame": 180,
+      "keyframes": [
+        165,
+        172,
+        180
+      ],
+      "caption": "left 放置 lamp_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 7,
+      "phase": "撤回",
+      "start_time": 5.73,
+      "end_time": 6.5,
+      "start_frame": 172,
+      "end_frame": 195,
+      "keyframes": [
+        172,
+        180,
+        195
+      ],
+      "caption": "right 撤回。",
+      "success": 1
+    },
+    {
+      "segment_id": 8,
+      "phase": "撤回",
+      "start_time": 6.0,
+      "end_time": 6.63,
+      "start_frame": 180,
+      "end_frame": 199,
+      "keyframes": [
+        180,
+        188,
+        199
+      ],
+      "caption": "left 撤回。",
+      "success": 1
+    }
+  ],
+  "quality": {
+    "caption_video_match": null,
+    "object_presence_rate": null,
+    "status": "UNKNOWN"
+  }
+}

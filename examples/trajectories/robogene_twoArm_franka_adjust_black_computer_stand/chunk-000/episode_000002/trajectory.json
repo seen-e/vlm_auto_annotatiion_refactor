@@ -1,0 +1,115 @@
+{
+  "episode_id": "episode_000002",
+  "robot_name": null,
+  "original_dataset_id": null,
+  "duration": 34.3,
+  "start_time": 0.0,
+  "end_time": 34.3,
+  "start_frame": 0,
+  "end_frame": 1028,
+  "keyframes": [
+    0,
+    518,
+    1028
+  ],
+  "L1_task": "将 laptop_1 搬运并放置到 stand_1；固定 mousepad_1",
+  "sense": null,
+  "category": null,
+  "segments": [
+    {
+      "segment_id": 0,
+      "phase": "固定",
+      "start_time": 3.0,
+      "end_time": 24.0,
+      "start_frame": 90,
+      "end_frame": 720,
+      "keyframes": [
+        90,
+        405,
+        720
+      ],
+      "caption": "right 固定 mousepad_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 1,
+      "phase": "接触",
+      "start_time": 9.0,
+      "end_time": 11.0,
+      "start_frame": 270,
+      "end_frame": 330,
+      "keyframes": [
+        270,
+        300,
+        330
+      ],
+      "caption": "left 接触 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 2,
+      "phase": "抓取",
+      "start_time": 11.0,
+      "end_time": 13.0,
+      "start_frame": 330,
+      "end_frame": 390,
+      "keyframes": [
+        330,
+        352,
+        390
+      ],
+      "caption": "left 抓取 laptop_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 3,
+      "phase": "搬运",
+      "start_time": 13.0,
+      "end_time": 17.0,
+      "start_frame": 390,
+      "end_frame": 510,
+      "keyframes": [
+        390,
+        450,
+        510
+      ],
+      "caption": "left 将 laptop_1 搬运至 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 4,
+      "phase": "放置",
+      "start_time": 17.0,
+      "end_time": 20.0,
+      "start_frame": 510,
+      "end_frame": 600,
+      "keyframes": [
+        510,
+        555,
+        600
+      ],
+      "caption": "left 将 laptop_1 放置到 stand_1。",
+      "success": 1
+    },
+    {
+      "segment_id": 5,
+      "phase": "解除固定",
+      "start_time": 24.0,
+      "end_time": 25.0,
+      "start_frame": 720,
+      "end_frame": 750,
+      "keyframes": [
+        720,
+        735,
+        750
+      ],
+      "caption": "right 解除对 mousepad_1 的固定。",
+      "success": 1
+    }
+  ],
+  "quality": {
+    "caption_video_match": null,
+    "object_presence_rate": null,
+    "status": "UNKNOWN"
+  }
+}
