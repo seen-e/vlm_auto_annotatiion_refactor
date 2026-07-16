@@ -1,16 +1,16 @@
 {
-  "episode_id": "episode_000000",
+  "episode_id": "episode_000004",
   "robot_name": null,
   "original_dataset_id": null,
-  "duration": 33.6,
+  "duration": 39.166666666666664,
   "start_time": 0.0,
-  "end_time": 33.6,
+  "end_time": 39.166666666666664,
   "start_frame": 0,
-  "end_frame": 1007,
+  "end_frame": 1174,
   "keyframes": [
     0,
-    502,
-    1007
+    585,
+    1174
   ],
   "L1_task": null,
   "sense": null,

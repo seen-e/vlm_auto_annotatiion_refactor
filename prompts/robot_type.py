@@ -22,3 +22,18 @@ MOBILE_MANIPULATOR_PROMPT = """
 """
 
 
+ROBOT_TYPE_PROMPTS = {
+    "single_arm": SINGLE_ARM_ROBOT_PROMPT,
+    "bimanual": BIMANUAL_ROBOT_PROMPT,
+    "mobile_manipulator": MOBILE_MANIPULATOR_PROMPT,
+}
+
+
+def get_robot_type_prompt(robot_type: str) -> str:
+    prompt = ROBOT_TYPE_PROMPTS.get(robot_type)
+    if prompt:
+        return prompt.strip()
+    return (
+        '当前 robot_type 为 "unknown"。不要猜测机器人类别，只根据视频中可见的动作完成标注；'
+        'executor 使用 "unknown"，action 按时间顺序记录可见高层动作，object 使用自然中文名称记录明确对象或空字符串 ""。'
+    )

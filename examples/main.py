@@ -39,7 +39,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
-DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_adjust_lamp.json"
+DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_adjust_black_computer_stand.json"
 
 
 def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
@@ -238,7 +238,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--start-from", default=None, help="Optional pipeline start stage.")
     parser.add_argument("--stop-after", default=None, help="Optional pipeline stop stage.")
     parser.add_argument("--skip-existing", action="store_true", help="Skip stages already present in context.")
-    parser.add_argument("--workers", type=int, default=1, help="Number of episode processes to run concurrently.")
+    parser.add_argument("--workers", type=int, default=6, help="Number of episode processes to run concurrently.")
     parser.add_argument(
         "--fail-fast",
         action="store_true",
