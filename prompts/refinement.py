@@ -100,6 +100,9 @@ REFINEMENT_USER_PROMPT = """
 Scene 阶段执行主体：
 {{ ctx.stages.scene.output.executors }}
 
+Scene 阶段检测物体：
+{{ ctx.stages.scene.output.objects }}
+
 Scene 阶段交互物体：
 {{ ctx.stages.scene.output.interaction_objects }}
 
