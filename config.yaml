@@ -36,21 +36,21 @@ workflow:
 model:
   # base_url: OpenAI-compatible API 地址。
   # 本地 vLLM 示例：http://127.0.0.1:8002/v1
-  base_url: "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260713_ex0m/v1"
+  base_url: "http://127.0.0.1:8002/v1"
   #"http://127.0.0.1:8002/v1"
   #qwen122B "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260713_olyp/v1"
-  #qwen397B "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260713_ex0m/v1"
+  #qwen397B "http://1993781598432617.cn-wulanchabu.pai-eas.aliyuncs.com/api/predict/quickstart_deploy_20260717_0s99/v1"
 
   # api_key: API key。
   # 本地 vLLM 通常可以使用 "EMPTY"。
-  api_key: "MmFhYjMyOTI1ODE3Yzk2OTE1OWViMGJjMzIxZTkzZjY5MjllY2JmZg=="
+  api_key: "EMPTY"
   #"EMPTY"
   #qwen122B"OTk4NzQ4MTk1ZjQzMTQ5OTRjODIyNWQzMGQyODM5ZGVkNWEyMGQxNQ=="
-  #qwen397B"MmFhYjMyOTI1ODE3Yzk2OTE1OWViMGJjMzIxZTkzZjY5MjllY2JmZg=="
+  #qwen397B"Yjk0MzNhYjUyNTU3M2I3MjdkMTI0MzVkMWJhNTE2MDc3NmQ2MTM2MQ=="
 
   # model: 模型名称，需要与 /v1/models 返回的 id 一致。
   # 例如："Qwen3-VL-8B-Instruct"、"Qwen3-VL-30B-A3B-Instruct-FP8"。
-  model: "Qwen3.5-397B-A17B-FP8"
+  model: "Qwen3.5-27B"
   #"Qwen3.5-27B"
   #"Qwen3.5-122B-A10B"
   #"Qwen3.5-397B-A17B-FP8"
@@ -156,17 +156,17 @@ stages:
 
       # draw_timestamps: 是否在图像上绘制时间戳，例如 t=1.25s。
       # refinement 阶段通常应该开启；scene 阶段也可以开启用于调试。
-      draw_timestamps: false
+      draw_timestamps: true
 
       # draw_view_names: 是否在图像上绘制视角名称。
       # 对多视角输入建议开启，便于模型理解不同画面来源。
       # 对应旧代码中的 draw_viewposition。
-      draw_view_names: false
+      draw_view_names: true
 
       # draw_montage_axes: 是否在多视角 timeline montage 外侧绘制坐标轴标签。
       # 仅当 merge_views=true 且 timeline_grid 实际合并超过 1 个时间点时生效。
       # 顶部按列标注时间戳，左侧按行标注视角名称。
-      draw_montage_axes: false
+      draw_montage_axes: true
 
       # min_api_frames: 尽量保证送入模型的最少帧数。
       # 当视频足够长时会尽量满足；视频过短时不会越界强行补帧。
@@ -220,20 +220,20 @@ stages:
       max_time: -1
       save_processed: true
       # analysis 需要观察动作顺序，通常比 scene 使用更高 fps 或更多帧。
-      fps: 4.0
-      max_frames: 128
+      fps: 2
+      max_frames: 512
       resize_width: 448
       jpeg_quality: 95
-      draw_timestamps: false
-      draw_view_names: false
-      draw_montage_axes: false
+      draw_timestamps: true
+      draw_view_names: true
+      draw_montage_axes: true
       min_api_frames: 2
       merge_views: false
       merge_mode: "per_frame"
       merge_length: -1
       view_names:
         - camera_front
-       #- camera_top
+
 
 
   refinement:
@@ -257,13 +257,13 @@ stages:
       save_processed: true
       # refinement 需要更精细的边界定位，通常使用更高 fps。
       fps: 4.0
-      max_frames: 128
+      max_frames: 512
       resize_width: 448
       # refinement 看边界和接触事件，建议保留较高 JPEG 质量。
       jpeg_quality: 95
-      draw_timestamps: false
-      draw_view_names: false
-      draw_montage_axes: false
+      draw_timestamps: true
+      draw_view_names: true
+      draw_montage_axes: true
       min_api_frames: 2
       merge_views: false
       merge_mode: "per_frame"

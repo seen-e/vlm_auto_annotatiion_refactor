@@ -39,7 +39,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
-DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_adjust_black_computer_stand.json"
+DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_arrange_tabletop_drink_display.json"
 
 
 def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
@@ -59,7 +59,7 @@ def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
 
 
 def _load_json_list(path: Path) -> list[dict[str, Any]]:
-    data = json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads(path.read_text(encoding="utf-8-sig"))
     if not isinstance(data, list):
         raise ValueError(f"Task file must contain a JSON list: {path}")
     for index, item in enumerate(data):
@@ -238,7 +238,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--start-from", default=None, help="Optional pipeline start stage.")
     parser.add_argument("--stop-after", default=None, help="Optional pipeline stop stage.")
     parser.add_argument("--skip-existing", action="store_true", help="Skip stages already present in context.")
-    parser.add_argument("--workers", type=int, default=6, help="Number of episode processes to run concurrently.")
+    parser.add_argument("--workers", type=int, default=4, help="Number of episode processes to run concurrently.")
     parser.add_argument(
         "--fail-fast",
         action="store_true",

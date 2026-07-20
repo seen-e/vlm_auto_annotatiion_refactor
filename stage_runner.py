@@ -31,12 +31,28 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
         return {
             "scene_summary": "dry_run scene output",
             "executors": [{"executor_id": "single", "description": "dry-run executor"}],
+            "objects": [{"object_id": "object", "description": "dry-run object"}],
+            "interaction_objects": [{"object_id": "object", "description": "dry-run object"}],
             "touched_objects": [{"object_id": "object", "description": "dry-run object"}],
             "background_objects": [],
             "best_observation_views": [],
         }
     if stage_name == "analysis":
         return {
+            "executor_timelines": [
+                {
+                    "executor": "single",
+                    "atomic_actions": [
+                        {
+                            "step_id": 1,
+                            "action": "grasp",
+                            "object": "object",
+                            "evidence": "dry-run evidence",
+                            "confidence": 0.0,
+                        }
+                    ],
+                }
+            ],
             "action_sequence": [
                 {
                     "step_id": 1,

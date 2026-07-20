@@ -9,104 +9,13 @@
   "end_frame": 959,
   "keyframes": [
     0,
-    488,
+    480,
     959
   ],
-  "L1_task": "将 laptop_1 搬运并放置到 tray_1；left 机械臂完成操作后撤回",
+  "L1_task": null,
   "sense": null,
   "category": null,
-  "segments": [
-    {
-      "segment_id": 0,
-      "phase": "接近",
-      "start_time": 4.0,
-      "end_time": 11.0,
-      "start_frame": 120,
-      "end_frame": 330,
-      "keyframes": [
-        120,
-        225,
-        330
-      ],
-      "caption": "left 接近 laptop_1。",
-      "success": 1
-    },
-    {
-      "segment_id": 1,
-      "phase": "固定",
-      "start_time": 5.0,
-      "end_time": 24.0,
-      "start_frame": 150,
-      "end_frame": 720,
-      "keyframes": [
-        150,
-        435,
-        720
-      ],
-      "caption": "right 固定 tray_1。",
-      "success": 1
-    },
-    {
-      "segment_id": 2,
-      "phase": "抓取",
-      "start_time": 11.0,
-      "end_time": 13.0,
-      "start_frame": 330,
-      "end_frame": 390,
-      "keyframes": [
-        330,
-        360,
-        390
-      ],
-      "caption": "left 抓取 laptop_1。",
-      "success": 1
-    },
-    {
-      "segment_id": 3,
-      "phase": "搬运",
-      "start_time": 13.0,
-      "end_time": 18.0,
-      "start_frame": 390,
-      "end_frame": 540,
-      "keyframes": [
-        390,
-        465,
-        540
-      ],
-      "caption": "left 将 laptop_1 搬运至 tray_1。",
-      "success": 1
-    },
-    {
-      "segment_id": 4,
-      "phase": "放置",
-      "start_time": 18.0,
-      "end_time": 20.0,
-      "start_frame": 540,
-      "end_frame": 600,
-      "keyframes": [
-        540,
-        570,
-        600
-      ],
-      "caption": "left 将 laptop_1 放置到 tray_1。",
-      "success": 1
-    },
-    {
-      "segment_id": 5,
-      "phase": "撤回",
-      "start_time": 20.0,
-      "end_time": 23.0,
-      "start_frame": 600,
-      "end_frame": 690,
-      "keyframes": [
-        600,
-        645,
-        690
-      ],
-      "caption": "left 撤回。",
-      "success": 1
-    }
-  ],
+  "segments": [],
   "quality": {
     "caption_video_match": null,
     "object_presence_rate": null,
