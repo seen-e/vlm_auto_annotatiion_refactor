@@ -85,6 +85,46 @@ def _refinement_output():
     }
 
 
+def _current_refinement_output():
+    return {
+        "video_duration": 10.0,
+        "executor_timelines": [
+            {
+                "executor": "left",
+                "actions": [
+                    {
+                        "action": "approach",
+                        "object": "bottle_1",
+                        "target": None,
+                        "start_time": 1.0,
+                        "end_time": 2.0,
+                        "evidence": "left approaches bottle_1",
+                    }
+                ],
+                "supplemented_actions": [
+                    {
+                        "action": "release",
+                        "object": "bottle_1",
+                        "target": "table",
+                        "start_time": 3.0,
+                        "end_time": 4.0,
+                        "evidence": "left releases bottle_1",
+                    }
+                ],
+                "remaining_intervals": [
+                    {
+                        "start_time": 0.0,
+                        "end_time": 1.0,
+                        "interval_type": "idle",
+                        "evidence": "idle",
+                    }
+                ],
+            }
+        ],
+        "uncertainties": [],
+    }
+
+
 def test_resolve_summary_output_path_prefers_task_trajectory_path(tmp_path: Path) -> None:
     task = {"trajectory_path": str(tmp_path / "custom" / "trajectory.json")}
     default = tmp_path / "default.json"
@@ -127,10 +167,32 @@ def test_actions_are_flattened_sorted_and_not_merged() -> None:
     )
 
     segments = trajectory["segments"]
-    assert len(segments) == 3
-    assert [segment["segment_id"] for segment in segments] == [0, 1, 2]
-    assert [segment["start_time"] for segment in segments] == [1.0, 2.0, 4.0]
-    assert [segment["phase"] for segment in segments] == ["抓取", "接近", "放置"]
+    assert set(segments) == {"left", "right"}
+    assert [segment["segment_id"] for segment in segments["right"]] == [0, 1]
+    assert [segment["segment_id"] for segment in segments["left"]] == [0]
+    assert [segment["start_time"] for segment in segments["right"]] == [1.0, 4.0]
+    assert [segment["start_time"] for segment in segments["left"]] == [2.0]
+    assert [segment["phase"] for segment in segments["right"]] == ["抓取", "放置"]
+    assert [segment["phase"] for segment in segments["left"]] == ["接近"]
+
+
+def test_current_refinement_executor_timelines_are_converted_to_segments() -> None:
+    trajectory = build_trajectory(
+        task={"episode_id": "episode_000001", "task": "Pick bottle"},
+        refinement_output=_current_refinement_output(),
+        video_meta=_video_meta(),
+    )
+
+    segments = trajectory["segments"]
+    assert set(segments) == {"left"}
+    left_segments = segments["left"]
+    assert [segment["segment_id"] for segment in left_segments] == [0, 1]
+    assert [segment["phase"] for segment in left_segments] == ["approach", "release"]
+    assert [segment["source"] for segment in left_segments] == ["action", "supplemented_action"]
+    assert [segment["executor"] for segment in left_segments] == ["left", "left"]
+    assert left_segments[0]["object"] == "bottle_1"
+    assert left_segments[1]["target"] == "table"
+    assert left_segments[0]["evidence"] == "left approaches bottle_1"
 
 
 def test_unknown_task_falls_back_to_subtask_descriptions() -> None:
@@ -150,8 +212,8 @@ def test_success_uses_subtask_source_step_ids() -> None:
         video_meta=_video_meta(),
     )
 
-    assert trajectory["segments"][0]["success"] == 1
-    assert trajectory["segments"][1]["success"] is None
+    assert trajectory["segments"]["right"][0]["success"] == 1
+    assert trajectory["segments"]["left"][0]["success"] is None
 
 
 def test_fallback_caption_uses_core_action_fields_without_evidence() -> None:
@@ -161,8 +223,8 @@ def test_fallback_caption_uses_core_action_fields_without_evidence() -> None:
         video_meta=_video_meta(),
     )
 
-    assert trajectory["segments"][0]["caption"] == "right 抓取 bottle_1"
-    assert "开始证据" not in trajectory["segments"][0]["caption"]
+    assert trajectory["segments"]["right"][0]["caption"] == "right 抓取 bottle_1"
+    assert "开始证据" not in trajectory["segments"]["right"][0]["caption"]
 
 
 def test_missing_quality_defaults_to_unknown_values() -> None:

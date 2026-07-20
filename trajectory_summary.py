@@ -190,6 +190,33 @@ def build_step_to_subtask_map(refinement_output: dict[str, Any]) -> dict[str, di
     return mapping
 
 
+def _timeline_actions(refinement_output: dict[str, Any]) -> list[tuple[dict[str, Any], Any, str]]:
+    """Return action-like records from old and current refinement schemas."""
+    records: list[tuple[dict[str, Any], Any, str]] = []
+    timelines = refinement_output.get("timed_executor_timelines")
+    if not isinstance(timelines, list):
+        timelines = refinement_output.get("executor_timelines")
+    if isinstance(timelines, list):
+        for timeline in timelines:
+            if not isinstance(timeline, dict):
+                continue
+            executor = timeline.get("executor")
+            for key, source in (("actions", "action"), ("supplemented_actions", "supplemented_action")):
+                timeline_actions = timeline.get(key)
+                if not isinstance(timeline_actions, list):
+                    continue
+                for action in timeline_actions:
+                    if isinstance(action, dict):
+                        records.append((action, executor, source))
+
+    refined_segments = refinement_output.get("refined_segments")
+    if isinstance(refined_segments, list):
+        for action in refined_segments:
+            if isinstance(action, dict):
+                records.append((action, action.get("executor"), "refined_segment"))
+    return records
+
+
 def resolve_segment_success(
     action: dict[str, Any],
     step_to_subtask: dict[str, dict[str, Any]],
@@ -216,7 +243,7 @@ def _success_value(status: Any) -> int | None:
     return None
 
 
-def build_segments(refinement_output: dict[str, Any], video_meta: dict[str, Any]) -> list[dict[str, Any]]:
+def build_segments(refinement_output: dict[str, Any], video_meta: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
     if not isinstance(refinement_output, dict):
         raise TrajectorySummaryError("refinement_output must be a JSON object")
     if not isinstance(video_meta, dict):
@@ -224,36 +251,24 @@ def build_segments(refinement_output: dict[str, Any], video_meta: dict[str, Any]
 
     episode_start, episode_end = _episode_time_bounds(video_meta)
     step_to_subtask = build_step_to_subtask_map(refinement_output)
-    actions: list[tuple[float, float, str, dict[str, Any], Any]] = []
-    timelines = refinement_output.get("timed_executor_timelines")
-    if not isinstance(timelines, list):
-        timelines = []
+    actions: list[tuple[float, float, str, str, dict[str, Any], Any, str]] = []
 
-    for timeline in timelines:
-        if not isinstance(timeline, dict):
+    for action, executor, source in _timeline_actions(refinement_output):
+        start = _to_float(action.get("start_time"))
+        end = _to_float(action.get("end_time"))
+        if start is None or end is None:
             continue
-        executor = timeline.get("executor")
-        timeline_actions = timeline.get("actions")
-        if not isinstance(timeline_actions, list):
+        if end < start:
+            start, end = end, start
+        clipped_start = max(episode_start, start)
+        clipped_end = min(episode_end, end)
+        if clipped_end < clipped_start:
             continue
-        for action in timeline_actions:
-            if not isinstance(action, dict):
-                continue
-            start = _to_float(action.get("start_time"))
-            end = _to_float(action.get("end_time"))
-            if start is None or end is None:
-                continue
-            if end < start:
-                start, end = end, start
-            clipped_start = max(episode_start, start)
-            clipped_end = min(episode_end, end)
-            if clipped_end < clipped_start:
-                continue
-            actions.append((clipped_start, clipped_end, str(action.get("step_id", "")), action, executor))
+        actions.append((clipped_start, clipped_end, str(executor or ""), str(action.get("step_id", "")), action, executor, source))
 
-    actions.sort(key=lambda item: (item[0], item[1], item[2]))
-    segments: list[dict[str, Any]] = []
-    for segment_id, (start, end, _step_id, action, executor) in enumerate(actions):
+    actions.sort(key=lambda item: (item[2], item[0], item[1], item[3], item[6]))
+    segments_by_executor: dict[str, list[dict[str, Any]]] = {}
+    for start, end, executor_key, _step_id, action, executor, source in actions:
         start_frame = timestamp_to_original_frame(start, video_meta)
         end_frame = timestamp_to_original_frame(end, video_meta)
         if end_frame < start_frame:
@@ -266,11 +281,13 @@ def build_segments(refinement_output: dict[str, Any], video_meta: dict[str, Any]
                     timestamp_to_original_frame((start + end) / 2.0, video_meta),
                     end_frame,
                 ]
-            }
-        )
-        segments.append(
+                }
+            )
+        executor_id = _clean_text(action.get("executor")) or _clean_text(executor) or "unknown"
+        executor_segments = segments_by_executor.setdefault(executor_id, [])
+        executor_segments.append(
             {
-                "segment_id": segment_id,
+                "segment_id": len(executor_segments),
                 "phase": normalize_phase(action.get("action")),
                 "start_time": start,
                 "end_time": end,
@@ -279,9 +296,14 @@ def build_segments(refinement_output: dict[str, Any], video_meta: dict[str, Any]
                 "keyframes": keyframes,
                 "caption": build_caption(action, executor),
                 "success": resolve_segment_success(action, step_to_subtask, refinement_output),
+                "executor": executor_id,
+                "object": _clean_text(action.get("object")),
+                "target": _clean_text(action.get("target")),
+                "evidence": _clean_text(action.get("evidence")),
+                "source": source,
             }
         )
-    return segments
+    return segments_by_executor
 
 
 def build_trajectory(
