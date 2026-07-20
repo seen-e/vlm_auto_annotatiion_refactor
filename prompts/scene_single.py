@@ -13,10 +13,19 @@ SCENE_SYSTEM_PROMPT = """
 
 * scene.executors 描述实际参与任务的执行主体。
 
+* 对于单臂机器人，唯一机械臂及其夹爪、灵巧手、腕部和局部连杆统一使用 executor_id="single"。
+
+* 视频中可能只显示末端执行器或局部连杆。同一机械臂在不同时间、不同位置、遮挡前后以及不同视角中的观测均保持为同一个 executor="single"，不得重复创建执行主体。
+
+* 不得根据机械臂当前画面位置、进入方向、暂时离开画面或重新出现的位置修改 executor_id。
+
+* 夹爪、灵巧手、腕部、末端工具均属于 executor="single" 的组成部分，不得单独建立 executor；被机械臂抓持后同步运动的物体仍属于 scene.objects，不得识别为 executor。
+
+* 只有能够可靠确认视频中存在两条彼此独立的机械臂时，才将机器人结构与单臂机器人配置不一致的问题写入 manual_review。仅未看到底座、根部或完整机械臂不构成类型不一致。
+
 * scene.object_categories 汇总视频中能够可靠确认的物体类别，以及每个类别在单个采样画面中的最大同时可见数量和证据时间。
 
 * scene.objects 描述需要在当前任务中独立保持身份的具体物体实例，包括实际参与任务的物体，以及确认任务物体身份所必需的邻近同类物体。大量重复且未参与任务的物体由 scene.object_categories 汇总。
-
 
 * 先完成 object_categories，再根据类别数量证据和跨帧身份连续性建立 objects。
 
@@ -47,7 +56,8 @@ SCENE_SYSTEM_PROMPT = """
 * 任务指令只作为辅助信息，结论以视频视觉证据为准。
 
 * 输出且仅输出一个合法 JSON 对象。
-  """
+"""
+
 
 SCENE_USER_PROMPT = """
 当前视频的任务相关信息：
@@ -56,7 +66,7 @@ SCENE_USER_PROMPT = """
 
 当前机器人类型：
 
-{{ prompt.robot_type.BIMANUAL_ROBOT_PROMPT }}
+{{ prompt.robot_type.SINGLE_ARM_ROBOT_PROMPT }}
 
 处理后的视频输入布局：
 
@@ -70,16 +80,18 @@ SCENE_USER_PROMPT = """
 
 1. 从输入布局中确认真实视角名称，将第一个真实输入视角的图像序列设为 primary_view。后续空间方位均以 primary_view 为准，其余传入视角的图像序列用于辅助确认。
 
-2. 识别实际参与任务的执行主体。executor_id 根据机器人类型以及执行主体在 primary_view 中的稳定空间位置确定。
+2. 识别实际参与任务的执行主体。对于单臂机器人，唯一机械臂及其夹爪、灵巧手、腕部和局部连杆统一使用 executor_id="single"。同一机械臂在不同时间、不同位置、遮挡前后或不同真实视角中的观测不得重复建立 executor。
 
-3. 对每个执行主体描述：
+3. 对 executor="single" 描述：
 
    * 静态外观；
-   * 底座或主体位置；
-   * 稳定区分特征；
-   * 在各真实视角中的画面位置；
+   * 底座、根部或可见主体位置；
+   * 末端执行器或夹爪的稳定外观特征；
+   * 在各真实视角中的画面位置。
 
-4. 对比配置中的 robot_type 与视频中可见的执行主体类型和数量。存在明显不一致或无法可靠确认时，将 manual_review.required 设为 true，并在 reasons 中说明。
+   视频中仅显示末端执行器或局部连杆时，应根据完整视频中的运动、外观和交互连续性确认其属于 executor="single"。不得因机械臂暂时被遮挡、离开画面、重新出现或在不同视角中位置不同而创建新的 executor。
+
+4. 对比配置中的 robot_type 与视频中能够可靠确认的机器人结构。同一机械臂在不同时间或不同视角中多次出现时不得进行数量累加。只有能够可靠确认存在两条彼此独立的机械臂或其他明显不一致结构时，才将 manual_review.required 设为 true，并在 reasons 中说明。仅未看到底座、根部或完整机械臂不构成类型不一致。
 
 5. 浏览完整视频，首先识别能够被可靠确认的物体类别，并写入 scene.object_categories。
 
@@ -104,7 +116,6 @@ SCENE_USER_PROMPT = """
    * 在 objects 中只建立需要独立保持身份的具体实例；
    * 对未参与任务且不影响任务物体身份区分的其他同类物体，不逐一建立 object_id；
    * 同类物体数量过多、排列密集或遮挡严重，导致 max_simultaneously_visible 无法精确确定时，记录能够可靠区分的数量，并在 uncertainties 中说明计数风险。
-
 
 10. 为每个物体建立稳定的“英文粗粒度类别_数字”object_id，并使用 category_id 引用 object_categories 中对应的类别。无法识别具体类别时，使用 object_1、object_2 等稳定 ID。
 
@@ -144,7 +155,6 @@ SCENE_USER_PROMPT = """
 
     物体位置变化以桌面、托盘、支架、容器、目标区域或其他稳定物体为参照，综合判断真实空间关系变化。
 
-
 17. interaction_objects 中的 object_id 引用 scene.objects 中已经存在的具体 object_id。
 
 18. interaction_reason 描述该物体参与任务的物体中心视觉证据：
@@ -160,7 +170,6 @@ SCENE_USER_PROMPT = """
     * “bottle_1 与该物体的关系由外部变为内部容纳关系。”
     * “part_1 与该物体由分离状态变为插入并连接状态。”
     * “object_1 与该物体建立稳定接触，最终位置和姿态受到该物体约束。”
-
 
 19. 普通桌面、地面和工作台主要作为环境结构记录。当其本身是明确的操作目标、放置目标或任务交互对象时，将其加入 interaction_objects。
 
@@ -180,52 +189,51 @@ SCENE_USER_PROMPT = """
 严格按照以下 JSON 格式返回，Key、层级和字段类型不得修改：
 
 {
-"robot_type": "bimanual",
-"primary_view": "第一个真实输入视角名称",
-"executors": [
-{
-"executor_id": "single | left | right | base | arm_1 | human | unknown",executor_id
-"category": "机械臂 | 移动底盘 | 人类 | 未知",
-"description": "执行主体的外观、底座位置和稳定区分特征",
-"position": "按真实视角依次描述该主体在画面中的相对位置；无法判断的视角写未知"
+  "robot_type": "single_arm",
+  "primary_view": "第一个真实输入视角名称",
+  "executors": [
+    {
+      "executor_id": "single | human | unknown",
+      "category": "机械臂 | 人类 | 未知",
+      "description": "执行主体的外观、底座或可见主体位置、末端执行器特征",
+      "position": "按真实视角依次描述该主体在画面中的相对位置；无法判断的视角写未知"
+    }
+  ],
+  "object_categories": [
+    {
+      "category_id": "稳定的英文粗粒度类别，例如 bottle、cup、tray",
+      "category": "可靠的粗粒度中文类别",
+      "max_simultaneously_visible": 3,
+      "count_evidence_time": "确定最大同时可见数量的时间，例如 0.00s",
+      "count_evidence_frame": 0,
+      "count_evidence": "说明该画面中能够同时确认多个独立实例的直接视觉依据"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "需要独立保持身份的具体物体实例编码，例如 bottle_1",
+      "category_id": "引用 object_categories 中已有的 category_id",
+      "first_view_time": "该具体实例第一次在 primary_view 中能够被可靠确认的时间，例如 3.0s；无法判断时写未知",
+      "category": "可靠的粗粒度中文类别",
+      "best_view_time": "该具体实例在 primary_view 中最清晰且最容易确认身份的时间，例如 12.5s；无法判断时写未知",
+      "description": "基于 best_view_time 对应主视角画面，描述物体本身的颜色、形状、大小、稳定结构和实例区分特征"
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "引用 objects 中已有的具体 object_id",
+      "interaction_role": "被执行物体 | 接收物体 | 容纳物体 | 固定物体 | 约束物体 | 连接目标 | 放置目标 | 其他",
+      "interaction_reason": "以当前 object_id 为主语，仅描述物体自身的位置、姿态、结构或开合状态变化，或其与其他 object_id 之间接触、分离、容纳、放置、固定、约束、插入或连接关系的变化；相关实体只使用 objects 中已有的 object_id"
+    }
+  ],
+  "manual_review": {
+    "required": false,
+    "reasons": [
+      "需要人工审核时，说明具体问题、发生时间和受影响内容；不需要审核时返回空数组"
+    ]
+  },
+  "uncertainties": [
+    "记录可能影响执行主体识别、物体类别、最大同时可见数量、同类实例数量、身份连续性、first_view_time、best_view_time 或 interaction_objects 筛选的问题；没有时返回空数组"
+  ]
 }
-],
-"object_categories": [
-{
-"category_id": "稳定的英文粗粒度类别，例如 bottle、cup、tray",
-"category": "可靠的粗粒度中文类别",
-"max_simultaneously_visible": 3,
-"count_evidence_time": "确定最大同时可见数量的时间，例如 0.00s",
-"count_evidence_frame": 0,
-"count_evidence": "说明该画面中能够同时确认多个独立实例的直接视觉依据"
-}
-],
-"objects": [
-{
-"object_id": "需要独立保持身份的具体物体实例编码，例如 bottle_1"
-"category_id": "引用 object_categories 中已有的 category_id",
-"first_view_time": "该具体实例第一次在 primary_view 中能够被可靠确认的时间，例如 3.0s；无法判断时写未知",
-"category": "可靠的粗粒度中文类别",
-"best_view_time": "该具体实例在 primary_view 中最清晰且最容易确认身份的时间，例如 12.5s；无法判断时写未知",
-"description": "基于 best_view_time 对应主视角画面，描述物体本身的颜色、形状、大小、稳定结构和实例区分特征"
-}
-],
-"interaction_objects": [
-{
-"object_id": "引用 objects 中已有的具体 object_id",
-"interaction_role": "被执行物体 | 接收物体 | 容纳物体 | 固定物体 | 约束物体 | 连接目标 | 放置目标 | 其他",
-"interaction_reason": "以当前 object_id 为主语，仅描述物体自身的位置、姿态、结构或开合状态变化，或其与其他 object_id 之间接触、分离、容纳、放置、固定、约束、插入或连接关系的变化；相关实体只使用 objects 中已有的 object_id"
-}
-],
-"manual_review": {
-"required": false,
-"reasons": [
-"需要人工审核时，说明具体问题、发生时间和受影响内容；不需要审核时返回空数组"
-]
-},
-"uncertainties": [
-"记录可能影响执行主体识别、物体类别、最大同时可见数量、同类实例数量、身份连续性、first_view_time、best_view_time 或 interaction_objects 筛选的问题；没有时返回空数组"
-]
-}
-
 """

@@ -146,6 +146,24 @@ def build_keyframes(start_time: float, end_time: float, video_meta: dict[str, An
     return sorted({_clamp(frame, start_frame, end_frame) for frame in frames})
 
 
+def keyframes_from_segments(segments: dict[str, list[dict[str, Any]]]) -> list[int]:
+    frames: set[int] = set()
+    for executor_segments in segments.values():
+        if not isinstance(executor_segments, list):
+            continue
+        for segment in executor_segments:
+            if not isinstance(segment, dict):
+                continue
+            keyframes = segment.get("keyframes")
+            if not isinstance(keyframes, list):
+                continue
+            for frame in keyframes:
+                parsed = _to_int(frame)
+                if parsed is not None:
+                    frames.add(parsed)
+    return sorted(frames)
+
+
 def normalize_phase(action: Any) -> str:
     text = _clean_text(action)
     if text is None:
@@ -323,6 +341,8 @@ def build_trajectory(
     start_time, end_time = _episode_time_bounds(video_meta)
     start_frame, end_frame = _frame_bounds(video_meta, start_time, end_time)
     l1_task = _resolve_l1_task(task, refinement_output)
+    segments = build_segments(refinement_output, video_meta)
+    keyframes = keyframes_from_segments(segments) or build_keyframes(start_time, end_time, video_meta)
     return {
         "episode_id": _clean_text(task.get("episode_id")),
         "robot_name": _clean_text(task.get("robot_name")),
@@ -332,11 +352,11 @@ def build_trajectory(
         "end_time": end_time,
         "start_frame": start_frame,
         "end_frame": end_frame,
-        "keyframes": build_keyframes(start_time, end_time, video_meta),
+        "keyframes": keyframes,
         "L1_task": l1_task,
         "sense": _first_text(refinement_output, ["sense", "scene_description", "scene_summary", "overall_summary"]),
         "category": _first_text(task, ["category"]) or _first_text(refinement_output, ["category", "task_category"]),
-        "segments": build_segments(refinement_output, video_meta),
+        "segments": segments,
         "quality": _build_quality(refinement_output),
     }
 

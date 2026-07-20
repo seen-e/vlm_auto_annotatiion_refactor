@@ -99,7 +99,7 @@ stages:
     # 推荐使用与框架包名解耦的路径：prompts.scene 或 scene。
     # 也兼容旧的完整包路径。
     prompt:
-      module: "prompts.scene"
+      module: "prompts.scene_single"
       # system: 模块中的 system prompt 变量名，必须是字符串。
       system: "SCENE_SYSTEM_PROMPT"
       # user: 模块中的 user prompt 模板变量名，必须是字符串。
@@ -200,7 +200,7 @@ stages:
 
   analysis:
     prompt:
-      module: "prompts.analysis"
+      module: "prompts.analysis_single"
       system: "ANALYSIS_SYSTEM_PROMPT"
       user: "ANALYSIS_USER_PROMPT"
     output_key: "analysis"
@@ -238,7 +238,7 @@ stages:
 
   refinement:
     prompt:
-      module: "prompts.refinement"
+      module: "prompts.refinement_single"
       system: "REFINEMENT_SYSTEM_PROMPT"
       user: "REFINEMENT_USER_PROMPT"
     output_key: "refinement"

@@ -269,17 +269,48 @@ def _effective_time_window(
 
 
 def _read_frame(path: Path, frame_index: int) -> np.ndarray:
-    cap = cv2.VideoCapture(str(path))
-    if not cap.isOpened():
-        raise VideoProcessError(f"failed to open video while reading frame: {path}")
     try:
-        cap.set(cv2.CAP_PROP_POS_FRAMES, int(frame_index))
-        ok, frame = cap.read()
-    finally:
-        cap.release()
-    if not ok or frame is None:
-        raise VideoProcessError(f"failed to read frame {frame_index} from {path}")
-    return frame
+        import av
+    except Exception:
+        av = None
+
+    if av is not None:
+        try:
+            with av.open(str(path)) as container:
+                stream = container.streams.video[0]
+                fps = float(stream.average_rate or stream.base_rate or 0.0)
+                target_time = 0.0 if fps <= 0 else int(frame_index) / fps
+                if stream.time_base:
+                    target_pts = max(0, int(target_time / float(stream.time_base)))
+                    container.seek(target_pts, backward=True, any_frame=False, stream=stream)
+
+                last_frame: np.ndarray | None = None
+                tolerance = 0.5 / fps if fps > 0 else 0.0
+                for decoded in container.decode(stream):
+                    frame_time = (
+                        float(decoded.pts * stream.time_base)
+                        if decoded.pts is not None and stream.time_base
+                        else 0.0
+                    )
+                    last_frame = decoded.to_ndarray(format="bgr24")
+                    if fps <= 0 or frame_time + tolerance >= target_time:
+                        return last_frame
+                if last_frame is not None:
+                    return last_frame
+        except Exception:
+            pass
+
+    cap = cv2.VideoCapture(str(path))
+    if cap.isOpened():
+        try:
+            cap.set(cv2.CAP_PROP_POS_FRAMES, int(frame_index))
+            ok, frame = cap.read()
+            if ok and frame is not None:
+                return frame
+        finally:
+            cap.release()
+
+    raise VideoProcessError(f"failed to read frame {frame_index} from {path}")
 
 
 def resize_keep_aspect(frame: np.ndarray, resize_width: int) -> np.ndarray:

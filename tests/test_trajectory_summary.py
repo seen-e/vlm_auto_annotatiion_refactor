@@ -156,6 +156,16 @@ def test_build_trajectory_episode_fields_and_keyframes_from_video_meta() -> None
     assert trajectory["duration"] == pytest.approx(8.0)
     assert trajectory["start_frame"] == 30
     assert trajectory["end_frame"] == 270
+    assert trajectory["keyframes"] == [30, 60, 150]
+
+
+def test_episode_keyframes_fall_back_to_episode_bounds_when_no_segments() -> None:
+    trajectory = build_trajectory(
+        task={"episode_id": "episode_000001", "task": "Pick bottle"},
+        refinement_output={"executor_timelines": []},
+        video_meta=_video_meta(effective_start_time=1.0, effective_end_time=9.0, effective_frame_start=30, effective_frame_end=270),
+    )
+
     assert trajectory["keyframes"] == [30, 150, 270]
 
 

@@ -33,7 +33,7 @@ load_outputs_into_context = result_io_module.load_outputs_into_context
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"))
+    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config.yaml"))
     parser.add_argument("--video", required=True)
     parser.add_argument("--instruction", required=True)
     parser.add_argument("--video-id", default="demo_episode")

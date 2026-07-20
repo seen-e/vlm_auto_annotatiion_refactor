@@ -216,7 +216,7 @@ def _handle_task_success(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Batch run configured VLM pipeline on robot_mind2 tasks.")
-    parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"), help="Path to config.yaml.")
+    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config.yaml"), help="Path to config.yaml.")
     parser.add_argument(
         "--tasks",
         default=str(DEFAULT_TASKS_PATH),

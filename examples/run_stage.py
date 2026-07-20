@@ -35,7 +35,7 @@ run_stage = stage_runner_module.run_stage
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", default=str(PACKAGE_DIR / "config.yaml"))
+    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config.yaml"))
     parser.add_argument("--stage", default="scene")
     parser.add_argument("--video", required=True)
     parser.add_argument("--instruction", required=True)
