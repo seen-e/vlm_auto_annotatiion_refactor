@@ -1,0 +1,205 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "bottle",
+      "category": "瓶子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "bottle_1",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "棕色瓶身，白色瓶盖，位于画面右侧。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_2",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "红色瓶身，红色瓶盖，位于画面中间。",
+      "first_view_time": 0.0,
+      "best_view_time": 12.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_3",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "橙色瓶身，橙色瓶盖，位于画面左侧。",
+      "first_view_time": 0.0,
+      "best_view_time": 22.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "bottle_1",
+      "interaction_reason": "夹爪与瓶身接触并闭合，随后瓶子随夹爪移动，表现出被夹持的状态。"
+    },
+    {
+      "object_id": "bottle_2",
+      "interaction_reason": "夹爪与瓶身接触并闭合，随后瓶子随夹爪移动，表现出被夹持的状态。"
+    },
+    {
+      "object_id": "bottle_3",
+      "interaction_reason": "夹爪与瓶身接触并闭合，随后瓶子随夹爪移动，表现出被夹持的状态。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪向右侧的棕色瓶子移动并靠近。",
+      "evidence": "夹爪与棕色瓶子之间的可见间隙持续减小。",
+      "object": "bottle_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪与棕色瓶子接触。",
+      "evidence": "夹爪指端与瓶身表面接触，间隙消失。",
+      "object": "bottle_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 6.5,
+      "local_observation": "夹爪闭合，夹持住棕色瓶子。",
+      "evidence": "夹爪指间距减小，瓶子被夹在中间。",
+      "object": "bottle_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.5,
+      "end_time_hint": 8.5,
+      "local_observation": "夹爪夹持棕色瓶子移动。",
+      "evidence": "瓶子与夹爪保持相对静止，背景发生位移。",
+      "object": "bottle_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.5,
+      "end_time_hint": 9.0,
+      "local_observation": "夹爪张开，释放棕色瓶子。",
+      "evidence": "夹爪指间距增大，瓶子不再受夹爪约束。",
+      "object": "bottle_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 9.0,
+      "end_time_hint": 12.5,
+      "local_observation": "夹爪向中间的红色瓶子移动并靠近。",
+      "evidence": "夹爪与红色瓶子之间的可见间隙持续减小。",
+      "object": "bottle_2",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 12.5,
+      "end_time_hint": 13.0,
+      "local_observation": "夹爪与红色瓶子接触。",
+      "evidence": "夹爪指端与瓶身表面接触，间隙消失。",
+      "object": "bottle_2",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 13.0,
+      "end_time_hint": 13.5,
+      "local_observation": "夹爪闭合，夹持住红色瓶子。",
+      "evidence": "夹爪指间距减小，瓶子被夹在中间。",
+      "object": "bottle_2",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 13.5,
+      "end_time_hint": 17.0,
+      "local_observation": "夹爪夹持红色瓶子移动。",
+      "evidence": "瓶子与夹爪保持相对静止，背景发生位移。",
+      "object": "bottle_2",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 17.0,
+      "end_time_hint": 17.5,
+      "local_observation": "夹爪张开，释放红色瓶子。",
+      "evidence": "夹爪指间距增大，瓶子不再受夹爪约束。",
+      "object": "bottle_2",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 17.5,
+      "end_time_hint": 23.5,
+      "local_observation": "夹爪向左侧的橙色瓶子移动并靠近。",
+      "evidence": "夹爪与橙色瓶子之间的可见间隙持续减小。",
+      "object": "bottle_3",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 23.5,
+      "end_time_hint": 24.0,
+      "local_observation": "夹爪与橙色瓶子接触。",
+      "evidence": "夹爪指端与瓶身表面接触，间隙消失。",
+      "object": "bottle_3",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 24.0,
+      "end_time_hint": 24.5,
+      "local_observation": "夹爪闭合，夹持住橙色瓶子。",
+      "evidence": "夹爪指间距减小，瓶子被夹在中间。",
+      "object": "bottle_3",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 24.5,
+      "end_time_hint": 28.5,
+      "local_observation": "夹爪夹持橙色瓶子移动。",
+      "evidence": "瓶子与夹爪保持相对静止，背景发生位移。",
+      "object": "bottle_3",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 28.5,
+      "end_time_hint": 29.0,
+      "local_observation": "夹爪张开，释放橙色瓶子。",
+      "evidence": "夹爪指间距增大，瓶子不再受夹爪约束。",
+      "object": "bottle_3",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}
+```

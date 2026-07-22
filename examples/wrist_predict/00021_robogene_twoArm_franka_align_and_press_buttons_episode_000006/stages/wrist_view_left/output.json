@@ -1,0 +1,139 @@
+{
+  "object_categories": [
+    {
+      "category": "control_panel",
+      "description": "控制面板",
+      "anchor_time": 0.73,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "button",
+      "description": "按钮",
+      "anchor_time": 0.73,
+      "max_simultaneously_visible": 4
+    },
+    {
+      "category": "basket",
+      "description": "金属篮",
+      "anchor_time": 0.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_panel_1",
+      "category": "control_panel",
+      "description": "位于画面右侧墙面上的白色长方形控制面板，包含多个按钮",
+      "first_view_time": 0.0,
+      "last_view_time": 5.0
+    },
+    {
+      "object_id": "button_1",
+      "category": "button",
+      "description": "位于control_panel_1最左侧的大型红色圆形急停按钮",
+      "first_view_time": 0.0,
+      "last_view_time": 2.87
+    },
+    {
+      "object_id": "button_2",
+      "category": "button",
+      "description": "位于control_panel_1上button_1右侧的小型红色圆形按钮",
+      "first_view_time": 0.27,
+      "last_view_time": 2.0
+    },
+    {
+      "object_id": "button_3",
+      "category": "button",
+      "description": "位于control_panel_1上button_2右侧的绿色圆形按钮",
+      "first_view_time": 0.27,
+      "last_view_time": 1.87
+    },
+    {
+      "object_id": "button_4",
+      "category": "button",
+      "description": "位于control_panel_1最右侧的黑色旋钮开关",
+      "first_view_time": 0.27,
+      "last_view_time": 1.5
+    },
+    {
+      "object_id": "basket_1",
+      "category": "basket",
+      "description": "位于画面左侧的白色金属网格篮",
+      "first_view_time": 0.0,
+      "last_view_time": 5.0
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在1.50s左右接触并按压该按钮，导致按钮状态改变（被按下），随后在2.50s左右离开。"
+    },
+    {
+      "object_id": "control_panel_1",
+      "roles": [
+        "source"
+      ],
+      "evidence": "button_1是control_panel_1的一部分，操作发生在该面板表面。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.37,
+      "local_observation": "开始时夹爪位于画面下方，control_panel_1位于右侧远处；结束时夹爪已移动至button_1正前方，即将接触。",
+      "evidence": "夹爪相对于control_panel_1的位置持续靠近，画面中control_panel_1逐渐变大并居中。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.37,
+      "end_time_hint": 1.63,
+      "local_observation": "开始时夹爪指尖接触button_1表面；结束时button_1明显被按下，呈现凹陷状态。",
+      "evidence": "夹爪向前推进，button_1从凸起状态变为按下状态，且夹爪保持接触。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "按压",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 2.37,
+      "local_observation": "开始时button_1处于被按下状态，夹爪保持接触；结束时夹爪开始向后撤退，button_1仍保持按下状态。",
+      "evidence": "夹爪与button_1保持相对静止，维持按压动作，随后夹爪位置开始后退。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "等待",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.37,
+      "end_time_hint": 3.0,
+      "local_observation": "开始时夹爪与button_1接触；结束时夹爪完全离开control_panel_1，画面中仅剩墙面。",
+      "evidence": "夹爪向后移动，control_panel_1逐渐移出画面或变得模糊，最终完全离开视野。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 5.0,
+      "local_observation": "开始时画面主要为墙面，夹爪位于下方；结束时夹爪回到初始大致位置，basket_1和control_panel_1重新出现在画面边缘。",
+      "evidence": "夹爪持续后退并调整姿态，背景物体（basket_1, control_panel_1）重新进入视野，表明机械臂已撤回至起始区域。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    }
+  ]
+}

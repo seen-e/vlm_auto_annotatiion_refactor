@@ -1,0 +1,117 @@
+{
+  "object_categories": [
+    {
+      "category_id": "control_box",
+      "category": "控制盒"
+    },
+    {
+      "category_id": "button",
+      "category": "按钮"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_box_1",
+      "category_id": "control_box",
+      "category": "控制盒",
+      "description": "白色矩形控制盒，表面安装有多个圆形按钮，包括红色急停按钮、红色按钮、绿色按钮和黑色旋钮。",
+      "first_view_time": 0.63,
+      "best_view_time": 2.87,
+      "uncertainty": null
+    },
+    {
+      "object_id": "button_1",
+      "category_id": "button",
+      "category": "按钮",
+      "description": "位于控制盒最右侧的黑色旋钮开关，带有银色金属环。",
+      "first_view_time": 1.0,
+      "best_view_time": 2.87,
+      "uncertainty": null
+    },
+    {
+      "object_id": "button_2",
+      "category_id": "button",
+      "category": "按钮",
+      "description": "位于控制盒中间位置的绿色圆形按钮。",
+      "first_view_time": 1.13,
+      "best_view_time": 2.87,
+      "uncertainty": null
+    },
+    {
+      "object_id": "button_3",
+      "category_id": "button",
+      "category": "按钮",
+      "description": "位于控制盒左侧的红色圆形按钮。",
+      "first_view_time": 1.13,
+      "best_view_time": 2.87,
+      "uncertainty": null
+    },
+    {
+      "object_id": "button_4",
+      "category_id": "button",
+      "category": "按钮",
+      "description": "位于控制盒最左侧的大型红色急停按钮。",
+      "first_view_time": 1.13,
+      "best_view_time": 2.87,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_1",
+      "interaction_reason": "夹爪直接对准并接触黑色旋钮开关，夹爪闭合后夹持住旋钮，并带动旋钮发生旋转动作。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪向白色控制盒移动，逐渐靠近并调整姿态以对准最右侧的黑色旋钮。",
+      "evidence": "控制盒从画面边缘进入视野，夹爪与旋钮之间的距离持续减小，最终夹爪开口对准旋钮两侧。",
+      "object": "button_1",
+      "target": "control_box_1",
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 1.87,
+      "local_observation": "夹爪指接触黑色旋钮两侧，随后夹爪指间距减小，闭合夹爪。",
+      "evidence": "夹爪指与旋钮表面间隙消失，随后夹爪指明显向内收缩，夹持住旋钮。",
+      "object": "button_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.63,
+      "local_observation": "夹爪夹持黑色旋钮并进行旋转操作，旋钮相对于控制盒面板发生角度变化。",
+      "evidence": "夹爪与旋钮保持相对静止，旋钮上的指示标记随夹爪转动而改变方向，从垂直位置转为水平位置。",
+      "object": "button_1",
+      "target": "control_box_1",
+      "action": "转动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.63,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪保持夹持状态，微调旋钮角度后准备释放。",
+      "evidence": "旋钮位置基本稳定，夹爪指仍包裹在旋钮两侧。",
+      "object": "button_1",
+      "target": null,
+      "action": "调整物体姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪指间距增大，张开夹爪，随后与旋钮分离并撤回。",
+      "evidence": "夹爪指明显向外张开，与旋钮表面出现间隙，随后夹爪向后移动远离控制盒。",
+      "object": "button_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}

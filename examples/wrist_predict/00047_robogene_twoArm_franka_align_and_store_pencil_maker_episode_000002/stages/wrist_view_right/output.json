@@ -1,0 +1,92 @@
+{
+  "object_categories": [
+    {
+      "category": "marker",
+      "description": "记号笔",
+      "anchor_time": 5.5,
+      "max_simultaneously_visible": 2
+    },
+    {
+      "category": "container",
+      "description": "容器",
+      "anchor_time": 4.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "clipboard",
+      "description": "写字板",
+      "anchor_time": 1.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "marker_1",
+      "category": "marker",
+      "description": "初始位于 container_1 内部、笔帽为橙色的记号笔",
+      "first_view_time": 0.0,
+      "last_view_time": 8.73
+    },
+    {
+      "object_id": "marker_2",
+      "category": "marker",
+      "description": "初始位于 container_1 内部、笔帽为蓝色的记号笔",
+      "first_view_time": 3.0,
+      "last_view_time": 8.73
+    },
+    {
+      "object_id": "container_1",
+      "category": "container",
+      "description": "位于画面左侧、内部装有记号笔的网状圆柱形容器",
+      "first_view_time": 0.0,
+      "last_view_time": 8.73
+    },
+    {
+      "object_id": "clipboard_1",
+      "category": "clipboard",
+      "description": "位于画面右侧、带有金属夹的白色写字板",
+      "first_view_time": 0.0,
+      "last_view_time": 8.73
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "marker_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪从 container_1 中抓取该实例，将其移出并放置在桌面上。"
+    },
+    {
+      "object_id": "container_1",
+      "roles": [
+        "source"
+      ],
+      "evidence": "marker_1 初始位于该容器内部，随后被移出。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 4.0,
+      "end_time_hint": 5.5,
+      "local_observation": "开始时夹爪位于 container_1 附近；结束时夹爪已闭合，夹住 marker_1 的笔身。",
+      "evidence": "夹爪向 container_1 移动并闭合，marker_1 随后随夹爪运动，与 container_1 分离。",
+      "object": "marker_1",
+      "target": "container_1",
+      "gripper_action": "抓取",
+      "arm_action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 7.5,
+      "local_observation": "开始时 marker_1 被夹爪夹持悬空；结束时 marker_1 被放置在桌面上。",
+      "evidence": "夹爪携带 marker_1 移动至桌面区域，随后张开夹爪，marker_1 停留在桌面上。",
+      "object": "marker_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": "放置",
+      "uncertainty": null
+    }
+  ]
+}

@@ -39,7 +39,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
-DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_arrange_tabletop_drink_display.json"
+DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_selected_all_tasks_test_data.json"
 
 
 def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
@@ -216,7 +216,7 @@ def _handle_task_success(
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Batch run configured VLM pipeline on robot_mind2 tasks.")
-    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config.yaml"), help="Path to config.yaml.")
+    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config_dual_gripper.yaml"), help="Path to config.yaml.")
     parser.add_argument(
         "--tasks",
         default=str(DEFAULT_TASKS_PATH),

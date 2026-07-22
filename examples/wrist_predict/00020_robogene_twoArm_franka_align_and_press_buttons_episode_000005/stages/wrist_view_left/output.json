@@ -1,0 +1,98 @@
+{
+  "object_categories": [
+    {
+      "category": "button_box",
+      "description": "带有红色急停按钮的白色控制盒",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "basket",
+      "description": "白色金属网格篮",
+      "anchor_time": 0.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "button_box_1",
+      "category": "button_box",
+      "description": "位于画面右侧、带有红色圆形急停按钮的白色控制盒",
+      "first_view_time": 0.0,
+      "last_view_time": 3.67
+    },
+    {
+      "object_id": "basket_1",
+      "category": "basket",
+      "description": "位于画面左侧的白色金属网格篮",
+      "first_view_time": 0.0,
+      "last_view_time": 3.67
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_box_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在 0.63s 左右接触并闭合夹持该物体，随后将其提起并移动，最后在 2.00s 左右释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.63,
+      "local_observation": "开始时夹爪张开，位于 button_box_1 左侧远处；结束时夹爪已移动至 button_box_1 正前方，准备接触。",
+      "evidence": "夹爪相对于 button_box_1 的距离持续减小，画面中 button_box_1 逐渐变大并居中。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 1.0,
+      "local_observation": "开始时夹爪两指位于 button_box_1 两侧；结束时夹爪已闭合并稳定夹持 button_box_1。",
+      "evidence": "夹爪指间距减小，button_box_1 随后与夹爪保持相对静止，随夹爪一同运动。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.87,
+      "local_observation": "开始时 button_box_1 被夹爪夹持，位于较低位置；结束时 button_box_1 被提升至较高位置。",
+      "evidence": "button_box_1 持续与夹爪保持固定相对位置，背景墙面纹理向下移动，表明物体被向上提起。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": "夹持",
+      "arm_action": "提起",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.13,
+      "local_observation": "开始时 button_box_1 被夹爪夹持在空中；结束时夹爪张开，button_box_1 脱离夹爪控制并下落。",
+      "evidence": "夹爪指间距增大，button_box_1 不再随夹爪运动，而是相对于夹爪向下移动并离开画面中心。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.13,
+      "end_time_hint": 3.67,
+      "local_observation": "开始时夹爪已张开并位于 button_box_1 上方；结束时夹爪保持张开状态，远离 button_box_1。",
+      "evidence": "夹爪与 button_box_1 之间无接触，夹爪向后上方移动，button_box_1 停留在原处或随重力下落至不可见区域。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

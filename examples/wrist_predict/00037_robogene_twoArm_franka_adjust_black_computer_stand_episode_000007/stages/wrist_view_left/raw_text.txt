@@ -1,0 +1,111 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "laptop_stand",
+      "description": "笔记本电脑支架",
+      "anchor_time": 5.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 18.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "mouse",
+      "description": "鼠标",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category": "laptop_stand",
+      "description": "位于画面右侧的灰色金属支架，带有黑色支撑杆和螺丝",
+      "first_view_time": 0.0,
+      "last_view_time": 21.0
+    },
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "放置在laptop_stand_1上的银灰色笔记本电脑",
+      "first_view_time": 15.0,
+      "last_view_time": 21.0
+    },
+    {
+      "object_id": "mouse_1",
+      "category": "mouse",
+      "description": "位于画面右下角黑色鼠标垫上的白色鼠标",
+      "first_view_time": 0.0,
+      "last_view_time": 29.0
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪在约 4.5s 接触并夹持该支架，随后机械臂带动支架移动，直至约 20.5s 释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 4.5,
+      "local_observation": "开始时夹爪位于桌面上方，未接触任何物体；结束时夹爪接近laptop_stand_1。",
+      "evidence": "夹爪相对于背景静止或微调位置，随后向右侧支架移动。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.0,
+      "local_observation": "开始时夹爪位于laptop_stand_1附近；结束时夹爪已闭合夹住支架。",
+      "evidence": "夹爪指间距减小，与支架接触并建立控制。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.0,
+      "end_time_hint": 20.5,
+      "local_observation": "开始时laptop_stand_1被夹爪控制；结束时laptop_stand_1仍被夹爪控制。",
+      "evidence": "laptop_stand_1随夹爪运动，期间laptop_1出现在支架上（约15.0s），整体被搬运。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "gripper_action": "夹持",
+      "arm_action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 20.5,
+      "end_time_hint": 21.0,
+      "local_observation": "开始时laptop_stand_1被夹爪控制；结束时夹爪张开，支架留在桌面上。",
+      "evidence": "夹爪指间距增大，laptop_stand_1不再随夹爪运动。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 21.0,
+      "end_time_hint": 29.0,
+      "local_observation": "开始时夹爪已释放物体；结束时夹爪位于桌面上方。",
+      "evidence": "夹爪与物体无接触，机械臂移动离开操作区域。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    }
+  ]
+}
+```

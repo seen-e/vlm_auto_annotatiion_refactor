@@ -1,0 +1,150 @@
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    },
+    {
+      "category_id": "marker",
+      "category": "马克笔"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "白色网状笔筒，内部装有蓝色和绿色马克笔。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_2",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "浅蓝色半透明杯子，内部装有橙色和蓝色马克笔。",
+      "first_view_time": 2.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_1",
+      "category_id": "marker",
+      "category": "马克笔",
+      "description": "位于 cup_1 中的绿色马克笔。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_2",
+      "category_id": "marker",
+      "category": "马克笔",
+      "description": "位于 cup_1 中的蓝色马克笔。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_3",
+      "category_id": "marker",
+      "category": "马克笔",
+      "description": "位于 cup_2 中的橙色马克笔。",
+      "first_view_time": 2.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_4",
+      "category_id": "marker",
+      "category": "马克笔",
+      "description": "位于 cup_2 中的蓝色马克笔。",
+      "first_view_time": 2.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "cup_1",
+      "interaction_reason": "夹爪与杯口边缘接触并施加推力，导致杯子发生位移。"
+    },
+    {
+      "object_id": "cup_2",
+      "interaction_reason": "夹爪与杯口边缘接触并施加推力，导致杯子发生位移。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.87,
+      "local_observation": "夹爪向白色网状杯子（cup_1）移动，逐渐靠近杯口。",
+      "evidence": "夹爪与杯子之间的视觉距离持续减小，杯子在画面中逐渐变大。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪接触白色网状杯子（cup_1）的边缘，并推动杯子移动。",
+      "evidence": "夹爪指尖与杯口边缘间隙消失，杯子随夹爪运动发生位置变化。",
+      "object": "cup_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.0,
+      "local_observation": "夹爪与白色网状杯子（cup_1）分离，并向右侧移动。",
+      "evidence": "夹爪与杯子之间重新出现间隙，杯子停止随夹爪运动。",
+      "object": "cup_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 2.5,
+      "local_observation": "夹爪向浅蓝色杯子（cup_2）移动并接触其边缘，推动杯子。",
+      "evidence": "夹爪靠近浅蓝色杯子，接触后杯子发生位移。",
+      "object": "cup_2",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪与浅蓝色杯子（cup_2）分离，并向左侧移动。",
+      "evidence": "夹爪与杯子之间出现间隙，杯子留在原处。",
+      "object": "cup_2",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.73,
+      "local_observation": "夹爪向白色网状杯子（cup_1）移动。",
+      "evidence": "夹爪与白色杯子之间的距离减小。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.73,
+      "end_time_hint": 6.87,
+      "local_observation": "夹爪在白色网状杯子（cup_1）附近保持相对静止或微调位置，未发生明显交互动作。",
+      "evidence": "夹爪与杯子相对位置基本保持不变，无明显的接触或推动迹象。",
+      "object": "cup_1",
+      "target": null,
+      "action": "等待",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    },
+    {
+      "category_id": "marker",
+      "category": "记号笔"
+    },
+    {
+      "category_id": "clipboard",
+      "category": "写字板"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "白色半透明网状笔筒，内部装有蓝色和橙色记号笔。",
+      "first_view_time": 0.0,
+      "best_view_time": 3.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_1",
+      "category_id": "marker",
+      "category": "记号笔",
+      "description": "橙色记号笔，位于杯子内部，后被夹爪取出。",
+      "first_view_time": 0.0,
+      "best_view_time": 4.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_2",
+      "category_id": "marker",
+      "category": "记号笔",
+      "description": "蓝色记号笔，位于杯子内部，未被夹爪操作。",
+      "first_view_time": 2.5,
+      "best_view_time": 3.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "clipboard_1",
+      "category_id": "clipboard",
+      "category": "写字板",
+      "description": "白色写字板，带有金属夹，位于画面右侧。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "marker_1",
+      "interaction_reason": "夹爪伸入杯中接触并夹持橙色记号笔，将其从杯中取出并放置于桌面上。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.7,
+      "local_observation": "夹爪向杯子移动并接近杯口。",
+      "evidence": "夹爪与杯子之间的可见距离持续减小。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.7,
+      "end_time_hint": 4.2,
+      "local_observation": "夹爪伸入杯内，靠近橙色记号笔。",
+      "evidence": "夹爪指尖进入杯口范围，与橙色记号笔间隙减小。",
+      "object": "marker_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.2,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪闭合，夹住橙色记号笔。",
+      "evidence": "夹爪指间距减小，与记号笔表面接触并产生约束。",
+      "object": "marker_1",
+      "target": null,
+      "action": "抓取",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.0,
+      "local_observation": "夹爪将橙色记号笔从杯中取出。",
+      "evidence": "记号笔随夹爪移动离开杯子，与杯子发生分离。",
+      "object": "marker_1",
+      "target": "cup_1",
+      "action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.0,
+      "end_time_hint": 5.7,
+      "local_observation": "夹爪携带记号笔移动至桌面区域。",
+      "evidence": "记号笔与夹爪保持相对静止，背景发生变化。",
+      "object": "marker_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.7,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪张开，将橙色记号笔放置在桌面上。",
+      "evidence": "夹爪指间距增大，记号笔与夹爪分离并停留在桌面。",
+      "object": "marker_1",
+      "target": null,
+      "action": "放置",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "laptop_stand",
+      "description": "笔记本电脑支架",
+      "anchor_time": 5.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 19.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "mouse",
+      "description": "鼠标",
+      "anchor_time": 25.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category": "laptop_stand",
+      "description": "位于画面右侧的黑色金属支架，带有灰色防滑垫",
+      "first_view_time": 0.0,
+      "last_view_time": 23.0
+    },
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "银灰色笔记本电脑，初始位于支架上方，随后被放置在桌面上",
+      "first_view_time": 16.5,
+      "last_view_time": 23.0
+    },
+    {
+      "object_id": "mouse_1",
+      "category": "mouse",
+      "description": "位于画面右下角黑色鼠标垫上的白色鼠标",
+      "first_view_time": 23.5,
+      "last_view_time": 30.8
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪接触并推动笔记本电脑，使其从支架上滑落至桌面。"
+    },
+    {
+      "object_id": "laptop_stand_1",
+      "roles": ["source"],
+      "evidence": "笔记本电脑初始位于该支架上，随后被移开。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 16.5,
+      "local_observation": "开始时夹爪位于支架前方；结束时夹爪接触支架上的笔记本电脑。",
+      "evidence": "夹爪向支架方向移动，逐渐接近并接触位于支架上的笔记本电脑。",
+      "object": null,
+      "target": "laptop_stand_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.5,
+      "end_time_hint": 23.0,
+      "local_observation": "开始时夹爪接触笔记本电脑；结束时笔记本电脑已离开支架并移出画面。",
+      "evidence": "夹爪推动笔记本电脑，使其相对于支架发生位移并最终滑落。",
+      "object": "laptop_1",
+      "target": "laptop_stand_1",
+      "gripper_action": null,
+      "arm_action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 23.0,
+      "end_time_hint": 30.8,
+      "local_observation": "开始时支架和笔记本电脑已不在画面中；结束时夹爪位于鼠标附近。",
+      "evidence": "夹爪离开原操作区域，移动至画面右下角的鼠标位置。",
+      "object": null,
+      "target": "mouse_1",
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    }
+  ]
+}
+```

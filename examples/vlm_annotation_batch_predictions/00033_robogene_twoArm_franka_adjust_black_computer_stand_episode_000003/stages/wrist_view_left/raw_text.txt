@@ -1,0 +1,92 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "laptop_stand",
+      "category": "笔记本支架"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category_id": "laptop_stand",
+      "category": "笔记本支架",
+      "description": "黑色金属支架，具有镂空结构和可调节的支撑臂，表面有圆形防滑垫。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，可见侧面接口和机身轮廓。",
+      "first_view_time": 16.5,
+      "best_view_time": 19.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "interaction_reason": "夹爪与支架底部接触并施加推力，导致支架在桌面上发生位置移动。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪向黑色笔记本支架移动，逐渐靠近支架底部。",
+      "evidence": "夹爪与支架之间的视觉距离持续减小，支架在画面中逐渐变大。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪前端接触到笔记本支架的底部结构。",
+      "evidence": "夹爪与支架之间的间隙消失，两者发生物理接触。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 16.0,
+      "local_observation": "夹爪保持闭合状态，抵住支架底部，支架位置基本保持不变。",
+      "evidence": "夹爪指间距无明显变化，支架相对于夹爪的位置稳定。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "固定",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.0,
+      "end_time_hint": 22.5,
+      "local_observation": "夹爪推动支架在桌面上滑动，支架位置发生明显改变，同时一台笔记本电脑出现在支架上方。",
+      "evidence": "支架相对于背景桌面的位置持续变化，夹爪与支架保持接触并同步移动。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 22.5,
+      "end_time_hint": 24.0,
+      "local_observation": "夹爪与支架分离，支架停止移动并停留在新位置。",
+      "evidence": "夹爪向后撤回，与支架之间重新出现可见间隙，支架不再随夹爪运动。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}
+```

@@ -1,0 +1,128 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "tray",
+      "category": "托盘"
+    },
+    {
+      "category_id": "bottle",
+      "category": "瓶子"
+    },
+    {
+      "category_id": "tape",
+      "category": "胶带"
+    },
+    {
+      "category_id": "board",
+      "category": "板"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "tray_1",
+      "category_id": "tray",
+      "category": "托盘",
+      "description": "红色长方形塑料托盘，内部有凹槽，侧边连接有一个黑色旋钮和木柄装置。",
+      "first_view_time": 0.0,
+      "best_view_time": 10.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_1",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "红色塑料瓶，瓶身有白色标签，横卧在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "tape_1",
+      "category_id": "tape",
+      "category": "胶带",
+      "description": "白色圆柱形胶带卷，位于瓶子旁边。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "board_1",
+      "category_id": "board",
+      "category": "板",
+      "description": "白色长方形平板，被另一机械臂夹持并插入红色托盘的凹槽中。",
+      "first_view_time": 4.5,
+      "best_view_time": 10.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "tray_1",
+      "interaction_reason": "夹爪与红色托盘边缘接触，并在后续过程中夹持托盘，使其随夹爪移动和旋转。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪保持张开状态，向右侧的红色托盘移动。",
+      "evidence": "夹爪指间距保持恒定且较大，夹爪与托盘之间的背景距离逐渐减小。",
+      "object": "tray_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪到达红色托盘边缘，夹爪指与托盘表面接触。",
+      "evidence": "夹爪停止向前移动，夹爪指与托盘边缘的间隙消失。",
+      "object": "tray_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.5,
+      "local_observation": "夹爪指间距减小，夹住红色托盘边缘。",
+      "evidence": "可见夹爪指间距持续减小，托盘相对于夹爪的位置固定。",
+      "object": "tray_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.5,
+      "end_time_hint": 13.5,
+      "local_observation": "夹爪夹持红色托盘，另一机械臂将白色板插入托盘。",
+      "evidence": "托盘与夹爪保持相对静止，白色板在外部作用下进入托盘内部。",
+      "object": "tray_1",
+      "target": "board_1",
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 13.5,
+      "end_time_hint": 15.5,
+      "local_observation": "夹爪带动红色托盘及内部的白色板进行旋转和位置调整。",
+      "evidence": "托盘和板作为一个整体随夹爪运动，姿态发生明显变化。",
+      "object": "tray_1",
+      "target": null,
+      "action": "调整物体姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 15.5,
+      "end_time_hint": 22.0,
+      "local_observation": "夹爪保持夹持状态，托盘和板保持静止。",
+      "evidence": "夹爪指间距未变，物体与夹爪无相对运动。",
+      "object": "tray_1",
+      "target": null,
+      "action": "等待",
+      "uncertainty": null
+    }
+  ]
+}
+```

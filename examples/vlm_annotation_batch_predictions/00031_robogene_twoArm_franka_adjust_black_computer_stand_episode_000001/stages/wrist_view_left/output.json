@@ -1,0 +1,80 @@
+{
+  "object_categories": [
+    {
+      "category_id": "laptop_stand",
+      "category": "笔记本支架"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category_id": "laptop_stand",
+      "category": "笔记本支架",
+      "description": "灰色金属支架，具有镂空底座和可调节角度的支撑臂，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，被放置在支架上，可见其侧面和底部。",
+      "first_view_time": 13.0,
+      "best_view_time": 16.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "interaction_reason": "夹爪与支架底座接触，并推动支架使其在桌面上发生位置移动。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 4.0,
+      "local_observation": "夹爪向桌面上的灰色金属支架移动，逐渐靠近支架底座。",
+      "evidence": "夹爪与支架之间的视觉距离持续减小，支架在画面中逐渐变大。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.0,
+      "end_time_hint": 5.0,
+      "local_observation": "夹爪前端接触到支架底座边缘。",
+      "evidence": "夹爪与支架底座之间的间隙消失，两者发生物理接触。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.0,
+      "end_time_hint": 21.0,
+      "local_observation": "夹爪保持接触状态，推动支架在桌面上滑动，支架位置发生明显变化。",
+      "evidence": "支架相对于桌面背景发生持续位移，且夹爪始终紧贴支架底座。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 21.0,
+      "end_time_hint": 22.0,
+      "local_observation": "夹爪与支架分离，支架停止移动。",
+      "evidence": "夹爪向后撤回，与支架底座之间重新出现可见间隙。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}

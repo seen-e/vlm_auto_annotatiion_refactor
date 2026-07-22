@@ -1,0 +1,105 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "笔筒"
+    },
+    {
+      "category_id": "marker",
+      "category": "马克笔"
+    },
+    {
+      "category_id": "clipboard",
+      "category": "写字板"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "笔筒",
+      "description": "浅蓝色网状圆柱形笔筒，内部装有文具。",
+      "first_view_time": 0.0,
+      "best_view_time": 4.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_1",
+      "category_id": "marker",
+      "category": "马克笔",
+      "description": "橙色笔身，带有半透明笔帽的马克笔。",
+      "first_view_time": 4.0,
+      "best_view_time": 5.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "clipboard_1",
+      "category_id": "clipboard",
+      "category": "写字板",
+      "description": "白色写字板，顶部有金属夹，固定在墙面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "marker_1",
+      "interaction_reason": "夹爪伸入笔筒内部接触并夹住马克笔，将其从笔筒中取出，随后夹持马克笔移动并释放到桌面上。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪向浅蓝色笔筒移动并靠近。",
+      "evidence": "夹爪与笔筒之间的视觉距离持续减小，笔筒在画面中逐渐变大。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.2,
+      "local_observation": "夹爪指伸入笔筒内部，接触并夹住橙色马克笔。",
+      "evidence": "夹爪指进入笔筒开口，与马克笔接触后间距减小，马克笔被夹爪约束。",
+      "object": "marker_1",
+      "target": "cup_1",
+      "action": "抓取",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.2,
+      "end_time_hint": 5.8,
+      "local_observation": "夹爪夹持马克笔从笔筒中移出。",
+      "evidence": "马克笔随夹爪向后移动，与笔筒分离，笔筒留在原处。",
+      "object": "marker_1",
+      "target": "cup_1",
+      "action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.8,
+      "end_time_hint": 6.8,
+      "local_observation": "夹爪夹持马克笔移动至桌面空白区域上方。",
+      "evidence": "背景从笔筒变为桌面空白区域，马克笔相对于夹爪位置保持稳定。",
+      "object": "marker_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.8,
+      "end_time_hint": 7.2,
+      "local_observation": "夹爪张开，将马克笔放置在桌面上。",
+      "evidence": "夹爪指间距增大，马克笔脱离夹爪约束并停留在桌面上。",
+      "object": "marker_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}
+```

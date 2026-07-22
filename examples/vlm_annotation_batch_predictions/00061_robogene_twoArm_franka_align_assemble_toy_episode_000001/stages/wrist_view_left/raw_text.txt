@@ -1,0 +1,175 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "puzzle_board",
+      "category": "拼图板"
+    },
+    {
+      "category_id": "block",
+      "category": "积木块"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "puzzle_board_1",
+      "category_id": "puzzle_board",
+      "category": "拼图板",
+      "description": "蓝色长方形拼图板，表面有数字和形状凹槽，可见数字 1、2、3、4 及对应凹槽。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "block_1",
+      "category_id": "block",
+      "category": "积木块",
+      "description": "粉色长方体形状积木块，用于填充拼图板上的对应凹槽。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "block_2",
+      "category_id": "block",
+      "category": "积木块",
+      "description": "粉色数字 1 形状积木块，用于填充拼图板上的数字 1 凹槽。",
+      "first_view_time": 0.0,
+      "best_view_time": 12.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "block_1",
+      "interaction_reason": "夹爪夹持该积木块并将其放入拼图板凹槽中，随后释放。"
+    },
+    {
+      "object_id": "block_2",
+      "interaction_reason": "夹爪夹持该积木块并将其放入拼图板数字 1 凹槽中，随后释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 4.0,
+      "local_observation": "夹爪在拼图板附近移动，未与物体发生接触。",
+      "evidence": "夹爪与拼图板之间保持明显间隙，无相对位置约束。",
+      "object": null,
+      "target": null,
+      "action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.0,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪逐渐靠近并包围粉色长方体积木块。",
+      "evidence": "夹爪指间距大于积木宽度，向积木中心移动，间隙减小。",
+      "object": "block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪闭合，夹住粉色长方体积木块。",
+      "evidence": "夹爪指间距持续减小直至接触积木两侧，积木被固定。",
+      "object": "block_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 8.0,
+      "local_observation": "夹爪携带粉色长方体积木块移动至拼图板上方。",
+      "evidence": "积木块随夹爪同步运动，相对于夹爪位置稳定。",
+      "object": "block_1",
+      "target": "puzzle_board_1",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.0,
+      "end_time_hint": 9.5,
+      "local_observation": "夹爪将粉色长方体积木块放入拼图板对应凹槽。",
+      "evidence": "积木块进入凹槽，夹爪向下移动直至积木与板面齐平。",
+      "object": "block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 9.5,
+      "end_time_hint": 10.5,
+      "local_observation": "夹爪张开，释放粉色长方体积木块。",
+      "evidence": "夹爪指间距增大，与积木分离，积木留在凹槽内。",
+      "object": "block_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 10.5,
+      "end_time_hint": 12.0,
+      "local_observation": "夹爪移动并靠近粉色数字 1 积木块。",
+      "evidence": "夹爪向积木块方向移动，间隙逐渐减小。",
+      "object": "block_2",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 12.0,
+      "end_time_hint": 14.5,
+      "local_observation": "夹爪闭合，夹住粉色数字 1 积木块。",
+      "evidence": "夹爪指间距减小，接触积木两侧并将其固定。",
+      "object": "block_2",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 14.5,
+      "end_time_hint": 16.0,
+      "local_observation": "夹爪携带粉色数字 1 积木块移动至拼图板数字 1 凹槽上方。",
+      "evidence": "积木块随夹爪同步运动，对准凹槽位置。",
+      "object": "block_2",
+      "target": "puzzle_board_1",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.0,
+      "end_time_hint": 17.5,
+      "local_observation": "夹爪将粉色数字 1 积木块放入拼图板数字 1 凹槽。",
+      "evidence": "积木块进入凹槽，夹爪调整位置使积木嵌入。",
+      "object": "block_2",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 17.5,
+      "end_time_hint": 18.5,
+      "local_observation": "夹爪张开，释放粉色数字 1 积木块。",
+      "evidence": "夹爪指间距增大，与积木分离，积木留在凹槽内。",
+      "object": "block_2",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 18.5,
+      "end_time_hint": 19.07,
+      "local_observation": "夹爪从拼图板区域移开。",
+      "evidence": "夹爪与拼图板距离增大，视野中拼图板逐渐移出。",
+      "object": null,
+      "target": null,
+      "action": "移动机械臂",
+      "uncertainty": null
+    }
+  ]
+}
+```

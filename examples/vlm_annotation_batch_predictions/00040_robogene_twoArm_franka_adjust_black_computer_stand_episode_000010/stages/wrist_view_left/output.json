@@ -1,0 +1,90 @@
+{
+  "object_categories": [
+    {
+      "category_id": "laptop_stand",
+      "category": "笔记本支架"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category_id": "laptop_stand",
+      "category": "笔记本支架",
+      "description": "黑色金属支架，具有镂空结构和圆形防滑垫，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 10.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，可见侧面接口和边缘，被放置在支架上。",
+      "first_view_time": 18.0,
+      "best_view_time": 21.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "interaction_reason": "夹爪与支架底部接触并施加推力，导致支架在桌面上发生位置移动。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪在桌面上方移动，逐渐靠近黑色的笔记本支架。",
+      "evidence": "夹爪与支架之间的视觉距离持续减小，支架在画面中逐渐变大。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪前端接触到笔记本支架的底部边缘。",
+      "evidence": "夹爪指尖与支架表面之间的间隙消失，两者发生物理接触。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 18.0,
+      "local_observation": "夹爪保持闭合状态，推动笔记本支架在桌面上向前滑动。",
+      "evidence": "夹爪与支架保持接触且相对位置稳定，支架相对于背景桌面发生持续位移。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 18.0,
+      "end_time_hint": 23.0,
+      "local_observation": "一台笔记本电脑被放置在支架上，夹爪继续推动载有电脑的支架。",
+      "evidence": "笔记本电脑出现在支架上方，夹爪继续推动支架整体移动。",
+      "object": "laptop_stand_1",
+      "target": "laptop_1",
+      "action": "推动",
+      "uncertainty": "笔记本电脑出现在画面中的具体放置过程未完全在夹爪视角中心清晰展示，但在推动过程中可见其位于支架上。"
+    },
+    {
+      "start_time_hint": 23.0,
+      "end_time_hint": 25.0,
+      "local_observation": "夹爪停止推动并与支架分离，支架及电脑停留在新位置。",
+      "evidence": "夹爪向后撤回，与支架之间重新出现明显间隙，支架停止移动。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "object_categories": [
+    {
+      "category_id": "tray",
+      "category": "托盘"
+    },
+    {
+      "category_id": "bottle",
+      "category": "瓶子"
+    },
+    {
+      "category_id": "tape",
+      "category": "胶带"
+    },
+    {
+      "category_id": "panel",
+      "category": "面板"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "tray_1",
+      "category_id": "tray",
+      "category": "托盘",
+      "description": "红色长方形塑料托盘，内部装有木柄工具。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_1",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "红色塑料饮料瓶，横卧在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "tape_1",
+      "category_id": "tape",
+      "category": "胶带",
+      "description": "白色圆柱形胶带卷，位于瓶子旁边。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "panel_1",
+      "category_id": "panel",
+      "category": "面板",
+      "description": "白色长方形平板，竖立在桌面上。",
+      "first_view_time": 1.5,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "panel_1",
+      "interaction_reason": "夹爪与面板边缘接触，随后夹爪闭合，面板受到夹爪约束并随夹爪移动。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪向白色面板边缘移动并接触。",
+      "evidence": "夹爪与面板之间的间隙消失，夹爪指端触碰到面板边缘。",
+      "object": "panel_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪指间距减小，夹住白色面板。",
+      "evidence": "可见夹爪指间距持续减小，面板被夹持在指端之间。",
+      "object": "panel_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 14.0,
+      "local_observation": "夹爪夹持白色面板进行移动和姿态调整。",
+      "evidence": "面板与夹爪保持相对静止，随夹爪一起平移和旋转。",
+      "object": "panel_1",
+      "target": null,
+      "action": "调整物体姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 14.0,
+      "end_time_hint": 15.0,
+      "local_observation": "夹爪将白色面板放入红色托盘内。",
+      "evidence": "面板进入托盘内部空间，随后夹爪与面板分离。",
+      "object": "panel_1",
+      "target": "tray_1",
+      "action": "放入",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,5708 @@
+{
+  "input": {
+    "video_path": {
+      "camera_front": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_front\\episode_000010.mp4",
+      "camera_left": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_left\\episode_000010.mp4",
+      "camera_right": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_right\\episode_000010.mp4",
+      "camera_top": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_top\\episode_000010.mp4",
+      "camera_wrist_left": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_wrist_left\\episode_000010.mp4",
+      "camera_wrist_right": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_wrist_right\\episode_000010.mp4"
+    },
+    "instruction": "assemble early education toy building blocks",
+    "video_id": "episode_000010",
+    "task_index": 70
+  },
+  "stages": {
+    "wrist_view_left": {
+      "output": {
+        "object_categories": [
+          {
+            "category_id": "puzzle_board",
+            "category": "拼图板"
+          },
+          {
+            "category_id": "block",
+            "category": "积木块"
+          }
+        ],
+        "objects": [
+          {
+            "object_id": "puzzle_board_1",
+            "category_id": "puzzle_board",
+            "category": "拼图板",
+            "description": "蓝色木质拼图板，带有数字和形状凹槽，固定在墙面上。",
+            "first_view_time": 0.0,
+            "best_view_time": 5.0,
+            "uncertainty": null
+          },
+          {
+            "object_id": "block_1",
+            "category_id": "block",
+            "category": "积木块",
+            "description": "粉色长方体积木块，位于拼图板左侧。",
+            "first_view_time": 0.0,
+            "best_view_time": 3.0,
+            "uncertainty": null
+          },
+          {
+            "object_id": "block_2",
+            "category_id": "block",
+            "category": "积木块",
+            "description": "粉色数字“1”形状积木块，位于拼图板左侧较远处。",
+            "first_view_time": 0.0,
+            "best_view_time": 12.0,
+            "uncertainty": null
+          }
+        ],
+        "interaction_objects": [
+          {
+            "object_id": "block_1",
+            "interaction_reason": "夹爪接近并夹持该积木块，将其移动并放入拼图板的对应凹槽中，随后释放。"
+          },
+          {
+            "object_id": "block_2",
+            "interaction_reason": "夹爪接近并夹持该积木块，将其移动并放入拼图板的对应凹槽中，随后释放。"
+          }
+        ],
+        "events": [
+          {
+            "start_time_hint": 0.0,
+            "end_time_hint": 2.0,
+            "local_observation": "夹爪向粉色长方体积木块移动，两者距离逐渐减小。",
+            "evidence": "画面中夹爪与积木块的相对位置变化，间隙持续缩小。",
+            "object": "block_1",
+            "target": null,
+            "action": "接近",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 2.0,
+            "end_time_hint": 3.0,
+            "local_observation": "夹爪指间距减小，夹住粉色长方体积木块。",
+            "evidence": "夹爪指与积木块两侧接触，随后夹爪指间距明显变小。",
+            "object": "block_1",
+            "target": null,
+            "action": "抓取",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 3.0,
+            "end_time_hint": 4.5,
+            "local_observation": "夹爪携带积木块向拼图板移动。",
+            "evidence": "积木块随夹爪同步运动，背景中的拼图板逐渐靠近。",
+            "object": "block_1",
+            "target": "puzzle_board_1",
+            "action": "搬运",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 4.5,
+            "end_time_hint": 10.5,
+            "local_observation": "夹爪将积木块对准并推入拼图板左下角的凹槽中。",
+            "evidence": "积木块与凹槽位置重合，夹爪向前推进，积木块进入凹槽内部。",
+            "object": "block_1",
+            "target": "puzzle_board_1",
+            "action": "放入",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 10.5,
+            "end_time_hint": 11.5,
+            "local_observation": "夹爪指间距增大，与积木块分离。",
+            "evidence": "夹爪指离开积木块表面，间隙重新出现，积木块留在凹槽内。",
+            "object": "block_1",
+            "target": null,
+            "action": "释放",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 11.5,
+            "end_time_hint": 12.5,
+            "local_observation": "夹爪向粉色数字“1”积木块移动。",
+            "evidence": "夹爪与数字积木块之间的可见间隙持续减小。",
+            "object": "block_2",
+            "target": null,
+            "action": "接近",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 12.5,
+            "end_time_hint": 13.0,
+            "local_observation": "夹爪指间距减小，夹住数字“1”积木块。",
+            "evidence": "夹爪指与积木块两侧接触并闭合。",
+            "object": "block_2",
+            "target": null,
+            "action": "抓取",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 13.0,
+            "end_time_hint": 14.0,
+            "local_observation": "夹爪携带数字积木块向拼图板移动。",
+            "evidence": "积木块随夹爪同步运动，靠近拼图板上的数字“1”空位。",
+            "object": "block_2",
+            "target": "puzzle_board_1",
+            "action": "搬运",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 14.0,
+            "end_time_hint": 15.5,
+            "local_observation": "夹爪将数字积木块对准并推入拼图板的对应凹槽中。",
+            "evidence": "积木块与凹槽位置重合，夹爪向前推进，积木块进入凹槽。",
+            "object": "block_2",
+            "target": "puzzle_board_1",
+            "action": "放入",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 15.5,
+            "end_time_hint": 16.5,
+            "local_observation": "夹爪指间距增大，与数字积木块分离。",
+            "evidence": "夹爪指离开积木块，积木块留在凹槽内。",
+            "object": "block_2",
+            "target": null,
+            "action": "释放",
+            "uncertainty": null
+          }
+        ]
+      },
+      "raw_text": "```json\n{\n  \"object_categories\": [\n    {\n      \"category_id\": \"puzzle_board\",\n      \"category\": \"拼图板\"\n    },\n    {\n      \"category_id\": \"block\",\n      \"category\": \"积木块\"\n    }\n  ],\n  \"objects\": [\n    {\n      \"object_id\": \"puzzle_board_1\",\n      \"category_id\": \"puzzle_board\",\n      \"category\": \"拼图板\",\n      \"description\": \"蓝色木质拼图板，带有数字和形状凹槽，固定在墙面上。\",\n      \"first_view_time\": 0.0,\n      \"best_view_time\": 5.0,\n      \"uncertainty\": null\n    },\n    {\n      \"object_id\": \"block_1\",\n      \"category_id\": \"block\",\n      \"category\": \"积木块\",\n      \"description\": \"粉色长方体积木块，位于拼图板左侧。\",\n      \"first_view_time\": 0.0,\n      \"best_view_time\": 3.0,\n      \"uncertainty\": null\n    },\n    {\n      \"object_id\": \"block_2\",\n      \"category_id\": \"block\",\n      \"category\": \"积木块\",\n      \"description\": \"粉色数字“1”形状积木块，位于拼图板左侧较远处。\",\n      \"first_view_time\": 0.0,\n      \"best_view_time\": 12.0,\n      \"uncertainty\": null\n    }\n  ],\n  \"interaction_objects\": [\n    {\n      \"object_id\": \"block_1\",\n      \"interaction_reason\": \"夹爪接近并夹持该积木块，将其移动并放入拼图板的对应凹槽中，随后释放。\"\n    },\n    {\n      \"object_id\": \"block_2\",\n      \"interaction_reason\": \"夹爪接近并夹持该积木块，将其移动并放入拼图板的对应凹槽中，随后释放。\"\n    }\n  ],\n  \"events\": [\n    {\n      \"start_time_hint\": 0.0,\n      \"end_time_hint\": 2.0,\n      \"local_observation\": \"夹爪向粉色长方体积木块移动，两者距离逐渐减小。\",\n      \"evidence\": \"画面中夹爪与积木块的相对位置变化，间隙持续缩小。\",\n      \"object\": \"block_1\",\n      \"target\": null,\n      \"action\": \"接近\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 2.0,\n      \"end_time_hint\": 3.0,\n      \"local_observation\": \"夹爪指间距减小，夹住粉色长方体积木块。\",\n      \"evidence\": \"夹爪指与积木块两侧接触，随后夹爪指间距明显变小。\",\n      \"object\": \"block_1\",\n      \"target\": null,\n      \"action\": \"抓取\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 3.0,\n      \"end_time_hint\": 4.5,\n      \"local_observation\": \"夹爪携带积木块向拼图板移动。\",\n      \"evidence\": \"积木块随夹爪同步运动，背景中的拼图板逐渐靠近。\",\n      \"object\": \"block_1\",\n      \"target\": \"puzzle_board_1\",\n      \"action\": \"搬运\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 4.5,\n      \"end_time_hint\": 10.5,\n      \"local_observation\": \"夹爪将积木块对准并推入拼图板左下角的凹槽中。\",\n      \"evidence\": \"积木块与凹槽位置重合，夹爪向前推进，积木块进入凹槽内部。\",\n      \"object\": \"block_1\",\n      \"target\": \"puzzle_board_1\",\n      \"action\": \"放入\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 10.5,\n      \"end_time_hint\": 11.5,\n      \"local_observation\": \"夹爪指间距增大，与积木块分离。\",\n      \"evidence\": \"夹爪指离开积木块表面，间隙重新出现，积木块留在凹槽内。\",\n      \"object\": \"block_1\",\n      \"target\": null,\n      \"action\": \"释放\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 11.5,\n      \"end_time_hint\": 12.5,\n      \"local_observation\": \"夹爪向粉色数字“1”积木块移动。\",\n      \"evidence\": \"夹爪与数字积木块之间的可见间隙持续减小。\",\n      \"object\": \"block_2\",\n      \"target\": null,\n      \"action\": \"接近\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 12.5,\n      \"end_time_hint\": 13.0,\n      \"local_observation\": \"夹爪指间距减小，夹住数字“1”积木块。\",\n      \"evidence\": \"夹爪指与积木块两侧接触并闭合。\",\n      \"object\": \"block_2\",\n      \"target\": null,\n      \"action\": \"抓取\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 13.0,\n      \"end_time_hint\": 14.0,\n      \"local_observation\": \"夹爪携带数字积木块向拼图板移动。\",\n      \"evidence\": \"积木块随夹爪同步运动，靠近拼图板上的数字“1”空位。\",\n      \"object\": \"block_2\",\n      \"target\": \"puzzle_board_1\",\n      \"action\": \"搬运\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 14.0,\n      \"end_time_hint\": 15.5,\n      \"local_observation\": \"夹爪将数字积木块对准并推入拼图板的对应凹槽中。\",\n      \"evidence\": \"积木块与凹槽位置重合，夹爪向前推进，积木块进入凹槽。\",\n      \"object\": \"block_2\",\n      \"target\": \"puzzle_board_1\",\n      \"action\": \"放入\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 15.5,\n      \"end_time_hint\": 16.5,\n      \"local_observation\": \"夹爪指间距增大，与数字积木块分离。\",\n      \"evidence\": \"夹爪指离开积木块，积木块留在凹槽内。\",\n      \"object\": \"block_2\",\n      \"target\": null,\n      \"action\": \"释放\",\n      \"uncertainty\": null\n    }\n  ]\n}\n```",
+      "system_prompt": "\n你是机器人夹爪视角视频的局部交互标注助手。\n\n根据单个夹爪相机视频，识别夹爪附近需要保持身份的局部物体、实际交互物体，并按时间顺序输出夹爪状态变化及夹爪与物体之间的局部关系变化。\n\n结果仅作为后续 Scene、Analysis 和 Refinement 阶段的辅助证据。不得补全完整任务，不得分析其他机械臂或双臂协作。\n\n【输出语言】\n\n除 JSON 字段名、object_id、category_id 和 null 外，所有自然语言字段必须使用简体中文。\n\n- category_id 使用简洁的英文单数类别；\n- category、description、interaction_reason、local_observation、evidence、uncertainty 使用简体中文；\n- action 原样使用用户提供动作词表中的动作名称或 null；\n- 禁止输出英文描述句子。\n\n【局部物体类别】\n\nobject_categories 汇总当前夹爪视角中与夹爪交互相关的物体类别，以及为区分交互物体所必需的邻近同类物体类别，不记录无关背景类别。\n\nobject_categories 只用于统一 objects 的类别命名，不用于表示或限制同类物体的实例数量。\n\n先完成 object_categories，再建立 objects。\n\nobject_categories 中的每个 category_id 都必须在 objects 中至少对应一个具体实例；如果无法为某个类别建立可靠的 object，则不得输出该类别。\n\n字段要求：\n\n- category_id：稳定的英文粗粒度类别；\n- category：可靠的中文粗粒度类别。\n\n由于夹爪相机会随机械臂移动，不得根据单个画面中的同类物体数量限制整个视频中的实例数量，也不得将不同时间出现的同类物体自动合并。\n\n【局部物体】\n\nobjects 记录夹爪实际接近、对准、接触、夹持或直接操作过的物体，以及为区分这些物体身份所必需的少量邻近同类物体，不记录其他背景物体。\n\n每个物体使用当前视角内部稳定的 object_id，优先使用“category_id_数字”格式，例如 bottle_1、button_1；类别无法确认时可使用 object_1。\n\n根据物体外观、局部结构、时间连续性、运动连续性以及遮挡前后的关系保持实例身份。\n\n同一物体再次出现且能够可靠确认时沿用原 object_id；能够确认是独立实例时创建新的 object_id；无法确认是否为同一物体时，不得强行合并，并在 uncertainty 中说明。\n\n字段要求：\n\n- object_id：当前夹爪视角内部的稳定实例 ID；\n- category_id：引用 object_categories 中已有的 category_id；\n- category：对应的中文粗粒度类别；\n- description：用中文描述颜色、形状、局部结构、安装关系或可抓持特征；\n- first_view_time：第一次能够可靠确认该物体身份的时间；\n- best_view_time：该物体局部特征最清晰的时间；\n- uncertainty：说明身份、类别或可见性的不确定性，可靠时填 null。\n\nobjects 必须覆盖 object_categories 中的全部类别。每个 category_id 至少建立一个对应 object_id；同一 category_id 在 object_categories 和 objects 中的中文 category 必须完全一致。\n\n【实际交互物体】\n\ninteraction_objects 从 objects 中筛选，只能引用 objects 中已有的 object_id。\n\n满足以下至少一项时，才能加入 interaction_objects：\n\n1. 夹爪与物体建立了可确认的直接接触；\n2. 物体受到夹爪稳定约束；\n3. 物体在夹爪作用下发生位置、姿态、结构或状态变化；\n4. 夹爪对物体执行了可确认的直接操作。\n\n仅发生接近、对准、画面重叠或进入夹爪开口，不足以加入 interaction_objects。\n\ninteraction_reason 使用中文描述当前夹爪视角中的直接视觉证据，不得描述任务意图，不得仅根据动作词表推断。\n\n接触或操作无法可靠确认时，不得强行加入 interaction_objects，应在对应 object 或 event 的 uncertainty 中说明。\n\n【夹爪状态】\n\n夹爪闭合只能依据可见夹爪指间距持续减小。\n\n夹爪张开只能依据可见夹爪指间距持续增大。\n\n不得根据任务语义、物体位于夹爪中央或预期操作推断夹爪开合。\n\n只能看到单侧夹爪指时，可以判断开合趋势，但必须在 uncertainty 中说明遮挡情况。\n\n夹爪完全不可见时，不得输出确定的开合事件。\n\n【接触与夹持】\n\n接触必须有直接视觉证据，例如夹爪与物体间隙消失、夹爪到达物体表面、物体受到作用，或分离后间隙重新出现。\n\n仅靠近、画面重叠或物体进入夹爪开口，不等于接触。\n\n夹持必须能够观察到物体受到夹爪约束，并与夹爪保持基本稳定的相对位置。\n\n相机运动造成的背景变化不等于物体随夹爪运动。判断同步运动时，只比较物体相对于夹爪的位置和姿态。\n\n【事件】\n\nevents 按照 start_time_hint 从早到晚排列。\n\n每个事件只描述一个主要变化。不同变化应拆开，例如：\n\n接近 → 接触 → 夹爪闭合 → 夹持 → 夹爪张开 → 分离\n\n不得为了补齐操作流程而输出没有直接证据的事件。\n\naction 必须从用户提供的动作词表中原样选择；完全无法判断时填 null。\n\nstart_time_hint 和 end_time_hint 是局部变化的粗略时间范围，必须与视频中的实际变化一致。\n\n字段要求：\n\n- local_observation：用中文描述当前区间直接看到的夹爪、物体及二者关系变化；\n- evidence：用中文说明支持 action、object 和 target 的直接视觉证据；\n- object：填写当前事件直接作用的局部 object_id，无法确认时填 null；\n- target：仅在当前视角能够确认明确目标物体时填写，否则填 null；\n- uncertainty：用中文说明不可靠内容、原因及仍可确认的部分，可靠时填 null。\n\nobject 和 target 只能引用 objects 中已有的 object_id。\n\n【遮挡与盲区】\n\n如果关键交互区间内夹爪、接触区域或物体被严重遮挡，无法判断开合、接触、夹持或分离，仍应输出事件：\n\n- action 填 null；\n- 无法确认 object 或 target 时填 null；\n- local_observation 和 evidence 描述不可见状态；\n- uncertainty 说明无法判断的内容。\n\n不得将无法观察等同于没有动作。\n\n【硬约束】\n\n1. 只使用当前夹爪视角中的直接视觉证据。\n2. 不输出视角名称、相机角色、executor 或左右臂身份。\n3. 不引用其他视角的 object_id。\n4. 不输出完整任务、subtask 或其他机械臂动作。\n5. 不根据任务指令补全不可见动作。\n6. 不把接近等同于接触。\n7. 不把夹爪闭合等同于成功夹持。\n8. object_categories 不表示或限制同类物体的实例数量。\n9. objects 的 category_id 必须引用 object_categories 中已有的 category_id。\n10. object_categories 中的每个 category_id 必须至少被 objects 中一个实例引用；没有对应 object 的类别不得输出。\n11. 同一 category_id 在 object_categories 和 objects 中必须对应相同的中文 category。\n12. interaction_objects 只能引用 objects 中已有的 object_id。\n13. events 中的 object 和 target 只能引用 objects 中已有的 object_id。\n14. 看不清时使用 uncertainty 或 action=null。\n15. 只输出合法 JSON，不输出解释、Markdown 或额外文本。\n",
+      "prompt": "\n请完整观看当前夹爪视角视频，输出局部物体类别、局部物体、实际交互物体和按时间顺序排列的夹爪局部交互事件。\n\n视频输入布局：\n当前视频输入布局说明：\n- 输入模式：image_sequence。\n- 共采样 137 个主时间点，最终送入模型 137 张图像。\n- 视角顺序：camera_wrist_left。\n- 主时间轴基于视角 camera_wrist_left；其他视角按同一时间戳对齐。\n- 每个采样时间点只有一个视角。\n- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。\n- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。\n- 图像上绘制了视角名称，可用来区分不同摄像机来源。\n- 每张 image_sequence 图像前都有独立文字标签；<t=...s> 表示原始视频时间轴，<view_name> 表示拍摄视角。\n\n视频布局规则：\n\n请先根据“当前视频输入布局说明”和 message 中的视角标签理解视觉输入，再分析场景、动作或时间边界。\n当多个视角分别作为图像序列或视频输入时，每组媒体前的文字标签表示该组所属视角；不得把相邻的不同媒体组误认为同一视角的连续画面。\n当 image_sequence 的每张图像前存在 `<t=...s> <view_name>` 标签时，前者是相对于原始视频起点的真实时间戳，后者是该图像的拍摄视角；标签属于紧随其后的图像。\n拼图中的相邻子图不一定表示真实空间相邻，可能表示不同视角或不同时间点。\n判断动作顺序和时间边界时，应优先参考图中的时间戳 t=...s。\n判断物体相对位置时，应结合视角名称，不要把不同视角之间的左右关系直接当成真实世界左右关系。\n如果一个图像是时间网格或 montage，请按时间戳和从左到右、从上到下的网格顺序理解时间推进。\n\n\n动作词表：\n[\n  \"张开夹爪\",\n  \"闭合夹爪\",\n  \"接近\",\n  \"对准\",\n  \"调整末端位置\",\n  \"调整末端姿态\",\n  \"接触\",\n  \"抓取\",\n  \"吸附\",\n  \"夹持\",\n  \"固定\",\n  \"支撑\",\n  \"按住\",\n  \"调整抓持\",\n  \"提起\",\n  \"搬运\",\n  \"降低\",\n  \"调整物体位置\",\n  \"调整物体姿态\",\n  \"放置\",\n  \"释放\",\n  \"解除吸附\",\n  \"推动\",\n  \"拉动\",\n  \"拖动\",\n  \"滑动\",\n  \"滚动\",\n  \"旋转\",\n  \"翻转\",\n  \"倾斜\",\n  \"放入\",\n  \"取出\",\n  \"倾倒\",\n  \"倒出\",\n  \"插入\",\n  \"拔出\",\n  \"连接\",\n  \"断开\",\n  \"安装\",\n  \"拆卸\",\n  \"分离\",\n  \"取下\",\n  \"旋入\",\n  \"旋出\",\n  \"扣合\",\n  \"解扣\",\n  \"锁定\",\n  \"解锁\",\n  \"打开\",\n  \"关闭\",\n  \"按压\",\n  \"拨动\",\n  \"转动\",\n  \"叠放\",\n  \"覆盖\",\n  \"揭开\",\n  \"折叠\",\n  \"展开\",\n  \"铺开\",\n  \"卷起\",\n  \"拉伸\",\n  \"挤压\",\n  \"撕开\",\n  \"剥离\",\n  \"擦拭\",\n  \"扫动\",\n  \"刮动\",\n  \"搅拌\",\n  \"舀取\",\n  \"敲击\",\n  \"切割\",\n  \"撤回\",\n  \"移动机械臂\",\n  \"等待\"\n]\n\n如果画面中存在显式时间戳，以画面时间戳为准；否则根据视频帧顺序估计粗略时间。\n\n要求：\n\n1. 先建立 object_categories，只汇总与夹爪交互相关或用于区分交互实例所必需的物体类别。\n2. object_categories 只用于统一类别名称，不用于表示或限制同类物体的实例数量。\n3. object_categories 中的每个 category_id 必须至少对应 objects 中一个具体实例；无法建立可靠实例的类别不得加入 object_categories。\n4. 根据物体外观、局部结构、时间连续性、运动连续性和遮挡前后关系建立 objects。\n5. 不得根据单个画面中的同类物体数量限制 objects 的数量，也不得将不同时间出现的同类物体自动视为同一实例。\n6. objects 记录交互相关实例，以及为区分其身份所必需的少量邻近同类实例。\n7. objects 的 category_id 必须引用 object_categories 中已有的 category_id。\n8. objects 必须覆盖 object_categories 中的全部 category_id，同一 category_id 在两处必须使用相同的中文 category。\n9. 从 objects 中筛选 interaction_objects；仅接近或对准但没有确认直接交互的物体不得加入。\n10. 根据夹爪指间距变化判断夹爪开合。\n11. 根据距离、间隙、接触、约束、稳定相对位置和分离变化识别事件。\n12. 每个事件只描述一个主要变化，并按 start_time_hint 从早到晚排列。\n13. action 必须从给定动作词表中原样选择，完全无法判断时填 null。\n14. 遮挡、盲区或模糊导致无法判断的关键区间，也作为 action=null 的事件输出。\n15. category_id 使用英文；其他自然语言字段必须使用简体中文。\n16. 只输出最终 JSON。\n\n输出格式：\n\n{\n  \"object_categories\": [\n    {\n      \"category_id\": \"lamp\",\n      \"category\": \"台灯\"\n    }\n  ],\n  \"objects\": [\n    {\n      \"object_id\": \"lamp_1\",\n      \"category_id\": \"lamp\",\n      \"category\": \"台灯\",\n      \"description\": \"蓝色台灯，可见圆形底座和局部灯罩。\",\n      \"first_view_time\": 0.5,\n      \"best_view_time\": 2.5,\n      \"uncertainty\": null\n    }\n  ],\n  \"interaction_objects\": [\n    {\n      \"object_id\": \"lamp_1\",\n      \"interaction_reason\": \"夹爪与台灯底座之间的间隙消失，夹爪闭合后底座受到稳定约束，并与夹爪保持稳定相对位置。\"\n    }\n  ],\n  \"events\": [\n    {\n      \"start_time_hint\": 1.5,\n      \"end_time_hint\": 2.5,\n      \"local_observation\": \"夹爪逐渐靠近蓝色台灯底座。\",\n      \"evidence\": \"夹爪与台灯底座之间的可见间隙持续减小。\",\n      \"object\": \"lamp_1\",\n      \"target\": null,\n      \"action\": \"接近\",\n      \"uncertainty\": null\n    }\n  ]\n}\n\n以上示例只说明字段格式和输出语言，不表示当前视频中存在台灯。\n\n输出前检查：\n\n- object_categories 中没有无关背景类别；\n- object_categories 没有包含任何实例数量字段；\n- object_categories 中每个 category_id 都至少被一个 object 引用，不存在没有对应实例的悬空类别；\n- 没有根据单帧同类物体数量限制 objects 的数量；\n- 没有将不同时间出现的同类物体自动合并；\n- objects 的 category_id 均引用已有 category_id；\n- objects 已覆盖 object_categories 中的全部 category_id；\n- 同一 category_id 在 object_categories 和 objects 中使用相同的中文 category；\n- interaction_objects 和 events 只引用已有 object_id；\n- 仅接近或对准的物体没有被误判为实际交互物体；\n- events 已按时间排序；\n- action 来自动作词表或为 null；\n- 开合、接触和夹持均有直接视觉 evidence；\n- 不可靠内容已写入 uncertainty；\n- 除 category_id 和 object_id 外没有英文自然语言内容；\n- JSON 之外没有其他输出。\n\n只输出最终 JSON。\n",
+      "video_meta": {
+        "input_type": "multi_view_dict",
+        "input_mode": "image_sequence",
+        "view_names": [
+          "camera_wrist_left"
+        ],
+        "primary_view": "camera_wrist_left",
+        "video_info": {
+          "camera_wrist_left": {
+            "path": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_wrist_left\\episode_000010.mp4",
+            "fps": 30.0,
+            "frame_count": 508,
+            "width": 640,
+            "height": 480,
+            "duration": 16.933333333333334
+          }
+        },
+        "original_fps": 30.0,
+        "target_fps": 8.0,
+        "frame_start": 0,
+        "frame_end": null,
+        "original_duration": 16.933333333333334,
+        "configured_max_time": -1,
+        "effective_duration": 16.933333333333334,
+        "effective_start_time": 0.0,
+        "effective_end_time": 16.933333333333334,
+        "effective_frame_start": 0,
+        "effective_frame_end": 507,
+        "min_input_duration": 16.933333333333334,
+        "per_view_durations": {
+          "camera_wrist_left": 16.933333333333334
+        },
+        "per_view_effective_durations": {
+          "camera_wrist_left": 16.933333333333334
+        },
+        "was_time_limited": false,
+        "was_limited_by_view_duration": false,
+        "was_limited_by_frame_range": false,
+        "sampled_frame_indices": [
+          0,
+          4,
+          8,
+          11,
+          15,
+          19,
+          22,
+          26,
+          30,
+          34,
+          38,
+          41,
+          45,
+          49,
+          52,
+          56,
+          60,
+          64,
+          68,
+          71,
+          75,
+          79,
+          82,
+          86,
+          90,
+          94,
+          98,
+          101,
+          105,
+          109,
+          112,
+          116,
+          120,
+          124,
+          128,
+          131,
+          135,
+          139,
+          142,
+          146,
+          150,
+          154,
+          158,
+          161,
+          165,
+          169,
+          172,
+          176,
+          180,
+          184,
+          188,
+          191,
+          195,
+          199,
+          202,
+          206,
+          210,
+          214,
+          218,
+          221,
+          225,
+          229,
+          232,
+          236,
+          240,
+          244,
+          248,
+          251,
+          255,
+          259,
+          262,
+          266,
+          270,
+          274,
+          278,
+          281,
+          285,
+          289,
+          292,
+          296,
+          300,
+          304,
+          308,
+          311,
+          315,
+          319,
+          322,
+          326,
+          330,
+          334,
+          338,
+          341,
+          345,
+          349,
+          352,
+          356,
+          360,
+          364,
+          368,
+          371,
+          375,
+          379,
+          382,
+          386,
+          390,
+          394,
+          398,
+          401,
+          405,
+          409,
+          412,
+          416,
+          420,
+          424,
+          428,
+          431,
+          435,
+          439,
+          442,
+          446,
+          450,
+          454,
+          458,
+          461,
+          465,
+          469,
+          472,
+          476,
+          480,
+          484,
+          488,
+          491,
+          495,
+          499,
+          502,
+          506,
+          507
+        ],
+        "sampled_timestamps": [
+          0.0,
+          0.13333333333333333,
+          0.26666666666666666,
+          0.36666666666666664,
+          0.5,
+          0.6333333333333333,
+          0.7333333333333333,
+          0.8666666666666667,
+          1.0,
+          1.1333333333333333,
+          1.2666666666666666,
+          1.3666666666666667,
+          1.5,
+          1.6333333333333333,
+          1.7333333333333334,
+          1.8666666666666667,
+          2.0,
+          2.1333333333333333,
+          2.2666666666666666,
+          2.3666666666666667,
+          2.5,
+          2.6333333333333333,
+          2.7333333333333334,
+          2.8666666666666667,
+          3.0,
+          3.1333333333333333,
+          3.2666666666666666,
+          3.3666666666666667,
+          3.5,
+          3.6333333333333333,
+          3.7333333333333334,
+          3.8666666666666667,
+          4.0,
+          4.133333333333334,
+          4.266666666666667,
+          4.366666666666666,
+          4.5,
+          4.633333333333334,
+          4.733333333333333,
+          4.866666666666666,
+          5.0,
+          5.133333333333334,
+          5.266666666666667,
+          5.366666666666666,
+          5.5,
+          5.633333333333334,
+          5.733333333333333,
+          5.866666666666666,
+          6.0,
+          6.133333333333334,
+          6.266666666666667,
+          6.366666666666666,
+          6.5,
+          6.633333333333334,
+          6.733333333333333,
+          6.866666666666666,
+          7.0,
+          7.133333333333334,
+          7.266666666666667,
+          7.366666666666666,
+          7.5,
+          7.633333333333334,
+          7.733333333333333,
+          7.866666666666666,
+          8.0,
+          8.133333333333333,
+          8.266666666666667,
+          8.366666666666667,
+          8.5,
+          8.633333333333333,
+          8.733333333333333,
+          8.866666666666667,
+          9.0,
+          9.133333333333333,
+          9.266666666666667,
+          9.366666666666667,
+          9.5,
+          9.633333333333333,
+          9.733333333333333,
+          9.866666666666667,
+          10.0,
+          10.133333333333333,
+          10.266666666666667,
+          10.366666666666667,
+          10.5,
+          10.633333333333333,
+          10.733333333333333,
+          10.866666666666667,
+          11.0,
+          11.133333333333333,
+          11.266666666666667,
+          11.366666666666667,
+          11.5,
+          11.633333333333333,
+          11.733333333333333,
+          11.866666666666667,
+          12.0,
+          12.133333333333333,
+          12.266666666666667,
+          12.366666666666667,
+          12.5,
+          12.633333333333333,
+          12.733333333333333,
+          12.866666666666667,
+          13.0,
+          13.133333333333333,
+          13.266666666666667,
+          13.366666666666667,
+          13.5,
+          13.633333333333333,
+          13.733333333333333,
+          13.866666666666667,
+          14.0,
+          14.133333333333333,
+          14.266666666666667,
+          14.366666666666667,
+          14.5,
+          14.633333333333333,
+          14.733333333333333,
+          14.866666666666667,
+          15.0,
+          15.133333333333333,
+          15.266666666666667,
+          15.366666666666667,
+          15.5,
+          15.633333333333333,
+          15.733333333333333,
+          15.866666666666667,
+          16.0,
+          16.133333333333333,
+          16.266666666666666,
+          16.366666666666667,
+          16.5,
+          16.633333333333333,
+          16.733333333333334,
+          16.866666666666667,
+          16.9
+        ],
+        "num_sampled_frames": 137,
+        "num_output_parts": 137,
+        "num_message_parts": 274,
+        "resize_width": 672,
+        "jpeg_quality": 95,
+        "draw_timestamps": true,
+        "draw_view_names": true,
+        "merge_views": false,
+        "merge_mode": "per_frame",
+        "merge_length": -1,
+        "effective_merge_length": 0,
+        "draw_montage_axes": true,
+        "separate_view_inputs": false,
+        "message_view_labels": false,
+        "add_frame_tags_requested": true,
+        "add_frame_tags": true,
+        "processed_layout": "flat",
+        "processed_view_directories": {},
+        "view_outputs": {},
+        "video_encoding": null,
+        "output_groups": [
+          {
+            "output_index": 0,
+            "primary_frame_indices": [
+              0
+            ],
+            "timestamps": [
+              0.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 0
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 0,
+            "message_media_part_index": 1
+          },
+          {
+            "output_index": 1,
+            "primary_frame_indices": [
+              4
+            ],
+            "timestamps": [
+              0.13333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 4
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 2,
+            "message_media_part_index": 3
+          },
+          {
+            "output_index": 2,
+            "primary_frame_indices": [
+              8
+            ],
+            "timestamps": [
+              0.26666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 8
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 4,
+            "message_media_part_index": 5
+          },
+          {
+            "output_index": 3,
+            "primary_frame_indices": [
+              11
+            ],
+            "timestamps": [
+              0.36666666666666664
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 11
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 6,
+            "message_media_part_index": 7
+          },
+          {
+            "output_index": 4,
+            "primary_frame_indices": [
+              15
+            ],
+            "timestamps": [
+              0.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 15
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 8,
+            "message_media_part_index": 9
+          },
+          {
+            "output_index": 5,
+            "primary_frame_indices": [
+              19
+            ],
+            "timestamps": [
+              0.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 19
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 10,
+            "message_media_part_index": 11
+          },
+          {
+            "output_index": 6,
+            "primary_frame_indices": [
+              22
+            ],
+            "timestamps": [
+              0.7333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 22
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 12,
+            "message_media_part_index": 13
+          },
+          {
+            "output_index": 7,
+            "primary_frame_indices": [
+              26
+            ],
+            "timestamps": [
+              0.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 26
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 14,
+            "message_media_part_index": 15
+          },
+          {
+            "output_index": 8,
+            "primary_frame_indices": [
+              30
+            ],
+            "timestamps": [
+              1.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 30
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 16,
+            "message_media_part_index": 17
+          },
+          {
+            "output_index": 9,
+            "primary_frame_indices": [
+              34
+            ],
+            "timestamps": [
+              1.1333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 34
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 18,
+            "message_media_part_index": 19
+          },
+          {
+            "output_index": 10,
+            "primary_frame_indices": [
+              38
+            ],
+            "timestamps": [
+              1.2666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 38
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 20,
+            "message_media_part_index": 21
+          },
+          {
+            "output_index": 11,
+            "primary_frame_indices": [
+              41
+            ],
+            "timestamps": [
+              1.3666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 41
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 22,
+            "message_media_part_index": 23
+          },
+          {
+            "output_index": 12,
+            "primary_frame_indices": [
+              45
+            ],
+            "timestamps": [
+              1.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 45
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 24,
+            "message_media_part_index": 25
+          },
+          {
+            "output_index": 13,
+            "primary_frame_indices": [
+              49
+            ],
+            "timestamps": [
+              1.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 49
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 26,
+            "message_media_part_index": 27
+          },
+          {
+            "output_index": 14,
+            "primary_frame_indices": [
+              52
+            ],
+            "timestamps": [
+              1.7333333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 52
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 28,
+            "message_media_part_index": 29
+          },
+          {
+            "output_index": 15,
+            "primary_frame_indices": [
+              56
+            ],
+            "timestamps": [
+              1.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 56
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 30,
+            "message_media_part_index": 31
+          },
+          {
+            "output_index": 16,
+            "primary_frame_indices": [
+              60
+            ],
+            "timestamps": [
+              2.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 60
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 32,
+            "message_media_part_index": 33
+          },
+          {
+            "output_index": 17,
+            "primary_frame_indices": [
+              64
+            ],
+            "timestamps": [
+              2.1333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 64
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 34,
+            "message_media_part_index": 35
+          },
+          {
+            "output_index": 18,
+            "primary_frame_indices": [
+              68
+            ],
+            "timestamps": [
+              2.2666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 68
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 36,
+            "message_media_part_index": 37
+          },
+          {
+            "output_index": 19,
+            "primary_frame_indices": [
+              71
+            ],
+            "timestamps": [
+              2.3666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 71
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 38,
+            "message_media_part_index": 39
+          },
+          {
+            "output_index": 20,
+            "primary_frame_indices": [
+              75
+            ],
+            "timestamps": [
+              2.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 75
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 40,
+            "message_media_part_index": 41
+          },
+          {
+            "output_index": 21,
+            "primary_frame_indices": [
+              79
+            ],
+            "timestamps": [
+              2.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 79
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 42,
+            "message_media_part_index": 43
+          },
+          {
+            "output_index": 22,
+            "primary_frame_indices": [
+              82
+            ],
+            "timestamps": [
+              2.7333333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 82
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 44,
+            "message_media_part_index": 45
+          },
+          {
+            "output_index": 23,
+            "primary_frame_indices": [
+              86
+            ],
+            "timestamps": [
+              2.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 86
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 46,
+            "message_media_part_index": 47
+          },
+          {
+            "output_index": 24,
+            "primary_frame_indices": [
+              90
+            ],
+            "timestamps": [
+              3.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 90
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 48,
+            "message_media_part_index": 49
+          },
+          {
+            "output_index": 25,
+            "primary_frame_indices": [
+              94
+            ],
+            "timestamps": [
+              3.1333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 94
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 50,
+            "message_media_part_index": 51
+          },
+          {
+            "output_index": 26,
+            "primary_frame_indices": [
+              98
+            ],
+            "timestamps": [
+              3.2666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 98
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 52,
+            "message_media_part_index": 53
+          },
+          {
+            "output_index": 27,
+            "primary_frame_indices": [
+              101
+            ],
+            "timestamps": [
+              3.3666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 101
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 54,
+            "message_media_part_index": 55
+          },
+          {
+            "output_index": 28,
+            "primary_frame_indices": [
+              105
+            ],
+            "timestamps": [
+              3.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 105
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 56,
+            "message_media_part_index": 57
+          },
+          {
+            "output_index": 29,
+            "primary_frame_indices": [
+              109
+            ],
+            "timestamps": [
+              3.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 109
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 58,
+            "message_media_part_index": 59
+          },
+          {
+            "output_index": 30,
+            "primary_frame_indices": [
+              112
+            ],
+            "timestamps": [
+              3.7333333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 112
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 60,
+            "message_media_part_index": 61
+          },
+          {
+            "output_index": 31,
+            "primary_frame_indices": [
+              116
+            ],
+            "timestamps": [
+              3.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 116
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 62,
+            "message_media_part_index": 63
+          },
+          {
+            "output_index": 32,
+            "primary_frame_indices": [
+              120
+            ],
+            "timestamps": [
+              4.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 120
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 64,
+            "message_media_part_index": 65
+          },
+          {
+            "output_index": 33,
+            "primary_frame_indices": [
+              124
+            ],
+            "timestamps": [
+              4.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 124
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 66,
+            "message_media_part_index": 67
+          },
+          {
+            "output_index": 34,
+            "primary_frame_indices": [
+              128
+            ],
+            "timestamps": [
+              4.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 128
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 68,
+            "message_media_part_index": 69
+          },
+          {
+            "output_index": 35,
+            "primary_frame_indices": [
+              131
+            ],
+            "timestamps": [
+              4.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 131
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 70,
+            "message_media_part_index": 71
+          },
+          {
+            "output_index": 36,
+            "primary_frame_indices": [
+              135
+            ],
+            "timestamps": [
+              4.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 135
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 72,
+            "message_media_part_index": 73
+          },
+          {
+            "output_index": 37,
+            "primary_frame_indices": [
+              139
+            ],
+            "timestamps": [
+              4.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 139
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 74,
+            "message_media_part_index": 75
+          },
+          {
+            "output_index": 38,
+            "primary_frame_indices": [
+              142
+            ],
+            "timestamps": [
+              4.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 142
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 76,
+            "message_media_part_index": 77
+          },
+          {
+            "output_index": 39,
+            "primary_frame_indices": [
+              146
+            ],
+            "timestamps": [
+              4.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 146
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 78,
+            "message_media_part_index": 79
+          },
+          {
+            "output_index": 40,
+            "primary_frame_indices": [
+              150
+            ],
+            "timestamps": [
+              5.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 150
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 80,
+            "message_media_part_index": 81
+          },
+          {
+            "output_index": 41,
+            "primary_frame_indices": [
+              154
+            ],
+            "timestamps": [
+              5.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 154
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 82,
+            "message_media_part_index": 83
+          },
+          {
+            "output_index": 42,
+            "primary_frame_indices": [
+              158
+            ],
+            "timestamps": [
+              5.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 158
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 84,
+            "message_media_part_index": 85
+          },
+          {
+            "output_index": 43,
+            "primary_frame_indices": [
+              161
+            ],
+            "timestamps": [
+              5.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 161
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 86,
+            "message_media_part_index": 87
+          },
+          {
+            "output_index": 44,
+            "primary_frame_indices": [
+              165
+            ],
+            "timestamps": [
+              5.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 165
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 88,
+            "message_media_part_index": 89
+          },
+          {
+            "output_index": 45,
+            "primary_frame_indices": [
+              169
+            ],
+            "timestamps": [
+              5.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 169
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 90,
+            "message_media_part_index": 91
+          },
+          {
+            "output_index": 46,
+            "primary_frame_indices": [
+              172
+            ],
+            "timestamps": [
+              5.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 172
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 92,
+            "message_media_part_index": 93
+          },
+          {
+            "output_index": 47,
+            "primary_frame_indices": [
+              176
+            ],
+            "timestamps": [
+              5.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 176
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 94,
+            "message_media_part_index": 95
+          },
+          {
+            "output_index": 48,
+            "primary_frame_indices": [
+              180
+            ],
+            "timestamps": [
+              6.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 180
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 96,
+            "message_media_part_index": 97
+          },
+          {
+            "output_index": 49,
+            "primary_frame_indices": [
+              184
+            ],
+            "timestamps": [
+              6.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 184
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 98,
+            "message_media_part_index": 99
+          },
+          {
+            "output_index": 50,
+            "primary_frame_indices": [
+              188
+            ],
+            "timestamps": [
+              6.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 188
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 100,
+            "message_media_part_index": 101
+          },
+          {
+            "output_index": 51,
+            "primary_frame_indices": [
+              191
+            ],
+            "timestamps": [
+              6.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 191
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 102,
+            "message_media_part_index": 103
+          },
+          {
+            "output_index": 52,
+            "primary_frame_indices": [
+              195
+            ],
+            "timestamps": [
+              6.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 195
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 104,
+            "message_media_part_index": 105
+          },
+          {
+            "output_index": 53,
+            "primary_frame_indices": [
+              199
+            ],
+            "timestamps": [
+              6.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 199
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 106,
+            "message_media_part_index": 107
+          },
+          {
+            "output_index": 54,
+            "primary_frame_indices": [
+              202
+            ],
+            "timestamps": [
+              6.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 202
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 108,
+            "message_media_part_index": 109
+          },
+          {
+            "output_index": 55,
+            "primary_frame_indices": [
+              206
+            ],
+            "timestamps": [
+              6.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 206
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 110,
+            "message_media_part_index": 111
+          },
+          {
+            "output_index": 56,
+            "primary_frame_indices": [
+              210
+            ],
+            "timestamps": [
+              7.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 210
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 112,
+            "message_media_part_index": 113
+          },
+          {
+            "output_index": 57,
+            "primary_frame_indices": [
+              214
+            ],
+            "timestamps": [
+              7.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 214
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 114,
+            "message_media_part_index": 115
+          },
+          {
+            "output_index": 58,
+            "primary_frame_indices": [
+              218
+            ],
+            "timestamps": [
+              7.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 218
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 116,
+            "message_media_part_index": 117
+          },
+          {
+            "output_index": 59,
+            "primary_frame_indices": [
+              221
+            ],
+            "timestamps": [
+              7.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 221
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 118,
+            "message_media_part_index": 119
+          },
+          {
+            "output_index": 60,
+            "primary_frame_indices": [
+              225
+            ],
+            "timestamps": [
+              7.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 225
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 120,
+            "message_media_part_index": 121
+          },
+          {
+            "output_index": 61,
+            "primary_frame_indices": [
+              229
+            ],
+            "timestamps": [
+              7.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 229
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 122,
+            "message_media_part_index": 123
+          },
+          {
+            "output_index": 62,
+            "primary_frame_indices": [
+              232
+            ],
+            "timestamps": [
+              7.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 232
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 124,
+            "message_media_part_index": 125
+          },
+          {
+            "output_index": 63,
+            "primary_frame_indices": [
+              236
+            ],
+            "timestamps": [
+              7.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 236
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 126,
+            "message_media_part_index": 127
+          },
+          {
+            "output_index": 64,
+            "primary_frame_indices": [
+              240
+            ],
+            "timestamps": [
+              8.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 240
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 128,
+            "message_media_part_index": 129
+          },
+          {
+            "output_index": 65,
+            "primary_frame_indices": [
+              244
+            ],
+            "timestamps": [
+              8.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 244
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 130,
+            "message_media_part_index": 131
+          },
+          {
+            "output_index": 66,
+            "primary_frame_indices": [
+              248
+            ],
+            "timestamps": [
+              8.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 248
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 132,
+            "message_media_part_index": 133
+          },
+          {
+            "output_index": 67,
+            "primary_frame_indices": [
+              251
+            ],
+            "timestamps": [
+              8.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 251
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 134,
+            "message_media_part_index": 135
+          },
+          {
+            "output_index": 68,
+            "primary_frame_indices": [
+              255
+            ],
+            "timestamps": [
+              8.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 255
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 136,
+            "message_media_part_index": 137
+          },
+          {
+            "output_index": 69,
+            "primary_frame_indices": [
+              259
+            ],
+            "timestamps": [
+              8.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 259
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 138,
+            "message_media_part_index": 139
+          },
+          {
+            "output_index": 70,
+            "primary_frame_indices": [
+              262
+            ],
+            "timestamps": [
+              8.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 262
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 140,
+            "message_media_part_index": 141
+          },
+          {
+            "output_index": 71,
+            "primary_frame_indices": [
+              266
+            ],
+            "timestamps": [
+              8.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 266
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 142,
+            "message_media_part_index": 143
+          },
+          {
+            "output_index": 72,
+            "primary_frame_indices": [
+              270
+            ],
+            "timestamps": [
+              9.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 270
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 144,
+            "message_media_part_index": 145
+          },
+          {
+            "output_index": 73,
+            "primary_frame_indices": [
+              274
+            ],
+            "timestamps": [
+              9.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 274
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 146,
+            "message_media_part_index": 147
+          },
+          {
+            "output_index": 74,
+            "primary_frame_indices": [
+              278
+            ],
+            "timestamps": [
+              9.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 278
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 148,
+            "message_media_part_index": 149
+          },
+          {
+            "output_index": 75,
+            "primary_frame_indices": [
+              281
+            ],
+            "timestamps": [
+              9.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 281
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 150,
+            "message_media_part_index": 151
+          },
+          {
+            "output_index": 76,
+            "primary_frame_indices": [
+              285
+            ],
+            "timestamps": [
+              9.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 285
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 152,
+            "message_media_part_index": 153
+          },
+          {
+            "output_index": 77,
+            "primary_frame_indices": [
+              289
+            ],
+            "timestamps": [
+              9.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 289
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 154,
+            "message_media_part_index": 155
+          },
+          {
+            "output_index": 78,
+            "primary_frame_indices": [
+              292
+            ],
+            "timestamps": [
+              9.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 292
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 156,
+            "message_media_part_index": 157
+          },
+          {
+            "output_index": 79,
+            "primary_frame_indices": [
+              296
+            ],
+            "timestamps": [
+              9.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 296
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 158,
+            "message_media_part_index": 159
+          },
+          {
+            "output_index": 80,
+            "primary_frame_indices": [
+              300
+            ],
+            "timestamps": [
+              10.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 300
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 160,
+            "message_media_part_index": 161
+          },
+          {
+            "output_index": 81,
+            "primary_frame_indices": [
+              304
+            ],
+            "timestamps": [
+              10.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 304
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 162,
+            "message_media_part_index": 163
+          },
+          {
+            "output_index": 82,
+            "primary_frame_indices": [
+              308
+            ],
+            "timestamps": [
+              10.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 308
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 164,
+            "message_media_part_index": 165
+          },
+          {
+            "output_index": 83,
+            "primary_frame_indices": [
+              311
+            ],
+            "timestamps": [
+              10.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 311
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 166,
+            "message_media_part_index": 167
+          },
+          {
+            "output_index": 84,
+            "primary_frame_indices": [
+              315
+            ],
+            "timestamps": [
+              10.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 315
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 168,
+            "message_media_part_index": 169
+          },
+          {
+            "output_index": 85,
+            "primary_frame_indices": [
+              319
+            ],
+            "timestamps": [
+              10.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 319
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 170,
+            "message_media_part_index": 171
+          },
+          {
+            "output_index": 86,
+            "primary_frame_indices": [
+              322
+            ],
+            "timestamps": [
+              10.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 322
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 172,
+            "message_media_part_index": 173
+          },
+          {
+            "output_index": 87,
+            "primary_frame_indices": [
+              326
+            ],
+            "timestamps": [
+              10.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 326
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 174,
+            "message_media_part_index": 175
+          },
+          {
+            "output_index": 88,
+            "primary_frame_indices": [
+              330
+            ],
+            "timestamps": [
+              11.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 330
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 176,
+            "message_media_part_index": 177
+          },
+          {
+            "output_index": 89,
+            "primary_frame_indices": [
+              334
+            ],
+            "timestamps": [
+              11.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 334
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 178,
+            "message_media_part_index": 179
+          },
+          {
+            "output_index": 90,
+            "primary_frame_indices": [
+              338
+            ],
+            "timestamps": [
+              11.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 338
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 180,
+            "message_media_part_index": 181
+          },
+          {
+            "output_index": 91,
+            "primary_frame_indices": [
+              341
+            ],
+            "timestamps": [
+              11.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 341
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 182,
+            "message_media_part_index": 183
+          },
+          {
+            "output_index": 92,
+            "primary_frame_indices": [
+              345
+            ],
+            "timestamps": [
+              11.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 345
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 184,
+            "message_media_part_index": 185
+          },
+          {
+            "output_index": 93,
+            "primary_frame_indices": [
+              349
+            ],
+            "timestamps": [
+              11.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 349
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 186,
+            "message_media_part_index": 187
+          },
+          {
+            "output_index": 94,
+            "primary_frame_indices": [
+              352
+            ],
+            "timestamps": [
+              11.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 352
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 188,
+            "message_media_part_index": 189
+          },
+          {
+            "output_index": 95,
+            "primary_frame_indices": [
+              356
+            ],
+            "timestamps": [
+              11.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 356
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 190,
+            "message_media_part_index": 191
+          },
+          {
+            "output_index": 96,
+            "primary_frame_indices": [
+              360
+            ],
+            "timestamps": [
+              12.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 360
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 192,
+            "message_media_part_index": 193
+          },
+          {
+            "output_index": 97,
+            "primary_frame_indices": [
+              364
+            ],
+            "timestamps": [
+              12.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 364
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 194,
+            "message_media_part_index": 195
+          },
+          {
+            "output_index": 98,
+            "primary_frame_indices": [
+              368
+            ],
+            "timestamps": [
+              12.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 368
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 196,
+            "message_media_part_index": 197
+          },
+          {
+            "output_index": 99,
+            "primary_frame_indices": [
+              371
+            ],
+            "timestamps": [
+              12.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 371
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 198,
+            "message_media_part_index": 199
+          },
+          {
+            "output_index": 100,
+            "primary_frame_indices": [
+              375
+            ],
+            "timestamps": [
+              12.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 375
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 200,
+            "message_media_part_index": 201
+          },
+          {
+            "output_index": 101,
+            "primary_frame_indices": [
+              379
+            ],
+            "timestamps": [
+              12.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 379
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 202,
+            "message_media_part_index": 203
+          },
+          {
+            "output_index": 102,
+            "primary_frame_indices": [
+              382
+            ],
+            "timestamps": [
+              12.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 382
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 204,
+            "message_media_part_index": 205
+          },
+          {
+            "output_index": 103,
+            "primary_frame_indices": [
+              386
+            ],
+            "timestamps": [
+              12.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 386
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 206,
+            "message_media_part_index": 207
+          },
+          {
+            "output_index": 104,
+            "primary_frame_indices": [
+              390
+            ],
+            "timestamps": [
+              13.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 390
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 208,
+            "message_media_part_index": 209
+          },
+          {
+            "output_index": 105,
+            "primary_frame_indices": [
+              394
+            ],
+            "timestamps": [
+              13.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 394
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 210,
+            "message_media_part_index": 211
+          },
+          {
+            "output_index": 106,
+            "primary_frame_indices": [
+              398
+            ],
+            "timestamps": [
+              13.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 398
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 212,
+            "message_media_part_index": 213
+          },
+          {
+            "output_index": 107,
+            "primary_frame_indices": [
+              401
+            ],
+            "timestamps": [
+              13.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 401
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 214,
+            "message_media_part_index": 215
+          },
+          {
+            "output_index": 108,
+            "primary_frame_indices": [
+              405
+            ],
+            "timestamps": [
+              13.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 405
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 216,
+            "message_media_part_index": 217
+          },
+          {
+            "output_index": 109,
+            "primary_frame_indices": [
+              409
+            ],
+            "timestamps": [
+              13.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 409
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 218,
+            "message_media_part_index": 219
+          },
+          {
+            "output_index": 110,
+            "primary_frame_indices": [
+              412
+            ],
+            "timestamps": [
+              13.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 412
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 220,
+            "message_media_part_index": 221
+          },
+          {
+            "output_index": 111,
+            "primary_frame_indices": [
+              416
+            ],
+            "timestamps": [
+              13.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 416
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 222,
+            "message_media_part_index": 223
+          },
+          {
+            "output_index": 112,
+            "primary_frame_indices": [
+              420
+            ],
+            "timestamps": [
+              14.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 420
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 224,
+            "message_media_part_index": 225
+          },
+          {
+            "output_index": 113,
+            "primary_frame_indices": [
+              424
+            ],
+            "timestamps": [
+              14.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 424
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 226,
+            "message_media_part_index": 227
+          },
+          {
+            "output_index": 114,
+            "primary_frame_indices": [
+              428
+            ],
+            "timestamps": [
+              14.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 428
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 228,
+            "message_media_part_index": 229
+          },
+          {
+            "output_index": 115,
+            "primary_frame_indices": [
+              431
+            ],
+            "timestamps": [
+              14.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 431
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 230,
+            "message_media_part_index": 231
+          },
+          {
+            "output_index": 116,
+            "primary_frame_indices": [
+              435
+            ],
+            "timestamps": [
+              14.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 435
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 232,
+            "message_media_part_index": 233
+          },
+          {
+            "output_index": 117,
+            "primary_frame_indices": [
+              439
+            ],
+            "timestamps": [
+              14.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 439
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 234,
+            "message_media_part_index": 235
+          },
+          {
+            "output_index": 118,
+            "primary_frame_indices": [
+              442
+            ],
+            "timestamps": [
+              14.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 442
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 236,
+            "message_media_part_index": 237
+          },
+          {
+            "output_index": 119,
+            "primary_frame_indices": [
+              446
+            ],
+            "timestamps": [
+              14.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 446
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 238,
+            "message_media_part_index": 239
+          },
+          {
+            "output_index": 120,
+            "primary_frame_indices": [
+              450
+            ],
+            "timestamps": [
+              15.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 450
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 240,
+            "message_media_part_index": 241
+          },
+          {
+            "output_index": 121,
+            "primary_frame_indices": [
+              454
+            ],
+            "timestamps": [
+              15.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 454
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 242,
+            "message_media_part_index": 243
+          },
+          {
+            "output_index": 122,
+            "primary_frame_indices": [
+              458
+            ],
+            "timestamps": [
+              15.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 458
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 244,
+            "message_media_part_index": 245
+          },
+          {
+            "output_index": 123,
+            "primary_frame_indices": [
+              461
+            ],
+            "timestamps": [
+              15.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 461
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 246,
+            "message_media_part_index": 247
+          },
+          {
+            "output_index": 124,
+            "primary_frame_indices": [
+              465
+            ],
+            "timestamps": [
+              15.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 465
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 248,
+            "message_media_part_index": 249
+          },
+          {
+            "output_index": 125,
+            "primary_frame_indices": [
+              469
+            ],
+            "timestamps": [
+              15.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 469
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 250,
+            "message_media_part_index": 251
+          },
+          {
+            "output_index": 126,
+            "primary_frame_indices": [
+              472
+            ],
+            "timestamps": [
+              15.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 472
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 252,
+            "message_media_part_index": 253
+          },
+          {
+            "output_index": 127,
+            "primary_frame_indices": [
+              476
+            ],
+            "timestamps": [
+              15.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 476
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 254,
+            "message_media_part_index": 255
+          },
+          {
+            "output_index": 128,
+            "primary_frame_indices": [
+              480
+            ],
+            "timestamps": [
+              16.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 480
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 256,
+            "message_media_part_index": 257
+          },
+          {
+            "output_index": 129,
+            "primary_frame_indices": [
+              484
+            ],
+            "timestamps": [
+              16.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 484
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 258,
+            "message_media_part_index": 259
+          },
+          {
+            "output_index": 130,
+            "primary_frame_indices": [
+              488
+            ],
+            "timestamps": [
+              16.266666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 488
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 260,
+            "message_media_part_index": 261
+          },
+          {
+            "output_index": 131,
+            "primary_frame_indices": [
+              491
+            ],
+            "timestamps": [
+              16.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 491
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 262,
+            "message_media_part_index": 263
+          },
+          {
+            "output_index": 132,
+            "primary_frame_indices": [
+              495
+            ],
+            "timestamps": [
+              16.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 495
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 264,
+            "message_media_part_index": 265
+          },
+          {
+            "output_index": 133,
+            "primary_frame_indices": [
+              499
+            ],
+            "timestamps": [
+              16.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 499
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 266,
+            "message_media_part_index": 267
+          },
+          {
+            "output_index": 134,
+            "primary_frame_indices": [
+              502
+            ],
+            "timestamps": [
+              16.733333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 502
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 268,
+            "message_media_part_index": 269
+          },
+          {
+            "output_index": 135,
+            "primary_frame_indices": [
+              506
+            ],
+            "timestamps": [
+              16.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 506
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 270,
+            "message_media_part_index": 271
+          },
+          {
+            "output_index": 136,
+            "primary_frame_indices": [
+              507
+            ],
+            "timestamps": [
+              16.9
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_left": 507
+            },
+            "views": [
+              "camera_wrist_left"
+            ],
+            "message_tag_part_index": 272,
+            "message_media_part_index": 273
+          }
+        ],
+        "processed_output_path": "C:\\Users\\34927\\Desktop\\vlm_auto_annotation_refactor_gpt\\examples\\vlm_annotation_batch_predictions\\00070_robogene_twoArm_franka_align_assemble_toy_episode_000010\\stages\\wrist_view_left\\processed_frames"
+      },
+      "video_layout": "当前视频输入布局说明：\n- 输入模式：image_sequence。\n- 共采样 137 个主时间点，最终送入模型 137 张图像。\n- 视角顺序：camera_wrist_left。\n- 主时间轴基于视角 camera_wrist_left；其他视角按同一时间戳对齐。\n- 每个采样时间点只有一个视角。\n- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。\n- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。\n- 图像上绘制了视角名称，可用来区分不同摄像机来源。\n- 每张 image_sequence 图像前都有独立文字标签；<t=...s> 表示原始视频时间轴，<view_name> 表示拍摄视角。",
+      "usage": {
+        "prompt_tokens": 51679,
+        "completion_tokens": 1569,
+        "total_tokens": 53248
+      },
+      "model": "Qwen3.5-397B-A17B-FP8",
+      "finish_reason": "stop"
+    },
+    "wrist_view_right": {
+      "output": {
+        "object_categories": [
+          {
+            "category_id": "number_block",
+            "category": "数字积木"
+          },
+          {
+            "category_id": "shape_block",
+            "category": "形状积木"
+          },
+          {
+            "category_id": "puzzle_board",
+            "category": "拼图板"
+          }
+        ],
+        "objects": [
+          {
+            "object_id": "number_block_1",
+            "category_id": "number_block",
+            "category": "数字积木",
+            "description": "橙色数字“10”积木，具有立体结构。",
+            "first_view_time": 0.0,
+            "best_view_time": 2.5,
+            "uncertainty": null
+          },
+          {
+            "object_id": "shape_block_1",
+            "category_id": "shape_block",
+            "category": "形状积木",
+            "description": "红色长方体形状积木。",
+            "first_view_time": 0.0,
+            "best_view_time": 9.5,
+            "uncertainty": null
+          },
+          {
+            "object_id": "puzzle_board_1",
+            "category_id": "puzzle_board",
+            "category": "拼图板",
+            "description": "蓝色背景拼图板，带有海洋生物图案和多个凹槽。",
+            "first_view_time": 4.27,
+            "best_view_time": 6.0,
+            "uncertainty": null
+          }
+        ],
+        "interaction_objects": [
+          {
+            "object_id": "number_block_1",
+            "interaction_reason": "夹爪闭合夹持数字积木，将其提起并放入拼图板凹槽中，随后释放。"
+          },
+          {
+            "object_id": "shape_block_1",
+            "interaction_reason": "夹爪闭合夹持红色形状积木，将其提起并放入拼图板凹槽中，随后释放。"
+          }
+        ],
+        "events": [
+          {
+            "start_time_hint": 0.0,
+            "end_time_hint": 2.0,
+            "local_observation": "夹爪向橙色数字“10”积木移动并靠近。",
+            "evidence": "夹爪与积木之间的可见间隙持续减小。",
+            "object": "number_block_1",
+            "target": null,
+            "action": "接近",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 2.0,
+            "end_time_hint": 3.5,
+            "local_observation": "夹爪指间距减小，夹住数字积木。",
+            "evidence": "夹爪指与积木表面接触，间距持续缩小直至稳定。",
+            "object": "number_block_1",
+            "target": null,
+            "action": "闭合夹爪",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 3.5,
+            "end_time_hint": 4.5,
+            "local_observation": "夹爪夹持数字积木离开桌面，向拼图板移动。",
+            "evidence": "积木随夹爪同步运动，背景发生变化。",
+            "object": "number_block_1",
+            "target": null,
+            "action": "提起",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 4.5,
+            "end_time_hint": 6.5,
+            "local_observation": "夹爪将数字积木对准并放入拼图板凹槽。",
+            "evidence": "积木位置与拼图板上的“10”凹槽重合，随后夹爪松开。",
+            "object": "number_block_1",
+            "target": "puzzle_board_1",
+            "action": "放入",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 6.5,
+            "end_time_hint": 7.5,
+            "local_observation": "夹爪张开，与数字积木分离并移开。",
+            "evidence": "夹爪指间距增大，积木留在拼图板上。",
+            "object": "number_block_1",
+            "target": null,
+            "action": "释放",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 7.5,
+            "end_time_hint": 9.0,
+            "local_observation": "夹爪向红色长方体积木移动并靠近。",
+            "evidence": "夹爪与积木之间的可见间隙持续减小。",
+            "object": "shape_block_1",
+            "target": null,
+            "action": "接近",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 9.0,
+            "end_time_hint": 10.0,
+            "local_observation": "夹爪指间距减小，夹住红色积木。",
+            "evidence": "夹爪指与积木表面接触，间距持续缩小。",
+            "object": "shape_block_1",
+            "target": null,
+            "action": "闭合夹爪",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 10.0,
+            "end_time_hint": 11.0,
+            "local_observation": "夹爪夹持红色积木离开桌面，向拼图板移动。",
+            "evidence": "积木随夹爪同步运动，背景发生变化。",
+            "object": "shape_block_1",
+            "target": null,
+            "action": "提起",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 11.0,
+            "end_time_hint": 14.5,
+            "local_observation": "夹爪将红色积木对准并放入拼图板凹槽。",
+            "evidence": "积木位置与拼图板上的长方形凹槽重合，夹爪进行调整后松开。",
+            "object": "shape_block_1",
+            "target": "puzzle_board_1",
+            "action": "放入",
+            "uncertainty": null
+          },
+          {
+            "start_time_hint": 14.5,
+            "end_time_hint": 15.5,
+            "local_observation": "夹爪张开，与红色积木分离并移开。",
+            "evidence": "夹爪指间距增大，积木留在拼图板上。",
+            "object": "shape_block_1",
+            "target": null,
+            "action": "释放",
+            "uncertainty": null
+          }
+        ]
+      },
+      "raw_text": "```json\n{\n  \"object_categories\": [\n    {\n      \"category_id\": \"number_block\",\n      \"category\": \"数字积木\"\n    },\n    {\n      \"category_id\": \"shape_block\",\n      \"category\": \"形状积木\"\n    },\n    {\n      \"category_id\": \"puzzle_board\",\n      \"category\": \"拼图板\"\n    }\n  ],\n  \"objects\": [\n    {\n      \"object_id\": \"number_block_1\",\n      \"category_id\": \"number_block\",\n      \"category\": \"数字积木\",\n      \"description\": \"橙色数字“10”积木，具有立体结构。\",\n      \"first_view_time\": 0.0,\n      \"best_view_time\": 2.5,\n      \"uncertainty\": null\n    },\n    {\n      \"object_id\": \"shape_block_1\",\n      \"category_id\": \"shape_block\",\n      \"category\": \"形状积木\",\n      \"description\": \"红色长方体形状积木。\",\n      \"first_view_time\": 0.0,\n      \"best_view_time\": 9.5,\n      \"uncertainty\": null\n    },\n    {\n      \"object_id\": \"puzzle_board_1\",\n      \"category_id\": \"puzzle_board\",\n      \"category\": \"拼图板\",\n      \"description\": \"蓝色背景拼图板，带有海洋生物图案和多个凹槽。\",\n      \"first_view_time\": 4.27,\n      \"best_view_time\": 6.0,\n      \"uncertainty\": null\n    }\n  ],\n  \"interaction_objects\": [\n    {\n      \"object_id\": \"number_block_1\",\n      \"interaction_reason\": \"夹爪闭合夹持数字积木，将其提起并放入拼图板凹槽中，随后释放。\"\n    },\n    {\n      \"object_id\": \"shape_block_1\",\n      \"interaction_reason\": \"夹爪闭合夹持红色形状积木，将其提起并放入拼图板凹槽中，随后释放。\"\n    }\n  ],\n  \"events\": [\n    {\n      \"start_time_hint\": 0.0,\n      \"end_time_hint\": 2.0,\n      \"local_observation\": \"夹爪向橙色数字“10”积木移动并靠近。\",\n      \"evidence\": \"夹爪与积木之间的可见间隙持续减小。\",\n      \"object\": \"number_block_1\",\n      \"target\": null,\n      \"action\": \"接近\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 2.0,\n      \"end_time_hint\": 3.5,\n      \"local_observation\": \"夹爪指间距减小，夹住数字积木。\",\n      \"evidence\": \"夹爪指与积木表面接触，间距持续缩小直至稳定。\",\n      \"object\": \"number_block_1\",\n      \"target\": null,\n      \"action\": \"闭合夹爪\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 3.5,\n      \"end_time_hint\": 4.5,\n      \"local_observation\": \"夹爪夹持数字积木离开桌面，向拼图板移动。\",\n      \"evidence\": \"积木随夹爪同步运动，背景发生变化。\",\n      \"object\": \"number_block_1\",\n      \"target\": null,\n      \"action\": \"提起\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 4.5,\n      \"end_time_hint\": 6.5,\n      \"local_observation\": \"夹爪将数字积木对准并放入拼图板凹槽。\",\n      \"evidence\": \"积木位置与拼图板上的“10”凹槽重合，随后夹爪松开。\",\n      \"object\": \"number_block_1\",\n      \"target\": \"puzzle_board_1\",\n      \"action\": \"放入\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 6.5,\n      \"end_time_hint\": 7.5,\n      \"local_observation\": \"夹爪张开，与数字积木分离并移开。\",\n      \"evidence\": \"夹爪指间距增大，积木留在拼图板上。\",\n      \"object\": \"number_block_1\",\n      \"target\": null,\n      \"action\": \"释放\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 7.5,\n      \"end_time_hint\": 9.0,\n      \"local_observation\": \"夹爪向红色长方体积木移动并靠近。\",\n      \"evidence\": \"夹爪与积木之间的可见间隙持续减小。\",\n      \"object\": \"shape_block_1\",\n      \"target\": null,\n      \"action\": \"接近\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 9.0,\n      \"end_time_hint\": 10.0,\n      \"local_observation\": \"夹爪指间距减小，夹住红色积木。\",\n      \"evidence\": \"夹爪指与积木表面接触，间距持续缩小。\",\n      \"object\": \"shape_block_1\",\n      \"target\": null,\n      \"action\": \"闭合夹爪\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 10.0,\n      \"end_time_hint\": 11.0,\n      \"local_observation\": \"夹爪夹持红色积木离开桌面，向拼图板移动。\",\n      \"evidence\": \"积木随夹爪同步运动，背景发生变化。\",\n      \"object\": \"shape_block_1\",\n      \"target\": null,\n      \"action\": \"提起\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 11.0,\n      \"end_time_hint\": 14.5,\n      \"local_observation\": \"夹爪将红色积木对准并放入拼图板凹槽。\",\n      \"evidence\": \"积木位置与拼图板上的长方形凹槽重合，夹爪进行调整后松开。\",\n      \"object\": \"shape_block_1\",\n      \"target\": \"puzzle_board_1\",\n      \"action\": \"放入\",\n      \"uncertainty\": null\n    },\n    {\n      \"start_time_hint\": 14.5,\n      \"end_time_hint\": 15.5,\n      \"local_observation\": \"夹爪张开，与红色积木分离并移开。\",\n      \"evidence\": \"夹爪指间距增大，积木留在拼图板上。\",\n      \"object\": \"shape_block_1\",\n      \"target\": null,\n      \"action\": \"释放\",\n      \"uncertainty\": null\n    }\n  ]\n}\n```",
+      "system_prompt": "\n你是机器人夹爪视角视频的局部交互标注助手。\n\n根据单个夹爪相机视频，识别夹爪附近需要保持身份的局部物体、实际交互物体，并按时间顺序输出夹爪状态变化及夹爪与物体之间的局部关系变化。\n\n结果仅作为后续 Scene、Analysis 和 Refinement 阶段的辅助证据。不得补全完整任务，不得分析其他机械臂或双臂协作。\n\n【输出语言】\n\n除 JSON 字段名、object_id、category_id 和 null 外，所有自然语言字段必须使用简体中文。\n\n- category_id 使用简洁的英文单数类别；\n- category、description、interaction_reason、local_observation、evidence、uncertainty 使用简体中文；\n- action 原样使用用户提供动作词表中的动作名称或 null；\n- 禁止输出英文描述句子。\n\n【局部物体类别】\n\nobject_categories 汇总当前夹爪视角中与夹爪交互相关的物体类别，以及为区分交互物体所必需的邻近同类物体类别，不记录无关背景类别。\n\nobject_categories 只用于统一 objects 的类别命名，不用于表示或限制同类物体的实例数量。\n\n先完成 object_categories，再建立 objects。\n\nobject_categories 中的每个 category_id 都必须在 objects 中至少对应一个具体实例；如果无法为某个类别建立可靠的 object，则不得输出该类别。\n\n字段要求：\n\n- category_id：稳定的英文粗粒度类别；\n- category：可靠的中文粗粒度类别。\n\n由于夹爪相机会随机械臂移动，不得根据单个画面中的同类物体数量限制整个视频中的实例数量，也不得将不同时间出现的同类物体自动合并。\n\n【局部物体】\n\nobjects 记录夹爪实际接近、对准、接触、夹持或直接操作过的物体，以及为区分这些物体身份所必需的少量邻近同类物体，不记录其他背景物体。\n\n每个物体使用当前视角内部稳定的 object_id，优先使用“category_id_数字”格式，例如 bottle_1、button_1；类别无法确认时可使用 object_1。\n\n根据物体外观、局部结构、时间连续性、运动连续性以及遮挡前后的关系保持实例身份。\n\n同一物体再次出现且能够可靠确认时沿用原 object_id；能够确认是独立实例时创建新的 object_id；无法确认是否为同一物体时，不得强行合并，并在 uncertainty 中说明。\n\n字段要求：\n\n- object_id：当前夹爪视角内部的稳定实例 ID；\n- category_id：引用 object_categories 中已有的 category_id；\n- category：对应的中文粗粒度类别；\n- description：用中文描述颜色、形状、局部结构、安装关系或可抓持特征；\n- first_view_time：第一次能够可靠确认该物体身份的时间；\n- best_view_time：该物体局部特征最清晰的时间；\n- uncertainty：说明身份、类别或可见性的不确定性，可靠时填 null。\n\nobjects 必须覆盖 object_categories 中的全部类别。每个 category_id 至少建立一个对应 object_id；同一 category_id 在 object_categories 和 objects 中的中文 category 必须完全一致。\n\n【实际交互物体】\n\ninteraction_objects 从 objects 中筛选，只能引用 objects 中已有的 object_id。\n\n满足以下至少一项时，才能加入 interaction_objects：\n\n1. 夹爪与物体建立了可确认的直接接触；\n2. 物体受到夹爪稳定约束；\n3. 物体在夹爪作用下发生位置、姿态、结构或状态变化；\n4. 夹爪对物体执行了可确认的直接操作。\n\n仅发生接近、对准、画面重叠或进入夹爪开口，不足以加入 interaction_objects。\n\ninteraction_reason 使用中文描述当前夹爪视角中的直接视觉证据，不得描述任务意图，不得仅根据动作词表推断。\n\n接触或操作无法可靠确认时，不得强行加入 interaction_objects，应在对应 object 或 event 的 uncertainty 中说明。\n\n【夹爪状态】\n\n夹爪闭合只能依据可见夹爪指间距持续减小。\n\n夹爪张开只能依据可见夹爪指间距持续增大。\n\n不得根据任务语义、物体位于夹爪中央或预期操作推断夹爪开合。\n\n只能看到单侧夹爪指时，可以判断开合趋势，但必须在 uncertainty 中说明遮挡情况。\n\n夹爪完全不可见时，不得输出确定的开合事件。\n\n【接触与夹持】\n\n接触必须有直接视觉证据，例如夹爪与物体间隙消失、夹爪到达物体表面、物体受到作用，或分离后间隙重新出现。\n\n仅靠近、画面重叠或物体进入夹爪开口，不等于接触。\n\n夹持必须能够观察到物体受到夹爪约束，并与夹爪保持基本稳定的相对位置。\n\n相机运动造成的背景变化不等于物体随夹爪运动。判断同步运动时，只比较物体相对于夹爪的位置和姿态。\n\n【事件】\n\nevents 按照 start_time_hint 从早到晚排列。\n\n每个事件只描述一个主要变化。不同变化应拆开，例如：\n\n接近 → 接触 → 夹爪闭合 → 夹持 → 夹爪张开 → 分离\n\n不得为了补齐操作流程而输出没有直接证据的事件。\n\naction 必须从用户提供的动作词表中原样选择；完全无法判断时填 null。\n\nstart_time_hint 和 end_time_hint 是局部变化的粗略时间范围，必须与视频中的实际变化一致。\n\n字段要求：\n\n- local_observation：用中文描述当前区间直接看到的夹爪、物体及二者关系变化；\n- evidence：用中文说明支持 action、object 和 target 的直接视觉证据；\n- object：填写当前事件直接作用的局部 object_id，无法确认时填 null；\n- target：仅在当前视角能够确认明确目标物体时填写，否则填 null；\n- uncertainty：用中文说明不可靠内容、原因及仍可确认的部分，可靠时填 null。\n\nobject 和 target 只能引用 objects 中已有的 object_id。\n\n【遮挡与盲区】\n\n如果关键交互区间内夹爪、接触区域或物体被严重遮挡，无法判断开合、接触、夹持或分离，仍应输出事件：\n\n- action 填 null；\n- 无法确认 object 或 target 时填 null；\n- local_observation 和 evidence 描述不可见状态；\n- uncertainty 说明无法判断的内容。\n\n不得将无法观察等同于没有动作。\n\n【硬约束】\n\n1. 只使用当前夹爪视角中的直接视觉证据。\n2. 不输出视角名称、相机角色、executor 或左右臂身份。\n3. 不引用其他视角的 object_id。\n4. 不输出完整任务、subtask 或其他机械臂动作。\n5. 不根据任务指令补全不可见动作。\n6. 不把接近等同于接触。\n7. 不把夹爪闭合等同于成功夹持。\n8. object_categories 不表示或限制同类物体的实例数量。\n9. objects 的 category_id 必须引用 object_categories 中已有的 category_id。\n10. object_categories 中的每个 category_id 必须至少被 objects 中一个实例引用；没有对应 object 的类别不得输出。\n11. 同一 category_id 在 object_categories 和 objects 中必须对应相同的中文 category。\n12. interaction_objects 只能引用 objects 中已有的 object_id。\n13. events 中的 object 和 target 只能引用 objects 中已有的 object_id。\n14. 看不清时使用 uncertainty 或 action=null。\n15. 只输出合法 JSON，不输出解释、Markdown 或额外文本。\n",
+      "prompt": "\n请完整观看当前夹爪视角视频，输出局部物体类别、局部物体、实际交互物体和按时间顺序排列的夹爪局部交互事件。\n\n视频输入布局：\n当前视频输入布局说明：\n- 输入模式：image_sequence。\n- 共采样 137 个主时间点，最终送入模型 137 张图像。\n- 视角顺序：camera_wrist_right。\n- 主时间轴基于视角 camera_wrist_right；其他视角按同一时间戳对齐。\n- 每个采样时间点只有一个视角。\n- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。\n- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。\n- 图像上绘制了视角名称，可用来区分不同摄像机来源。\n- 每张 image_sequence 图像前都有独立文字标签；<t=...s> 表示原始视频时间轴，<view_name> 表示拍摄视角。\n\n视频布局规则：\n\n请先根据“当前视频输入布局说明”和 message 中的视角标签理解视觉输入，再分析场景、动作或时间边界。\n当多个视角分别作为图像序列或视频输入时，每组媒体前的文字标签表示该组所属视角；不得把相邻的不同媒体组误认为同一视角的连续画面。\n当 image_sequence 的每张图像前存在 `<t=...s> <view_name>` 标签时，前者是相对于原始视频起点的真实时间戳，后者是该图像的拍摄视角；标签属于紧随其后的图像。\n拼图中的相邻子图不一定表示真实空间相邻，可能表示不同视角或不同时间点。\n判断动作顺序和时间边界时，应优先参考图中的时间戳 t=...s。\n判断物体相对位置时，应结合视角名称，不要把不同视角之间的左右关系直接当成真实世界左右关系。\n如果一个图像是时间网格或 montage，请按时间戳和从左到右、从上到下的网格顺序理解时间推进。\n\n\n动作词表：\n[\n  \"张开夹爪\",\n  \"闭合夹爪\",\n  \"接近\",\n  \"对准\",\n  \"调整末端位置\",\n  \"调整末端姿态\",\n  \"接触\",\n  \"抓取\",\n  \"吸附\",\n  \"夹持\",\n  \"固定\",\n  \"支撑\",\n  \"按住\",\n  \"调整抓持\",\n  \"提起\",\n  \"搬运\",\n  \"降低\",\n  \"调整物体位置\",\n  \"调整物体姿态\",\n  \"放置\",\n  \"释放\",\n  \"解除吸附\",\n  \"推动\",\n  \"拉动\",\n  \"拖动\",\n  \"滑动\",\n  \"滚动\",\n  \"旋转\",\n  \"翻转\",\n  \"倾斜\",\n  \"放入\",\n  \"取出\",\n  \"倾倒\",\n  \"倒出\",\n  \"插入\",\n  \"拔出\",\n  \"连接\",\n  \"断开\",\n  \"安装\",\n  \"拆卸\",\n  \"分离\",\n  \"取下\",\n  \"旋入\",\n  \"旋出\",\n  \"扣合\",\n  \"解扣\",\n  \"锁定\",\n  \"解锁\",\n  \"打开\",\n  \"关闭\",\n  \"按压\",\n  \"拨动\",\n  \"转动\",\n  \"叠放\",\n  \"覆盖\",\n  \"揭开\",\n  \"折叠\",\n  \"展开\",\n  \"铺开\",\n  \"卷起\",\n  \"拉伸\",\n  \"挤压\",\n  \"撕开\",\n  \"剥离\",\n  \"擦拭\",\n  \"扫动\",\n  \"刮动\",\n  \"搅拌\",\n  \"舀取\",\n  \"敲击\",\n  \"切割\",\n  \"撤回\",\n  \"移动机械臂\",\n  \"等待\"\n]\n\n如果画面中存在显式时间戳，以画面时间戳为准；否则根据视频帧顺序估计粗略时间。\n\n要求：\n\n1. 先建立 object_categories，只汇总与夹爪交互相关或用于区分交互实例所必需的物体类别。\n2. object_categories 只用于统一类别名称，不用于表示或限制同类物体的实例数量。\n3. object_categories 中的每个 category_id 必须至少对应 objects 中一个具体实例；无法建立可靠实例的类别不得加入 object_categories。\n4. 根据物体外观、局部结构、时间连续性、运动连续性和遮挡前后关系建立 objects。\n5. 不得根据单个画面中的同类物体数量限制 objects 的数量，也不得将不同时间出现的同类物体自动视为同一实例。\n6. objects 记录交互相关实例，以及为区分其身份所必需的少量邻近同类实例。\n7. objects 的 category_id 必须引用 object_categories 中已有的 category_id。\n8. objects 必须覆盖 object_categories 中的全部 category_id，同一 category_id 在两处必须使用相同的中文 category。\n9. 从 objects 中筛选 interaction_objects；仅接近或对准但没有确认直接交互的物体不得加入。\n10. 根据夹爪指间距变化判断夹爪开合。\n11. 根据距离、间隙、接触、约束、稳定相对位置和分离变化识别事件。\n12. 每个事件只描述一个主要变化，并按 start_time_hint 从早到晚排列。\n13. action 必须从给定动作词表中原样选择，完全无法判断时填 null。\n14. 遮挡、盲区或模糊导致无法判断的关键区间，也作为 action=null 的事件输出。\n15. category_id 使用英文；其他自然语言字段必须使用简体中文。\n16. 只输出最终 JSON。\n\n输出格式：\n\n{\n  \"object_categories\": [\n    {\n      \"category_id\": \"lamp\",\n      \"category\": \"台灯\"\n    }\n  ],\n  \"objects\": [\n    {\n      \"object_id\": \"lamp_1\",\n      \"category_id\": \"lamp\",\n      \"category\": \"台灯\",\n      \"description\": \"蓝色台灯，可见圆形底座和局部灯罩。\",\n      \"first_view_time\": 0.5,\n      \"best_view_time\": 2.5,\n      \"uncertainty\": null\n    }\n  ],\n  \"interaction_objects\": [\n    {\n      \"object_id\": \"lamp_1\",\n      \"interaction_reason\": \"夹爪与台灯底座之间的间隙消失，夹爪闭合后底座受到稳定约束，并与夹爪保持稳定相对位置。\"\n    }\n  ],\n  \"events\": [\n    {\n      \"start_time_hint\": 1.5,\n      \"end_time_hint\": 2.5,\n      \"local_observation\": \"夹爪逐渐靠近蓝色台灯底座。\",\n      \"evidence\": \"夹爪与台灯底座之间的可见间隙持续减小。\",\n      \"object\": \"lamp_1\",\n      \"target\": null,\n      \"action\": \"接近\",\n      \"uncertainty\": null\n    }\n  ]\n}\n\n以上示例只说明字段格式和输出语言，不表示当前视频中存在台灯。\n\n输出前检查：\n\n- object_categories 中没有无关背景类别；\n- object_categories 没有包含任何实例数量字段；\n- object_categories 中每个 category_id 都至少被一个 object 引用，不存在没有对应实例的悬空类别；\n- 没有根据单帧同类物体数量限制 objects 的数量；\n- 没有将不同时间出现的同类物体自动合并；\n- objects 的 category_id 均引用已有 category_id；\n- objects 已覆盖 object_categories 中的全部 category_id；\n- 同一 category_id 在 object_categories 和 objects 中使用相同的中文 category；\n- interaction_objects 和 events 只引用已有 object_id；\n- 仅接近或对准的物体没有被误判为实际交互物体；\n- events 已按时间排序；\n- action 来自动作词表或为 null；\n- 开合、接触和夹持均有直接视觉 evidence；\n- 不可靠内容已写入 uncertainty；\n- 除 category_id 和 object_id 外没有英文自然语言内容；\n- JSON 之外没有其他输出。\n\n只输出最终 JSON。\n",
+      "video_meta": {
+        "input_type": "multi_view_dict",
+        "input_mode": "image_sequence",
+        "view_names": [
+          "camera_wrist_right"
+        ],
+        "primary_view": "camera_wrist_right",
+        "video_info": {
+          "camera_wrist_right": {
+            "path": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_assemble_toy\\videos\\chunk-000\\observation.rgb_images.camera_wrist_right\\episode_000010.mp4",
+            "fps": 30.0,
+            "frame_count": 508,
+            "width": 640,
+            "height": 480,
+            "duration": 16.933333333333334
+          }
+        },
+        "original_fps": 30.0,
+        "target_fps": 8.0,
+        "frame_start": 0,
+        "frame_end": null,
+        "original_duration": 16.933333333333334,
+        "configured_max_time": -1,
+        "effective_duration": 16.933333333333334,
+        "effective_start_time": 0.0,
+        "effective_end_time": 16.933333333333334,
+        "effective_frame_start": 0,
+        "effective_frame_end": 507,
+        "min_input_duration": 16.933333333333334,
+        "per_view_durations": {
+          "camera_wrist_right": 16.933333333333334
+        },
+        "per_view_effective_durations": {
+          "camera_wrist_right": 16.933333333333334
+        },
+        "was_time_limited": false,
+        "was_limited_by_view_duration": false,
+        "was_limited_by_frame_range": false,
+        "sampled_frame_indices": [
+          0,
+          4,
+          8,
+          11,
+          15,
+          19,
+          22,
+          26,
+          30,
+          34,
+          38,
+          41,
+          45,
+          49,
+          52,
+          56,
+          60,
+          64,
+          68,
+          71,
+          75,
+          79,
+          82,
+          86,
+          90,
+          94,
+          98,
+          101,
+          105,
+          109,
+          112,
+          116,
+          120,
+          124,
+          128,
+          131,
+          135,
+          139,
+          142,
+          146,
+          150,
+          154,
+          158,
+          161,
+          165,
+          169,
+          172,
+          176,
+          180,
+          184,
+          188,
+          191,
+          195,
+          199,
+          202,
+          206,
+          210,
+          214,
+          218,
+          221,
+          225,
+          229,
+          232,
+          236,
+          240,
+          244,
+          248,
+          251,
+          255,
+          259,
+          262,
+          266,
+          270,
+          274,
+          278,
+          281,
+          285,
+          289,
+          292,
+          296,
+          300,
+          304,
+          308,
+          311,
+          315,
+          319,
+          322,
+          326,
+          330,
+          334,
+          338,
+          341,
+          345,
+          349,
+          352,
+          356,
+          360,
+          364,
+          368,
+          371,
+          375,
+          379,
+          382,
+          386,
+          390,
+          394,
+          398,
+          401,
+          405,
+          409,
+          412,
+          416,
+          420,
+          424,
+          428,
+          431,
+          435,
+          439,
+          442,
+          446,
+          450,
+          454,
+          458,
+          461,
+          465,
+          469,
+          472,
+          476,
+          480,
+          484,
+          488,
+          491,
+          495,
+          499,
+          502,
+          506,
+          507
+        ],
+        "sampled_timestamps": [
+          0.0,
+          0.13333333333333333,
+          0.26666666666666666,
+          0.36666666666666664,
+          0.5,
+          0.6333333333333333,
+          0.7333333333333333,
+          0.8666666666666667,
+          1.0,
+          1.1333333333333333,
+          1.2666666666666666,
+          1.3666666666666667,
+          1.5,
+          1.6333333333333333,
+          1.7333333333333334,
+          1.8666666666666667,
+          2.0,
+          2.1333333333333333,
+          2.2666666666666666,
+          2.3666666666666667,
+          2.5,
+          2.6333333333333333,
+          2.7333333333333334,
+          2.8666666666666667,
+          3.0,
+          3.1333333333333333,
+          3.2666666666666666,
+          3.3666666666666667,
+          3.5,
+          3.6333333333333333,
+          3.7333333333333334,
+          3.8666666666666667,
+          4.0,
+          4.133333333333334,
+          4.266666666666667,
+          4.366666666666666,
+          4.5,
+          4.633333333333334,
+          4.733333333333333,
+          4.866666666666666,
+          5.0,
+          5.133333333333334,
+          5.266666666666667,
+          5.366666666666666,
+          5.5,
+          5.633333333333334,
+          5.733333333333333,
+          5.866666666666666,
+          6.0,
+          6.133333333333334,
+          6.266666666666667,
+          6.366666666666666,
+          6.5,
+          6.633333333333334,
+          6.733333333333333,
+          6.866666666666666,
+          7.0,
+          7.133333333333334,
+          7.266666666666667,
+          7.366666666666666,
+          7.5,
+          7.633333333333334,
+          7.733333333333333,
+          7.866666666666666,
+          8.0,
+          8.133333333333333,
+          8.266666666666667,
+          8.366666666666667,
+          8.5,
+          8.633333333333333,
+          8.733333333333333,
+          8.866666666666667,
+          9.0,
+          9.133333333333333,
+          9.266666666666667,
+          9.366666666666667,
+          9.5,
+          9.633333333333333,
+          9.733333333333333,
+          9.866666666666667,
+          10.0,
+          10.133333333333333,
+          10.266666666666667,
+          10.366666666666667,
+          10.5,
+          10.633333333333333,
+          10.733333333333333,
+          10.866666666666667,
+          11.0,
+          11.133333333333333,
+          11.266666666666667,
+          11.366666666666667,
+          11.5,
+          11.633333333333333,
+          11.733333333333333,
+          11.866666666666667,
+          12.0,
+          12.133333333333333,
+          12.266666666666667,
+          12.366666666666667,
+          12.5,
+          12.633333333333333,
+          12.733333333333333,
+          12.866666666666667,
+          13.0,
+          13.133333333333333,
+          13.266666666666667,
+          13.366666666666667,
+          13.5,
+          13.633333333333333,
+          13.733333333333333,
+          13.866666666666667,
+          14.0,
+          14.133333333333333,
+          14.266666666666667,
+          14.366666666666667,
+          14.5,
+          14.633333333333333,
+          14.733333333333333,
+          14.866666666666667,
+          15.0,
+          15.133333333333333,
+          15.266666666666667,
+          15.366666666666667,
+          15.5,
+          15.633333333333333,
+          15.733333333333333,
+          15.866666666666667,
+          16.0,
+          16.133333333333333,
+          16.266666666666666,
+          16.366666666666667,
+          16.5,
+          16.633333333333333,
+          16.733333333333334,
+          16.866666666666667,
+          16.9
+        ],
+        "num_sampled_frames": 137,
+        "num_output_parts": 137,
+        "num_message_parts": 274,
+        "resize_width": 672,
+        "jpeg_quality": 95,
+        "draw_timestamps": true,
+        "draw_view_names": true,
+        "merge_views": false,
+        "merge_mode": "per_frame",
+        "merge_length": -1,
+        "effective_merge_length": 0,
+        "draw_montage_axes": true,
+        "separate_view_inputs": false,
+        "message_view_labels": false,
+        "add_frame_tags_requested": true,
+        "add_frame_tags": true,
+        "processed_layout": "flat",
+        "processed_view_directories": {},
+        "view_outputs": {},
+        "video_encoding": null,
+        "output_groups": [
+          {
+            "output_index": 0,
+            "primary_frame_indices": [
+              0
+            ],
+            "timestamps": [
+              0.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 0
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 0,
+            "message_media_part_index": 1
+          },
+          {
+            "output_index": 1,
+            "primary_frame_indices": [
+              4
+            ],
+            "timestamps": [
+              0.13333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 4
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 2,
+            "message_media_part_index": 3
+          },
+          {
+            "output_index": 2,
+            "primary_frame_indices": [
+              8
+            ],
+            "timestamps": [
+              0.26666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 8
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 4,
+            "message_media_part_index": 5
+          },
+          {
+            "output_index": 3,
+            "primary_frame_indices": [
+              11
+            ],
+            "timestamps": [
+              0.36666666666666664
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 11
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 6,
+            "message_media_part_index": 7
+          },
+          {
+            "output_index": 4,
+            "primary_frame_indices": [
+              15
+            ],
+            "timestamps": [
+              0.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 15
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 8,
+            "message_media_part_index": 9
+          },
+          {
+            "output_index": 5,
+            "primary_frame_indices": [
+              19
+            ],
+            "timestamps": [
+              0.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 19
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 10,
+            "message_media_part_index": 11
+          },
+          {
+            "output_index": 6,
+            "primary_frame_indices": [
+              22
+            ],
+            "timestamps": [
+              0.7333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 22
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 12,
+            "message_media_part_index": 13
+          },
+          {
+            "output_index": 7,
+            "primary_frame_indices": [
+              26
+            ],
+            "timestamps": [
+              0.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 26
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 14,
+            "message_media_part_index": 15
+          },
+          {
+            "output_index": 8,
+            "primary_frame_indices": [
+              30
+            ],
+            "timestamps": [
+              1.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 30
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 16,
+            "message_media_part_index": 17
+          },
+          {
+            "output_index": 9,
+            "primary_frame_indices": [
+              34
+            ],
+            "timestamps": [
+              1.1333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 34
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 18,
+            "message_media_part_index": 19
+          },
+          {
+            "output_index": 10,
+            "primary_frame_indices": [
+              38
+            ],
+            "timestamps": [
+              1.2666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 38
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 20,
+            "message_media_part_index": 21
+          },
+          {
+            "output_index": 11,
+            "primary_frame_indices": [
+              41
+            ],
+            "timestamps": [
+              1.3666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 41
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 22,
+            "message_media_part_index": 23
+          },
+          {
+            "output_index": 12,
+            "primary_frame_indices": [
+              45
+            ],
+            "timestamps": [
+              1.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 45
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 24,
+            "message_media_part_index": 25
+          },
+          {
+            "output_index": 13,
+            "primary_frame_indices": [
+              49
+            ],
+            "timestamps": [
+              1.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 49
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 26,
+            "message_media_part_index": 27
+          },
+          {
+            "output_index": 14,
+            "primary_frame_indices": [
+              52
+            ],
+            "timestamps": [
+              1.7333333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 52
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 28,
+            "message_media_part_index": 29
+          },
+          {
+            "output_index": 15,
+            "primary_frame_indices": [
+              56
+            ],
+            "timestamps": [
+              1.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 56
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 30,
+            "message_media_part_index": 31
+          },
+          {
+            "output_index": 16,
+            "primary_frame_indices": [
+              60
+            ],
+            "timestamps": [
+              2.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 60
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 32,
+            "message_media_part_index": 33
+          },
+          {
+            "output_index": 17,
+            "primary_frame_indices": [
+              64
+            ],
+            "timestamps": [
+              2.1333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 64
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 34,
+            "message_media_part_index": 35
+          },
+          {
+            "output_index": 18,
+            "primary_frame_indices": [
+              68
+            ],
+            "timestamps": [
+              2.2666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 68
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 36,
+            "message_media_part_index": 37
+          },
+          {
+            "output_index": 19,
+            "primary_frame_indices": [
+              71
+            ],
+            "timestamps": [
+              2.3666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 71
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 38,
+            "message_media_part_index": 39
+          },
+          {
+            "output_index": 20,
+            "primary_frame_indices": [
+              75
+            ],
+            "timestamps": [
+              2.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 75
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 40,
+            "message_media_part_index": 41
+          },
+          {
+            "output_index": 21,
+            "primary_frame_indices": [
+              79
+            ],
+            "timestamps": [
+              2.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 79
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 42,
+            "message_media_part_index": 43
+          },
+          {
+            "output_index": 22,
+            "primary_frame_indices": [
+              82
+            ],
+            "timestamps": [
+              2.7333333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 82
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 44,
+            "message_media_part_index": 45
+          },
+          {
+            "output_index": 23,
+            "primary_frame_indices": [
+              86
+            ],
+            "timestamps": [
+              2.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 86
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 46,
+            "message_media_part_index": 47
+          },
+          {
+            "output_index": 24,
+            "primary_frame_indices": [
+              90
+            ],
+            "timestamps": [
+              3.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 90
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 48,
+            "message_media_part_index": 49
+          },
+          {
+            "output_index": 25,
+            "primary_frame_indices": [
+              94
+            ],
+            "timestamps": [
+              3.1333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 94
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 50,
+            "message_media_part_index": 51
+          },
+          {
+            "output_index": 26,
+            "primary_frame_indices": [
+              98
+            ],
+            "timestamps": [
+              3.2666666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 98
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 52,
+            "message_media_part_index": 53
+          },
+          {
+            "output_index": 27,
+            "primary_frame_indices": [
+              101
+            ],
+            "timestamps": [
+              3.3666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 101
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 54,
+            "message_media_part_index": 55
+          },
+          {
+            "output_index": 28,
+            "primary_frame_indices": [
+              105
+            ],
+            "timestamps": [
+              3.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 105
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 56,
+            "message_media_part_index": 57
+          },
+          {
+            "output_index": 29,
+            "primary_frame_indices": [
+              109
+            ],
+            "timestamps": [
+              3.6333333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 109
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 58,
+            "message_media_part_index": 59
+          },
+          {
+            "output_index": 30,
+            "primary_frame_indices": [
+              112
+            ],
+            "timestamps": [
+              3.7333333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 112
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 60,
+            "message_media_part_index": 61
+          },
+          {
+            "output_index": 31,
+            "primary_frame_indices": [
+              116
+            ],
+            "timestamps": [
+              3.8666666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 116
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 62,
+            "message_media_part_index": 63
+          },
+          {
+            "output_index": 32,
+            "primary_frame_indices": [
+              120
+            ],
+            "timestamps": [
+              4.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 120
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 64,
+            "message_media_part_index": 65
+          },
+          {
+            "output_index": 33,
+            "primary_frame_indices": [
+              124
+            ],
+            "timestamps": [
+              4.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 124
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 66,
+            "message_media_part_index": 67
+          },
+          {
+            "output_index": 34,
+            "primary_frame_indices": [
+              128
+            ],
+            "timestamps": [
+              4.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 128
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 68,
+            "message_media_part_index": 69
+          },
+          {
+            "output_index": 35,
+            "primary_frame_indices": [
+              131
+            ],
+            "timestamps": [
+              4.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 131
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 70,
+            "message_media_part_index": 71
+          },
+          {
+            "output_index": 36,
+            "primary_frame_indices": [
+              135
+            ],
+            "timestamps": [
+              4.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 135
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 72,
+            "message_media_part_index": 73
+          },
+          {
+            "output_index": 37,
+            "primary_frame_indices": [
+              139
+            ],
+            "timestamps": [
+              4.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 139
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 74,
+            "message_media_part_index": 75
+          },
+          {
+            "output_index": 38,
+            "primary_frame_indices": [
+              142
+            ],
+            "timestamps": [
+              4.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 142
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 76,
+            "message_media_part_index": 77
+          },
+          {
+            "output_index": 39,
+            "primary_frame_indices": [
+              146
+            ],
+            "timestamps": [
+              4.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 146
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 78,
+            "message_media_part_index": 79
+          },
+          {
+            "output_index": 40,
+            "primary_frame_indices": [
+              150
+            ],
+            "timestamps": [
+              5.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 150
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 80,
+            "message_media_part_index": 81
+          },
+          {
+            "output_index": 41,
+            "primary_frame_indices": [
+              154
+            ],
+            "timestamps": [
+              5.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 154
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 82,
+            "message_media_part_index": 83
+          },
+          {
+            "output_index": 42,
+            "primary_frame_indices": [
+              158
+            ],
+            "timestamps": [
+              5.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 158
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 84,
+            "message_media_part_index": 85
+          },
+          {
+            "output_index": 43,
+            "primary_frame_indices": [
+              161
+            ],
+            "timestamps": [
+              5.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 161
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 86,
+            "message_media_part_index": 87
+          },
+          {
+            "output_index": 44,
+            "primary_frame_indices": [
+              165
+            ],
+            "timestamps": [
+              5.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 165
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 88,
+            "message_media_part_index": 89
+          },
+          {
+            "output_index": 45,
+            "primary_frame_indices": [
+              169
+            ],
+            "timestamps": [
+              5.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 169
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 90,
+            "message_media_part_index": 91
+          },
+          {
+            "output_index": 46,
+            "primary_frame_indices": [
+              172
+            ],
+            "timestamps": [
+              5.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 172
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 92,
+            "message_media_part_index": 93
+          },
+          {
+            "output_index": 47,
+            "primary_frame_indices": [
+              176
+            ],
+            "timestamps": [
+              5.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 176
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 94,
+            "message_media_part_index": 95
+          },
+          {
+            "output_index": 48,
+            "primary_frame_indices": [
+              180
+            ],
+            "timestamps": [
+              6.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 180
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 96,
+            "message_media_part_index": 97
+          },
+          {
+            "output_index": 49,
+            "primary_frame_indices": [
+              184
+            ],
+            "timestamps": [
+              6.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 184
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 98,
+            "message_media_part_index": 99
+          },
+          {
+            "output_index": 50,
+            "primary_frame_indices": [
+              188
+            ],
+            "timestamps": [
+              6.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 188
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 100,
+            "message_media_part_index": 101
+          },
+          {
+            "output_index": 51,
+            "primary_frame_indices": [
+              191
+            ],
+            "timestamps": [
+              6.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 191
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 102,
+            "message_media_part_index": 103
+          },
+          {
+            "output_index": 52,
+            "primary_frame_indices": [
+              195
+            ],
+            "timestamps": [
+              6.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 195
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 104,
+            "message_media_part_index": 105
+          },
+          {
+            "output_index": 53,
+            "primary_frame_indices": [
+              199
+            ],
+            "timestamps": [
+              6.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 199
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 106,
+            "message_media_part_index": 107
+          },
+          {
+            "output_index": 54,
+            "primary_frame_indices": [
+              202
+            ],
+            "timestamps": [
+              6.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 202
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 108,
+            "message_media_part_index": 109
+          },
+          {
+            "output_index": 55,
+            "primary_frame_indices": [
+              206
+            ],
+            "timestamps": [
+              6.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 206
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 110,
+            "message_media_part_index": 111
+          },
+          {
+            "output_index": 56,
+            "primary_frame_indices": [
+              210
+            ],
+            "timestamps": [
+              7.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 210
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 112,
+            "message_media_part_index": 113
+          },
+          {
+            "output_index": 57,
+            "primary_frame_indices": [
+              214
+            ],
+            "timestamps": [
+              7.133333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 214
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 114,
+            "message_media_part_index": 115
+          },
+          {
+            "output_index": 58,
+            "primary_frame_indices": [
+              218
+            ],
+            "timestamps": [
+              7.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 218
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 116,
+            "message_media_part_index": 117
+          },
+          {
+            "output_index": 59,
+            "primary_frame_indices": [
+              221
+            ],
+            "timestamps": [
+              7.366666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 221
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 118,
+            "message_media_part_index": 119
+          },
+          {
+            "output_index": 60,
+            "primary_frame_indices": [
+              225
+            ],
+            "timestamps": [
+              7.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 225
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 120,
+            "message_media_part_index": 121
+          },
+          {
+            "output_index": 61,
+            "primary_frame_indices": [
+              229
+            ],
+            "timestamps": [
+              7.633333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 229
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 122,
+            "message_media_part_index": 123
+          },
+          {
+            "output_index": 62,
+            "primary_frame_indices": [
+              232
+            ],
+            "timestamps": [
+              7.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 232
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 124,
+            "message_media_part_index": 125
+          },
+          {
+            "output_index": 63,
+            "primary_frame_indices": [
+              236
+            ],
+            "timestamps": [
+              7.866666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 236
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 126,
+            "message_media_part_index": 127
+          },
+          {
+            "output_index": 64,
+            "primary_frame_indices": [
+              240
+            ],
+            "timestamps": [
+              8.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 240
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 128,
+            "message_media_part_index": 129
+          },
+          {
+            "output_index": 65,
+            "primary_frame_indices": [
+              244
+            ],
+            "timestamps": [
+              8.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 244
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 130,
+            "message_media_part_index": 131
+          },
+          {
+            "output_index": 66,
+            "primary_frame_indices": [
+              248
+            ],
+            "timestamps": [
+              8.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 248
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 132,
+            "message_media_part_index": 133
+          },
+          {
+            "output_index": 67,
+            "primary_frame_indices": [
+              251
+            ],
+            "timestamps": [
+              8.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 251
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 134,
+            "message_media_part_index": 135
+          },
+          {
+            "output_index": 68,
+            "primary_frame_indices": [
+              255
+            ],
+            "timestamps": [
+              8.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 255
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 136,
+            "message_media_part_index": 137
+          },
+          {
+            "output_index": 69,
+            "primary_frame_indices": [
+              259
+            ],
+            "timestamps": [
+              8.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 259
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 138,
+            "message_media_part_index": 139
+          },
+          {
+            "output_index": 70,
+            "primary_frame_indices": [
+              262
+            ],
+            "timestamps": [
+              8.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 262
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 140,
+            "message_media_part_index": 141
+          },
+          {
+            "output_index": 71,
+            "primary_frame_indices": [
+              266
+            ],
+            "timestamps": [
+              8.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 266
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 142,
+            "message_media_part_index": 143
+          },
+          {
+            "output_index": 72,
+            "primary_frame_indices": [
+              270
+            ],
+            "timestamps": [
+              9.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 270
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 144,
+            "message_media_part_index": 145
+          },
+          {
+            "output_index": 73,
+            "primary_frame_indices": [
+              274
+            ],
+            "timestamps": [
+              9.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 274
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 146,
+            "message_media_part_index": 147
+          },
+          {
+            "output_index": 74,
+            "primary_frame_indices": [
+              278
+            ],
+            "timestamps": [
+              9.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 278
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 148,
+            "message_media_part_index": 149
+          },
+          {
+            "output_index": 75,
+            "primary_frame_indices": [
+              281
+            ],
+            "timestamps": [
+              9.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 281
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 150,
+            "message_media_part_index": 151
+          },
+          {
+            "output_index": 76,
+            "primary_frame_indices": [
+              285
+            ],
+            "timestamps": [
+              9.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 285
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 152,
+            "message_media_part_index": 153
+          },
+          {
+            "output_index": 77,
+            "primary_frame_indices": [
+              289
+            ],
+            "timestamps": [
+              9.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 289
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 154,
+            "message_media_part_index": 155
+          },
+          {
+            "output_index": 78,
+            "primary_frame_indices": [
+              292
+            ],
+            "timestamps": [
+              9.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 292
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 156,
+            "message_media_part_index": 157
+          },
+          {
+            "output_index": 79,
+            "primary_frame_indices": [
+              296
+            ],
+            "timestamps": [
+              9.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 296
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 158,
+            "message_media_part_index": 159
+          },
+          {
+            "output_index": 80,
+            "primary_frame_indices": [
+              300
+            ],
+            "timestamps": [
+              10.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 300
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 160,
+            "message_media_part_index": 161
+          },
+          {
+            "output_index": 81,
+            "primary_frame_indices": [
+              304
+            ],
+            "timestamps": [
+              10.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 304
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 162,
+            "message_media_part_index": 163
+          },
+          {
+            "output_index": 82,
+            "primary_frame_indices": [
+              308
+            ],
+            "timestamps": [
+              10.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 308
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 164,
+            "message_media_part_index": 165
+          },
+          {
+            "output_index": 83,
+            "primary_frame_indices": [
+              311
+            ],
+            "timestamps": [
+              10.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 311
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 166,
+            "message_media_part_index": 167
+          },
+          {
+            "output_index": 84,
+            "primary_frame_indices": [
+              315
+            ],
+            "timestamps": [
+              10.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 315
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 168,
+            "message_media_part_index": 169
+          },
+          {
+            "output_index": 85,
+            "primary_frame_indices": [
+              319
+            ],
+            "timestamps": [
+              10.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 319
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 170,
+            "message_media_part_index": 171
+          },
+          {
+            "output_index": 86,
+            "primary_frame_indices": [
+              322
+            ],
+            "timestamps": [
+              10.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 322
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 172,
+            "message_media_part_index": 173
+          },
+          {
+            "output_index": 87,
+            "primary_frame_indices": [
+              326
+            ],
+            "timestamps": [
+              10.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 326
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 174,
+            "message_media_part_index": 175
+          },
+          {
+            "output_index": 88,
+            "primary_frame_indices": [
+              330
+            ],
+            "timestamps": [
+              11.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 330
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 176,
+            "message_media_part_index": 177
+          },
+          {
+            "output_index": 89,
+            "primary_frame_indices": [
+              334
+            ],
+            "timestamps": [
+              11.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 334
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 178,
+            "message_media_part_index": 179
+          },
+          {
+            "output_index": 90,
+            "primary_frame_indices": [
+              338
+            ],
+            "timestamps": [
+              11.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 338
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 180,
+            "message_media_part_index": 181
+          },
+          {
+            "output_index": 91,
+            "primary_frame_indices": [
+              341
+            ],
+            "timestamps": [
+              11.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 341
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 182,
+            "message_media_part_index": 183
+          },
+          {
+            "output_index": 92,
+            "primary_frame_indices": [
+              345
+            ],
+            "timestamps": [
+              11.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 345
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 184,
+            "message_media_part_index": 185
+          },
+          {
+            "output_index": 93,
+            "primary_frame_indices": [
+              349
+            ],
+            "timestamps": [
+              11.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 349
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 186,
+            "message_media_part_index": 187
+          },
+          {
+            "output_index": 94,
+            "primary_frame_indices": [
+              352
+            ],
+            "timestamps": [
+              11.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 352
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 188,
+            "message_media_part_index": 189
+          },
+          {
+            "output_index": 95,
+            "primary_frame_indices": [
+              356
+            ],
+            "timestamps": [
+              11.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 356
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 190,
+            "message_media_part_index": 191
+          },
+          {
+            "output_index": 96,
+            "primary_frame_indices": [
+              360
+            ],
+            "timestamps": [
+              12.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 360
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 192,
+            "message_media_part_index": 193
+          },
+          {
+            "output_index": 97,
+            "primary_frame_indices": [
+              364
+            ],
+            "timestamps": [
+              12.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 364
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 194,
+            "message_media_part_index": 195
+          },
+          {
+            "output_index": 98,
+            "primary_frame_indices": [
+              368
+            ],
+            "timestamps": [
+              12.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 368
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 196,
+            "message_media_part_index": 197
+          },
+          {
+            "output_index": 99,
+            "primary_frame_indices": [
+              371
+            ],
+            "timestamps": [
+              12.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 371
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 198,
+            "message_media_part_index": 199
+          },
+          {
+            "output_index": 100,
+            "primary_frame_indices": [
+              375
+            ],
+            "timestamps": [
+              12.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 375
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 200,
+            "message_media_part_index": 201
+          },
+          {
+            "output_index": 101,
+            "primary_frame_indices": [
+              379
+            ],
+            "timestamps": [
+              12.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 379
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 202,
+            "message_media_part_index": 203
+          },
+          {
+            "output_index": 102,
+            "primary_frame_indices": [
+              382
+            ],
+            "timestamps": [
+              12.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 382
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 204,
+            "message_media_part_index": 205
+          },
+          {
+            "output_index": 103,
+            "primary_frame_indices": [
+              386
+            ],
+            "timestamps": [
+              12.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 386
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 206,
+            "message_media_part_index": 207
+          },
+          {
+            "output_index": 104,
+            "primary_frame_indices": [
+              390
+            ],
+            "timestamps": [
+              13.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 390
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 208,
+            "message_media_part_index": 209
+          },
+          {
+            "output_index": 105,
+            "primary_frame_indices": [
+              394
+            ],
+            "timestamps": [
+              13.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 394
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 210,
+            "message_media_part_index": 211
+          },
+          {
+            "output_index": 106,
+            "primary_frame_indices": [
+              398
+            ],
+            "timestamps": [
+              13.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 398
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 212,
+            "message_media_part_index": 213
+          },
+          {
+            "output_index": 107,
+            "primary_frame_indices": [
+              401
+            ],
+            "timestamps": [
+              13.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 401
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 214,
+            "message_media_part_index": 215
+          },
+          {
+            "output_index": 108,
+            "primary_frame_indices": [
+              405
+            ],
+            "timestamps": [
+              13.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 405
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 216,
+            "message_media_part_index": 217
+          },
+          {
+            "output_index": 109,
+            "primary_frame_indices": [
+              409
+            ],
+            "timestamps": [
+              13.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 409
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 218,
+            "message_media_part_index": 219
+          },
+          {
+            "output_index": 110,
+            "primary_frame_indices": [
+              412
+            ],
+            "timestamps": [
+              13.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 412
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 220,
+            "message_media_part_index": 221
+          },
+          {
+            "output_index": 111,
+            "primary_frame_indices": [
+              416
+            ],
+            "timestamps": [
+              13.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 416
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 222,
+            "message_media_part_index": 223
+          },
+          {
+            "output_index": 112,
+            "primary_frame_indices": [
+              420
+            ],
+            "timestamps": [
+              14.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 420
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 224,
+            "message_media_part_index": 225
+          },
+          {
+            "output_index": 113,
+            "primary_frame_indices": [
+              424
+            ],
+            "timestamps": [
+              14.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 424
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 226,
+            "message_media_part_index": 227
+          },
+          {
+            "output_index": 114,
+            "primary_frame_indices": [
+              428
+            ],
+            "timestamps": [
+              14.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 428
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 228,
+            "message_media_part_index": 229
+          },
+          {
+            "output_index": 115,
+            "primary_frame_indices": [
+              431
+            ],
+            "timestamps": [
+              14.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 431
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 230,
+            "message_media_part_index": 231
+          },
+          {
+            "output_index": 116,
+            "primary_frame_indices": [
+              435
+            ],
+            "timestamps": [
+              14.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 435
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 232,
+            "message_media_part_index": 233
+          },
+          {
+            "output_index": 117,
+            "primary_frame_indices": [
+              439
+            ],
+            "timestamps": [
+              14.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 439
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 234,
+            "message_media_part_index": 235
+          },
+          {
+            "output_index": 118,
+            "primary_frame_indices": [
+              442
+            ],
+            "timestamps": [
+              14.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 442
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 236,
+            "message_media_part_index": 237
+          },
+          {
+            "output_index": 119,
+            "primary_frame_indices": [
+              446
+            ],
+            "timestamps": [
+              14.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 446
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 238,
+            "message_media_part_index": 239
+          },
+          {
+            "output_index": 120,
+            "primary_frame_indices": [
+              450
+            ],
+            "timestamps": [
+              15.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 450
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 240,
+            "message_media_part_index": 241
+          },
+          {
+            "output_index": 121,
+            "primary_frame_indices": [
+              454
+            ],
+            "timestamps": [
+              15.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 454
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 242,
+            "message_media_part_index": 243
+          },
+          {
+            "output_index": 122,
+            "primary_frame_indices": [
+              458
+            ],
+            "timestamps": [
+              15.266666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 458
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 244,
+            "message_media_part_index": 245
+          },
+          {
+            "output_index": 123,
+            "primary_frame_indices": [
+              461
+            ],
+            "timestamps": [
+              15.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 461
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 246,
+            "message_media_part_index": 247
+          },
+          {
+            "output_index": 124,
+            "primary_frame_indices": [
+              465
+            ],
+            "timestamps": [
+              15.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 465
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 248,
+            "message_media_part_index": 249
+          },
+          {
+            "output_index": 125,
+            "primary_frame_indices": [
+              469
+            ],
+            "timestamps": [
+              15.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 469
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 250,
+            "message_media_part_index": 251
+          },
+          {
+            "output_index": 126,
+            "primary_frame_indices": [
+              472
+            ],
+            "timestamps": [
+              15.733333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 472
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 252,
+            "message_media_part_index": 253
+          },
+          {
+            "output_index": 127,
+            "primary_frame_indices": [
+              476
+            ],
+            "timestamps": [
+              15.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 476
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 254,
+            "message_media_part_index": 255
+          },
+          {
+            "output_index": 128,
+            "primary_frame_indices": [
+              480
+            ],
+            "timestamps": [
+              16.0
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 480
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 256,
+            "message_media_part_index": 257
+          },
+          {
+            "output_index": 129,
+            "primary_frame_indices": [
+              484
+            ],
+            "timestamps": [
+              16.133333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 484
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 258,
+            "message_media_part_index": 259
+          },
+          {
+            "output_index": 130,
+            "primary_frame_indices": [
+              488
+            ],
+            "timestamps": [
+              16.266666666666666
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 488
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 260,
+            "message_media_part_index": 261
+          },
+          {
+            "output_index": 131,
+            "primary_frame_indices": [
+              491
+            ],
+            "timestamps": [
+              16.366666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 491
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 262,
+            "message_media_part_index": 263
+          },
+          {
+            "output_index": 132,
+            "primary_frame_indices": [
+              495
+            ],
+            "timestamps": [
+              16.5
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 495
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 264,
+            "message_media_part_index": 265
+          },
+          {
+            "output_index": 133,
+            "primary_frame_indices": [
+              499
+            ],
+            "timestamps": [
+              16.633333333333333
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 499
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 266,
+            "message_media_part_index": 267
+          },
+          {
+            "output_index": 134,
+            "primary_frame_indices": [
+              502
+            ],
+            "timestamps": [
+              16.733333333333334
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 502
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 268,
+            "message_media_part_index": 269
+          },
+          {
+            "output_index": 135,
+            "primary_frame_indices": [
+              506
+            ],
+            "timestamps": [
+              16.866666666666667
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 506
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 270,
+            "message_media_part_index": 271
+          },
+          {
+            "output_index": 136,
+            "primary_frame_indices": [
+              507
+            ],
+            "timestamps": [
+              16.9
+            ],
+            "per_view_frame_indices": {
+              "camera_wrist_right": 507
+            },
+            "views": [
+              "camera_wrist_right"
+            ],
+            "message_tag_part_index": 272,
+            "message_media_part_index": 273
+          }
+        ],
+        "processed_output_path": "C:\\Users\\34927\\Desktop\\vlm_auto_annotation_refactor_gpt\\examples\\vlm_annotation_batch_predictions\\00070_robogene_twoArm_franka_align_assemble_toy_episode_000010\\stages\\wrist_view_right\\processed_frames"
+      },
+      "video_layout": "当前视频输入布局说明：\n- 输入模式：image_sequence。\n- 共采样 137 个主时间点，最终送入模型 137 张图像。\n- 视角顺序：camera_wrist_right。\n- 主时间轴基于视角 camera_wrist_right；其他视角按同一时间戳对齐。\n- 每个采样时间点只有一个视角。\n- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。\n- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。\n- 图像上绘制了视角名称，可用来区分不同摄像机来源。\n- 每张 image_sequence 图像前都有独立文字标签；<t=...s> 表示原始视频时间轴，<view_name> 表示拍摄视角。",
+      "usage": {
+        "prompt_tokens": 51679,
+        "completion_tokens": 1541,
+        "total_tokens": 53220
+      },
+      "model": "Qwen3.5-397B-A17B-FP8",
+      "finish_reason": "stop"
+    }
+  },
+  "pipeline": {
+    "workflow": [
+      "wrist_view_left",
+      "wrist_view_right"
+    ],
+    "selected_stages": [
+      "wrist_view_left",
+      "wrist_view_right"
+    ],
+    "executed_stages": [
+      "wrist_view_left",
+      "wrist_view_right"
+    ],
+    "skipped_stages": []
+  },
+  "run_dir": "C:\\Users\\34927\\Desktop\\vlm_auto_annotation_refactor_gpt\\examples\\vlm_annotation_batch_predictions\\00070_robogene_twoArm_franka_align_assemble_toy_episode_000010",
+  "current_video_layout": "当前视频输入布局说明：\n- 输入模式：image_sequence。\n- 共采样 137 个主时间点，最终送入模型 137 张图像。\n- 视角顺序：camera_wrist_right。\n- 主时间轴基于视角 camera_wrist_right；其他视角按同一时间戳对齐。\n- 每个采样时间点只有一个视角。\n- per_frame 模式未启用时间维度 montage；每张图像对应一个采样时间点。\n- 图像上绘制了 t=...s 时间戳，动作顺序和边界判断应优先参考这些时间戳。\n- 图像上绘制了视角名称，可用来区分不同摄像机来源。\n- 每张 image_sequence 图像前都有独立文字标签；<t=...s> 表示原始视频时间轴，<view_name> 表示拍摄视角。"
+}

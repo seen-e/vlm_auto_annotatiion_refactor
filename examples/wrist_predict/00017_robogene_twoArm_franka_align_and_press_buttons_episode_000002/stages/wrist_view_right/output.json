@@ -1,0 +1,125 @@
+{
+  "object_categories": [
+    {
+      "category": "control_box",
+      "description": "带有按钮和旋钮的控制盒",
+      "anchor_time": 2.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "knob",
+      "description": "控制盒上的黑色旋钮",
+      "anchor_time": 2.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "clamp",
+      "description": "带有青色顶部的金属夹子",
+      "anchor_time": 0.0,
+      "max_simultaneously_visible": 2
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_box_1",
+      "category": "control_box",
+      "description": "位于画面左侧，带有红色、绿色按钮和黑色旋钮的银色金属盒",
+      "first_view_time": 0.37,
+      "last_view_time": 3.27
+    },
+    {
+      "object_id": "knob_1",
+      "category": "knob",
+      "description": "位于 control_box_1 右侧的黑色旋钮，带有白色指示线",
+      "first_view_time": 0.63,
+      "last_view_time": 3.0
+    },
+    {
+      "object_id": "clamp_1",
+      "category": "clamp",
+      "description": "初始位于画面右侧上方的金属夹子，顶部为青色",
+      "first_view_time": 0.0,
+      "last_view_time": 0.5
+    },
+    {
+      "object_id": "clamp_2",
+      "category": "clamp",
+      "description": "初始位于画面右侧下方的金属夹子，顶部为青色",
+      "first_view_time": 0.0,
+      "last_view_time": 0.5
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "knob_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在 1.63s 左右接触并夹住 knob_1，随后带动其旋转，并在 2.63s 左右释放。"
+    },
+    {
+      "object_id": "control_box_1",
+      "roles": [
+        "source"
+      ],
+      "evidence": "knob_1 初始安装在 control_box_1 上，操作过程中 control_box_1 保持静止作为支撑。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.5,
+      "end_time_hint": 1.63,
+      "local_observation": "开始时夹爪位于 control_box_1 附近；结束时夹爪两指已接触 knob_1 两侧。",
+      "evidence": "夹爪向 control_box_1 移动并调整姿态，最终对准 knob_1。",
+      "object": "knob_1",
+      "target": "control_box_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 1.87,
+      "local_observation": "开始时夹爪两指位于 knob_1 两侧；结束时夹爪闭合夹住 knob_1。",
+      "evidence": "夹爪指间距减小，knob_1 随后随夹爪运动。",
+      "object": "knob_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.63,
+      "local_observation": "开始时 knob_1 被夹爪夹持；结束时 knob_1 已旋转至新角度。",
+      "evidence": "knob_1 相对于 control_box_1 发生旋转，白色指示线方向改变。",
+      "object": "knob_1",
+      "target": "control_box_1",
+      "gripper_action": "夹持",
+      "arm_action": "旋转",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.63,
+      "end_time_hint": 2.87,
+      "local_observation": "开始时夹爪夹持 knob_1；结束时夹爪张开，knob_1 留在原位。",
+      "evidence": "夹爪指间距增大，knob_1 不再随夹爪运动。",
+      "object": "knob_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.87,
+      "end_time_hint": 3.27,
+      "local_observation": "开始时夹爪位于 control_box_1 附近；结束时夹爪远离 control_box_1。",
+      "evidence": "夹爪与 control_box_1 之间的距离持续增大。",
+      "object": "knob_1",
+      "target": "control_box_1",
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

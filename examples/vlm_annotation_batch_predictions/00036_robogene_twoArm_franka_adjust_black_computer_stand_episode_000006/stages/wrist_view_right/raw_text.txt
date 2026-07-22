@@ -1,0 +1,92 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    },
+    {
+      "category_id": "mount",
+      "category": "支架"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，可见苹果标志，被夹爪夹持。",
+      "first_view_time": 0.0,
+      "best_view_time": 23.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "mount_1",
+      "category_id": "mount",
+      "category": "支架",
+      "description": "黑色金属支架，安装在墙面上，用于支撑笔记本电脑。",
+      "first_view_time": 12.0,
+      "best_view_time": 15.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "interaction_reason": "夹爪与笔记本电脑边缘直接接触，夹爪闭合后笔记本电脑受到稳定约束，并随夹爪发生位置和姿态变化。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 8.0,
+      "local_observation": "夹爪保持张开状态，向笔记本电脑边缘移动并靠近。",
+      "evidence": "夹爪指间距保持较大，与笔记本电脑之间的可见间隙持续减小。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.0,
+      "end_time_hint": 10.0,
+      "local_observation": "夹爪指与笔记本电脑边缘接触，随后夹爪指间距减小。",
+      "evidence": "夹爪与笔记本电脑之间间隙消失，夹爪指发生相对闭合运动。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 10.0,
+      "end_time_hint": 22.0,
+      "local_observation": "夹爪夹持笔记本电脑，将其从支架上提起并调整姿态。",
+      "evidence": "笔记本电脑与夹爪保持相对静止，随夹爪运动脱离支架支撑。",
+      "object": "laptop_1",
+      "target": "mount_1",
+      "action": "提起",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 22.0,
+      "end_time_hint": 34.0,
+      "local_observation": "夹爪携带笔记本电脑移动，将其放置于墙面附近。",
+      "evidence": "笔记本电脑随夹爪运动至新位置，夹爪指间距保持闭合。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "放置",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 34.0,
+      "end_time_hint": 36.0,
+      "local_observation": "夹爪指间距增大，与笔记本电脑分离。",
+      "evidence": "夹爪指明显张开，笔记本电脑不再受夹爪约束，停留在墙面上。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    }
+  ]
+}
+```

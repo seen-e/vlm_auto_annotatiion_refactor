@@ -1,0 +1,116 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 5.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "block",
+      "description": "木块",
+      "anchor_time": 9.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "wall_mount",
+      "description": "墙面支架",
+      "anchor_time": 14.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "初始位于画面左侧、银灰色外壳的笔记本电脑",
+      "first_view_time": 0.0,
+      "last_view_time": 24.0
+    },
+    {
+      "object_id": "block_1",
+      "category": "block",
+      "description": "位于画面下方、浅色长方体木块",
+      "first_view_time": 7.5,
+      "last_view_time": 28.5
+    },
+    {
+      "object_id": "wall_mount_1",
+      "category": "wall_mount",
+      "description": "位于画面右侧、固定在墙面上的黑色支架",
+      "first_view_time": 13.0,
+      "last_view_time": 16.0
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪在 4.0s 左右接触并夹持该物体，随后将其从墙面支架上取下并搬运。"
+    },
+    {
+      "object_id": "wall_mount_1",
+      "roles": ["source"],
+      "evidence": "laptop_1 初始放置在该支架上，随后被移开。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 4.0,
+      "local_observation": "开始时夹爪位于笔记本电脑附近；结束时夹爪接触笔记本电脑边缘。",
+      "evidence": "夹爪向笔记本电脑方向移动，最终与物体表面接触。",
+      "object": "laptop_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.0,
+      "end_time_hint": 5.0,
+      "local_observation": "开始时夹爪接触笔记本电脑；结束时夹爪闭合夹持住笔记本电脑。",
+      "evidence": "夹爪指间距减小，笔记本电脑随后随夹爪运动。",
+      "object": "laptop_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.0,
+      "end_time_hint": 16.0,
+      "local_observation": "开始时笔记本电脑被夹持在支架上；结束时笔记本电脑已离开支架。",
+      "evidence": "笔记本电脑相对于 wall_mount_1 由接触变为分离，并随夹爪移动。",
+      "object": "laptop_1",
+      "target": "wall_mount_1",
+      "gripper_action": "夹持",
+      "arm_action": "取下",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.0,
+      "end_time_hint": 24.0,
+      "local_observation": "开始时笔记本电脑悬空被搬运；结束时笔记本电脑被放置在桌面上。",
+      "evidence": "笔记本电脑随夹爪移动位置，最终静止在桌面上，夹爪随后松开。",
+      "object": "laptop_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": "放置",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 24.0,
+      "end_time_hint": 28.5,
+      "local_observation": "开始时夹爪位于笔记本电脑旁；结束时夹爪移开。",
+      "evidence": "夹爪张开并远离笔记本电脑，未再接触物体。",
+      "object": "laptop_1",
+      "target": null,
+      "gripper_action": "张开夹爪",
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

@@ -1,0 +1,79 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "浅蓝色圆柱形杯子，倒扣在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "cup_1",
+      "interaction_reason": "夹爪两侧指部接触杯子侧壁，随后夹爪闭合，杯子被稳定夹持并随夹爪移动离开桌面。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.73,
+      "local_observation": "夹爪保持张开状态，向画面中央的浅蓝色杯子移动，逐渐靠近并对准杯子两侧。",
+      "evidence": "夹爪与杯子之间的视觉距离持续减小，杯子在画面中的占比逐渐增大。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.73,
+      "end_time_hint": 2.0,
+      "local_observation": "夹爪指部接触到杯子侧壁。",
+      "evidence": "夹爪指部与杯子表面之间的间隙消失，出现接触阴影。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 2.5,
+      "local_observation": "夹爪指部间距减小，夹紧杯子。",
+      "evidence": "可见夹爪指部向内收缩，紧贴杯子表面。",
+      "object": "cup_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 4.87,
+      "local_observation": "杯子被夹爪稳定夹持，随夹爪一起移动并离开桌面，背景发生显著变化。",
+      "evidence": "杯子相对于夹爪的位置保持稳定，且杯子底部离开桌面悬空。",
+      "object": "cup_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.87,
+      "end_time_hint": 5.13,
+      "local_observation": "夹爪指部间距增大，杯子从夹爪中脱落并掉回桌面。",
+      "evidence": "夹爪指部向外张开，杯子与夹爪分离并向下运动消失在视野中。",
+      "object": "cup_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}
+```

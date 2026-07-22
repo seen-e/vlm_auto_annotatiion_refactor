@@ -1,0 +1,100 @@
+{
+  "object_categories": [
+    {
+      "category_id": "control_box",
+      "category": "控制盒"
+    },
+    {
+      "category_id": "switch",
+      "category": "旋钮开关"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_box_1",
+      "category_id": "control_box",
+      "category": "控制盒",
+      "description": "白色长方形控制盒，表面有四个按钮/开关，包括红色急停按钮、红色按钮、绿色按钮和黑色旋钮开关。",
+      "first_view_time": 0.63,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "switch_1",
+      "category_id": "switch",
+      "category": "旋钮开关",
+      "description": "位于控制盒最右侧的黑色旋钮开关，带有白色指示标记。",
+      "first_view_time": 0.87,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "switch_1",
+      "interaction_reason": "夹爪指端直接接触并夹持旋钮开关的黑色手柄部分，随后带动旋钮发生旋转，改变了开关的指向角度。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 1.37,
+      "local_observation": "夹爪向控制盒移动，逐渐靠近并对准最右侧的黑色旋钮开关。",
+      "evidence": "控制盒和旋钮开关在画面中逐渐变大，夹爪指端与旋钮开关之间的间隙持续减小。",
+      "object": "switch_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.37,
+      "end_time_hint": 1.63,
+      "local_observation": "夹爪指端接触旋钮开关的黑色手柄部分。",
+      "evidence": "夹爪指端与旋钮开关表面之间的可见间隙消失，两者发生物理接触。",
+      "object": "switch_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 2.0,
+      "local_observation": "夹爪指间距减小，夹持住旋钮开关的手柄。",
+      "evidence": "可见夹爪指间距持续减小，直至夹住旋钮开关的黑色手柄部分。",
+      "object": "switch_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪带动旋钮开关旋转，旋钮上的白色指示标记角度发生变化。",
+      "evidence": "夹爪与旋钮开关保持相对静止并同步运动，旋钮开关上的白色指示条从指向右上方转动至指向下方。",
+      "object": "switch_1",
+      "target": null,
+      "action": "转动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪指间距增大，与旋钮开关分离。",
+      "evidence": "可见夹爪指间距持续增大，夹爪指端与旋钮开关表面之间重新出现间隙。",
+      "object": "switch_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 4.23,
+      "local_observation": "夹爪向后移动，远离控制盒和旋钮开关。",
+      "evidence": "控制盒和旋钮开关在画面中逐渐变小并移出视野中心，夹爪与物体之间的距离增加。",
+      "object": "switch_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

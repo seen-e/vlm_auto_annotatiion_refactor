@@ -1,0 +1,128 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "tray",
+      "category": "托盘"
+    },
+    {
+      "category_id": "bottle",
+      "category": "瓶子"
+    },
+    {
+      "category_id": "tape",
+      "category": "胶带"
+    },
+    {
+      "category_id": "board",
+      "category": "板"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "tray_1",
+      "category_id": "tray",
+      "category": "托盘",
+      "description": "红色长方形塑料托盘，内部放置有木柄工具。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_1",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "红色塑料瓶，带有白色标签，位于托盘右下方。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "tape_1",
+      "category_id": "tape",
+      "category": "胶带",
+      "description": "白色卷状胶带，位于瓶子旁边。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "board_1",
+      "category_id": "board",
+      "category": "板",
+      "description": "白色长方形板，边缘为银色金属材质，被夹爪夹持。",
+      "first_view_time": 1.5,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "board_1",
+      "interaction_reason": "夹爪与白色板边缘直接接触，夹爪闭合后板受到稳定约束，并随夹爪移动发生位置和姿态变化。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪逐渐靠近白色板边缘，夹爪指间距减小。",
+      "evidence": "夹爪与板之间的可见间隙持续减小，夹爪指间距变小。",
+      "object": "board_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪指接触白色板边缘，夹爪继续闭合。",
+      "evidence": "夹爪指与板表面间隙消失，夹爪指间距持续减小。",
+      "object": "board_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪完全闭合，夹持住白色板边缘。",
+      "evidence": "夹爪指间距达到最小并保持稳定，板与夹爪保持相对静止。",
+      "object": "board_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 14.0,
+      "local_observation": "夹爪夹持白色板进行移动和姿态调整，板随夹爪同步运动。",
+      "evidence": "白色板相对于夹爪位置稳定，背景发生变化，板的角度发生改变。",
+      "object": "board_1",
+      "target": null,
+      "action": "调整物体姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 14.0,
+      "end_time_hint": 16.0,
+      "local_observation": "夹爪将白色板放入红色托盘内，板与托盘接触。",
+      "evidence": "白色板进入托盘内部区域，并与托盘底部或侧壁接触。",
+      "object": "board_1",
+      "target": "tray_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.0,
+      "end_time_hint": 17.0,
+      "local_observation": "夹爪张开，释放白色板，夹爪与板分离。",
+      "evidence": "夹爪指间距增大，夹爪指与板表面出现间隙，板不再随夹爪运动。",
+      "object": "board_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}
+```

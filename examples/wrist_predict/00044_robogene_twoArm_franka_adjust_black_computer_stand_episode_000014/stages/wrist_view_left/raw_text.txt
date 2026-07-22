@@ -1,0 +1,81 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 21.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "stand",
+      "description": "支架",
+      "anchor_time": 10.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "银灰色笔记本电脑，初始位于画面外，后从上方进入视野并放置在支架上",
+      "first_view_time": 18.0,
+      "last_view_time": 34.57
+    },
+    {
+      "object_id": "stand_1",
+      "category": "stand",
+      "description": "黑色金属支架，位于桌面右侧，用于支撑笔记本电脑",
+      "first_view_time": 0.0,
+      "last_view_time": 34.57
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪接触并推动笔记本电脑，使其从悬空状态变为放置在支架上。"
+    },
+    {
+      "object_id": "stand_1",
+      "roles": ["target"],
+      "evidence": "笔记本电脑最终被放置在支架_1上，支架提供了支撑。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 18.0,
+      "local_observation": "开始时夹爪位于桌面上方，视野中仅有支架；结束时夹爪移动至笔记本电脑下方。",
+      "evidence": "夹爪相对于背景支架发生位移，随后笔记本电脑进入视野。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 18.0,
+      "end_time_hint": 24.0,
+      "local_observation": "开始时笔记本电脑悬空位于支架上方；结束时笔记本电脑已放置在支架上。",
+      "evidence": "夹爪接触笔记本电脑底部并向前推动，笔记本电脑相对于支架由外部变为放置在上方。",
+      "object": "laptop_1",
+      "target": "stand_1",
+      "gripper_action": "夹持",
+      "arm_action": "放置",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 24.0,
+      "end_time_hint": 34.57,
+      "local_observation": "开始时笔记本电脑位于支架上；结束时夹爪撤回，笔记本电脑保持静止。",
+      "evidence": "夹爪与笔记本电脑分离并向后移动，笔记本电脑不再随夹爪运动。",
+      "object": "laptop_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

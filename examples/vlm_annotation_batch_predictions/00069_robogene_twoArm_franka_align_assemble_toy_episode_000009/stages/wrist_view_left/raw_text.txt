@@ -1,0 +1,157 @@
+{
+  "object_categories": [
+    {
+      "category_id": "puzzle_board",
+      "category": "拼图板"
+    },
+    {
+      "category_id": "number_block",
+      "category": "数字积木"
+    },
+    {
+      "category_id": "shape_block",
+      "category": "形状积木"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "puzzle_board_1",
+      "category_id": "puzzle_board",
+      "category": "拼图板",
+      "description": "蓝色木质拼图板，带有数字和形状凹槽，表面有海洋生物图案。",
+      "first_view_time": 0.0,
+      "best_view_time": 8.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "number_block_1",
+      "category_id": "number_block",
+      "category": "数字积木",
+      "description": "粉色数字“1”积木，位于拼图板左侧凹槽中。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "shape_block_1",
+      "category_id": "shape_block",
+      "category": "形状积木",
+      "description": "粉色长方体形状积木，位于拼图板左下角凹槽中。",
+      "first_view_time": 0.0,
+      "best_view_time": 13.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "number_block_1",
+      "interaction_reason": "夹爪夹持数字“1”积木并将其从拼图板凹槽中拔出，随后移动并重新插入原凹槽。"
+    },
+    {
+      "object_id": "shape_block_1",
+      "interaction_reason": "夹爪夹持粉色长方体积木并将其从拼图板凹槽中拔出，随后移动并重新插入原凹槽。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪向拼图板上的粉色数字“1”积木靠近。",
+      "evidence": "夹爪与数字“1”积木之间的可见间隙持续减小。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.5,
+      "local_observation": "夹爪接触并闭合夹持数字“1”积木。",
+      "evidence": "夹爪指与积木表面间隙消失，夹爪间距减小，积木被稳定约束。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 4.0,
+      "local_observation": "夹爪将数字“1”积木从拼图板凹槽中拔出并移开。",
+      "evidence": "积木与凹槽之间出现明显间隙，积木随夹爪同步运动离开原位置。",
+      "object": "number_block_1",
+      "target": "puzzle_board_1",
+      "action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.0,
+      "end_time_hint": 6.5,
+      "local_observation": "夹爪调整姿态并重新对准数字“1”积木的原始凹槽位置。",
+      "evidence": "夹爪携带积木移动回拼图板上方，积木与凹槽在视觉上对齐。",
+      "object": "number_block_1",
+      "target": "puzzle_board_1",
+      "action": "调整末端姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.5,
+      "end_time_hint": 9.0,
+      "local_observation": "夹爪将数字“1”积木插入拼图板凹槽并释放。",
+      "evidence": "积木进入凹槽后间隙消失，夹爪张开后与积木分离。",
+      "object": "number_block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 9.0,
+      "end_time_hint": 11.0,
+      "local_observation": "夹爪向拼图板上的粉色长方体形状积木靠近。",
+      "evidence": "夹爪与形状积木之间的可见间隙持续减小。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 11.0,
+      "end_time_hint": 12.0,
+      "local_observation": "夹爪接触并闭合夹持粉色长方体形状积木。",
+      "evidence": "夹爪指与积木表面间隙消失，夹爪间距减小，积木被稳定约束。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 12.0,
+      "end_time_hint": 13.5,
+      "local_observation": "夹爪将粉色长方体形状积木从拼图板凹槽中拔出并移开。",
+      "evidence": "积木与凹槽之间出现明显间隙，积木随夹爪同步运动离开原位置。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 13.5,
+      "end_time_hint": 15.5,
+      "local_observation": "夹爪调整姿态并重新对准粉色长方体形状积木的原始凹槽位置。",
+      "evidence": "夹爪携带积木移动回拼图板上方，积木与凹槽在视觉上对齐。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "调整末端姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 15.5,
+      "end_time_hint": 17.0,
+      "local_observation": "夹爪将粉色长方体形状积木插入拼图板凹槽并释放。",
+      "evidence": "积木进入凹槽后间隙消失，夹爪张开后与积木分离。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    }
+  ]
+}

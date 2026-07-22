@@ -1,0 +1,82 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "control_box",
+      "category": "控制盒"
+    },
+    {
+      "category_id": "switch",
+      "category": "旋钮开关"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_box_1",
+      "category_id": "control_box",
+      "category": "控制盒",
+      "description": "白色长方形控制盒，表面安装有红色急停按钮、红色按钮、绿色按钮及黑色旋钮开关。",
+      "first_view_time": 0.27,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "switch_1",
+      "category_id": "switch",
+      "category": "旋钮开关",
+      "description": "位于控制盒右侧的黑色旋钮开关，带有银色金属环和指示标记。",
+      "first_view_time": 0.5,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "switch_1",
+      "interaction_reason": "夹爪指尖直接接触并夹持旋钮开关的旋钮部分，在夹爪闭合约束下，旋钮发生旋转，随后夹爪张开并分离。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.27,
+      "end_time_hint": 1.0,
+      "local_observation": "夹爪向控制盒移动，逐渐靠近并调整位置以对准黑色旋钮开关。",
+      "evidence": "控制盒和旋钮开关在画面中逐渐变大，夹爪位置相对于旋钮开关不断调整，间隙减小。",
+      "object": "switch_1",
+      "target": "control_box_1",
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.27,
+      "local_observation": "夹爪指尖接触旋钮开关的旋钮部分，随后夹爪指间距减小，闭合夹爪。",
+      "evidence": "夹爪指尖与旋钮表面间隙消失，随后两指间距明显缩小，夹住旋钮。",
+      "object": "switch_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.27,
+      "end_time_hint": 2.73,
+      "local_observation": "夹爪夹持旋钮开关并进行旋转操作，旋钮上的指示标记发生角度变化。",
+      "evidence": "夹爪保持闭合状态，旋钮开关随夹爪转动，指示标记从垂直方向转为水平方向。",
+      "object": "switch_1",
+      "target": null,
+      "action": "转动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.73,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪指间距增大，张开夹爪，随后与旋钮开关分离并撤回。",
+      "evidence": "夹爪两指明显分开，不再接触旋钮，随后控制盒在画面中逐渐远离。",
+      "object": "switch_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    }
+  ]
+}
+```

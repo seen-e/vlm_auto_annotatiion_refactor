@@ -1,0 +1,129 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    },
+    {
+      "category_id": "rack",
+      "category": "架子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "黄色塑料杯，圆柱形，开口向上，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_2",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "蓝色塑料杯，圆柱形，内部装有橙色和蓝色物体，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_3",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "白色塑料杯，倒置挂在架子上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_4",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "黄色塑料杯，倒置挂在架子上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "rack_1",
+      "category_id": "rack",
+      "category": "架子",
+      "description": "白色金属线框架子，带有木质横杆，用于悬挂杯子。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "cup_1",
+      "interaction_reason": "夹爪接近并接触黄色杯子外壁，随后闭合夹爪将其夹持并移动，最后张开夹爪将其释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 2.8,
+      "local_observation": "夹爪保持张开状态，向黄色杯子方向移动，逐渐靠近。",
+      "evidence": "夹爪指间距保持较大且稳定，黄色杯子在画面中逐渐变大，相对距离减小。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.8,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪指接触黄色杯子外壁。",
+      "evidence": "夹爪指与杯子表面间隙消失，杯子位置未发生明显变化。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.8,
+      "local_observation": "夹爪指间距持续减小，夹紧黄色杯子。",
+      "evidence": "可见夹爪指明显向内收缩，直至紧贴杯子表面。",
+      "object": "cup_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.8,
+      "end_time_hint": 6.5,
+      "local_observation": "夹爪夹持黄色杯子移动，将其推向蓝色杯子方向。",
+      "evidence": "黄色杯子与夹爪保持相对静止，随夹爪一起移动，背景发生位移。",
+      "object": "cup_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.5,
+      "end_time_hint": 6.8,
+      "local_observation": "夹爪指间距增大，松开黄色杯子。",
+      "evidence": "可见夹爪指明显向外张开，与杯子表面产生间隙。",
+      "object": "cup_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.8,
+      "end_time_hint": 7.0,
+      "local_observation": "夹爪与黄色杯子分离，向后退去。",
+      "evidence": "夹爪与杯子之间出现明显间隙，杯子留在原处，夹爪移出画面中心。",
+      "object": "cup_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}
+```

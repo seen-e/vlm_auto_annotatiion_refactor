@@ -1,0 +1,147 @@
+{
+  "object_categories": [
+    {
+      "category_id": "puzzle_board",
+      "category": "拼图板"
+    },
+    {
+      "category_id": "number_block",
+      "category": "数字积木"
+    },
+    {
+      "category_id": "shape_block",
+      "category": "形状积木"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "puzzle_board_1",
+      "category_id": "puzzle_board",
+      "category": "拼图板",
+      "description": "蓝色木质拼图板，带有数字和形状凹槽，表面有海洋生物图案。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "number_block_1",
+      "category_id": "number_block",
+      "category": "数字积木",
+      "description": "粉色数字“1”积木，位于拼图板左侧。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "shape_block_1",
+      "category_id": "shape_block",
+      "category": "形状积木",
+      "description": "粉色长方体形状积木，位于拼图板上方。",
+      "first_view_time": 0.0,
+      "best_view_time": 10.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "number_block_1",
+      "interaction_reason": "夹爪夹持数字积木并将其放入拼图板对应凹槽，随后释放。"
+    },
+    {
+      "object_id": "shape_block_1",
+      "interaction_reason": "夹爪夹持形状积木并将其放入拼图板对应凹槽，随后释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪向粉色数字“1”积木移动并靠近。",
+      "evidence": "夹爪与数字积木之间的可见间隙持续减小。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪闭合，夹住数字积木。",
+      "evidence": "夹爪指间距减小，数字积木被夹持在夹爪之间。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 7.5,
+      "local_observation": "夹爪携带数字积木向拼图板移动并对准凹槽。",
+      "evidence": "数字积木随夹爪移动，位置逐渐靠近拼图板上的数字“1”凹槽。",
+      "object": "number_block_1",
+      "target": "puzzle_board_1",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 7.5,
+      "end_time_hint": 9.0,
+      "local_observation": "夹爪将数字积木放入拼图板凹槽并释放。",
+      "evidence": "数字积木进入凹槽，夹爪张开，积木留在板内。",
+      "object": "number_block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 9.0,
+      "end_time_hint": 10.5,
+      "local_observation": "夹爪向粉色形状积木移动并靠近。",
+      "evidence": "夹爪与形状积木之间的可见间隙持续减小。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 10.5,
+      "end_time_hint": 11.0,
+      "local_observation": "夹爪闭合，夹住形状积木。",
+      "evidence": "夹爪指间距减小，形状积木被夹持在夹爪之间。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 11.0,
+      "end_time_hint": 13.0,
+      "local_observation": "夹爪携带形状积木向拼图板移动并对准凹槽。",
+      "evidence": "形状积木随夹爪移动，位置逐渐靠近拼图板上的对应凹槽。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 13.0,
+      "end_time_hint": 17.5,
+      "local_observation": "夹爪尝试将形状积木放入拼图板凹槽，期间有微调动作。",
+      "evidence": "形状积木在凹槽附近移动，夹爪姿态和位置有小幅调整。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "调整物体位置",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 17.5,
+      "end_time_hint": 18.0,
+      "local_observation": "夹爪将形状积木放入拼图板凹槽并释放。",
+      "evidence": "形状积木进入凹槽，夹爪张开，积木留在板内。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    }
+  ]
+}

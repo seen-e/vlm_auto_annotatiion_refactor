@@ -1,0 +1,119 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "control_box",
+      "description": "带有多个按钮和旋钮的控制盒",
+      "anchor_time": 2.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "knob",
+      "description": "控制盒上的黑色旋钮开关",
+      "anchor_time": 2.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "button",
+      "description": "控制盒上的红色和绿色按钮",
+      "anchor_time": 2.5,
+      "max_simultaneously_visible": 3
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_box_1",
+      "category": "control_box",
+      "description": "位于画面左侧，带有红色急停按钮、红色按钮、绿色按钮和黑色旋钮的银色金属盒",
+      "first_view_time": 0.27,
+      "last_view_time": 3.27
+    },
+    {
+      "object_id": "knob_1",
+      "category": "knob",
+      "description": "位于 control_box_1 最右侧的黑色旋钮开关",
+      "first_view_time": 0.5,
+      "last_view_time": 3.0
+    },
+    {
+      "object_id": "button_1",
+      "category": "button",
+      "description": "位于 control_box_1 左侧的大型红色急停按钮",
+      "first_view_time": 2.13,
+      "last_view_time": 3.27
+    },
+    {
+      "object_id": "button_2",
+      "category": "button",
+      "description": "位于 control_box_1 中部的红色圆形按钮",
+      "first_view_time": 2.13,
+      "last_view_time": 3.27
+    },
+    {
+      "object_id": "button_3",
+      "category": "button",
+      "description": "位于 control_box_1 中部的绿色圆形按钮",
+      "first_view_time": 0.63,
+      "last_view_time": 3.27
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "knob_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪两指夹住 knob_1 的旋钮部分，并带动其旋转，随后释放。"
+    },
+    {
+      "object_id": "control_box_1",
+      "roles": ["source", "target"],
+      "evidence": "knob_1 始终安装在 control_box_1 上，操作前后位置未发生相对改变，仅姿态发生变化。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.27,
+      "end_time_hint": 1.0,
+      "local_observation": "开始时夹爪位于 control_box_1 附近；结束时夹爪已移动至 knob_1 正上方并对准。",
+      "evidence": "夹爪相对于 control_box_1 的位置逐渐靠近，最终对准 knob_1。",
+      "object": "knob_1",
+      "target": "control_box_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.37,
+      "local_observation": "开始时夹爪位于 knob_1 两侧；结束时夹爪闭合夹住 knob_1。",
+      "evidence": "夹爪指间距减小，接触并夹持住 knob_1 的旋钮部分。",
+      "object": "knob_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.37,
+      "end_time_hint": 2.73,
+      "local_observation": "开始时 knob_1 处于初始角度；结束时 knob_1 已被旋转至新角度。",
+      "evidence": "夹爪保持夹持状态，带动 knob_1 发生明显的旋转运动，旋钮上的白色标记位置发生改变。",
+      "object": "knob_1",
+      "target": "control_box_1",
+      "gripper_action": "夹持",
+      "arm_action": "旋转",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.73,
+      "end_time_hint": 3.0,
+      "local_observation": "开始时夹爪仍夹住 knob_1；结束时夹爪张开并离开 knob_1。",
+      "evidence": "夹爪指间距增大，解除对 knob_1 的控制，随后机械臂撤回。",
+      "object": "knob_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

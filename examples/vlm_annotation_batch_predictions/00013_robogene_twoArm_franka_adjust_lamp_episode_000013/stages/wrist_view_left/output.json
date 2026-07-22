@@ -1,0 +1,90 @@
+{
+  "object_categories": [
+    {
+      "category_id": "lamp",
+      "category": "台灯"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category_id": "lamp",
+      "category": "台灯",
+      "description": "蓝色台灯，具有圆形底座和钟形灯罩，表面光滑反光。",
+      "first_view_time": 0.0,
+      "best_view_time": 3.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银色笔记本电脑，闭合状态，外壳上有黑色标志。",
+      "first_view_time": 0.0,
+      "best_view_time": 0.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "interaction_reason": "夹爪与台灯灯罩发生直接接触，夹爪闭合后灯罩受到稳定约束，并随夹爪移动发生位置变化。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 2.5,
+      "local_observation": "夹爪逐渐靠近蓝色台灯灯罩，夹爪指间距保持张开状态。",
+      "evidence": "夹爪与台灯灯罩之间的可见间隙持续减小，夹爪指未发生明显闭合动作。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪指与蓝色台灯灯罩表面接触，间隙消失。",
+      "evidence": "夹爪指前端与灯罩表面贴合，无明显间隙。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪指间距减小，夹持住蓝色台灯灯罩。",
+      "evidence": "夹爪指明显向内收缩，灯罩被夹在指间，相对位置稳定。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪夹持蓝色台灯灯罩并移动，台灯位置发生改变。",
+      "evidence": "台灯随夹爪同步运动，背景相对位置变化，表明物体被搬运。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪松开蓝色台灯灯罩，台灯留在桌面上，夹爪撤回。",
+      "evidence": "夹爪指间距增大，与灯罩分离，台灯静止在桌面上。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "tray",
+      "category": "托盘"
+    },
+    {
+      "category_id": "sign",
+      "category": "标牌"
+    },
+    {
+      "category_id": "bottle",
+      "category": "瓶子"
+    },
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "tray_1",
+      "category_id": "tray",
+      "category": "托盘",
+      "description": "红色长方形塑料托盘，边缘有凸起，表面光滑。",
+      "first_view_time": 0.0,
+      "best_view_time": 8.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "sign_1",
+      "category_id": "sign",
+      "category": "标牌",
+      "description": "白色长方形板，上面写有红色汉字“饮料展示区”，底部有黑色支架。",
+      "first_view_time": 2.87,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_1",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "红色可口可乐玻璃瓶，瓶身有白色标志。",
+      "first_view_time": 2.13,
+      "best_view_time": 3.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "白色圆柱形纸杯，侧倒放置。",
+      "first_view_time": 2.13,
+      "best_view_time": 3.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "tray_1",
+      "interaction_reason": "夹爪与红色托盘边缘接触，随后托盘随夹爪移动，两者保持相对静止，表明存在夹持或推动关系。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪在桌面上方移动，逐渐接近红色托盘、瓶子和杯子。",
+      "evidence": "背景中的物体从模糊变为清晰，且相对于夹爪的位置逐渐靠近。",
+      "object": null,
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 5.0,
+      "local_observation": "夹爪对准红色托盘的前端边缘，并轻微调整位置。",
+      "evidence": "夹爪开口正对托盘边缘，两者距离极近但未发生明显形变或相对位移。",
+      "object": "tray_1",
+      "target": null,
+      "action": "对准",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.0,
+      "end_time_hint": 7.5,
+      "local_observation": "夹爪闭合，夹住红色托盘的前端边缘。",
+      "evidence": "夹爪指间距减小，与托盘边缘接触，随后托盘随夹爪一起向后移动。",
+      "object": "tray_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 7.5,
+      "end_time_hint": 15.5,
+      "local_observation": "夹爪保持闭合状态，带动红色托盘向后移动，标牌随之倾斜。",
+      "evidence": "托盘相对于夹爪位置固定，背景中的瓶子和杯子逐渐远离，标牌角度发生变化。",
+      "object": "tray_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 15.5,
+      "end_time_hint": 16.5,
+      "local_observation": "夹爪张开，释放红色托盘。",
+      "evidence": "夹爪指间距增大，托盘停止随夹爪运动，留在原处。",
+      "object": "tray_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.5,
+      "end_time_hint": 19.93,
+      "local_observation": "夹爪向后撤回，远离红色托盘及桌面上的其他物体。",
+      "evidence": "夹爪与托盘之间的距离持续增大，背景物体逐渐变小。",
+      "object": null,
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

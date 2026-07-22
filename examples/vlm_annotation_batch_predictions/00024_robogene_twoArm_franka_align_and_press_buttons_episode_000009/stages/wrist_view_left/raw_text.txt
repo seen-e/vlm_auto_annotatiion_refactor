@@ -1,0 +1,79 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "button_box",
+      "category": "按钮盒"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "button_box_1",
+      "category_id": "button_box",
+      "category": "按钮盒",
+      "description": "白色长方形盒子，表面有红色和绿色按钮，安装在墙面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_box_1",
+      "interaction_reason": "夹爪与按钮盒表面直接接触，夹爪闭合后对按钮盒施加压力，随后夹爪张开并分离。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.87,
+      "local_observation": "夹爪逐渐靠近墙面上的白色按钮盒。",
+      "evidence": "夹爪与按钮盒之间的可见间隙持续减小，直至接触。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.0,
+      "local_observation": "夹爪与按钮盒表面接触。",
+      "evidence": "夹爪指尖与按钮盒表面间隙消失，视觉上无相对位移。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.87,
+      "local_observation": "夹爪闭合，对按钮盒施加压力。",
+      "evidence": "夹爪指间距持续减小，按钮盒受到挤压。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.27,
+      "local_observation": "夹爪张开，与按钮盒分离。",
+      "evidence": "夹爪指间距持续增大，夹爪与按钮盒之间重新出现间隙。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.27,
+      "end_time_hint": 2.87,
+      "local_observation": "夹爪从按钮盒位置撤回，远离按钮盒。",
+      "evidence": "夹爪与按钮盒之间的距离持续增大，按钮盒逐渐移出视野中心。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

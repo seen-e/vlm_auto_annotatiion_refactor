@@ -1,0 +1,132 @@
+{
+  "object_categories": [
+    {
+      "category": "control_panel",
+      "description": "带有多个按钮和旋钮的白色控制面板",
+      "anchor_time": 1.87,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "switch",
+      "description": "控制面板上的黑色旋钮开关",
+      "anchor_time": 1.87,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "button",
+      "description": "控制面板上的圆形按钮",
+      "anchor_time": 1.87,
+      "max_simultaneously_visible": 3
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_panel_1",
+      "category": "control_panel",
+      "description": "位于画面左侧，带有红色急停按钮、红色按钮、绿色按钮和黑色旋钮的白色矩形面板",
+      "first_view_time": 0.27,
+      "last_view_time": 2.87
+    },
+    {
+      "object_id": "switch_1",
+      "category": "switch",
+      "description": "位于 control_panel_1 最右侧的黑色旋钮开关",
+      "first_view_time": 0.73,
+      "last_view_time": 2.63
+    },
+    {
+      "object_id": "button_1",
+      "category": "button",
+      "description": "位于 control_panel_1 左侧的大型红色急停按钮",
+      "first_view_time": 0.63,
+      "last_view_time": 2.63
+    },
+    {
+      "object_id": "button_2",
+      "category": "button",
+      "description": "位于 control_panel_1 中间偏左的小型红色按钮",
+      "first_view_time": 0.63,
+      "last_view_time": 2.63
+    },
+    {
+      "object_id": "button_3",
+      "category": "button",
+      "description": "位于 control_panel_1 中间偏右的绿色按钮",
+      "first_view_time": 0.63,
+      "last_view_time": 2.63
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "switch_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在 1.13s 左右接触 switch_1，随后闭合夹爪夹持住旋钮，并在 1.37s 至 2.37s 期间带动旋钮旋转，最后在 2.50s 释放。"
+    },
+    {
+      "object_id": "control_panel_1",
+      "roles": [
+        "source"
+      ],
+      "evidence": "switch_1 安装在 control_panel_1 上，操作过程中 control_panel_1 保持静止，作为 switch_1 的支撑基座。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.27,
+      "end_time_hint": 1.13,
+      "local_observation": "开始时夹爪位于 control_panel_1 附近但未接触；结束时夹爪指端已接触 switch_1 两侧。",
+      "evidence": "夹爪向 control_panel_1 移动，逐渐靠近 switch_1，最终指端与旋钮边缘接触。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.13,
+      "end_time_hint": 1.37,
+      "local_observation": "开始时夹爪指端接触 switch_1 两侧；结束时夹爪已闭合并牢固夹持 switch_1。",
+      "evidence": "夹爪指间距减小，switch_1 随后随夹爪微小调整而运动，表明已建立稳定控制。",
+      "object": "switch_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.37,
+      "end_time_hint": 2.37,
+      "local_observation": "开始时 switch_1 处于初始角度；结束时 switch_1 已被旋转至新角度。",
+      "evidence": "夹爪保持闭合状态，带动 switch_1 绕其轴心顺时针旋转，旋钮上的白色标记位置发生明显变化。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": "夹持",
+      "arm_action": "旋转",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.37,
+      "end_time_hint": 2.63,
+      "local_observation": "开始时夹爪仍夹持 switch_1；结束时夹爪张开并脱离 switch_1。",
+      "evidence": "夹爪指间距增大，switch_1 不再随夹爪运动，保持在新角度位置。",
+      "object": "switch_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.63,
+      "end_time_hint": 2.87,
+      "local_observation": "开始时夹爪刚释放 switch_1；结束时夹爪已远离 control_panel_1。",
+      "evidence": "夹爪向后移动，control_panel_1 逐渐移出画面中心，最终完全离开视野。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

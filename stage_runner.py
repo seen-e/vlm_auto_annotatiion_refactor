@@ -8,7 +8,7 @@ from typing import Any
 
 from .json_utils import extract_json
 from .model_client import call_vlm_with_metadata
-from .prompt_utils import load_stage_prompt, render_template, resolve_input_fields
+from .prompt_utils import _prompt_package_from_module, load_stage_prompt, render_template, resolve_input_fields
 from .video_process import build_video_inputs
 
 
@@ -276,8 +276,11 @@ def run_stage(
         context["current_video_layout"] = current_video_layout
         extra_vars = resolve_input_fields(context, stage_cfg.get("input_fields"))
         system_template, user_template = load_stage_prompt(stage_cfg, stage_name=stage_name)
-        system_prompt = render_template(system_template, context=context, extra_vars=extra_vars)
-        user_prompt = render_template(user_template, context=context, extra_vars=extra_vars)
+        prompt_cfg = stage_cfg.get("prompt") or {}
+        prompt_module = str(prompt_cfg.get("module") or "") if isinstance(prompt_cfg, dict) else ""
+        prompt_package = _prompt_package_from_module(prompt_module)
+        system_prompt = render_template(system_template, context=context, extra_vars=extra_vars, prompt_package=prompt_package)
+        user_prompt = render_template(user_template, context=context, extra_vars=extra_vars, prompt_package=prompt_package)
 
         usage: dict[str, Any] = {}
         if dry_run:

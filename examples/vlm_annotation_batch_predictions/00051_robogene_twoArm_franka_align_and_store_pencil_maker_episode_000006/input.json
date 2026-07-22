@@ -1,0 +1,13 @@
+{
+  "video_path": {
+    "camera_front": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_and_store_pencil_maker\\videos\\chunk-000\\observation.rgb_images.camera_front\\episode_000006.mp4",
+    "camera_left": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_and_store_pencil_maker\\videos\\chunk-000\\observation.rgb_images.camera_left\\episode_000006.mp4",
+    "camera_right": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_and_store_pencil_maker\\videos\\chunk-000\\observation.rgb_images.camera_right\\episode_000006.mp4",
+    "camera_top": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_and_store_pencil_maker\\videos\\chunk-000\\observation.rgb_images.camera_top\\episode_000006.mp4",
+    "camera_wrist_left": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_and_store_pencil_maker\\videos\\chunk-000\\observation.rgb_images.camera_wrist_left\\episode_000006.mp4",
+    "camera_wrist_right": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_align_and_store_pencil_maker\\videos\\chunk-000\\observation.rgb_images.camera_wrist_right\\episode_000006.mp4"
+  },
+  "instruction": "Use both arms to remove a pencil from the hexagonal pen holder and place it into the white storage bag, ensuring alignment with the bag's opening and maintaining the pencil's upright position",
+  "video_id": "episode_000006",
+  "task_index": 51
+}

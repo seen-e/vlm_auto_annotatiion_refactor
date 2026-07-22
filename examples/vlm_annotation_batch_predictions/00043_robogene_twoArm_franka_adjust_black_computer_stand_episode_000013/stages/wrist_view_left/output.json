@@ -1,0 +1,103 @@
+{
+  "object_categories": [
+    {
+      "category_id": "laptop_stand",
+      "category": "笔记本支架"
+    },
+    {
+      "category_id": "mouse",
+      "category": "鼠标"
+    },
+    {
+      "category_id": "mousepad",
+      "category": "鼠标垫"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category_id": "laptop_stand",
+      "category": "笔记本支架",
+      "description": "灰色金属材质，具有镂空底座和可调节角度的支撑臂，底部可见黑色防滑垫和银色螺丝。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "mouse_1",
+      "category_id": "mouse",
+      "category": "鼠标",
+      "description": "白色流线型无线鼠标，位于黑色鼠标垫上。",
+      "first_view_time": 0.0,
+      "best_view_time": 0.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "mousepad_1",
+      "category_id": "mousepad",
+      "category": "鼠标垫",
+      "description": "黑色矩形鼠标垫，位于鼠标下方。",
+      "first_view_time": 0.0,
+      "best_view_time": 0.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "interaction_reason": "夹爪与支架底座直接接触，并在接触后保持相对静止，随后支架随夹爪移动离开原位。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 3.8,
+      "local_observation": "夹爪向灰色笔记本支架移动，逐渐靠近支架底座。",
+      "evidence": "夹爪与支架之间的视觉距离持续减小，支架在画面中逐渐变大。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.8,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪前端接触笔记本支架底座表面。",
+      "evidence": "夹爪与支架底座之间的间隙消失，两者发生物理接触。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 18.0,
+      "local_observation": "夹爪保持闭合状态并与支架底座接触，支架相对于夹爪位置保持稳定。",
+      "evidence": "夹爪指间距无明显变化，支架与夹爪同步移动，无相对滑动。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 18.0,
+      "end_time_hint": 19.5,
+      "local_observation": "夹爪携带支架移动，支架离开桌面原位置。",
+      "evidence": "支架随夹爪运动，背景桌面纹理发生相对位移。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 19.5,
+      "end_time_hint": 25.7,
+      "local_observation": "夹爪张开，与支架分离，支架不再受夹爪约束。",
+      "evidence": "夹爪指间距增大，支架停留在新位置，夹爪移开。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}

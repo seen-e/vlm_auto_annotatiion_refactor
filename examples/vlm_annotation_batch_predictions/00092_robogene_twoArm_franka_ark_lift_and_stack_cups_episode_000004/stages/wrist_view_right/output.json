@@ -1,0 +1,123 @@
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    },
+    {
+      "category_id": "rack",
+      "category": "架子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "黄色塑料杯，圆柱形，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 4.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_2",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "蓝色塑料杯，圆柱形，放置在桌面上。",
+      "first_view_time": 6.73,
+      "best_view_time": 7.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "rack_1",
+      "category_id": "rack",
+      "category": "架子",
+      "description": "白色金属架子，带有木质横杆，上面挂有白色和黄色杯子。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "cup_1",
+      "interaction_reason": "夹爪与黄色杯子外壁接触，夹爪闭合后杯子受到稳定约束，并随夹爪移动。"
+    },
+    {
+      "object_id": "cup_2",
+      "interaction_reason": "夹爪夹持黄色杯子移动至蓝色杯子上方，将黄色杯子套入蓝色杯子内部，实现叠放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪向黄色杯子移动，逐渐靠近并对准。",
+      "evidence": "夹爪与黄色杯子之间的可见间隙持续减小，杯子在画面中逐渐变大。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪接触黄色杯子外壁。",
+      "evidence": "夹爪指尖与黄色杯子外壁之间的间隙消失，接触点清晰可见。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪闭合，夹持黄色杯子。",
+      "evidence": "夹爪指间距持续减小，黄色杯子受到约束，与夹爪保持相对静止。",
+      "object": "cup_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 7.0,
+      "local_observation": "夹爪夹持黄色杯子移动，靠近蓝色杯子。",
+      "evidence": "黄色杯子随夹爪运动，蓝色杯子进入视野，两者距离逐渐减小。",
+      "object": "cup_1",
+      "target": "cup_2",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 7.0,
+      "end_time_hint": 8.0,
+      "local_observation": "夹爪将黄色杯子套入蓝色杯子内部。",
+      "evidence": "黄色杯子底部进入蓝色杯子开口，两者发生重叠，形成叠放状态。",
+      "object": "cup_1",
+      "target": "cup_2",
+      "action": "叠放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.0,
+      "end_time_hint": 8.5,
+      "local_observation": "夹爪张开，释放叠放好的杯子。",
+      "evidence": "夹爪指间距增大，与杯子外壁分离，杯子留在桌面上。",
+      "object": "cup_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.5,
+      "end_time_hint": 10.07,
+      "local_observation": "夹爪撤回，远离叠放的杯子。",
+      "evidence": "夹爪与杯子之间的距离持续增大，画面视野扩大。",
+      "object": "cup_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

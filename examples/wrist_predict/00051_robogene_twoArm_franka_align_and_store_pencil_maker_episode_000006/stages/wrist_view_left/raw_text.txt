@@ -1,0 +1,147 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "cup",
+      "description": "白色网状笔筒",
+      "anchor_time": 1.0,
+      "max_simultaneously_visible": 2
+    },
+    {
+      "category": "marker",
+      "description": "彩色记号笔",
+      "anchor_time": 1.0,
+      "max_simultaneously_visible": 3
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category": "cup",
+      "description": "初始位于画面右侧，内含绿色和蓝色记号笔的白色网状笔筒",
+      "first_view_time": 0.0,
+      "last_view_time": 6.87
+    },
+    {
+      "object_id": "marker_green",
+      "category": "marker",
+      "description": "位于 cup_1 内部，笔帽为绿色的记号笔",
+      "first_view_time": 0.0,
+      "last_view_time": 6.87
+    },
+    {
+      "object_id": "marker_blue_1",
+      "category": "marker",
+      "description": "位于 cup_1 内部，笔帽为蓝色的记号笔",
+      "first_view_time": 0.0,
+      "last_view_time": 6.87
+    },
+    {
+      "object_id": "cup_2",
+      "category": "cup",
+      "description": "初始位于画面右侧远处，内含橙色记号笔的白色网状笔筒",
+      "first_view_time": 2.13,
+      "last_view_time": 3.27
+    },
+    {
+      "object_id": "marker_orange",
+      "category": "marker",
+      "description": "位于 cup_2 内部，笔帽为橙色的记号笔",
+      "first_view_time": 2.13,
+      "last_view_time": 3.27
+    },
+    {
+      "object_id": "marker_blue_2",
+      "category": "marker",
+      "description": "位于 cup_2 内部，笔帽为蓝色的记号笔",
+      "first_view_time": 2.73,
+      "last_view_time": 3.27
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "marker_blue_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪在 1.50s 左右接触并抓取该实例，将其从 cup_1 中取出，并在 2.73s 左右将其放入 cup_2 中。"
+    },
+    {
+      "object_id": "cup_1",
+      "roles": ["source"],
+      "evidence": "marker_blue_1 初始位于该容器内部，随后被移出。"
+    },
+    {
+      "object_id": "cup_2",
+      "roles": ["target"],
+      "evidence": "marker_blue_1 最终被放入该容器内部。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.13,
+      "local_observation": "开始时夹爪位于 cup_1 附近；结束时夹爪已移动至 cup_1 边缘，准备接触内部物体。",
+      "evidence": "夹爪相对于 cup_1 的位置发生变化，逐渐靠近并包围 marker_blue_1 的上部。",
+      "object": "marker_blue_1",
+      "target": "cup_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.13,
+      "end_time_hint": 1.63,
+      "local_observation": "开始时夹爪两指位于 marker_blue_1 两侧；结束时夹爪已闭合并稳固夹持该物体。",
+      "evidence": "夹爪指间距减小，marker_blue_1 随后随夹爪运动，与 cup_1 产生相对位移。",
+      "object": "marker_blue_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 2.13,
+      "local_observation": "开始时 marker_blue_1 位于 cup_1 内部；结束时 marker_blue_1 已完全离开 cup_1。",
+      "evidence": "marker_blue_1 持续受夹爪控制，相对于 cup_1 由内部移动到外部，随后机械臂携带物体向右侧移动。",
+      "object": "marker_blue_1",
+      "target": "cup_1",
+      "gripper_action": "夹持",
+      "arm_action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.13,
+      "end_time_hint": 2.73,
+      "local_observation": "开始时夹爪携带 marker_blue_1 接近 cup_2；结束时 marker_blue_1 位于 cup_2 开口上方。",
+      "evidence": "夹爪携带物体移动至 cup_2 附近，调整位置准备放入。",
+      "object": "marker_blue_1",
+      "target": "cup_2",
+      "gripper_action": "夹持",
+      "arm_action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.73,
+      "end_time_hint": 3.00,
+      "local_observation": "开始时 marker_blue_1 位于 cup_2 外部上方；结束时 marker_blue_1 已进入 cup_2 内部。",
+      "evidence": "夹爪降低高度，marker_blue_1 进入 cup_2 内部，随后夹爪张开。",
+      "object": "marker_blue_1",
+      "target": "cup_2",
+      "gripper_action": "释放",
+      "arm_action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.00,
+      "end_time_hint": 3.50,
+      "local_observation": "开始时夹爪位于 cup_2 附近；结束时夹爪已撤回并远离 cup_2。",
+      "evidence": "夹爪张开后，机械臂向后移动，离开操作区域。",
+      "object": "marker_blue_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

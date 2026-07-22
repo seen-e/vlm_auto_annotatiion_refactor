@@ -1,0 +1,92 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "lamp",
+      "category": "台灯"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category_id": "lamp",
+      "category": "台灯",
+      "description": "蓝色台灯，具有圆形底座和光滑的灯罩，被另一只机械臂夹持。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银色笔记本电脑，闭合状态，表面有黑色标志，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 0.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "interaction_reason": "夹爪与蓝色台灯灯罩发生直接接触，夹爪闭合后灯罩受到约束，并随夹爪移动。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪向蓝色台灯灯罩移动，逐渐靠近。",
+      "evidence": "夹爪与台灯灯罩之间的可见间隙持续减小。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.0,
+      "local_observation": "夹爪与蓝色台灯灯罩接触，间隙消失。",
+      "evidence": "夹爪指端到达灯罩表面，可见间隙消失。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 2.5,
+      "local_observation": "夹爪闭合，夹持蓝色台灯灯罩。",
+      "evidence": "夹爪指间距减小，灯罩受到约束并与夹爪保持相对静止。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪夹持蓝色台灯灯罩，随机械臂移动。",
+      "evidence": "灯罩与夹爪保持稳定的相对位置，背景发生变化。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.0,
+      "local_observation": "夹爪张开，与蓝色台灯灯罩分离。",
+      "evidence": "夹爪指间距增大，灯罩不再受夹爪约束，间隙重新出现。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}
+```

@@ -1,0 +1,142 @@
+{
+  "object_categories": [
+    {
+      "category": "lamp",
+      "description": "蓝色台灯",
+      "anchor_time": 1.5,
+      "max_simultaneously_visible": 2
+    },
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "mouse",
+      "description": "鼠标",
+      "anchor_time": 1.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "mousepad",
+      "description": "鼠标垫",
+      "anchor_time": 1.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category": "lamp",
+      "description": "位于画面前景、被夹爪直接操作的蓝色台灯",
+      "first_view_time": 0.37,
+      "last_view_time": 5.0
+    },
+    {
+      "object_id": "lamp_2",
+      "category": "lamp",
+      "description": "位于 lamp_1 后方、被另一机械臂操作的蓝色台灯",
+      "first_view_time": 0.87,
+      "last_view_time": 5.0
+    },
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "位于桌面右侧的银色笔记本电脑",
+      "first_view_time": 0.0,
+      "last_view_time": 6.23
+    },
+    {
+      "object_id": "mouse_1",
+      "category": "mouse",
+      "description": "位于 mousepad_1 上的白色鼠标",
+      "first_view_time": 0.87,
+      "last_view_time": 5.13
+    },
+    {
+      "object_id": "mousepad_1",
+      "category": "mousepad",
+      "description": "位于桌面右侧、承载 mouse_1 的黑色鼠标垫",
+      "first_view_time": 0.87,
+      "last_view_time": 5.13
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在 t=2.5s 左右接触 lamp_1 的灯头部分，随后夹爪闭合建立控制，并在 t=2.5s 至 t=4.8s 期间随夹爪移动，最后被放置在桌面上。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 2.5,
+      "local_observation": "开始时夹爪张开并位于 lamp_1 附近；结束时夹爪两指接触 lamp_1 灯头两侧。",
+      "evidence": "夹爪向 lamp_1 移动，相对距离减小，最终接触物体表面。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 2.8,
+      "local_observation": "开始时夹爪两指位于 lamp_1 两侧；结束时夹爪闭合，夹住 lamp_1。",
+      "evidence": "夹爪指间距减小，lamp_1 随后与夹爪保持相对静止，表明建立了稳定控制。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.8,
+      "end_time_hint": 4.6,
+      "local_observation": "开始时 lamp_1 被夹爪控制并悬空；结束时 lamp_1 被移动至桌面新位置上方。",
+      "evidence": "lamp_1 持续与夹爪保持固定相对位置，并相对于桌面背景发生位移。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": "夹持",
+      "arm_action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.6,
+      "end_time_hint": 4.9,
+      "local_observation": "开始时 lamp_1 悬空于桌面上方；结束时 lamp_1 底部接触桌面。",
+      "evidence": "lamp_1 相对于桌面的高度降低，直至接触支撑面。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "放置",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.9,
+      "end_time_hint": 5.1,
+      "local_observation": "开始时夹爪夹持 lamp_1 并接触桌面；结束时夹爪张开，lamp_1 留在桌面上。",
+      "evidence": "夹爪指间距增大，lamp_1 不再随夹爪运动，解除控制关系。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": "释放",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.1,
+      "end_time_hint": 6.23,
+      "local_observation": "开始时夹爪已释放 lamp_1；结束时夹爪保持张开状态并远离物体。",
+      "evidence": "夹爪与 lamp_1 分离，机械臂向后移动，无进一步操作。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

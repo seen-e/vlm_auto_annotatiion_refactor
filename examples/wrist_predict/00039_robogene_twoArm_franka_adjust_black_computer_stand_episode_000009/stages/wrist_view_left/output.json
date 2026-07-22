@@ -1,0 +1,107 @@
+{
+  "object_categories": [
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 20.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "stand",
+      "description": "支架",
+      "anchor_time": 10.0,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "mouse",
+      "description": "鼠标",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "银灰色笔记本电脑，初始位于支架上方，随后被放置在支架上",
+      "first_view_time": 16.5,
+      "last_view_time": 30.0
+    },
+    {
+      "object_id": "stand_1",
+      "category": "stand",
+      "description": "位于画面右侧的黑色金属支架，具有镂空结构",
+      "first_view_time": 0.0,
+      "last_view_time": 30.5
+    },
+    {
+      "object_id": "mouse_1",
+      "category": "mouse",
+      "description": "位于画面右下角黑色垫子上的白色鼠标",
+      "first_view_time": 0.0,
+      "last_view_time": 33.4
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪接触并推动笔记本电脑，使其在支架上发生位置变化。"
+    },
+    {
+      "object_id": "stand_1",
+      "roles": [
+        "target"
+      ],
+      "evidence": "笔记本电脑最终被放置在支架上，支架作为支撑目标。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 16.5,
+      "local_observation": "开始时夹爪位于桌面上方，视野中可见支架和鼠标；结束时夹爪移动至笔记本电脑附近。",
+      "evidence": "夹爪相对于背景物体（支架、鼠标）发生位移，逐渐接近笔记本电脑。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.5,
+      "end_time_hint": 20.0,
+      "local_observation": "开始时夹爪接触笔记本电脑边缘；结束时笔记本电脑开始沿支架表面滑动。",
+      "evidence": "夹爪与笔记本电脑建立接触，随后笔记本电脑相对于支架发生位移。",
+      "object": "laptop_1",
+      "target": "stand_1",
+      "gripper_action": null,
+      "arm_action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 20.0,
+      "end_time_hint": 30.0,
+      "local_observation": "开始时笔记本电脑位于支架上部；结束时笔记本电脑已滑入支架内部凹槽并停止。",
+      "evidence": "笔记本电脑持续相对于支架向下移动，最终进入支架内部结构并被支撑。",
+      "object": "laptop_1",
+      "target": "stand_1",
+      "gripper_action": null,
+      "arm_action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 30.0,
+      "end_time_hint": 33.4,
+      "local_observation": "开始时夹爪位于笔记本电脑附近；结束时夹爪撤回至初始位置附近。",
+      "evidence": "夹爪与笔记本电脑分离，并相对于背景物体向后退去。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

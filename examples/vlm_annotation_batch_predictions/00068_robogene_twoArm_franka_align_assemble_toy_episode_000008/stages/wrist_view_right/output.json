@@ -1,0 +1,137 @@
+{
+  "object_categories": [
+    {
+      "category_id": "number_block",
+      "category": "数字积木"
+    },
+    {
+      "category_id": "shape_block",
+      "category": "形状积木"
+    },
+    {
+      "category_id": "puzzle_board",
+      "category": "拼图板"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "number_block_1",
+      "category_id": "number_block",
+      "category": "数字积木",
+      "description": "橙色数字“10”积木，具有立体结构。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "shape_block_1",
+      "category_id": "shape_block",
+      "category": "形状积木",
+      "description": "红色长方体形状积木。",
+      "first_view_time": 0.0,
+      "best_view_time": 6.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "puzzle_board_1",
+      "category_id": "puzzle_board",
+      "category": "拼图板",
+      "description": "蓝色背景拼图板，带有海洋生物图案和多个凹槽。",
+      "first_view_time": 2.63,
+      "best_view_time": 3.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "number_block_1",
+      "interaction_reason": "夹爪闭合夹持数字积木，将其提起并放入拼图板凹槽中，随后释放。"
+    },
+    {
+      "object_id": "shape_block_1",
+      "interaction_reason": "夹爪闭合夹持红色形状积木，将其提起并放入拼图板凹槽中，随后释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.87,
+      "local_observation": "夹爪向橙色数字“10”积木移动，逐渐靠近并对准。",
+      "evidence": "夹爪与积木之间的视觉距离持续减小，积木在画面中逐渐变大。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.37,
+      "local_observation": "夹爪指接触积木两侧，随后夹爪间距减小，夹持住积木。",
+      "evidence": "夹爪指与积木表面接触，积木随夹爪同步运动离开桌面。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "抓取",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.37,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪携带积木移动至拼图板上方，并对准数字“10”的凹槽。",
+      "evidence": "背景变为拼图板，积木位于对应凹槽正上方。",
+      "object": "number_block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪将积木放入凹槽后张开，与积木分离。",
+      "evidence": "夹爪指间距增大，积木留在凹槽内，夹爪移开。",
+      "object": "number_block_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪移动并接近红色长方体积木。",
+      "evidence": "画面中心出现红色积木，夹爪逐渐靠近。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 6.73,
+      "local_observation": "夹爪闭合夹持红色积木，并将其提起。",
+      "evidence": "夹爪指接触积木两侧并闭合，积木随夹爪上升。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "抓取",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.73,
+      "end_time_hint": 8.5,
+      "local_observation": "夹爪携带红色积木移动至拼图板上方，对准长方形凹槽。",
+      "evidence": "积木位于拼图板对应凹槽上方，位置逐渐调整。",
+      "object": "shape_block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.5,
+      "end_time_hint": 9.0,
+      "local_observation": "夹爪将积木放入凹槽后张开，与积木分离。",
+      "evidence": "夹爪指间距增大，积木留在凹槽内，夹爪移开。",
+      "object": "shape_block_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}

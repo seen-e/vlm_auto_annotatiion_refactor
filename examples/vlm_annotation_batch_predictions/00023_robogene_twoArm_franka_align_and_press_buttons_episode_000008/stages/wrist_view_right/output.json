@@ -1,0 +1,90 @@
+{
+  "object_categories": [
+    {
+      "category_id": "control_box",
+      "category": "控制盒"
+    },
+    {
+      "category_id": "switch",
+      "category": "开关"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_box_1",
+      "category_id": "control_box",
+      "category": "控制盒",
+      "description": "白色长方形控制盒，表面有红色、绿色和黑色按钮/开关。",
+      "first_view_time": 0.27,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "switch_1",
+      "category_id": "switch",
+      "category": "开关",
+      "description": "位于控制盒上的黑色旋钮开关，带有白色指示线。",
+      "first_view_time": 0.63,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "switch_1",
+      "interaction_reason": "夹爪直接夹住黑色旋钮开关的突起部分，并带动其发生旋转，开关状态发生改变。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.27,
+      "end_time_hint": 1.0,
+      "local_observation": "夹爪向白色控制盒移动，逐渐靠近并调整姿态以对准黑色旋钮开关。",
+      "evidence": "控制盒在画面中逐渐变大，夹爪开口对准开关位置。",
+      "object": "control_box_1",
+      "target": "switch_1",
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪指接触并闭合夹住黑色旋钮开关。",
+      "evidence": "夹爪指与开关侧面接触，指间距减小，开关被夹持在夹爪之间。",
+      "object": "switch_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.87,
+      "local_observation": "夹爪带动黑色旋钮开关旋转，开关上的白色指示线位置发生明显变化。",
+      "evidence": "开关随夹爪转动，指示线方向改变，表明开关状态被调整。",
+      "object": "switch_1",
+      "target": null,
+      "action": "转动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.87,
+      "end_time_hint": 3.27,
+      "local_observation": "夹爪张开，与黑色旋钮开关分离。",
+      "evidence": "夹爪指间距增大，离开开关表面，开关保持在旋转后的位置。",
+      "object": "switch_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.27,
+      "end_time_hint": 3.87,
+      "local_observation": "夹爪远离控制盒，画面中控制盒逐渐变小直至移出视野。",
+      "evidence": "夹爪与控制盒之间的距离增加，控制盒离开画面中心。",
+      "object": "control_box_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

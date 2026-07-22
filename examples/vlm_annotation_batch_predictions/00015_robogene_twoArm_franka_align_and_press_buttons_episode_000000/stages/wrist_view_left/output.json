@@ -1,0 +1,87 @@
+{
+  "object_categories": [
+    {
+      "category_id": "button_box",
+      "category": "按钮盒"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "button_box_1",
+      "category_id": "button_box",
+      "category": "按钮盒",
+      "description": "白色长方形控制盒，表面有红色、绿色和黑色按钮，安装在墙面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_box_1",
+      "interaction_reason": "夹爪与按钮盒表面直接接触，夹爪闭合后夹持住红色按钮区域，随后夹爪张开并与按钮盒分离。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.63,
+      "local_observation": "夹爪向墙面上的按钮盒移动，逐渐靠近红色按钮区域。",
+      "evidence": "夹爪与按钮盒之间的可见间隙持续减小，按钮盒在画面中逐渐变大。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 0.87,
+      "local_observation": "夹爪前端接触到按钮盒表面，特别是红色按钮区域。",
+      "evidence": "夹爪与按钮盒之间的间隙消失，夹爪指与按钮盒表面发生物理接触。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪闭合，夹持住按钮盒的红色按钮区域。",
+      "evidence": "夹爪指间距持续减小，夹爪与按钮盒保持稳定的相对位置，按钮盒受到夹爪约束。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 1.87,
+      "local_observation": "夹爪保持闭合状态，继续夹持按钮盒。",
+      "evidence": "夹爪指间距保持较小，夹爪与按钮盒相对位置稳定。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "固定",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.13,
+      "local_observation": "夹爪张开，与按钮盒分离。",
+      "evidence": "夹爪指间距持续增大，夹爪与按钮盒之间重新出现可见间隙。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.13,
+      "end_time_hint": 3.53,
+      "local_observation": "夹爪从按钮盒区域撤回，远离按钮盒。",
+      "evidence": "夹爪与按钮盒之间的可见间隙持续增大，按钮盒在画面中逐渐变小。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

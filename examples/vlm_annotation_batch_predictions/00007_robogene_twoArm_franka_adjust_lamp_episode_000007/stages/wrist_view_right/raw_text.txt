@@ -1,0 +1,115 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "lamp",
+      "category": "台灯"
+    },
+    {
+      "category_id": "mouse",
+      "category": "鼠标"
+    },
+    {
+      "category_id": "mousepad",
+      "category": "鼠标垫"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category_id": "lamp",
+      "category": "台灯",
+      "description": "蓝色圆形底座台灯，带有黑色波纹软管灯杆和黑色电源线，底座上可见黑色开关。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "mouse_1",
+      "category_id": "mouse",
+      "category": "鼠标",
+      "description": "白色流线型鼠标，放置在黑色鼠标垫上。",
+      "first_view_time": 0.0,
+      "best_view_time": 0.37,
+      "uncertainty": null
+    },
+    {
+      "object_id": "mousepad_1",
+      "category_id": "mousepad",
+      "category": "鼠标垫",
+      "description": "黑色矩形鼠标垫，位于鼠标下方。",
+      "first_view_time": 0.0,
+      "best_view_time": 0.37,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "interaction_reason": "夹爪与台灯底座接触并闭合，夹持住底座，随后台灯随夹爪移动，最后夹爪张开并分离。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.87,
+      "local_observation": "夹爪从初始位置向蓝色台灯底座移动，逐渐靠近并对准底座。",
+      "evidence": "画面中夹爪与台灯底座的相对距离持续减小，直至夹爪到达底座两侧。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.0,
+      "local_observation": "夹爪指内侧与蓝色台灯底座表面接触。",
+      "evidence": "夹爪指与底座之间的可见间隙消失，夹爪停止相对底座的接近运动。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪指间距持续减小，夹紧台灯底座。",
+      "evidence": "可见夹爪指相对于底座向内移动，指间距明显缩小。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 4.87,
+      "local_observation": "夹爪保持闭合状态，台灯底座被夹持并随夹爪发生位置和姿态变化。",
+      "evidence": "台灯底座与夹爪保持稳定的相对位置，背景发生变化，表明物体随夹爪移动。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.87,
+      "end_time_hint": 5.13,
+      "local_observation": "夹爪指间距持续增大，松开台灯底座。",
+      "evidence": "可见夹爪指相对于底座向外移动，指间距明显增大。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.13,
+      "end_time_hint": 5.37,
+      "local_observation": "夹爪与台灯底座分离，并向后退去。",
+      "evidence": "夹爪与底座之间重新出现可见间隙，且间隙持续增大，台灯留在原处。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}
+```

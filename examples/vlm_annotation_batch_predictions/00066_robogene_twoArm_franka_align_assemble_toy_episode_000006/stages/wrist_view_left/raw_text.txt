@@ -1,0 +1,159 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "puzzle_board",
+      "category": "拼图板"
+    },
+    {
+      "category_id": "block",
+      "category": "积木块"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "puzzle_board_1",
+      "category_id": "puzzle_board",
+      "category": "拼图板",
+      "description": "蓝色木质拼图板，带有数字和形状凹槽，左下角有一个紫白格纹的矩形凹槽。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "block_1",
+      "category_id": "block",
+      "category": "积木块",
+      "description": "粉色长方体积木块，被夹爪抓取并放入拼图板。",
+      "first_view_time": 2.5,
+      "best_view_time": 4.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "block_2",
+      "category_id": "block",
+      "category": "积木块",
+      "description": "粉色数字“1”形状积木块，被夹爪抓取并放入拼图板。",
+      "first_view_time": 8.5,
+      "best_view_time": 9.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "puzzle_board_1",
+      "interaction_reason": "夹爪将积木块放入拼图板的凹槽中，与拼图板发生接触和位置调整。"
+    },
+    {
+      "object_id": "block_1",
+      "interaction_reason": "夹爪夹持该积木块，将其移动并放入拼图板凹槽，随后释放。"
+    },
+    {
+      "object_id": "block_2",
+      "interaction_reason": "夹爪夹持该积木块，将其移动并放入拼图板凹槽，随后释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 3.6,
+      "local_observation": "夹爪逐渐靠近并包围粉色长方体积木块。",
+      "evidence": "夹爪指间距大于物体宽度，物体位于夹爪中心，间隙逐渐减小。",
+      "object": "block_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.6,
+      "end_time_hint": 3.9,
+      "local_observation": "夹爪闭合，夹住粉色长方体积木块。",
+      "evidence": "夹爪指间距持续减小直至接触物体表面，物体被固定。",
+      "object": "block_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.9,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪携带粉色长方体积木块移动向拼图板。",
+      "evidence": "积木块随夹爪同步运动，背景中的拼图板逐渐靠近。",
+      "object": "block_1",
+      "target": "puzzle_board_1",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪将粉色长方体积木块放入拼图板左下角的凹槽中。",
+      "evidence": "积木块进入凹槽区域，夹爪进行微调以对齐位置。",
+      "object": "block_1",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪张开，释放粉色长方体积木块。",
+      "evidence": "夹爪指间距增大，与积木块分离，积木块留在凹槽内。",
+      "object": "block_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.5,
+      "end_time_hint": 9.4,
+      "local_observation": "夹爪逐渐靠近并包围粉色数字“1”积木块。",
+      "evidence": "夹爪指间距大于物体宽度，物体位于夹爪中心，间隙逐渐减小。",
+      "object": "block_2",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 9.4,
+      "end_time_hint": 9.7,
+      "local_observation": "夹爪闭合，夹住粉色数字“1”积木块。",
+      "evidence": "夹爪指间距持续减小直至接触物体表面，物体被固定。",
+      "object": "block_2",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 9.7,
+      "end_time_hint": 10.5,
+      "local_observation": "夹爪携带粉色数字“1”积木块移动向拼图板。",
+      "evidence": "积木块随夹爪同步运动，背景中的拼图板逐渐靠近。",
+      "object": "block_2",
+      "target": "puzzle_board_1",
+      "action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 10.5,
+      "end_time_hint": 11.3,
+      "local_observation": "夹爪将粉色数字“1”积木块放入拼图板对应的数字“1”凹槽中。",
+      "evidence": "积木块进入凹槽区域，夹爪进行微调以对齐位置。",
+      "object": "block_2",
+      "target": "puzzle_board_1",
+      "action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 11.3,
+      "end_time_hint": 11.6,
+      "local_observation": "夹爪张开，释放粉色数字“1”积木块。",
+      "evidence": "夹爪指间距增大，与积木块分离，积木块留在凹槽内。",
+      "object": "block_2",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    }
+  ]
+}
+```

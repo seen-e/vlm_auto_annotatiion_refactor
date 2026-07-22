@@ -1,0 +1,114 @@
+{
+  "object_categories": [
+    {
+      "category_id": "laptop_stand",
+      "category": "笔记本支架"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category_id": "laptop_stand",
+      "category": "笔记本支架",
+      "description": "黑色金属支架，具有镂空结构和调节关节，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，可见侧面接口和机身轮廓。",
+      "first_view_time": 15.0,
+      "best_view_time": 20.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "interaction_reason": "夹爪与支架底部接触并施加推力，导致支架在桌面上发生位置移动。"
+    },
+    {
+      "object_id": "laptop_1",
+      "interaction_reason": "笔记本电脑被放置在支架上，随支架一起移动，随后被移除。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 3.0,
+      "local_observation": "夹爪向黑色笔记本支架移动，逐渐靠近支架底部。",
+      "evidence": "夹爪与支架之间的视觉距离持续减小，直至接触。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 4.0,
+      "local_observation": "夹爪前端接触到笔记本支架的底部结构。",
+      "evidence": "夹爪与支架表面间隙消失，接触点清晰可见。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.0,
+      "end_time_hint": 15.0,
+      "local_observation": "夹爪保持与支架接触，支架位置基本保持不变。",
+      "evidence": "夹爪与支架相对静止，无显著位移。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "等待",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 15.0,
+      "end_time_hint": 19.0,
+      "local_observation": "一台笔记本电脑出现在支架上方，并逐渐放置在支架上。",
+      "evidence": "笔记本电脑机身进入视野并落在支架支撑面上。",
+      "object": "laptop_1",
+      "target": "laptop_stand_1",
+      "action": "放置",
+      "uncertainty": "放置动作主要由外部执行，夹爪视角主要观察到物体出现和落位。"
+    },
+    {
+      "start_time_hint": 19.0,
+      "end_time_hint": 25.0,
+      "local_observation": "夹爪推动支架，支架连同其上的笔记本电脑一起在桌面上滑动。",
+      "evidence": "支架和笔记本电脑相对于背景桌面发生连续位移，夹爪保持接触推动。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 25.0,
+      "end_time_hint": 26.0,
+      "local_observation": "笔记本电脑从支架上被移走，支架停止移动。",
+      "evidence": "笔记本电脑离开支架支撑面，支架随后静止。",
+      "object": "laptop_1",
+      "target": "laptop_stand_1",
+      "action": "取下",
+      "uncertainty": "取下动作主要由外部执行，夹爪视角观察到物体分离。"
+    },
+    {
+      "start_time_hint": 26.0,
+      "end_time_hint": 33.57,
+      "local_observation": "夹爪与支架分离，并向后撤回，离开支架区域。",
+      "evidence": "夹爪与支架之间出现并增大间隙，支架留在原处。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

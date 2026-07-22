@@ -1,0 +1,85 @@
+{
+  "object_categories": [
+    {
+      "category": "button_box",
+      "description": "带有红色急停按钮的白色控制盒",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "button_box_1",
+      "category": "button_box",
+      "description": "位于画面右侧、带有红色圆形急停按钮的白色控制盒",
+      "first_view_time": 0.0,
+      "last_view_time": 3.33
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_box_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪接近并接触该控制盒上的红色按钮，随后夹爪闭合对按钮施加压力，最后夹爪张开并撤回。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.63,
+      "local_observation": "开始时夹爪张开，位于画面下方，距离 button_box_1 较远；结束时夹爪已移动至 button_box_1 的红色按钮正前方，准备接触。",
+      "evidence": "夹爪相对于 button_box_1 的距离持续减小，画面中 button_box_1 逐渐变大并居中。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 0.87,
+      "local_observation": "开始时夹爪指尖接触红色按钮表面；结束时夹爪两指已闭合并压紧按钮。",
+      "evidence": "夹爪指尖与红色按钮接触后，指间距明显减小，按钮被按下。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": "闭合夹爪",
+      "arm_action": "按压",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.63,
+      "local_observation": "开始时夹爪保持闭合状态，持续按压红色按钮；结束时夹爪仍保持闭合按压状态。",
+      "evidence": "夹爪与按钮保持相对静止，按钮处于被按下的状态，夹爪未发生明显位移。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": "夹持",
+      "arm_action": "等待",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 1.87,
+      "local_observation": "开始时夹爪闭合按压按钮；结束时夹爪两指张开，脱离按钮表面。",
+      "evidence": "夹爪指间距增大，红色按钮弹起恢复原状，夹爪与按钮分离。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": "张开夹爪",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.87,
+      "end_time_hint": 2.5,
+      "local_observation": "开始时夹爪张开位于 button_box_1 附近；结束时夹爪已远离 button_box_1，回到初始大致位置。",
+      "evidence": "夹爪相对于 button_box_1 的距离持续增大，button_box_1 在画面中逐渐变小并移向边缘。",
+      "object": "button_box_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

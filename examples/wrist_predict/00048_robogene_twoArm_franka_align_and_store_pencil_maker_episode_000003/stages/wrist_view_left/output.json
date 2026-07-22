@@ -1,0 +1,151 @@
+{
+  "object_categories": [
+    {
+      "category": "marker",
+      "description": "记号笔",
+      "anchor_time": 0.63,
+      "max_simultaneously_visible": 3
+    },
+    {
+      "category": "container",
+      "description": "容器",
+      "anchor_time": 0.63,
+      "max_simultaneously_visible": 2
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "marker_1",
+      "category": "marker",
+      "description": "初始位于 container_1 内部、笔身为绿色的记号笔",
+      "first_view_time": 0.0,
+      "last_view_time": 7.1
+    },
+    {
+      "object_id": "marker_2",
+      "category": "marker",
+      "description": "初始位于 container_1 内部、笔身为蓝色的记号笔",
+      "first_view_time": 0.0,
+      "last_view_time": 7.1
+    },
+    {
+      "object_id": "marker_3",
+      "category": "marker",
+      "description": "初始位于 container_1 内部、笔身为紫色的记号笔",
+      "first_view_time": 0.0,
+      "last_view_time": 7.1
+    },
+    {
+      "object_id": "marker_4",
+      "category": "marker",
+      "description": "初始位于 container_2 内部、笔身为橙色的记号笔",
+      "first_view_time": 2.73,
+      "last_view_time": 3.87
+    },
+    {
+      "object_id": "container_1",
+      "category": "container",
+      "description": "初始位于画面右侧、容纳 marker_1、marker_2 和 marker_3 的白色网状容器",
+      "first_view_time": 0.0,
+      "last_view_time": 7.1
+    },
+    {
+      "object_id": "container_2",
+      "category": "container",
+      "description": "操作后段出现的、容纳 marker_4 的容器",
+      "first_view_time": 2.73,
+      "last_view_time": 3.87
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "marker_2",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在 1.50s 左右接触并闭合，随后该蓝色记号笔随夹爪移动，并在 3.00s 左右被放入 container_2。"
+    },
+    {
+      "object_id": "container_1",
+      "roles": [
+        "source"
+      ],
+      "evidence": "marker_2 初始位于该容器内部，随后被移出。"
+    },
+    {
+      "object_id": "container_2",
+      "roles": [
+        "target"
+      ],
+      "evidence": "marker_2 最终被放入该容器内部。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.5,
+      "local_observation": "开始时夹爪张开并位于 container_1 附近；结束时夹爪两指接触 marker_2 两侧。",
+      "evidence": "夹爪向 container_1 移动并调整姿态，最终对准 marker_2。",
+      "object": "marker_2",
+      "target": "container_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.0,
+      "local_observation": "开始时夹爪两指位于 marker_2 两侧；结束时夹爪闭合，marker_2 被固定。",
+      "evidence": "夹爪指间距减小，marker_2 随后与夹爪保持相对静止。",
+      "object": "marker_2",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 2.73,
+      "local_observation": "开始时 marker_2 位于 container_1 内部；结束时 marker_2 已离开 container_1 并随夹爪移动。",
+      "evidence": "marker_2 持续受夹爪控制，相对于 container_1 由内部移动到外部。",
+      "object": "marker_2",
+      "target": "container_1",
+      "gripper_action": "夹持",
+      "arm_action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.73,
+      "end_time_hint": 3.0,
+      "local_observation": "开始时夹爪携带 marker_2 移动；结束时 marker_2 位于 container_2 上方。",
+      "evidence": "marker_2 随夹爪从 container_1 区域移动到 container_2 区域。",
+      "object": "marker_2",
+      "target": "container_2",
+      "gripper_action": "夹持",
+      "arm_action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.0,
+      "end_time_hint": 3.5,
+      "local_observation": "开始时 marker_2 位于 container_2 上方；结束时 marker_2 进入 container_2 内部。",
+      "evidence": "夹爪降低并将 marker_2 放入 container_2，随后松开。",
+      "object": "marker_2",
+      "target": "container_2",
+      "gripper_action": "释放",
+      "arm_action": "放入",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 7.1,
+      "local_observation": "开始时夹爪已释放 marker_2；结束时夹爪保持张开并远离容器。",
+      "evidence": "夹爪张开并撤回，marker_2 留在 container_2 中不再随夹爪运动。",
+      "object": "marker_2",
+      "target": null,
+      "gripper_action": "张开夹爪",
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

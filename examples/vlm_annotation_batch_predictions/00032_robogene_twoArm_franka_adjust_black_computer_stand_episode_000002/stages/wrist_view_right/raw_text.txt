@@ -1,0 +1,105 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    },
+    {
+      "category_id": "mouse",
+      "category": "鼠标"
+    },
+    {
+      "category_id": "block",
+      "category": "木块"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，可见苹果标志，平放在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "mouse_1",
+      "category_id": "mouse",
+      "category": "鼠标",
+      "description": "白色鼠标，位于黑色鼠标垫上。",
+      "first_view_time": 3.87,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "block_1",
+      "category_id": "block",
+      "category": "木块",
+      "description": "浅色长方体木块，位于桌面上。",
+      "first_view_time": 10.0,
+      "best_view_time": 11.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_1",
+      "interaction_reason": "夹爪与笔记本电脑边缘接触，随后夹爪闭合，笔记本电脑随夹爪移动，表明受到夹爪约束。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 7.0,
+      "local_observation": "夹爪向笔记本电脑移动，逐渐靠近其边缘。",
+      "evidence": "夹爪与笔记本电脑之间的可见间隙持续减小。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 7.0,
+      "end_time_hint": 8.0,
+      "local_observation": "夹爪指尖接触到笔记本电脑边缘。",
+      "evidence": "夹爪与笔记本电脑边缘之间的间隙消失。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 8.0,
+      "end_time_hint": 10.0,
+      "local_observation": "夹爪指间距减小，夹持笔记本电脑边缘。",
+      "evidence": "可见夹爪指间距持续减小，笔记本电脑位置随夹爪微调。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 10.0,
+      "end_time_hint": 24.0,
+      "local_observation": "夹爪夹持笔记本电脑进行移动和姿态调整。",
+      "evidence": "笔记本电脑随夹爪同步运动，相对位置保持稳定。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "调整物体姿态",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 24.0,
+      "end_time_hint": 31.0,
+      "local_observation": "夹爪将笔记本电脑放置回桌面，随后夹爪张开。",
+      "evidence": "笔记本电脑与桌面接触并静止，随后夹爪指间距增大，与笔记本电脑分离。",
+      "object": "laptop_1",
+      "target": null,
+      "action": "放置",
+      "uncertainty": null
+    }
+  ]
+}
+```

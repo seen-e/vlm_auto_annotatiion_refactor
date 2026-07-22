@@ -1,0 +1,105 @@
+{
+  "object_categories": [
+    {
+      "category": "control_panel",
+      "description": "控制面板",
+      "anchor_time": 1.13,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "switch",
+      "description": "旋钮开关",
+      "anchor_time": 1.13,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_panel_1",
+      "category": "control_panel",
+      "description": "安装在墙面上的白色矩形控制面板，包含红色急停按钮、红色按钮、绿色按钮和黑色旋钮",
+      "first_view_time": 0.0,
+      "last_view_time": 4.27
+    },
+    {
+      "object_id": "switch_1",
+      "category": "switch",
+      "description": "位于 control_panel_1 最右侧的黑色旋钮开关",
+      "first_view_time": 0.37,
+      "last_view_time": 2.63
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "switch_1",
+      "roles": [
+        "manipulated"
+      ],
+      "evidence": "夹爪在 1.37s 左右接触 switch_1，随后对其进行旋转操作，并在 2.00s 后解除接触。"
+    },
+    {
+      "object_id": "control_panel_1",
+      "roles": [
+        "source"
+      ],
+      "evidence": "switch_1 是 control_panel_1 的组成部分，操作过程中 switch_1 始终位于 control_panel_1 上。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.37,
+      "local_observation": "开始时夹爪位于画面下方，control_panel_1 位于远处；结束时夹爪已移动至 switch_1 附近，准备接触。",
+      "evidence": "夹爪相对于 control_panel_1 的距离持续减小，画面中 control_panel_1 逐渐变大，表明机械臂正在接近目标。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.37,
+      "end_time_hint": 1.63,
+      "local_observation": "开始时夹爪指尖接近 switch_1；结束时夹爪已接触并夹持住 switch_1 的旋钮部分。",
+      "evidence": "夹爪指尖与 switch_1 的黑色旋钮部分发生物理接触，随后夹爪保持闭合状态以固定旋钮。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": "抓取",
+      "arm_action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 2.0,
+      "local_observation": "开始时 switch_1 处于初始位置；结束时 switch_1 的旋钮方向发生明显改变。",
+      "evidence": "在夹爪保持夹持状态下，switch_1 的旋钮相对于 control_panel_1 面板发生了旋转运动，旋钮上的白色标记位置发生变化。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": "夹持",
+      "arm_action": "旋转",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 2.63,
+      "local_observation": "开始时夹爪仍接触 switch_1；结束时夹爪已离开 switch_1 并向后退。",
+      "evidence": "夹爪与 switch_1 分离，随后机械臂带动夹爪向后移动，switch_1 保持在 control_panel_1 上的新位置。",
+      "object": "switch_1",
+      "target": "control_panel_1",
+      "gripper_action": "释放",
+      "arm_action": "撤回",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.63,
+      "end_time_hint": 4.27,
+      "local_observation": "开始时夹爪已远离 control_panel_1；结束时夹爪停留在远离控制面板的位置。",
+      "evidence": "夹爪与控制面板之间的距离增大，画面中控制面板逐渐变小，随后夹爪保持静止或微调位置。",
+      "object": "switch_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

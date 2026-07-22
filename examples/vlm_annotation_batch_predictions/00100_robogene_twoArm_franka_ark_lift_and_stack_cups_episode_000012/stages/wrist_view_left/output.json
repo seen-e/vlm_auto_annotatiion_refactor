@@ -1,0 +1,77 @@
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "浅蓝色圆柱形杯子，顶部有圆形凹槽结构，表面光滑。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "cup_1",
+      "interaction_reason": "夹爪与杯子侧面接触并闭合，杯子被稳定夹持并随夹爪移动，随后被释放。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.37,
+      "local_observation": "夹爪逐渐靠近浅蓝色杯子，两者之间的可见间隙持续减小。",
+      "evidence": "画面中夹爪与杯子之间的距离明显缩短，直至夹爪到达杯子两侧。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.37,
+      "end_time_hint": 1.63,
+      "local_observation": "夹爪与杯子侧面接触，夹爪指间距开始减小。",
+      "evidence": "夹爪指与杯子表面间隙消失，随后夹爪指间距持续缩小。",
+      "object": "cup_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.63,
+      "end_time_hint": 2.0,
+      "local_observation": "夹爪持续闭合，夹紧杯子。",
+      "evidence": "可见夹爪指间距持续减小，直至达到最小开度。",
+      "object": "cup_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 3.87,
+      "local_observation": "杯子被夹爪稳定夹持，并随夹爪一起移动和抬起。",
+      "evidence": "杯子相对于夹爪的位置保持稳定，背景发生明显变化，表明物体随夹爪运动。",
+      "object": "cup_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.87,
+      "end_time_hint": 4.13,
+      "local_observation": "夹爪张开，杯子与夹爪分离并掉落。",
+      "evidence": "夹爪指间距增大，杯子不再受夹爪约束，从画面中消失。",
+      "object": "cup_1",
+      "target": null,
+      "action": "释放",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "lamp",
+      "description": "蓝色台灯",
+      "anchor_time": 1.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "laptop",
+      "description": "银色笔记本电脑",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "desk",
+      "description": "桌面",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category": "lamp",
+      "description": "位于桌面上方、带有蓝色灯罩的台灯",
+      "first_view_time": 0.63,
+      "last_view_time": 4.73
+    },
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "位于桌面右侧、带有苹果标志的银色笔记本电脑",
+      "first_view_time": 0.0,
+      "last_view_time": 5.83
+    },
+    {
+      "object_id": "desk_1",
+      "category": "desk",
+      "description": "作为背景支撑面的木质桌面",
+      "first_view_time": 0.0,
+      "last_view_time": 5.83
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪在 t=2.5s 左右接触并闭合夹持 lamp_1，随后 lamp_1 随夹爪移动，并在 t=4.5s 左右被释放。"
+    },
+    {
+      "object_id": "desk_1",
+      "roles": ["source", "target"],
+      "evidence": "lamp_1 初始放置在 desk_1 上，被夹爪提起后，最终又被放置回 desk_1 上。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 2.5,
+      "local_observation": "开始时夹爪张开，位于 lamp_1 附近；结束时夹爪两指接触 lamp_1 灯颈部位。",
+      "evidence": "夹爪向 lamp_1 移动，指间距逐渐减小直至接触物体表面。",
+      "object": "lamp_1",
+      "target": "desk_1",
+      "gripper_action": "闭合夹爪",
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 2.73,
+      "local_observation": "开始时夹爪接触 lamp_1；结束时夹爪已闭合，lamp_1 被稳定夹持。",
+      "evidence": "夹爪指间距进一步减小，lamp_1 随即开始随夹爪运动，建立控制关系。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": "抓取",
+      "arm_action": null,
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.73,
+      "end_time_hint": 4.5,
+      "local_observation": "开始时 lamp_1 被夹爪夹持并离开桌面；结束时 lamp_1 被移动至新位置上方。",
+      "evidence": "lamp_1 与夹爪保持相对静止，相对于 desk_1 发生位置变化，由原位置移动到新位置。",
+      "object": "lamp_1",
+      "target": "desk_1",
+      "gripper_action": "夹持",
+      "arm_action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 4.73,
+      "local_observation": "开始时 lamp_1 位于 desk_1 上方；结束时 lamp_1 接触桌面，夹爪张开。",
+      "evidence": "夹爪指间距增大，lamp_1 停止随夹爪运动并停留在桌面上，控制关系解除。",
+      "object": "lamp_1",
+      "target": "desk_1",
+      "gripper_action": "释放",
+      "arm_action": "放置",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.73,
+      "end_time_hint": 5.83,
+      "local_observation": "开始时夹爪已张开并离开 lamp_1；结束时夹爪处于静止或微调状态。",
+      "evidence": "夹爪与 lamp_1 分离，lamp_1 静止在桌面上，无进一步交互动作。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

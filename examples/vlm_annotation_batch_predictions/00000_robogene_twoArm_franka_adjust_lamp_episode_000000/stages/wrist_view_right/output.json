@@ -1,0 +1,87 @@
+{
+  "object_categories": [
+    {
+      "category_id": "lamp",
+      "category": "台灯"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category_id": "lamp",
+      "category": "台灯",
+      "description": "蓝色圆形底座台灯，带有黑色波纹软管灯杆和黑色电源线。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "interaction_reason": "夹爪与台灯底座接触并闭合，夹持住底座，随后台灯随夹爪移动，最后夹爪张开并分离。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.63,
+      "local_observation": "夹爪向蓝色台灯底座移动，两者之间的可见间隙逐渐减小。",
+      "evidence": "画面中夹爪与台灯底座的相对距离持续缩短。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 0.87,
+      "local_observation": "夹爪指接触到蓝色台灯底座表面，间隙消失。",
+      "evidence": "夹爪指与底座表面贴合，无明显间隙。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪指间距减小，执行闭合动作以夹持台灯底座。",
+      "evidence": "可见夹爪指持续向内收缩，直至紧贴底座两侧。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 5.5,
+      "local_observation": "夹爪保持闭合状态，台灯底座被稳定夹持，并随夹爪发生位置和姿态变化。",
+      "evidence": "台灯底座相对于夹爪的位置保持稳定，且随夹爪整体移动。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "夹持",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.5,
+      "end_time_hint": 6.0,
+      "local_observation": "夹爪指间距增大，执行张开动作，准备释放台灯底座。",
+      "evidence": "可见夹爪指持续向外扩张，与底座表面产生间隙。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "张开夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 6.0,
+      "end_time_hint": 6.63,
+      "local_observation": "夹爪与台灯底座分离，间隙重新出现并增大，夹爪移开。",
+      "evidence": "夹爪指完全离开底座表面，两者之间出现明显空隙。",
+      "object": "lamp_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}

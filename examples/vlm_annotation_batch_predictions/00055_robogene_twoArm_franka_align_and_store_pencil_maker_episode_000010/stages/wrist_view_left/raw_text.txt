@@ -1,0 +1,111 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    },
+    {
+      "category_id": "marker",
+      "category": "马克笔"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "白色网状笔筒，内部装有绿色和蓝色马克笔。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "marker_1",
+      "category_id": "marker",
+      "category": "马克笔",
+      "description": "蓝色马克笔，位于白色笔筒内，后被夹爪取出。",
+      "first_view_time": 0.0,
+      "best_view_time": 2.5,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_2",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "浅蓝色半透明杯子，内部装有橙色马克笔。",
+      "first_view_time": 2.73,
+      "best_view_time": 3.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "marker_1",
+      "interaction_reason": "夹爪闭合夹住蓝色马克笔，将其从杯_1 中取出，随后移动并释放到杯_2 中。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.0,
+      "local_observation": "夹爪向白色笔筒（cup_1）移动并靠近其中的蓝色马克笔（marker_1）。",
+      "evidence": "夹爪与笔筒及马克笔之间的视觉距离持续减小。",
+      "object": "marker_1",
+      "target": "cup_1",
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪闭合，夹住蓝色马克笔（marker_1）。",
+      "evidence": "夹爪指间距减小，与马克笔接触并产生约束。",
+      "object": "marker_1",
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.63,
+      "local_observation": "夹爪夹持蓝色马克笔（marker_1）向上提起，使其脱离白色笔筒（cup_1）。",
+      "evidence": "马克笔随夹爪运动，与笔筒之间出现明显间隙。",
+      "object": "marker_1",
+      "target": "cup_1",
+      "action": "取出",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.63,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪携带蓝色马克笔（marker_1）移动至浅蓝色杯子（cup_2）上方并对准。",
+      "evidence": "马克笔位置改变，最终位于杯_2 开口正上方。",
+      "object": "marker_1",
+      "target": "cup_2",
+      "action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 3.87,
+      "local_observation": "夹爪张开，释放蓝色马克笔（marker_1）落入浅蓝色杯子（cup_2）中。",
+      "evidence": "夹爪指间距增大，马克笔失去约束并掉入杯中。",
+      "object": "marker_1",
+      "target": "cup_2",
+      "action": "释放",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.87,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪张开状态下从浅蓝色杯子（cup_2）处移开。",
+      "evidence": "夹爪与杯子之间的距离增大。",
+      "object": null,
+      "target": null,
+      "action": "移动机械臂",
+      "uncertainty": null
+    }
+  ]
+}
+```

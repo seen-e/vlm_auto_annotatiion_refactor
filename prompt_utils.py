@@ -74,6 +74,8 @@ def _import_prompt_module(module_name: str):
             add_candidate(f"{package_name}.prompts.{prompt_suffix}")
         elif "." not in module_name:
             add_candidate(f"{package_name}.prompts.{module_name}")
+        else:
+            add_candidate(f"{package_name}.{module_name}")
 
     if prompt_suffix:
         add_candidate(f"prompts.{prompt_suffix}")
@@ -91,12 +93,36 @@ def _import_prompt_module(module_name: str):
     raise PromptRenderError(f"Failed to import prompt module {module_name!r}: {last_error}")
 
 
-def resolve_prompt_path(path: str) -> Any:
+def _prompt_package_from_module(module_name: str | None) -> str | None:
+    if not module_name:
+        return None
+    text = str(module_name).strip()
+    if "." not in text:
+        return None
+    return text.rsplit(".", 1)[0] or None
+
+
+def resolve_prompt_path(path: str, *, prompt_package: str | None = None) -> Any:
     """Resolve a prompt variable path like ``common.JSON_ONLY_RULE``."""
     if "." not in path:
         raise PromptRenderError(f"Prompt path must be '<module>.<variable>', got {path!r}")
     module_name, attr_path = path.split(".", 1)
-    module = _import_prompt_module(f"prompts.{module_name}")
+    candidates: list[str] = []
+    if prompt_package:
+        candidates.append(f"{prompt_package}.{module_name}")
+    candidates.append(f"prompts.{module_name}")
+
+    module = None
+    last_error: Exception | None = None
+    for candidate in candidates:
+        try:
+            module = _import_prompt_module(candidate)
+            break
+        except Exception as exc:
+            last_error = exc
+    if module is None:
+        raise PromptRenderError(f"Failed to import prompt path {path!r}: {last_error}")
+
     current: Any = module
     consumed = [module_name]
     for part in attr_path.split("."):
@@ -117,12 +143,18 @@ def resolve_prompt_path(path: str) -> Any:
     return current
 
 
-def render_template(template: str, *, context: dict[str, Any], extra_vars: dict[str, Any] | None = None) -> str:
+def render_template(
+    template: str,
+    *,
+    context: dict[str, Any],
+    extra_vars: dict[str, Any] | None = None,
+    prompt_package: str | None = None,
+) -> str:
     """Render ``{{ ... }}`` placeholders.
 
     Supported forms:
     - ``{{ ctx.input.instruction }}`` from pipeline context
-    - ``{{ prompt.common.JSON_ONLY_RULE }}`` from ``prompts/common.py``
+    - ``{{ prompt.common.JSON_ONLY_RULE }}`` from the current prompt package, falling back to ``prompts/common.py``
     - ``{{ old_var }}`` from ``extra_vars`` for backward compatibility
     """
     extra_vars = extra_vars or {}
@@ -132,7 +164,7 @@ def render_template(template: str, *, context: dict[str, Any], extra_vars: dict[
         if expr.startswith("ctx."):
             return _to_text(resolve_context_path(context, expr[len("ctx.") :]))
         if expr.startswith("prompt."):
-            return _to_text(resolve_prompt_path(expr[len("prompt.") :]))
+            return _to_text(resolve_prompt_path(expr[len("prompt.") :], prompt_package=prompt_package))
         if expr in extra_vars:
             return _to_text(extra_vars[expr])
         raise PromptRenderError(f"Unresolved prompt placeholder: {{{{ {expr} }}}}")

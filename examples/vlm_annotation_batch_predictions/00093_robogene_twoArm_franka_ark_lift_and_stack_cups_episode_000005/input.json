@@ -1,0 +1,13 @@
+{
+  "video_path": {
+    "camera_front": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_front\\episode_000005.mp4",
+    "camera_left": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_left\\episode_000005.mp4",
+    "camera_right": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_right\\episode_000005.mp4",
+    "camera_top": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_top\\episode_000005.mp4",
+    "camera_wrist_left": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_wrist_left\\episode_000005.mp4",
+    "camera_wrist_right": "C:\\Users\\34927\\Desktop\\vla_dataset\\robogene_twoArm_franka_ark_lift_and_stack_cups\\videos\\chunk-000\\observation.rgb_images.camera_wrist_right\\episode_000005.mp4"
+  },
+  "instruction": "\"Use the left arm to pick up the blue IKEA cup and rotate it 180 degrees. Then, use the right arm to pick up the yellow IKEA cup and place it on top of the blue cup, ensuring a stable stack",
+  "video_id": "episode_000005",
+  "task_index": 93
+}

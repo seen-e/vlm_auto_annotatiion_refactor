@@ -1,0 +1,105 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "lamp",
+      "description": "蓝色台灯",
+      "anchor_time": 1.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "laptop",
+      "description": "笔记本电脑",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "table",
+      "description": "桌面",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "lamp_1",
+      "category": "lamp",
+      "description": "蓝色台灯，初始位于画面右上方，后被另一机械臂抓取并移动",
+      "first_view_time": 0.5,
+      "last_view_time": 5.27
+    },
+    {
+      "object_id": "laptop_1",
+      "category": "laptop",
+      "description": "银色笔记本电脑，位于画面右下方桌面上",
+      "first_view_time": 0.0,
+      "last_view_time": 6.5
+    },
+    {
+      "object_id": "table_1",
+      "category": "table",
+      "description": "浅棕色桌面，作为所有物体的支撑面",
+      "first_view_time": 0.0,
+      "last_view_time": 6.5
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "lamp_1",
+      "roles": ["manipulated"],
+      "evidence": "另一机械臂（非本视角夹爪）在 t=1.0s 左右接触并抓取 lamp_1，随后将其提起并移动，本视角夹爪未直接操作该物体。"
+    },
+    {
+      "object_id": "table_1",
+      "roles": ["source"],
+      "evidence": "lamp_1 初始放置于 table_1 上，后被移离桌面。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.0,
+      "local_observation": "开始时夹爪静止，画面中可见 laptop_1 和部分桌面；结束时 lamp_1 进入画面右上角，尚未被操作。",
+      "evidence": "相机随机械臂轻微移动，lamp_1 从画面外进入视野，无夹爪动作发生。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "移动机械臂",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 2.0,
+      "local_observation": "开始时 lamp_1 位于桌面上；结束时另一机械臂已接触并夹持 lamp_1 底座。",
+      "evidence": "外部机械臂末端接近 lamp_1，夹爪闭合建立控制，lamp_1 开始随其运动。",
+      "object": "lamp_1",
+      "target": "table_1",
+      "gripper_action": null,
+      "arm_action": "抓取",
+      "uncertainty": "本视角夹爪未参与操作，仅观察外部机械臂动作。"
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 5.0,
+      "local_observation": "开始时 lamp_1 被外部机械臂夹持并悬空；结束时 lamp_1 被移至画面左上方并释放。",
+      "evidence": "lamp_1 持续随外部机械臂运动，位置从右下移至左上，最终脱离夹爪控制。",
+      "object": "lamp_1",
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "搬运",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 5.0,
+      "end_time_hint": 6.5,
+      "local_observation": "开始时 lamp_1 刚被释放；结束时画面恢复初始状态，仅见 laptop_1 和桌面。",
+      "evidence": "lamp_1 离开画面，本视角夹爪保持静止，无进一步操作。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "等待",
+      "uncertainty": null
+    }
+  ]
+}
+```

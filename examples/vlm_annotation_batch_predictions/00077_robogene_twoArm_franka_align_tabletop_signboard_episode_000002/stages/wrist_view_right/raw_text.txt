@@ -1,0 +1,108 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "tray",
+      "category": "托盘"
+    },
+    {
+      "category_id": "sign",
+      "category": "标牌"
+    },
+    {
+      "category_id": "bottle",
+      "category": "瓶子"
+    },
+    {
+      "category_id": "cup",
+      "category": "杯子"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "tray_1",
+      "category_id": "tray",
+      "category": "托盘",
+      "description": "红色长方形塑料托盘，表面光滑，边缘有凸起。",
+      "first_view_time": 0.0,
+      "best_view_time": 9.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "sign_1",
+      "category_id": "sign",
+      "category": "标牌",
+      "description": "白色长方形板，上面写有红色汉字“饮料展示区”，通过黑色夹具和木条支撑在托盘上。",
+      "first_view_time": 3.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "bottle_1",
+      "category_id": "bottle",
+      "category": "瓶子",
+      "description": "红色塑料瓶，瓶身有白色标签，倒在桌面上。",
+      "first_view_time": 2.5,
+      "best_view_time": 4.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "cup_1",
+      "category_id": "cup",
+      "category": "杯子",
+      "description": "白色圆柱形杯子，倒在桌面上，位于瓶子旁边。",
+      "first_view_time": 2.5,
+      "best_view_time": 4.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "tray_1",
+      "interaction_reason": "夹爪与红色托盘边缘直接接触，并推动托盘使其在桌面上发生位置移动。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 3.5,
+      "local_observation": "夹爪保持张开状态，向红色托盘方向移动，逐渐靠近目标。",
+      "evidence": "夹爪指间距保持较大且稳定，背景中红色托盘逐渐占据画面中心，距离明显减小。",
+      "object": "tray_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 3.5,
+      "end_time_hint": 4.5,
+      "local_observation": "夹爪前端接触红色托盘边缘，并轻微调整位置。",
+      "evidence": "夹爪与托盘边缘的视觉间隙消失，夹爪位置相对于托盘边缘发生微小变化。",
+      "object": "tray_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 4.5,
+      "end_time_hint": 16.0,
+      "local_observation": "夹爪持续抵住红色托盘边缘，推动托盘及上方的标牌组件在桌面上滑动。",
+      "evidence": "夹爪与托盘保持接触，托盘和标牌相对于桌面背景发生持续的位置变化，且与夹爪保持相对静止。",
+      "object": "tray_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 16.0,
+      "end_time_hint": 17.5,
+      "local_observation": "夹爪与托盘分离，托盘停止移动，夹爪向后撤回。",
+      "evidence": "夹爪与托盘之间重新出现可见间隙，托盘相对于桌面静止，夹爪向远离托盘方向移动。",
+      "object": "tray_1",
+      "target": null,
+      "action": "分离",
+      "uncertainty": null
+    }
+  ]
+}
+```

@@ -1,0 +1,92 @@
+```json
+{
+  "object_categories": [
+    {
+      "category_id": "laptop_stand",
+      "category": "笔记本支架"
+    },
+    {
+      "category_id": "laptop",
+      "category": "笔记本电脑"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "category_id": "laptop_stand",
+      "category": "笔记本支架",
+      "description": "黑色金属支架，具有镂空结构和调节臂，放置在桌面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 5.0,
+      "uncertainty": null
+    },
+    {
+      "object_id": "laptop_1",
+      "category_id": "laptop",
+      "category": "笔记本电脑",
+      "description": "银灰色笔记本电脑，可见侧面接口和机身，被放置在支架上。",
+      "first_view_time": 15.0,
+      "best_view_time": 18.0,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "laptop_stand_1",
+      "interaction_reason": "夹爪与支架底部接触，并在后续过程中推动支架移动，导致支架位置发生明显变化。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 1.5,
+      "local_observation": "夹爪保持张开状态，向画面右上方的黑色支架移动。",
+      "evidence": "夹爪与支架之间的视觉距离持续减小，夹爪指间距保持较大。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.5,
+      "end_time_hint": 2.0,
+      "local_observation": "夹爪指间距减小，夹爪闭合。",
+      "evidence": "左右夹爪指相互靠近直至接触或达到最小间距。",
+      "object": null,
+      "target": null,
+      "action": "闭合夹爪",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.0,
+      "end_time_hint": 5.0,
+      "local_observation": "夹爪接触支架底部，并推动支架在桌面上移动。",
+      "evidence": "夹爪与支架底部间隙消失，支架随夹爪运动发生位移。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "推动",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 15.0,
+      "end_time_hint": 18.0,
+      "local_observation": "一台笔记本电脑被放置在支架上，支架承受了笔记本电脑的重量。",
+      "evidence": "笔记本电脑出现在支架上方并与支架接触，支架位置因负载发生微调。",
+      "object": "laptop_stand_1",
+      "target": "laptop_1",
+      "action": "支撑",
+      "uncertainty": "放置笔记本电脑的动作主要由画面外执行，当前视角主要观察到支撑结果。"
+    },
+    {
+      "start_time_hint": 19.0,
+      "end_time_hint": 21.0,
+      "local_observation": "夹爪从支架附近撤回，远离支架和笔记本电脑。",
+      "evidence": "夹爪与支架之间的距离持续增大，画面视野逐渐开阔。",
+      "object": "laptop_stand_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}
+```

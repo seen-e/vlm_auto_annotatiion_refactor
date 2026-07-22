@@ -1,0 +1,67 @@
+{
+  "object_categories": [
+    {
+      "category_id": "button_box",
+      "category": "按钮盒"
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "button_box_1",
+      "category_id": "button_box",
+      "category": "按钮盒",
+      "description": "白色长方形控制盒，表面有红色、绿色和黑色圆形按钮，安装在墙面上。",
+      "first_view_time": 0.0,
+      "best_view_time": 1.5,
+      "uncertainty": null
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_box_1",
+      "interaction_reason": "夹爪指尖与按钮盒上的红色按钮发生直接接触，并施加压力导致按钮被按下，随后夹爪撤回，按钮恢复原状。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.87,
+      "local_observation": "夹爪向墙面上的按钮盒移动，逐渐靠近红色按钮。",
+      "evidence": "画面中按钮盒逐渐变大，夹爪与红色按钮之间的视觉间隙持续减小。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.87,
+      "end_time_hint": 1.0,
+      "local_observation": "夹爪指尖接触到红色按钮表面。",
+      "evidence": "夹爪指尖与红色按钮之间的间隙消失，两者发生物理接触。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "接触",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 2.37,
+      "local_observation": "夹爪持续按压红色按钮，按钮呈现被按下的状态。",
+      "evidence": "夹爪保持与按钮的接触位置，红色按钮相对于白色底座明显内陷，表明受到持续压力。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "按压",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.37,
+      "end_time_hint": 2.73,
+      "local_observation": "夹爪从红色按钮上撤回，与按钮盒分离。",
+      "evidence": "夹爪向后移动，与按钮盒之间重新出现明显间隙，按钮盒在画面中逐渐变小。",
+      "object": "button_box_1",
+      "target": null,
+      "action": "撤回",
+      "uncertainty": null
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+```json
+{
+  "object_categories": [
+    {
+      "category": "control_panel",
+      "description": "控制面板",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 1
+    },
+    {
+      "category": "button",
+      "description": "按钮",
+      "anchor_time": 0.5,
+      "max_simultaneously_visible": 4
+    },
+    {
+      "category": "cage",
+      "description": "金属笼",
+      "anchor_time": 0.0,
+      "max_simultaneously_visible": 1
+    }
+  ],
+  "objects": [
+    {
+      "object_id": "control_panel_1",
+      "category": "control_panel",
+      "description": "位于画面右侧墙壁上的白色矩形控制面板，包含多个按钮",
+      "first_view_time": 0.0,
+      "last_view_time": 4.83
+    },
+    {
+      "object_id": "button_1",
+      "category": "button",
+      "description": "位于control_panel_1左侧的大型红色圆形急停按钮",
+      "first_view_time": 0.0,
+      "last_view_time": 4.83
+    },
+    {
+      "object_id": "button_2",
+      "category": "button",
+      "description": "位于button_1右侧的小型红色圆形按钮",
+      "first_view_time": 0.27,
+      "last_view_time": 4.83
+    },
+    {
+      "object_id": "button_3",
+      "category": "button",
+      "description": "位于button_2右侧的绿色圆形按钮",
+      "first_view_time": 0.27,
+      "last_view_time": 4.83
+    },
+    {
+      "object_id": "button_4",
+      "category": "button",
+      "description": "位于button_3右侧的黑色旋钮或按钮",
+      "first_view_time": 0.37,
+      "last_view_time": 4.83
+    },
+    {
+      "object_id": "cage_1",
+      "category": "cage",
+      "description": "位于画面左侧的白色金属网格笼状结构",
+      "first_view_time": 0.0,
+      "last_view_time": 4.83
+    }
+  ],
+  "interaction_objects": [
+    {
+      "object_id": "button_1",
+      "roles": ["manipulated"],
+      "evidence": "夹爪在0.63s至1.73s期间与button_1直接接触并施加压力，导致按钮状态改变（被按下），随后夹爪撤回。"
+    },
+    {
+      "object_id": "control_panel_1",
+      "roles": ["source"],
+      "evidence": "button_1固定在control_panel_1上，是操作发生的支撑结构。"
+    }
+  ],
+  "events": [
+    {
+      "start_time_hint": 0.0,
+      "end_time_hint": 0.63,
+      "local_observation": "开始时夹爪位于画面下方，远离control_panel_1；结束时夹爪已移动至button_1正前方，准备接触。",
+      "evidence": "夹爪相对于control_panel_1的距离持续减小，画面中control_panel_1逐渐放大，表明机械臂正在接近目标。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": null,
+      "arm_action": "接近",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 0.63,
+      "end_time_hint": 1.0,
+      "local_observation": "开始时夹爪指尖接触button_1表面；结束时button_1明显被按下，呈现凹陷状态。",
+      "evidence": "夹爪向前推进，button_1从凸起状态变为按下状态，夹爪保持闭合或微张以维持接触压力。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": "夹持",
+      "arm_action": "按压",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 1.0,
+      "end_time_hint": 1.73,
+      "local_observation": "开始时button_1处于被按下状态，夹爪保持接触；结束时夹爪开始向后撤回，但仍与button_1接触。",
+      "evidence": "夹爪维持对button_1的压力，button_1保持按下状态，随后夹爪缓慢后退，button_1随之弹起或保持接触直到分离。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": "夹持",
+      "arm_action": "等待",
+      "uncertainty": "button_1是否在夹爪撤回前已自动弹起不确定，但夹爪动作显示为维持接触后撤回。"
+    },
+    {
+      "start_time_hint": 1.73,
+      "end_time_hint": 2.5,
+      "local_observation": "开始时夹爪与button_1分离，向后移动；结束时夹爪回到初始远离位置，control_panel_1在画面中变小。",
+      "evidence": "夹爪与control_panel_1的距离持续增加，button_1恢复未按下状态（或不再被夹爪遮挡），机械臂执行撤回动作。",
+      "object": "button_1",
+      "target": "control_panel_1",
+      "gripper_action": "释放",
+      "arm_action": "撤回",
+      "uncertainty": null
+    },
+    {
+      "start_time_hint": 2.5,
+      "end_time_hint": 4.83,
+      "local_observation": "开始时夹爪位于远离control_panel_1的位置；结束时夹爪保持静止，无明显动作。",
+      "evidence": "夹爪与control_panel_1保持固定距离，无相对运动，场景稳定。",
+      "object": null,
+      "target": null,
+      "gripper_action": null,
+      "arm_action": "等待",
+      "uncertainty": null
+    }
+  ]
+}
+```
