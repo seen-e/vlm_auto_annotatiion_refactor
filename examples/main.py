@@ -9,8 +9,6 @@ For a quick pipeline check without calling the VLM:
     python examples/main.py --dry-run --limit 1
 
 Per-task outputs are saved under ``examples/vlm_annotation_batch_predictions``.
-After refinement completes, a standardized trajectory JSON is saved to each
-task's ``trajectory_path`` when present, otherwise to ``--summary``.
 """
 
 from __future__ import annotations
@@ -39,23 +37,16 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
-DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogene_twoArm_franka_selected_all_tasks_test_data.json"
+DEFAULT_TASKS_PATH = SCRIPT_DIR / "data" / "robocoin_view_combos_max20_local_paths_preferred_head_view_subtask_splits.json"
 
 
-def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
+def _ensure_imports() -> Any:
     """Import pipeline helpers from the current package directory name."""
     if str(PACKAGE_PARENT) not in sys.path:
         sys.path.insert(0, str(PACKAGE_PARENT))
 
     pipeline_module = importlib.import_module(f"{PACKAGE_NAME}.pipeline")
-    trajectory_module = importlib.import_module(f"{PACKAGE_NAME}.trajectory_summary")
-    return (
-        pipeline_module.run_pipeline,
-        trajectory_module.build_trajectory,
-        trajectory_module.resolve_summary_output_path,
-        trajectory_module.save_trajectory,
-        trajectory_module.register_unique_output_path,
-    )
+    return pipeline_module.run_pipeline
 
 
 def _load_json_list(path: Path) -> list[dict[str, Any]]:
@@ -104,6 +95,44 @@ def _resolve_video_path(value: Any, base_dir: Path) -> Any:
     return str((base_dir / path).resolve())
 
 
+def _format_annotation_subtasks(subtasks: Any) -> str:
+    if not isinstance(subtasks, list):
+        raise ValueError("annotation subtasks must be a list")
+
+    lines = ["["]
+    for index, subtask in enumerate(subtasks):
+        if not isinstance(subtask, dict):
+            raise ValueError(f"annotation subtask #{index} must be a JSON object")
+        comma = "," if index < len(subtasks) - 1 else ""
+        subtask_id = subtask.get("subtask_id")
+        subtask_text = subtask.get("subtask")
+        start_time = subtask.get("start_time")
+        end_time = subtask.get("end_time")
+        start_text = "null" if start_time is None else f"{float(start_time):.2f}"
+        end_text = "null" if end_time is None else f"{float(end_time):.2f}"
+        lines.extend(
+            [
+                "  {",
+                f"    \"subtask_id\": {json.dumps(subtask_id, ensure_ascii=False)},",
+                f"    \"subtask\": {json.dumps(subtask_text, ensure_ascii=False)},",
+                f"    \"start_time\": {start_text},",
+                f"    \"end_time\": {end_text}",
+                f"  }}{comma}",
+            ]
+        )
+    lines.append("]")
+    return "\n".join(lines)
+
+
+def _extract_scene_annotation(scenes: Any) -> str:
+    if not isinstance(scenes, list) or not scenes:
+        return ""
+    first_scene = scenes[0]
+    if not isinstance(first_scene, dict):
+        return ""
+    return str(first_scene.get("scene_annotation") or "")
+
+
 def _slice_tasks(tasks: list[dict[str, Any]], *, start_index: int, limit: int | None) -> list[tuple[int, dict[str, Any]]]:
     end_index = len(tasks) if limit is None else min(len(tasks), start_index + limit)
     return list(enumerate(tasks[start_index:end_index], start=start_index))
@@ -121,6 +150,9 @@ def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> 
         "input": {
             "video_path": _resolve_video_path(item["video_path"], task_base_dir),
             "instruction": str(instruction),
+            "task": str(instruction),
+            "scene_annotation": _extract_scene_annotation(item.get("scenes")),
+            "subtasks": _format_annotation_subtasks(item.get("subtasks", [])),
             "video_id": episode_id,
             "task_index": index,
         },
@@ -128,10 +160,25 @@ def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> 
     }
 
 
-def _refinement_record(context: dict[str, Any]) -> dict[str, Any] | None:
-    record = context.get("stages", {}).get("refinement")
-    return record if isinstance(record, dict) else None
+def _selected_output_json_paths(context: dict[str, Any]) -> list[dict[str, str]]:
+    run_dir = context.get("run_dir")
+    if not run_dir:
+        raise RuntimeError("run_dir was not set; stage output.json cannot be verified")
+    stage_names = context.get("pipeline", {}).get("selected_stages") or []
+    if not stage_names:
+        raise RuntimeError("selected_stages was not set; stage output.json cannot be verified")
 
+    outputs: list[dict[str, str]] = []
+    missing: list[str] = []
+    for stage_name in stage_names:
+        output_path = Path(run_dir) / "stages" / str(stage_name) / "output.json"
+        if output_path.exists():
+            outputs.append({"stage": str(stage_name), "output_json": str(output_path)})
+        else:
+            missing.append(str(output_path))
+    if missing:
+        raise RuntimeError(f"stage output.json was not saved: {missing}")
+    return outputs
 
 def _run_one_task_worker(
     *,
@@ -141,11 +188,10 @@ def _run_one_task_worker(
     task_base_dir: str,
     config: dict[str, Any],
     output_dir: str,
-    summary_path: str,
     run_options: dict[str, Any],
 ) -> dict[str, Any]:
     """Run one episode pipeline in a worker process."""
-    run_pipeline, build_trajectory, resolve_summary_output_path, _save_trajectory, _register_unique_output_path = _ensure_imports()
+    run_pipeline = _ensure_imports()
     started_at = time.perf_counter()
 
     dataset_name = _infer_dataset_name(item.get("video_path"))
@@ -164,21 +210,7 @@ def _run_one_task_worker(
         run_name=run_name,
         save_results=True,
     )
-
-    trajectory = None
-    trajectory_path = None
-    refinement_record = _refinement_record(context)
-    if refinement_record is not None:
-        trajectory = build_trajectory(
-            task=item,
-            refinement_output=refinement_record.get("output"),
-            video_meta=refinement_record.get("video_meta"),
-        )
-        trajectory_path = resolve_summary_output_path(
-            item,
-            Path(summary_path),
-            task_base_dir=Path(task_base_dir),
-        )
+    output_json_paths = _selected_output_json_paths(context)
 
     return {
         "index": index,
@@ -186,37 +218,59 @@ def _run_one_task_worker(
         "episode_id": episode_id,
         "run_name": run_name,
         "run_dir": context.get("run_dir"),
-        "trajectory": trajectory,
-        "trajectory_path": str(trajectory_path) if trajectory_path is not None else None,
+        "output_json_paths": output_json_paths,
         "elapsed_seconds": time.perf_counter() - started_at,
     }
 
 
-def _handle_task_success(
-    result: dict[str, Any],
-    *,
-    register_unique_output_path: Any,
-    save_trajectory: Any,
-    used_trajectory_paths: dict[str, str],
-) -> None:
-    trajectory = result.get("trajectory")
-    trajectory_path = result.get("trajectory_path")
-    if trajectory is not None and trajectory_path is not None:
-        register_unique_output_path(trajectory_path, str(result["episode_id"]), used_trajectory_paths)
-        save_trajectory(trajectory, trajectory_path)
-        print(f"  trajectory -> {trajectory_path}")
-    else:
-        print("  trajectory skipped -> refinement stage was not completed")
+def _success_record(result: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "episode_id": result.get("episode_id"),
+        "index": result.get("index"),
+        "run_name": result.get("run_name"),
+        "run_dir": result.get("run_dir"),
+        "output_json_paths": result.get("output_json_paths") or [],
+        "elapsed_seconds": result.get("elapsed_seconds"),
+    }
 
+
+def _failure_record(index: int, item: dict[str, Any], error_text: str) -> dict[str, Any]:
+    dataset_name = _infer_dataset_name(item.get("video_path"))
+    episode_id = str(item.get("episode_id") or f"item_{index:05d}")
+    return {
+        "episode_id": episode_id,
+        "index": index,
+        "run_name": _safe_name(f"{index:05d}_{dataset_name}_{episode_id}"),
+        "error": error_text,
+    }
+
+
+def _save_batch_status(output_dir: Path, successful: list[dict[str, Any]], failed: list[dict[str, Any]]) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    (output_dir / "successful_episodes.json").write_text(
+        json.dumps(successful, ensure_ascii=False, indent=2, default=str),
+        encoding="utf-8",
+    )
+    (output_dir / "failed_episodes.json").write_text(
+        json.dumps(failed, ensure_ascii=False, indent=2, default=str),
+        encoding="utf-8",
+    )
+
+
+def _handle_task_success(result: dict[str, Any]) -> None:
     elapsed_seconds = result.get("elapsed_seconds")
     if elapsed_seconds is not None:
         print(f"  elapsed -> {float(elapsed_seconds):.2f}s")
+    output_paths = result.get("output_json_paths") or []
+    if output_paths:
+        output_summary = ", ".join(str(item.get("output_json")) for item in output_paths if isinstance(item, dict))
+        print(f"  output.json -> {output_summary}")
     print(f"  ok -> {result.get('run_dir')}")
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Batch run configured VLM pipeline on robot_mind2 tasks.")
-    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config_dual_gripper.yaml"), help="Path to config.yaml.")
+    parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config_annotation.yaml"), help="Path to config.yaml.")
     parser.add_argument(
         "--tasks",
         default=str(DEFAULT_TASKS_PATH),
@@ -226,11 +280,6 @@ def parse_args() -> argparse.Namespace:
         "--output-dir",
         default=str(SCRIPT_DIR / "vlm_annotation_batch_predictions"),
         help="Directory for per-task outputs.",
-    )
-    parser.add_argument(
-        "--summary",
-        default=str(SCRIPT_DIR / "trajectory.json"),
-        help="Path for aggregate summary JSON.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Run video/prompt pipeline without real model calls.")
     parser.add_argument("--start-index", type=int, default=0, help="Start task index, inclusive.")
@@ -257,18 +306,11 @@ def main() -> None:
     if args.workers < 1:
         raise ValueError("--workers must be >= 1")
 
-    (
-        run_pipeline,
-        build_trajectory,
-        resolve_summary_output_path,
-        save_trajectory,
-        register_unique_output_path,
-    ) = _ensure_imports()
+    _ensure_imports()
 
     config_path = Path(args.config)
     tasks_path = Path(args.tasks)
     output_dir = Path(args.output_dir)
-    summary_path = Path(args.summary)
 
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     tasks = _load_json_list(tasks_path)
@@ -276,14 +318,15 @@ def main() -> None:
     selected_tasks = _slice_tasks(tasks, start_index=args.start_index, limit=args.limit)
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    used_trajectory_paths: dict[str, str] = {}
+    successful_episodes: list[dict[str, Any]] = []
+    failed_episodes: list[dict[str, Any]] = []
+    _save_batch_status(output_dir, successful_episodes, failed_episodes)
     ok_count = 0
     error_count = 0
 
     print(f"Loaded config: {config_path}")
     print(f"Loaded tasks: {tasks_path} ({len(tasks)} total, {len(selected_tasks)} selected)")
     print(f"Saving per-task outputs to: {output_dir}")
-    print(f"Default trajectory output: {summary_path}")
     print(f"Workers: {args.workers}")
 
     run_options = {
@@ -307,7 +350,6 @@ def main() -> None:
             "task_base_dir": str(task_base_dir),
             "config": config,
             "output_dir": str(output_dir),
-            "summary_path": str(summary_path),
             "run_options": run_options,
         }
 
@@ -316,17 +358,16 @@ def main() -> None:
             print_task_header(index, item)
             try:
                 result = _run_one_task_worker(**build_worker_kwargs(index, item))
-                _handle_task_success(
-                    result,
-                    register_unique_output_path=register_unique_output_path,
-                    save_trajectory=save_trajectory,
-                    used_trajectory_paths=used_trajectory_paths,
-                )
+                _handle_task_success(result)
+                successful_episodes.append(_success_record(result))
+                _save_batch_status(output_dir, successful_episodes, failed_episodes)
                 ok_count += 1
             except Exception as exc:
                 error_text = f"{type(exc).__name__}: {exc}"
                 error_count += 1
                 print(f"  error -> {error_text}")
+                failed_episodes.append(_failure_record(index, item, error_text))
+                _save_batch_status(output_dir, successful_episodes, failed_episodes)
                 if args.fail_fast:
                     traceback.print_exc()
                     raise
@@ -344,17 +385,16 @@ def main() -> None:
                 print_task_header(index, item)
                 try:
                     result = future.result()
-                    _handle_task_success(
-                        result,
-                        register_unique_output_path=register_unique_output_path,
-                        save_trajectory=save_trajectory,
-                        used_trajectory_paths=used_trajectory_paths,
-                    )
+                    _handle_task_success(result)
+                    successful_episodes.append(_success_record(result))
+                    _save_batch_status(output_dir, successful_episodes, failed_episodes)
                     ok_count += 1
                 except Exception as exc:
                     error_text = f"{type(exc).__name__}: {exc}"
                     error_count += 1
                     print(f"  error -> {error_text}")
+                    failed_episodes.append(_failure_record(index, item, error_text))
+                    _save_batch_status(output_dir, successful_episodes, failed_episodes)
                     if args.fail_fast:
                         for pending in future_to_task:
                             pending.cancel()
@@ -366,8 +406,7 @@ def main() -> None:
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0
     print(
         f"\nDone. ok={ok_count}, error={error_count}, "
-        f"total_elapsed={total_elapsed:.2f}s, avg_per_episode={average_elapsed:.2f}s, "
-        f"default_trajectory={summary_path}"
+        f"total_elapsed={total_elapsed:.2f}s, avg_per_episode={average_elapsed:.2f}s"
     )
 
 

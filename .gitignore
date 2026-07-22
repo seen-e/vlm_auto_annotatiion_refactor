@@ -12,6 +12,8 @@ env/
 outputs/
 examples/batch_predictions/
 examples/batch_predictions.json
+examples/*.json
+examples/**/*.json
 examples/test_data/
 
 .pytest_cache/
