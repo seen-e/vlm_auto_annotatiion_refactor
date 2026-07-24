@@ -8,7 +8,13 @@ from typing import Any
 
 from .json_utils import extract_json
 from .model_client import call_vlm_with_metadata
-from .prompt_utils import _prompt_package_from_module, load_stage_prompt, render_template, resolve_input_fields
+from .prompt_utils import (
+    _prompt_package_from_module,
+    load_stage_prompt,
+    render_template,
+    resolve_input_fields,
+    resolve_robot_type_prompt,
+)
 from .video_process import build_video_inputs
 
 
@@ -30,7 +36,7 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
     if stage_name == "scene":
         return {
             "scene_summary": "dry_run scene output",
-            "executors": [{"executor_id": "single", "description": "dry-run executor"}],
+            "executors": [{"executor_id": "arm_1", "description": "dry-run executor"}],
             "objects": [{"object_id": "object", "description": "dry-run object"}],
             "interaction_objects": [{"object_id": "object", "description": "dry-run object"}],
             "touched_objects": [{"object_id": "object", "description": "dry-run object"}],
@@ -41,7 +47,7 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
         return {
             "executor_timelines": [
                 {
-                    "executor": "single",
+                    "executor": "arm_1",
                     "atomic_actions": [
                         {
                             "step_id": 1,
@@ -56,7 +62,7 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
             "action_sequence": [
                 {
                     "step_id": 1,
-                    "executor": "single",
+                    "executor": "arm_1",
                     "action": "grasp",
                     "object": "object",
                     "evidence": "dry-run evidence",
@@ -69,7 +75,7 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
             "refined_segments": [
                 {
                     "step_id": 1,
-                    "executor": "single",
+                    "executor": "arm_1",
                     "action": "grasp",
                     "object": "object",
                     "start_time": 0.0,
@@ -87,6 +93,13 @@ def _ensure_context(context: dict[str, Any]) -> None:
     context.setdefault("stages", {})
     if "video_path" not in context["input"]:
         raise StageRunnerError("context['input']['video_path'] is required")
+
+
+def _configured_robot_type(config: dict[str, Any]) -> str:
+    robot_cfg = config.get("robot") or {}
+    if isinstance(robot_cfg, dict) and robot_cfg.get("type"):
+        return str(robot_cfg["type"])
+    return str(config.get("robot_type") or "bimanual")
 
 
 def _safe_path_name(value: Any, *, default: str) -> str:
@@ -279,6 +292,17 @@ def run_stage(
         prompt_cfg = stage_cfg.get("prompt") or {}
         prompt_module = str(prompt_cfg.get("module") or "") if isinstance(prompt_cfg, dict) else ""
         prompt_package = _prompt_package_from_module(prompt_module)
+        robot_type = _configured_robot_type(config)
+        context["robot_type"] = robot_type
+        context["robot_type_prompt"] = resolve_robot_type_prompt(robot_type, prompt_package=prompt_package)
+        fusion_output = ((context.get("stages") or {}).get("fusion") or {}).get("output")
+        analysis_output = ((context.get("stages") or {}).get("analysis") or {}).get("output")
+        if fusion_output is not None:
+            context["analysis_for_refinement"] = fusion_output
+            context["analysis_source_for_refinement"] = "fusion"
+        elif analysis_output is not None:
+            context["analysis_for_refinement"] = analysis_output
+            context["analysis_source_for_refinement"] = "analysis"
         system_prompt = render_template(system_template, context=context, extra_vars=extra_vars, prompt_package=prompt_package)
         user_prompt = render_template(user_template, context=context, extra_vars=extra_vars, prompt_package=prompt_package)
 

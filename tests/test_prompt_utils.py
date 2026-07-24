@@ -3,7 +3,7 @@ from __future__ import annotations
 import importlib
 import sys
 
-from prompt_utils import _prompt_package_from_module, render_template
+from prompt_utils import _prompt_package_from_module, render_template, resolve_robot_type_prompt
 
 
 def test_prompt_placeholder_prefers_current_prompt_package(tmp_path, monkeypatch) -> None:
@@ -27,3 +27,11 @@ def test_prompt_placeholder_prefers_current_prompt_package(tmp_path, monkeypatch
 def test_prompt_package_is_derived_from_stage_prompt_module() -> None:
     assert _prompt_package_from_module("prompts_4stage.gripper_prompt") == "prompts_4stage"
     assert _prompt_package_from_module("prompts.scene_dual") == "prompts"
+
+
+def test_resolve_robot_type_prompt_uses_configured_type() -> None:
+    single_prompt = resolve_robot_type_prompt("single_arm", prompt_package="prompts")
+    bimanual_prompt = resolve_robot_type_prompt("bimanual", prompt_package="prompts")
+
+    assert 'executor 固定使用 "arm_1"' in single_prompt
+    assert 'executor 仅使用 "arm_1" 或 "arm_2"' in bimanual_prompt

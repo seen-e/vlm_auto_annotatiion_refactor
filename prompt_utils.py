@@ -143,6 +143,14 @@ def resolve_prompt_path(path: str, *, prompt_package: str | None = None) -> Any:
     return current
 
 
+def resolve_robot_type_prompt(robot_type: str, *, prompt_package: str | None = None) -> str:
+    """Resolve the configured robot type through the active prompt package."""
+    resolver = resolve_prompt_path("robot_type.get_robot_type_prompt", prompt_package=prompt_package)
+    if not callable(resolver):
+        raise PromptRenderError("prompt.robot_type.get_robot_type_prompt must be callable")
+    return _to_text(resolver(str(robot_type)))
+
+
 def render_template(
     template: str,
     *,

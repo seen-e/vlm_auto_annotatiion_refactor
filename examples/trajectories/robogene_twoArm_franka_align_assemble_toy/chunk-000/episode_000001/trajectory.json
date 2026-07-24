@@ -1,0 +1,447 @@
+{
+  "episode_id": "episode_000001",
+  "robot_name": null,
+  "original_dataset_id": null,
+  "duration": 19.1,
+  "start_time": 0.0,
+  "end_time": 19.1,
+  "start_frame": 0,
+  "end_frame": 572,
+  "keyframes": [
+    0,
+    22,
+    45,
+    52,
+    60,
+    75,
+    90,
+    98,
+    105,
+    112,
+    120,
+    135,
+    150,
+    158,
+    165,
+    172,
+    180,
+    188,
+    195,
+    202,
+    210,
+    330,
+    345,
+    360,
+    368,
+    375,
+    382,
+    390,
+    398,
+    405,
+    412,
+    420,
+    435,
+    450,
+    465,
+    480,
+    495,
+    518,
+    540,
+    555,
+    572
+  ],
+  "L1_task": "assemble early education toy building blocks",
+  "sense": null,
+  "category": null,
+  "segments": {
+    "arm_1": [
+      {
+        "segment_id": 0,
+        "phase": "接近",
+        "start_time": 0.0,
+        "end_time": 1.5,
+        "start_frame": 0,
+        "end_frame": 45,
+        "keyframes": [
+          0,
+          22,
+          45
+        ],
+        "caption": "arm_1 接近 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 从画面左下方起始位置开始移动，末端向画面左上方的粉色拼图块（puzzle_piece_1）靠近，夹爪保持张开状态，直至末端到达物体上方准备抓取。",
+        "source": "action"
+      },
+      {
+        "segment_id": 1,
+        "phase": "抓取",
+        "start_time": 1.5,
+        "end_time": 2.0,
+        "start_frame": 45,
+        "end_frame": 60,
+        "keyframes": [
+          45,
+          52,
+          60
+        ],
+        "caption": "arm_1 抓取 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 末端到达 puzzle_piece_1 上方，夹爪闭合夹住物体，物体被约束并随末端轻微移动，确认抓取动作完成。",
+        "source": "action"
+      },
+      {
+        "segment_id": 2,
+        "phase": "搬运",
+        "start_time": 2.0,
+        "end_time": 3.0,
+        "start_frame": 60,
+        "end_frame": 90,
+        "keyframes": [
+          60,
+          75,
+          90
+        ],
+        "caption": "arm_1 搬运 puzzle_piece_1 puzzle_board_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": "puzzle_board_1",
+        "evidence": "arm_1 夹持 puzzle_piece_1 从桌面左上方移动至拼图板（puzzle_board_1）上方，物体随末端同步位移，夹爪保持闭合。",
+        "source": "action"
+      },
+      {
+        "segment_id": 3,
+        "phase": "放入",
+        "start_time": 3.0,
+        "end_time": 3.5,
+        "start_frame": 90,
+        "end_frame": 105,
+        "keyframes": [
+          90,
+          98,
+          105
+        ],
+        "caption": "arm_1 放入 puzzle_piece_1 puzzle_board_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": "puzzle_board_1",
+        "evidence": "arm_1 末端垂直向下运动，将 puzzle_piece_1 放入 puzzle_board_1 的对应凹槽中，物体进入凹槽区域。",
+        "source": "action"
+      },
+      {
+        "segment_id": 4,
+        "phase": "释放",
+        "start_time": 3.5,
+        "end_time": 4.0,
+        "start_frame": 105,
+        "end_frame": 120,
+        "keyframes": [
+          105,
+          112,
+          120
+        ],
+        "caption": "arm_1 释放 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 夹爪张开释放 puzzle_piece_1，末端抬起并与物体分离，随后向后撤回。",
+        "source": "action"
+      },
+      {
+        "segment_id": 5,
+        "phase": "接近",
+        "start_time": 14.5,
+        "end_time": 15.5,
+        "start_frame": 435,
+        "end_frame": 465,
+        "keyframes": [
+          435,
+          450,
+          465
+        ],
+        "caption": "arm_1 接近 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 从等待位置再次启动，末端向 puzzle_board_1 移动，接近已放置的 puzzle_piece_1 区域。",
+        "source": "action"
+      },
+      {
+        "segment_id": 6,
+        "phase": "调整物体位置",
+        "start_time": 15.5,
+        "end_time": 16.5,
+        "start_frame": 465,
+        "end_frame": 495,
+        "keyframes": [
+          465,
+          480,
+          495
+        ],
+        "caption": "arm_1 调整物体位置 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 末端接触 puzzle_piece_1，在板上方进行小范围位置调整，夹爪保持闭合接触状态。",
+        "source": "action"
+      },
+      {
+        "segment_id": 7,
+        "phase": "按住",
+        "start_time": 16.5,
+        "end_time": 18.0,
+        "start_frame": 495,
+        "end_frame": 540,
+        "keyframes": [
+          495,
+          518,
+          540
+        ],
+        "caption": "arm_1 按住 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 保持接触并对 puzzle_piece_1 施加压力，末端静止按压，夹爪视角记录闭合状态持续。",
+        "source": "action"
+      },
+      {
+        "segment_id": 8,
+        "phase": "撤回",
+        "start_time": 18.0,
+        "end_time": 19.07,
+        "start_frame": 540,
+        "end_frame": 572,
+        "keyframes": [
+          540,
+          555,
+          572
+        ],
+        "caption": "arm_1 撤回 puzzle_piece_1",
+        "success": null,
+        "executor": "arm_1",
+        "object": "puzzle_piece_1",
+        "target": null,
+        "evidence": "arm_1 夹爪张开，末端抬起并与 puzzle_piece_1 分离，随后撤回至左下方初始位置。",
+        "source": "action"
+      }
+    ],
+    "arm_2": [
+      {
+        "segment_id": 0,
+        "phase": "接近",
+        "start_time": 4.0,
+        "end_time": 5.0,
+        "start_frame": 120,
+        "end_frame": 150,
+        "keyframes": [
+          120,
+          135,
+          150
+        ],
+        "caption": "arm_2 接近 number_block_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_1",
+        "target": null,
+        "evidence": "arm_2 从画面右下方起始位置开始移动，末端向画面右上方的橙色数字积木（number_block_1）靠近，夹爪保持张开状态。",
+        "source": "action"
+      },
+      {
+        "segment_id": 1,
+        "phase": "抓取",
+        "start_time": 5.0,
+        "end_time": 5.5,
+        "start_frame": 150,
+        "end_frame": 165,
+        "keyframes": [
+          150,
+          158,
+          165
+        ],
+        "caption": "arm_2 抓取 number_block_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_1",
+        "target": null,
+        "evidence": "arm_2 末端到达 number_block_1 上方，夹爪闭合夹住积木，物体被约束。",
+        "source": "action"
+      },
+      {
+        "segment_id": 2,
+        "phase": "搬运",
+        "start_time": 5.5,
+        "end_time": 6.0,
+        "start_frame": 165,
+        "end_frame": 180,
+        "keyframes": [
+          165,
+          172,
+          180
+        ],
+        "caption": "arm_2 搬运 number_block_1 puzzle_board_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_1",
+        "target": "puzzle_board_1",
+        "evidence": "arm_2 夹持 number_block_1 从桌面右上方移动至 puzzle_board_1 上方，物体随末端同步位移。",
+        "source": "action"
+      },
+      {
+        "segment_id": 3,
+        "phase": "放入",
+        "start_time": 6.0,
+        "end_time": 6.5,
+        "start_frame": 180,
+        "end_frame": 195,
+        "keyframes": [
+          180,
+          188,
+          195
+        ],
+        "caption": "arm_2 放入 number_block_1 puzzle_board_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_1",
+        "target": "puzzle_board_1",
+        "evidence": "arm_2 末端垂直向下运动，将 number_block_1 放入 puzzle_board_1 的对应凹槽中。",
+        "source": "action"
+      },
+      {
+        "segment_id": 4,
+        "phase": "释放",
+        "start_time": 6.5,
+        "end_time": 7.0,
+        "start_frame": 195,
+        "end_frame": 210,
+        "keyframes": [
+          195,
+          202,
+          210
+        ],
+        "caption": "arm_2 释放 number_block_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_1",
+        "target": null,
+        "evidence": "arm_2 夹爪张开释放 number_block_1，末端抬起并与物体分离。",
+        "source": "action"
+      },
+      {
+        "segment_id": 5,
+        "phase": "接近",
+        "start_time": 11.0,
+        "end_time": 12.0,
+        "start_frame": 330,
+        "end_frame": 360,
+        "keyframes": [
+          330,
+          345,
+          360
+        ],
+        "caption": "arm_2 接近 number_block_2",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_2",
+        "target": null,
+        "evidence": "arm_2 从 puzzle_board_1 区域移动靠近桌面右上方的红色小积木（number_block_2），夹爪张开准备抓取。",
+        "source": "action"
+      },
+      {
+        "segment_id": 6,
+        "phase": "抓取",
+        "start_time": 12.0,
+        "end_time": 12.5,
+        "start_frame": 360,
+        "end_frame": 375,
+        "keyframes": [
+          360,
+          368,
+          375
+        ],
+        "caption": "arm_2 抓取 number_block_2",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_2",
+        "target": null,
+        "evidence": "arm_2 末端到达 number_block_2 上方，夹爪闭合夹住积木。",
+        "source": "action"
+      },
+      {
+        "segment_id": 7,
+        "phase": "搬运",
+        "start_time": 12.5,
+        "end_time": 13.0,
+        "start_frame": 375,
+        "end_frame": 390,
+        "keyframes": [
+          375,
+          382,
+          390
+        ],
+        "caption": "arm_2 搬运 number_block_2 puzzle_board_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_2",
+        "target": "puzzle_board_1",
+        "evidence": "arm_2 夹持 number_block_2 移动至 puzzle_board_1 上方，物体随末端同步位移。",
+        "source": "action"
+      },
+      {
+        "segment_id": 8,
+        "phase": "放入",
+        "start_time": 13.0,
+        "end_time": 13.5,
+        "start_frame": 390,
+        "end_frame": 405,
+        "keyframes": [
+          390,
+          398,
+          405
+        ],
+        "caption": "arm_2 放入 number_block_2 puzzle_board_1",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_2",
+        "target": "puzzle_board_1",
+        "evidence": "arm_2 末端垂直向下运动，将 number_block_2 放入 puzzle_board_1 的对应凹槽中。",
+        "source": "action"
+      },
+      {
+        "segment_id": 9,
+        "phase": "释放",
+        "start_time": 13.5,
+        "end_time": 14.0,
+        "start_frame": 405,
+        "end_frame": 420,
+        "keyframes": [
+          405,
+          412,
+          420
+        ],
+        "caption": "arm_2 释放 number_block_2",
+        "success": null,
+        "executor": "arm_2",
+        "object": "number_block_2",
+        "target": null,
+        "evidence": "arm_2 夹爪张开释放 number_block_2，末端抬起并与物体分离，随后撤回。",
+        "source": "action"
+      }
+    ]
+  },
+  "quality": {
+    "caption_video_match": null,
+    "object_presence_rate": null,
+    "status": "UNKNOWN"
+  }
+}

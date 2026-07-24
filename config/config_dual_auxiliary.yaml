@@ -30,6 +30,11 @@ workflow:
   - auxiliary_view_left
   - auxiliary_view_right
 
+# robot_type: 机器人提示词开关。
+# 可选值对应 prompts/robot_type.py 中 ROBOT_TYPE_PROMPTS 的 key：
+#   single_arm / bimanual / mobile_manipulator
+robot_type: bimanual
+
 # model: 默认模型调用参数。
 
 # model: 默认模型调用参数。
@@ -85,10 +90,10 @@ stages:
 
   auxiliary_view_left:
     prompt:
-      module: "prompts_4stage.gripper_prompt"
-      system: "WRIST_SYSTEM_PROMPT"
-      user: "WRIST_USER_PROMPT"
-    output_key: "wrist_view_left"
+      module: "prompts_4stage.auxiliary_prompt"
+      system: "AUXILIARY_SYSTEM_PROMPT"
+      user: "AUXILIARY_USER_PROMPT"
+    output_key: "auxiliary_view_left"
 
     generation:
        max_tokens: 32768
@@ -103,7 +108,7 @@ stages:
       max_time: -1
       save_processed: true
       # refinement 需要更精细的边界定位，通常使用更高 fps。
-      fps: 8.0
+      fps: 2.0
       max_frames: 512
       resize_width: 672
       # refinement 看边界和接触事件，建议保留较高 JPEG 质量。
@@ -116,14 +121,14 @@ stages:
       merge_mode: "per_frame"
       merge_length: -1
       view_names:
-        - camera_wrist_left
+        - camera_left
 
   auxiliary_view_right:
     prompt:
-      module: "prompts_4stage.gripper_prompt"
-      system: "WRIST_SYSTEM_PROMPT"
-      user: "WRIST_USER_PROMPT"
-    output_key: "wrist_view_right"
+      module: "prompts_4stage.auxiliary_prompt"
+      system: "AUXILIARY_SYSTEM_PROMPT"
+      user: "AUXILIARY_USER_PROMPT"
+    output_key: "auxiliary_view_right"
 
     generation:
        max_tokens: 32768
@@ -138,7 +143,7 @@ stages:
       max_time: -1
       save_processed: true
       # refinement 需要更精细的边界定位，通常使用更高 fps。
-      fps: 8.0
+      fps: 2.0
       max_frames: 512
       resize_width: 672
       # refinement 看边界和接触事件，建议保留较高 JPEG 质量。
@@ -151,4 +156,4 @@ stages:
       merge_mode: "per_frame"
       merge_length: -1
       view_names:
-        - camera_wrist_right
+        - camera_right
