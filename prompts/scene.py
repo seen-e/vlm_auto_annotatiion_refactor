@@ -62,16 +62,16 @@ SCENE_USER_PROMPT = """
 以下信息来自两个夹爪视角，仅作为辅助参考。夹爪视角 A/B 不代表固定的左右方位，也不要根据 A/B 推断真实空间中的左右关系、机械臂身份或物体全局位置。
 
 夹爪视角 A 检测到的物体：
-{{ ctx.stages.wrist_view_left.output.objects }}
+{{ ctx.stages.wrist_view_left.output }}
 
 夹爪视角 B 检测到的物体：
-{{ ctx.stages.wrist_view_right.output.objects }}
+{{ ctx.stages.wrist_view_right.output }}
 
 夹爪视角 A 中疑似与机械臂发生交互的物体：
-{{ ctx.stages.wrist_view_left.output.interaction_objects }}
+{{ ctx.stages.wrist_view_left.output }}
 
 夹爪视角 B 中疑似与机械臂发生交互的物体：
-{{ ctx.stages.wrist_view_right.output.interaction_objects }}
+{{ ctx.stages.wrist_view_right.output }}
 
 夹爪视角使用原则：
 

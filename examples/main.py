@@ -39,7 +39,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 PACKAGE_DIR = SCRIPT_DIR.parent
 PACKAGE_PARENT = PACKAGE_DIR.parent
 PACKAGE_NAME = PACKAGE_DIR.name
-DEFAULT_TASKS_PATH = SCRIPT_DIR / "test_data" / "robogen_task"/ "robogene_twoArm_franka_align_assemble_toy.json"
+DEFAULT_TASKS_PATH = "/home/xuchacha/vlm_auto_annotation_refactor/examples/data/dual_arm/robogene_twoArm_franka_adjust_black_computer_stand.json"
 
 
 def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
@@ -214,6 +214,24 @@ def _handle_task_success(
     print(f"  ok -> {result.get('run_dir')}")
 
 
+def _print_batch_progress(
+    *,
+    ok_count: int,
+    error_count: int,
+    selected_count: int,
+    trajectory_count: int,
+    total_started_at: float,
+) -> None:
+    processed_count = ok_count + error_count
+    total_elapsed = time.perf_counter() - total_started_at
+    average_elapsed = total_elapsed / processed_count if processed_count else 0.0
+    print(
+        f"  progress -> processed={processed_count}/{selected_count}, "
+        f"trajectories={trajectory_count}, ok={ok_count}, error={error_count}, "
+        f"total_elapsed={total_elapsed:.2f}s, avg_per_finished={average_elapsed:.2f}s"
+    )
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Batch run configured VLM pipeline on robot_mind2 tasks.")
     parser.add_argument("--config", default=str(PACKAGE_DIR / "config" / "config_pipeline.yaml"), help="Path to config.yaml.")
@@ -323,10 +341,24 @@ def main() -> None:
                     used_trajectory_paths=used_trajectory_paths,
                 )
                 ok_count += 1
+                _print_batch_progress(
+                    ok_count=ok_count,
+                    error_count=error_count,
+                    selected_count=len(selected_tasks),
+                    trajectory_count=len(used_trajectory_paths),
+                    total_started_at=total_started_at,
+                )
             except Exception as exc:
                 error_text = f"{type(exc).__name__}: {exc}"
                 error_count += 1
                 print(f"  error -> {error_text}")
+                _print_batch_progress(
+                    ok_count=ok_count,
+                    error_count=error_count,
+                    selected_count=len(selected_tasks),
+                    trajectory_count=len(used_trajectory_paths),
+                    total_started_at=total_started_at,
+                )
                 if args.fail_fast:
                     traceback.print_exc()
                     raise
@@ -351,10 +383,24 @@ def main() -> None:
                         used_trajectory_paths=used_trajectory_paths,
                     )
                     ok_count += 1
+                    _print_batch_progress(
+                        ok_count=ok_count,
+                        error_count=error_count,
+                        selected_count=len(selected_tasks),
+                        trajectory_count=len(used_trajectory_paths),
+                        total_started_at=total_started_at,
+                    )
                 except Exception as exc:
                     error_text = f"{type(exc).__name__}: {exc}"
                     error_count += 1
                     print(f"  error -> {error_text}")
+                    _print_batch_progress(
+                        ok_count=ok_count,
+                        error_count=error_count,
+                        selected_count=len(selected_tasks),
+                        trajectory_count=len(used_trajectory_paths),
+                        total_started_at=total_started_at,
+                    )
                     if args.fail_fast:
                         for pending in future_to_task:
                             pending.cancel()
@@ -364,8 +410,9 @@ def main() -> None:
     total_elapsed = time.perf_counter() - total_started_at
     processed_count = ok_count + error_count
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0
+    trajectory_count = len(used_trajectory_paths)
     print(
-        f"\nDone. ok={ok_count}, error={error_count}, "
+        f"\nDone. ok={ok_count}, error={error_count}, trajectories={trajectory_count}, "
         f"total_elapsed={total_elapsed:.2f}s, avg_per_episode={average_elapsed:.2f}s, "
         f"default_trajectory={summary_path}"
     )

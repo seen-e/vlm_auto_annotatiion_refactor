@@ -14,9 +14,50 @@ FUSION_SYSTEM_PROMPT = """
 
 * Fusion 只做动作融合纠正和粗时间候选修正，不输出最终精确 start_time/end_time。
 * 输出仍使用 start_time_hint 和 end_time_hint，表示后续 Refinement 的候选搜索范围。
-* 不得直接复制 Analysis 的动作结论。必须结合当前 Fusion 视频和两个夹爪阶段 JSON 输出重新核验。
+* 不得未经核验直接复制 Analysis 的动作结论。对每条动作先进行轻量一致性检查；当前 Fusion 视频没有明显反证，且相关时间范围内不存在有效夹爪冲突记录时，可以直接保留为 kept。只有发现实质冲突、明显错配、独立状态转折或可靠补充证据时，才展开详细融合纠正。
 * 不得因为夹爪阶段 JSON 输出记录了局部接触，就自动推断完整机械臂发生抓取、搬运、放置等高层动作；必须在当前 Fusion 视频或 Analysis 证据中也能看到对应 executor 的末端运动或物体关系变化。
 * 不得因为 Analysis 给出动作，就忽略夹爪阶段 JSON 输出中明确相反的开合、接触、释放或遮挡记录。
+
+【内部推理与核验范围】
+
+* 不输出、复述或总结内部思考过程，完成判断后直接输出最终 JSON。
+
+* 以 Analysis 中的单条动作为基本核验单位，按 executor 和时间顺序单遍处理。每条动作只进行一次主判定，不得在不同证据源之间反复回溯或多轮重新解释。
+
+* 对每条 Analysis 动作先进行轻量一致性检查。只有出现以下任一情况时，才展开详细的多来源核验：
+  1. 当前 Fusion 视频与 Analysis 结论明显不一致；
+  2. 相关时间范围内存在明确的夹爪开合、接触、约束、释放或滑移记录；
+  3. action、object、target 或时间候选存在明显错配；
+  4. 相邻动作可能重复、需要合并，或单条动作包含两个独立状态转折、需要拆分；
+  5. 当前视频存在 Analysis 未记录的独立视觉事件。
+
+* 未触发上述条件时，只需确认当前视频没有明显反证，并将动作判定为 kept；不得为了证明动作正确而穷举所有可能解释。
+
+* 每条动作最多依次检查以下三项：
+  1. 当前 Fusion 视频是否支持或否定该动作；
+  2. 与该动作时间范围直接重叠或紧邻的夹爪阶段 JSON 是否提供有效补充或冲突；
+  3. 是否需要保留、修改、删除、合并或拆分。
+  完成上述判断后立即确定结果，不继续扩展替代假设。
+
+* 夹爪阶段 JSON 只检查与当前动作候选时间范围重叠或紧邻的记录。不得将每条 Analysis 动作与全部夹爪记录进行逐项交叉比较。
+
+* 不得构造多个候选解释后逐一讨论。存在歧义时直接采用证据要求最低、语义最保守的结论；仍无法确认的字段填写 null，并记录一次 uncertainty。
+
+* supplemented 动作只在当前 Fusion 视频中存在明确、独立的视觉状态转折时考虑。仅有夹爪阶段 JSON 记录而当前视频无法建立对应关系时，不继续推演，不补充动作。
+
+* conflicts 只记录会实际改变动作结论或无法裁决的实质冲突。uncertainties 只记录会影响 action、object、target、executor 或候选时间的关键不确定性。相同问题不得在多个字段中重复解释。
+
+* evidence、local_observation、summary、reason 和 fusion_summary 只写支持最终决定的最短直接证据，不复述输入内容，不描述完整排除过程，不记录未采用的候选判断。
+
+* 已完成判定的动作不得因处理后续动作而重新展开分析。只有发现直接影响前后动作合并、拆分或时间重叠的新证据时，才允许进行一次局部修正。
+
+* 所有动作处理完成后只进行一次最终检查，检查范围仅包括：
+  1. JSON 是否合法；
+  2. executor、object 和 target 是否引用已有 ID；
+  3. Analysis 下标是否正确；
+  4. supplemented_actions 与 executor timeline 中对应动作是否一致；
+  5. 是否存在明显重复动作或不合理时间重叠。
+  不得在最终检查阶段重新分析完整视频或重新裁决全部动作。
 
 【证据优先级】
 
@@ -71,7 +112,7 @@ FUSION_SYSTEM_PROMPT = """
 
 【动作保留、修改、删除、补充标准】
 
-* 保留 kept：Analysis 动作与当前 Fusion 视频和夹爪阶段 JSON 输出一致，或虽然夹爪阶段 JSON 输出无有效记录但当前 Fusion 视频证据充分。
+* 保留 kept：Analysis 动作与当前 Fusion 视频和相关时间范围内的夹爪阶段 JSON 输出一致，或相关时间范围内无有效夹爪冲突记录且当前 Fusion 视频没有明显反证。
 * 修改 modified：动作类型、object、target、时间候选或证据需要修正，但核心事件确实发生。
 * 删除 dropped：Analysis 动作缺少直接证据，或被可靠夹爪阶段 JSON 输出/当前 Fusion 视频证据否定。
 * 补充 supplemented：Analysis 漏掉了具有独立视觉边界的动作，例如接触建立、夹爪闭合并建立约束、物体开始同步运动、物体脱离支撑、释放、分离、放置关系建立。
@@ -122,35 +163,35 @@ FUSION_USER_PROMPT = """
 
 Scene 阶段执行主体：
 
-{{ ctx.stages.scene.output.executors }}
+{{ ctx.stages.scene.output }}
 
 Scene 阶段物体：
 
-{{ ctx.stages.scene.output.objects }}
+{{ ctx.stages.scene.output }}
 
 Scene 阶段交互物体：
 
-{{ ctx.stages.scene.output.interaction_objects }}
+{{ ctx.stages.scene.output }}
 
 Analysis 阶段原子动作序列：
 
-{{ ctx.stages.analysis.output.executor_timelines }}
+{{ ctx.stages.analysis.output }}
 
 Analysis 阶段新增动作：
 
-{{ ctx.stages.analysis.output.added_actions }}
+{{ ctx.stages.analysis.output }}
 
 Analysis 阶段不确定问题：
 
-{{ ctx.stages.analysis.output.uncertainties }}
+{{ ctx.stages.analysis.output }}
 
 夹爪视角 A 状态 JSON 输出（A 只是数据源编号，不代表任何固定空间方位）：
 
-{{ ctx.stages.wrist_view_left.output.gripper_state }}
+{{ ctx.stages.wrist_view_left.output }}
 
 夹爪视角 B 状态 JSON 输出（B 只是数据源编号，不代表任何固定空间方位）：
 
-{{ ctx.stages.wrist_view_right.output.gripper_state }}
+{{ ctx.stages.wrist_view_right.output }}
 
 夹爪状态 JSON 输出使用原则：
 
@@ -177,6 +218,36 @@ Analysis 阶段不确定问题：
 
 注意：夹爪视角 A/B 只是两个上游 JSON 数据源编号，不表示真实空间方位，也不表示固定的 arm_1/arm_2 对应关系。不得根据 A/B 推断 executor 身份。
 
+推理与处理范围限制：
+
+1. 按 executor 和 Analysis 动作顺序单遍处理，不得反复从头检查已经完成判定的动作。
+
+2. 对每条 Analysis 动作先做轻量一致性检查。当前视频没有明显反证，且相关时间范围内没有有效夹爪冲突记录时，直接判定为 kept。
+
+3. 只有出现以下情况时才展开详细融合：
+   * 当前视频与 Analysis 明显冲突；
+   * 夹爪阶段 JSON 在相关时间范围内提供明确支持或否定；
+   * action、object、target 或候选时间明显错误；
+   * 相邻动作需要合并，或单条动作需要拆分；
+   * 当前视频存在具有独立视觉边界的漏检动作。
+
+4. 每条动作最多检查：
+   * 当前视频直接证据；
+   * 与该动作时间范围重叠或紧邻的夹爪记录；
+   * 最终应采取的保留、修改、删除、合并或拆分方式。
+
+5. 不比较与当前动作时间无关的夹爪记录，不将每条动作与全部夹爪 JSON 逐项交叉匹配。
+
+6. 不生成多个候选解释并逐一讨论。证据不足时采用保守结论，相关字段填写 null，并记录一次 uncertainty。
+
+7. 仅有夹爪 JSON 记录、但当前 Fusion 视频无法建立 executor 或物体关系对应时，不继续推演为完整动作，不写入 supplemented_actions。
+
+8. evidence、local_observation、summary、reason 和 fusion_summary 使用简短直接描述，只保留实际支持最终结论的证据，不复述完整输入，不描述内部排除过程。
+
+9. 同一冲突或不确定问题只记录一次，不得同时在多个字段中重复展开。
+
+10. 不输出思考过程，直接返回最终合法 JSON。
+
 处理要求：
 
 1. 以 Scene 阶段 executors 为准，为每个有效 executor 输出一条融合后的 timeline。
@@ -193,7 +264,7 @@ Analysis 阶段不确定问题：
    * merged：与相邻动作合并；
    * split：拆成多个更可靠动作。
 
-5. 检查两个夹爪阶段 JSON 输出中是否记录了 Analysis 漏掉的关键局部事件。只有当该事件也能与当前 Fusion 视频中的 executor 或物体关系变化建立可靠联系时，才写入 supplemented_actions。
+5. 只检查与当前动作候选时间范围或相邻空档重叠、紧邻的两个夹爪阶段 JSON 记录中是否存在 Analysis 漏掉的关键局部事件。只有当该事件也能与当前 Fusion 视频中的 executor 或物体关系变化建立可靠联系时，才写入 supplemented_actions。
 
 6. 夹爪阶段 JSON 输出主要用于校验：
 
@@ -317,7 +388,7 @@ Analysis 阶段不确定问题：
 * dropped_actions：记录 Analysis 中被删除或被合并吸收的动作，不再进入 actions。
 * fusion_status：说明该最终动作相对于 Analysis 的来源状态。
 * source.analysis_action_indices：引用 Analysis 中同一 executor actions 数组的 0-based 下标；新增动作填空数组。
-* source.wrist_evidence：只摘要真正参与判断的夹爪阶段 JSON 记录；未使用夹爪阶段 JSON 记录时返回空数组。
+* source.wrist_evidence：只摘要与当前动作时间相关且真正参与判断的夹爪阶段 JSON 记录；未使用夹爪阶段 JSON 记录时返回空数组。
 * conflicts：只记录实质证据冲突；没有冲突时返回空数组。
 * uncertainties：记录无法可靠判断的问题；没有时返回空数组。
 * 某个数组没有内容时返回空数组。

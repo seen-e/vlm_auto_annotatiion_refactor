@@ -137,13 +137,13 @@ ANALYSIS_USER_PROMPT = """
 {{ prompt.common.VIDEO_LAYOUT_RULE }}
 
 Scene 阶段执行主体：
-{{ ctx.stages.scene.output.executors }}
+{{ ctx.stages.scene.output }}
 
 Scene 阶段检测物体：
-{{ ctx.stages.scene.output.objects }}
+{{ ctx.stages.scene.output }}
 
 Scene 阶段候选交互物体：
-{{ ctx.stages.scene.output.interaction_objects }}
+{{ ctx.stages.scene.output }}
 
 动作词表：
 {{ prompt.actionbase.ACTION_VOCABULARY }}
