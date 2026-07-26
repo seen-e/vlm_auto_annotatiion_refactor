@@ -65,23 +65,8 @@ def _import_prompt_module(module_name: str):
             candidates.append(candidate)
 
     package_name = (__package__ or "").split(".", 1)[0]
-    prompt_suffix = module_name.split(".prompts.", 1)[1] if ".prompts." in module_name else None
-
-    if package_name:
-        if module_name.startswith("prompts."):
-            add_candidate(f"{package_name}.{module_name}")
-        elif prompt_suffix:
-            add_candidate(f"{package_name}.prompts.{prompt_suffix}")
-        elif "." not in module_name:
-            add_candidate(f"{package_name}.prompts.{module_name}")
-        else:
-            add_candidate(f"{package_name}.{module_name}")
-
-    if prompt_suffix:
-        add_candidate(f"prompts.{prompt_suffix}")
-    elif "." not in module_name:
-        add_candidate(f"prompts.{module_name}")
-
+    if package_name and not module_name.startswith(f"{package_name}."):
+        add_candidate(f"{package_name}.{module_name}")
     add_candidate(module_name)
 
     last_error: Exception | None = None

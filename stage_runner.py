@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import shutil
+import tempfile
 from pathlib import Path
 from typing import Any
 
@@ -59,6 +61,8 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
                     ],
                 }
             ],
+            "added_actions": [],
+            "uncertainties": [],
             "action_sequence": [
                 {
                     "step_id": 1,
@@ -69,6 +73,15 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
                     "confidence": 0.0,
                 }
             ]
+        }
+    if stage_name.startswith("wrist_view"):
+        return {
+            "gripper_location": None,
+            "object_categories": [],
+            "objects": [],
+            "interaction_objects": [],
+            "gripper_state": [],
+            "gripper_object_interactions": [],
         }
     if stage_name == "refinement":
         return {
@@ -84,6 +97,34 @@ def _dry_run_output(stage_name: str) -> dict[str, Any]:
                     "confidence": 0.0,
                 }
             ]
+        }
+    if stage_name == "fusion":
+        return {
+            "robot_type": "dry_run",
+            "fusion_summary": "dry_run fusion output",
+            "executor_timelines": [
+                {
+                    "executor": "arm_1",
+                    "actions": [
+                        {
+                            "source": {"analysis_action_indices": [], "wrist_evidence": []},
+                            "fusion_status": "kept",
+                            "start_time_hint": 0.0,
+                            "end_time_hint": 1.0,
+                            "local_observation": "dry-run local observation",
+                            "evidence": "dry-run evidence",
+                            "object": "object",
+                            "target": None,
+                            "action": "grasp",
+                        }
+                    ],
+                    "dropped_actions": [],
+                }
+            ],
+            "supplemented_actions": [],
+            "added_actions": [],
+            "conflicts": [],
+            "uncertainties": [],
         }
     return {"stage": stage_name, "status": "dry_run_ok"}
 
@@ -120,6 +161,225 @@ def _resolve_processed_output_path(
     if run_dir is None:
         return None
     return Path(run_dir) / "stages" / _safe_path_name(stage_name, default="stage") / "processed_frames"
+
+
+def _stage_dir(run_dir: str | Path | None, stage_name: str) -> Path:
+    if run_dir is not None:
+        return Path(run_dir) / "stages" / _safe_path_name(stage_name, default="stage")
+    return Path(tempfile.mkdtemp(prefix=f"{_safe_path_name(stage_name, default='stage')}_"))
+
+
+def _selected_view_names(video_cfg: dict[str, Any], video_path: Any, video_segments: dict[str, Any]) -> list[str]:
+    configured = video_cfg.get("view_names")
+    if configured:
+        return [str(name) for name in configured]
+    if isinstance(video_path, dict) and video_path:
+        return [str(name) for name in video_path.keys()]
+    return [str(name) for name in video_segments.keys()]
+
+
+def _cut_video_segment_by_frame(
+    *,
+    source_path: str | Path,
+    output_path: str | Path,
+    start_frame: int,
+    end_frame: int,
+    fps: Any = None,
+) -> None:
+    if start_frame < 0:
+        raise StageRunnerError(f"video segment start_frame must be >= 0, got {start_frame}")
+    if end_frame < start_frame:
+        raise StageRunnerError(f"video segment end_frame must be >= start_frame, got {start_frame}-{end_frame}")
+
+    try:
+        import ffmpeg
+    except ImportError as exc:
+        raise StageRunnerError("ffmpeg-python is required to cut video_segments; install package 'ffmpeg-python'") from exc
+
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    stream = (
+        ffmpeg
+        .input(str(source_path))
+        .filter("select", f"between(n,{start_frame},{end_frame})")
+        .filter("setpts", "PTS-STARTPTS")
+    )
+    output_kwargs: dict[str, Any] = {
+        "an": None,
+        "vcodec": "libx264",
+        "pix_fmt": "yuv420p",
+    }
+    if fps is not None:
+        output_kwargs["r"] = fps
+    try:
+        (
+            ffmpeg
+            .output(stream, str(output), **output_kwargs)
+            .overwrite_output()
+            .global_args("-hide_banner", "-loglevel", "error")
+            .run(capture_stdout=True, capture_stderr=True)
+        )
+    except ffmpeg.Error as exc:
+        stderr = exc.stderr.decode("utf-8", errors="replace") if isinstance(exc.stderr, bytes) else exc.stderr
+        detail = (stderr or "").strip()
+        raise StageRunnerError(f"ffmpeg failed to cut video segment {source_path}: {detail}") from exc
+    if not output.exists() or output.stat().st_size <= 0:
+        raise StageRunnerError(f"ffmpeg did not create a valid video clip: {output}")
+
+
+def _is_minus_one(value: Any) -> bool:
+    try:
+        return float(value) == -1.0
+    except (TypeError, ValueError):
+        return False
+
+
+def _should_use_full_video(segment: dict[str, Any]) -> bool:
+    return all(
+        _is_minus_one(segment.get(key))
+        for key in ("start_time", "end_time", "start_frame", "end_frame")
+    )
+
+
+def _register_stage_video_clip_cleanup(
+    context: dict[str, Any],
+    *,
+    clip_paths: list[Path],
+    cleanup_dirs: list[Path],
+) -> None:
+    if not clip_paths and not cleanup_dirs:
+        return
+    pipeline_state = context.setdefault("pipeline", {})
+    entries = pipeline_state.setdefault("temporary_video_segments", [])
+    entries.append(
+        {
+            "clip_paths": [str(path) for path in clip_paths],
+            "cleanup_dirs": [str(path) for path in cleanup_dirs],
+        }
+    )
+
+
+def _prepare_stage_video_input(
+    *,
+    stage_name: str,
+    context: dict[str, Any],
+    video_cfg: dict[str, Any],
+    run_dir: str | Path | None,
+) -> tuple[Any, list[Path], list[Path], list[dict[str, Any]]]:
+    video_segments = context.get("input", {}).get("video_segments")
+    if not isinstance(video_segments, dict) or not video_segments:
+        return context["input"]["video_path"], [], [], []
+
+    source_video_path = context["input"]["video_path"]
+    view_names = _selected_view_names(video_cfg, source_video_path, video_segments)
+    missing = [name for name in view_names if name not in video_segments]
+    if missing:
+        raise StageRunnerError(
+            f"stage {stage_name!r} requested view_names not present in input.video_segments: {missing}"
+        )
+
+    clip_root: Path | None = None
+    clip_paths: list[Path] = []
+    cleanup_dirs: list[Path] = []
+    stage_video_path: dict[str, str] = {}
+    clip_meta: list[dict[str, Any]] = []
+    for view_name in view_names:
+        segment = video_segments[view_name]
+        if not isinstance(segment, dict):
+            raise StageRunnerError(f"input.video_segments[{view_name!r}] must be a JSON object")
+        source_path = segment.get("video_path")
+        if source_path is None and isinstance(source_video_path, dict):
+            source_path = source_video_path.get(view_name)
+        if source_path is None:
+            raise StageRunnerError(f"input.video_segments[{view_name!r}] missing video_path")
+
+        if _should_use_full_video(segment):
+            stage_video_path[view_name] = str(source_path)
+            clip_meta.append(
+                {
+                    "view_name": view_name,
+                    "source_video_path": str(source_path),
+                    "temporary_clip_path": None,
+                    "start_time": segment.get("start_time"),
+                    "end_time": segment.get("end_time"),
+                    "start_frame": segment.get("start_frame"),
+                    "end_frame": segment.get("end_frame"),
+                    "fps": segment.get("fps"),
+                    "used_full_video": True,
+                    "deleted_after_pipeline": False,
+                }
+            )
+            continue
+
+        if "start_frame" not in segment or "end_frame" not in segment:
+            raise StageRunnerError(f"input.video_segments[{view_name!r}] missing start_frame/end_frame")
+        start_frame = int(segment["start_frame"])
+        end_frame = int(segment["end_frame"])
+        if clip_root is None:
+            stage_root = _stage_dir(run_dir, stage_name)
+            clip_root = stage_root / "input_clips"
+            cleanup_dirs.append(clip_root)
+            if run_dir is None:
+                cleanup_dirs.append(stage_root)
+        clip_path = clip_root / f"{_safe_path_name(view_name, default='view')}_{start_frame}_{end_frame}.mp4"
+        _cut_video_segment_by_frame(
+            source_path=source_path,
+            output_path=clip_path,
+            start_frame=start_frame,
+            end_frame=end_frame,
+            fps=segment.get("fps"),
+        )
+        clip_paths.append(clip_path)
+        stage_video_path[view_name] = str(clip_path)
+        clip_meta.append(
+            {
+                "view_name": view_name,
+                "source_video_path": str(source_path),
+                "temporary_clip_path": str(clip_path),
+                "start_time": segment.get("start_time"),
+                "end_time": segment.get("end_time"),
+                "start_frame": start_frame,
+                "end_frame": end_frame,
+                "fps": segment.get("fps"),
+                "used_full_video": False,
+                "deleted_after_pipeline": True,
+            }
+        )
+
+    return stage_video_path, clip_paths, cleanup_dirs, clip_meta
+
+
+def _cleanup_stage_video_clips(clip_paths: list[Path], cleanup_dirs: list[Path]) -> None:
+    for path in clip_paths:
+        try:
+            path.unlink(missing_ok=True)
+        except Exception:
+            pass
+    for directory in sorted(set(cleanup_dirs), key=lambda path: len(path.parts), reverse=True):
+        try:
+            shutil.rmtree(directory)
+        except FileNotFoundError:
+            pass
+        except Exception:
+            pass
+
+
+def cleanup_temporary_video_segments(context: dict[str, Any]) -> None:
+    pipeline_state = context.get("pipeline")
+    if not isinstance(pipeline_state, dict):
+        return
+    entries = pipeline_state.pop("temporary_video_segments", [])
+    if not isinstance(entries, list):
+        return
+    if not entries:
+        return
+    for entry in entries:
+        if not isinstance(entry, dict):
+            continue
+        clip_paths = [Path(path) for path in entry.get("clip_paths", [])]
+        cleanup_dirs = [Path(path) for path in entry.get("cleanup_dirs", [])]
+        _cleanup_stage_video_clips(clip_paths, cleanup_dirs)
+    pipeline_state["temporary_video_segments_deleted"] = True
 
 
 def _save_failure_debug(
@@ -282,7 +542,16 @@ def run_stage(
         if processed_output_path is not None:
             video_build_cfg["save_processed_path"] = processed_output_path
 
-        image_parts, video_meta = build_video_inputs(context["input"]["video_path"], **video_build_cfg)
+        stage_video_path, clip_paths, cleanup_dirs, clip_meta = _prepare_stage_video_input(
+            stage_name=stage_name,
+            context=context,
+            video_cfg=video_cfg,
+            run_dir=run_dir,
+        )
+        _register_stage_video_clip_cleanup(context, clip_paths=clip_paths, cleanup_dirs=cleanup_dirs)
+        image_parts, video_meta = build_video_inputs(stage_video_path, **video_build_cfg)
+        if clip_meta:
+            video_meta["source_video_segments"] = clip_meta
         if processed_output_path is not None:
             video_meta["processed_output_path"] = str(processed_output_path)
         current_video_layout = build_video_layout_description(video_cfg, video_meta)

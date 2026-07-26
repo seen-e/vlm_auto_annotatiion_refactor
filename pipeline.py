@@ -5,7 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from .stage_runner import run_stage
+from .stage_runner import cleanup_temporary_video_segments, run_stage
 
 
 class PipelineError(RuntimeError):
@@ -85,6 +85,7 @@ def run_pipeline(
         context["pipeline"]["executed_stages"] = executed
         context["pipeline"]["skipped_stages"] = skipped
 
+        cleanup_temporary_video_segments(context)
         if save_results and run_dir is not None:
             from .result_io import save_context
 
@@ -94,3 +95,5 @@ def run_pipeline(
         raise
     except Exception as exc:
         raise PipelineError(f"Pipeline execution failed: {exc}") from exc
+    finally:
+        cleanup_temporary_video_segments(context)

@@ -104,6 +104,20 @@ def _resolve_video_path(value: Any, base_dir: Path) -> Any:
     return str((base_dir / path).resolve())
 
 
+def _resolve_video_segment_paths(value: Any, base_dir: Path) -> Any:
+    if isinstance(value, dict):
+        resolved: dict[str, Any] = {}
+        for key, item in value.items():
+            if key == "video_path" and isinstance(item, (str, Path)):
+                resolved[key] = _resolve_video_path(item, base_dir)
+            else:
+                resolved[key] = _resolve_video_segment_paths(item, base_dir)
+        return resolved
+    if isinstance(value, list):
+        return [_resolve_video_segment_paths(item, base_dir) for item in value]
+    return value
+
+
 def _slice_tasks(tasks: list[dict[str, Any]], *, start_index: int, limit: int | None) -> list[tuple[int, dict[str, Any]]]:
     end_index = len(tasks) if limit is None else min(len(tasks), start_index + limit)
     return list(enumerate(tasks[start_index:end_index], start=start_index))
@@ -117,13 +131,16 @@ def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> 
         raise ValueError(f"Task item #{index} missing 'task' or 'instruction'")
 
     episode_id = str(item.get("episode_id") or f"item_{index:05d}")
+    input_context = {
+        "video_path": _resolve_video_path(item["video_path"], task_base_dir),
+        "instruction": str(instruction),
+        "video_id": episode_id,
+        "task_index": index,
+    }
+    if "video_segments" in item:
+        input_context["video_segments"] = _resolve_video_segment_paths(item["video_segments"], task_base_dir)
     return {
-        "input": {
-            "video_path": _resolve_video_path(item["video_path"], task_base_dir),
-            "instruction": str(instruction),
-            "video_id": episode_id,
-            "task_index": index,
-        },
+        "input": input_context,
         "stages": {},
     }
 
