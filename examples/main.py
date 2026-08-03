@@ -16,6 +16,7 @@ task's ``trajectory_path`` when present, otherwise to ``--summary``.
 from __future__ import annotations
 
 import argparse
+import copy
 import importlib
 import json
 import re
@@ -118,6 +119,15 @@ def _resolve_video_segment_paths(value: Any, base_dir: Path) -> Any:
     return value
 
 
+def _build_episode_source(item: dict[str, Any], base_dir: Path) -> dict[str, Any]:
+    episode = copy.deepcopy(item)
+    if "video_path" in episode:
+        episode["video_path"] = _resolve_video_path(episode["video_path"], base_dir)
+    if "video_segments" in episode:
+        episode["video_segments"] = _resolve_video_segment_paths(episode["video_segments"], base_dir)
+    return episode
+
+
 def _slice_tasks(tasks: list[dict[str, Any]], *, start_index: int, limit: int | None) -> list[tuple[int, dict[str, Any]]]:
     end_index = len(tasks) if limit is None else min(len(tasks), start_index + limit)
     return list(enumerate(tasks[start_index:end_index], start=start_index))
@@ -133,6 +143,7 @@ def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> 
     episode_id = str(item.get("episode_id") or f"item_{index:05d}")
     input_context = {
         "video_path": _resolve_video_path(item["video_path"], task_base_dir),
+        "episode": _build_episode_source(item, task_base_dir),
         "instruction": str(instruction),
         "video_id": episode_id,
         "task_index": index,

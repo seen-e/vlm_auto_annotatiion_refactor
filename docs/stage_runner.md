@@ -62,6 +62,59 @@ context = {
 }
 ```
 
+可选的 `input.video_segments` 用于描述 episode 的某个视角只是大视频中的一段。外层 key 是视角名，应与
+`input.video_path` 或 stage 配置里的 `video.view_names` 对齐：
+
+```python
+context = {
+  "input": {
+    "video_path": {
+      "observation.images.image_0": "/data/videos/image_0/file-000.mp4"
+    },
+    "video_segments": {
+      "observation.images.image_0": {
+        "video_path": "/data/videos/image_0/file-000.mp4",
+        "start_time": 4.6,
+        "end_time": 9.2,
+        "fps": 5.0
+      }
+    },
+    "instruction": "flip cup upright"
+  },
+  "stages": {}
+}
+```
+
+切片规则：
+
+- 如果 `start_frame/end_frame` 存在且不是 `-1/-1`，优先按闭区间帧号切片，并在 `video_meta.source_video_segments`
+  记录 `segment_mode="frame"`。
+- 否则如果 `start_time/end_time` 存在且不是 `-1/-1`，按秒切片，并记录 `segment_mode="time"`。
+- 如果 `start_time/end_time` 是 `-1/-1`，直接使用完整原视频，并记录 `segment_mode="full"`；对只提供
+  frame pair 的旧格式，`start_frame/end_frame=-1/-1` 也表示完整原视频。
+- 如果某个 segment 没有写 `video_path`，runner 会回退到匹配视角的 `input.video_path`。
+
+每个 stage 还可以通过 `episode_fields` 把输入 JSON 中的字段传给 prompt：
+
+```yaml
+scene:
+  episode_fields:
+    - fps
+    - length
+    - video_path.camera_front
+```
+
+这些字段会在 prompt 中挂到 `ctx.episode`：
+
+```text
+{{ ctx.episode.fps }}
+{{ ctx.episode.length }}
+{{ ctx.episode.video_path.camera_front }}
+```
+
+字段值为 JSON `null` 时会渲染为 `null`。未配置 `episode_fields` 的 stage 不会继承其他 stage 的
+`ctx.episode`。
+
 #### context 输出格式
 
 ```python

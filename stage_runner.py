@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import copy
 import json
 import shutil
 import tempfile
@@ -25,6 +26,7 @@ class StageRunnerError(RuntimeError):
 
 
 _VIDEO_SAVE_KEYS = {"save_processed", "processed_output_path", "output_path", "save_processed_path"}
+_EPISODE_FIELDS_KEYS = ("episode_fields", "episode_input_fields")
 
 
 def _model_cfg(config: dict[str, Any], stage_cfg: dict[str, Any]) -> dict[str, Any]:
@@ -136,6 +138,101 @@ def _ensure_context(context: dict[str, Any]) -> None:
         raise StageRunnerError("context['input']['video_path'] is required")
 
 
+def _resolve_dotted_field(source: Any, field_path: str) -> Any:
+    if not field_path:
+        raise StageRunnerError("episode field path must not be empty")
+    parts = str(field_path).split(".")
+    current = source
+    index = 0
+    while index < len(parts):
+        if isinstance(current, dict):
+            matched = False
+            for end in range(len(parts), index, -1):
+                key = ".".join(parts[index:end])
+                if key in current:
+                    current = current[key]
+                    index = end
+                    matched = True
+                    break
+            if not matched:
+                missing = ".".join(parts[: index + 1])
+                raise StageRunnerError(f"episode field path not found: {field_path!r}; missing {missing!r}")
+        elif isinstance(current, (list, tuple)):
+            try:
+                list_index = int(parts[index])
+            except ValueError as exc:
+                raise StageRunnerError(
+                    f"episode field path {field_path!r} expected list index, got {parts[index]!r}"
+                ) from exc
+            try:
+                current = current[list_index]
+            except IndexError as exc:
+                raise StageRunnerError(
+                    f"episode field path {field_path!r} list index out of range: {list_index}"
+                ) from exc
+            index += 1
+        else:
+            raise StageRunnerError(
+                f"cannot resolve episode field {field_path!r} through {type(current).__name__}"
+            )
+    return current
+
+
+def _assign_dotted_field(target: dict[str, Any], field_path: str, value: Any) -> None:
+    parts = str(field_path).split(".")
+    current = target
+    for part in parts[:-1]:
+        existing = current.get(part)
+        if existing is None:
+            existing = {}
+            current[part] = existing
+        if not isinstance(existing, dict):
+            raise StageRunnerError(f"episode field path conflict while assigning {field_path!r}")
+        current = existing
+    leaf = parts[-1]
+    if leaf in current and isinstance(current[leaf], dict) and not isinstance(value, dict):
+        raise StageRunnerError(f"episode field path conflict while assigning {field_path!r}")
+    current[leaf] = copy.deepcopy(value)
+
+
+def _episode_source(context: dict[str, Any]) -> dict[str, Any]:
+    source = context.get("episode_source")
+    if isinstance(source, dict):
+        return source
+    input_ctx = context.get("input") or {}
+    source = input_ctx.get("episode") if isinstance(input_ctx, dict) else None
+    if isinstance(source, dict):
+        return source
+    return input_ctx if isinstance(input_ctx, dict) else {}
+
+
+def _stage_episode_fields(stage_cfg: dict[str, Any]) -> Any:
+    for key in _EPISODE_FIELDS_KEYS:
+        if key in stage_cfg:
+            return stage_cfg.get(key)
+    return None
+
+
+def _prepare_episode_context(context: dict[str, Any], episode_fields: Any) -> dict[str, Any] | None:
+    if episode_fields is None or episode_fields is False:
+        return None
+    source = _episode_source(context)
+    if episode_fields is True or episode_fields == "*":
+        return copy.deepcopy(source)
+    if isinstance(episode_fields, str):
+        episode_fields = [episode_fields]
+    if not isinstance(episode_fields, list):
+        raise StageRunnerError("episode_fields must be a list of field paths, '*', or true")
+
+    episode_context: dict[str, Any] = {}
+    for field_path in episode_fields:
+        if not isinstance(field_path, str):
+            raise StageRunnerError(f"episode_fields entries must be strings, got {type(field_path).__name__}")
+        value = _resolve_dotted_field(source, field_path)
+        _assign_dotted_field(episode_context, field_path, value)
+    return episode_context
+
+
 def _configured_robot_type(config: dict[str, Any]) -> str:
     robot_cfg = config.get("robot") or {}
     if isinstance(robot_cfg, dict) and robot_cfg.get("type"):
@@ -227,6 +324,55 @@ def _cut_video_segment_by_frame(
         raise StageRunnerError(f"ffmpeg did not create a valid video clip: {output}")
 
 
+def _cut_video_segment_by_time(
+    *,
+    source_path: str | Path,
+    output_path: str | Path,
+    start_time: float,
+    end_time: float,
+    fps: Any = None,
+) -> None:
+    if start_time < 0:
+        raise StageRunnerError(f"video segment start_time must be >= 0, got {start_time}")
+    if end_time <= start_time:
+        raise StageRunnerError(f"video segment end_time must be > start_time, got {start_time}-{end_time}")
+
+    try:
+        import ffmpeg
+    except ImportError as exc:
+        raise StageRunnerError("ffmpeg-python is required to cut video_segments; install package 'ffmpeg-python'") from exc
+
+    output = Path(output_path)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    duration = float(end_time) - float(start_time)
+    stream = (
+        ffmpeg
+        .input(str(source_path), ss=float(start_time), t=duration)
+        .filter("setpts", "PTS-STARTPTS")
+    )
+    output_kwargs: dict[str, Any] = {
+        "an": None,
+        "vcodec": "libx264",
+        "pix_fmt": "yuv420p",
+    }
+    if fps is not None:
+        output_kwargs["r"] = fps
+    try:
+        (
+            ffmpeg
+            .output(stream, str(output), **output_kwargs)
+            .overwrite_output()
+            .global_args("-hide_banner", "-loglevel", "error")
+            .run(capture_stdout=True, capture_stderr=True)
+        )
+    except ffmpeg.Error as exc:
+        stderr = exc.stderr.decode("utf-8", errors="replace") if isinstance(exc.stderr, bytes) else exc.stderr
+        detail = (stderr or "").strip()
+        raise StageRunnerError(f"ffmpeg failed to cut video segment {source_path}: {detail}") from exc
+    if not output.exists() or output.stat().st_size <= 0:
+        raise StageRunnerError(f"ffmpeg did not create a valid video clip: {output}")
+
+
 def _is_minus_one(value: Any) -> bool:
     try:
         return float(value) == -1.0
@@ -234,11 +380,20 @@ def _is_minus_one(value: Any) -> bool:
         return False
 
 
+def _has_segment_pair(segment: dict[str, Any], start_key: str, end_key: str) -> bool:
+    return start_key in segment and end_key in segment
+
+
+def _is_full_video_pair(segment: dict[str, Any], start_key: str, end_key: str) -> bool:
+    return _has_segment_pair(segment, start_key, end_key) and _is_minus_one(segment[start_key]) and _is_minus_one(segment[end_key])
+
+
 def _should_use_full_video(segment: dict[str, Any]) -> bool:
-    return all(
-        _is_minus_one(segment.get(key))
-        for key in ("start_time", "end_time", "start_frame", "end_frame")
-    )
+    if _has_segment_pair(segment, "start_time", "end_time"):
+        return _is_full_video_pair(segment, "start_time", "end_time")
+    if _has_segment_pair(segment, "start_frame", "end_frame"):
+        return _is_full_video_pair(segment, "start_frame", "end_frame")
+    return False
 
 
 def _register_stage_video_clip_cleanup(
@@ -290,6 +445,8 @@ def _prepare_stage_video_input(
         source_path = segment.get("video_path")
         if source_path is None and isinstance(source_video_path, dict):
             source_path = source_video_path.get(view_name)
+        elif source_path is None:
+            source_path = source_video_path
         if source_path is None:
             raise StageRunnerError(f"input.video_segments[{view_name!r}] missing video_path")
 
@@ -306,29 +463,57 @@ def _prepare_stage_video_input(
                     "end_frame": segment.get("end_frame"),
                     "fps": segment.get("fps"),
                     "used_full_video": True,
+                    "segment_mode": "full",
                     "deleted_after_pipeline": False,
                 }
             )
             continue
 
-        if "start_frame" not in segment or "end_frame" not in segment:
-            raise StageRunnerError(f"input.video_segments[{view_name!r}] missing start_frame/end_frame")
-        start_frame = int(segment["start_frame"])
-        end_frame = int(segment["end_frame"])
         if clip_root is None:
             stage_root = _stage_dir(run_dir, stage_name)
             clip_root = stage_root / "input_clips"
             cleanup_dirs.append(clip_root)
             if run_dir is None:
                 cleanup_dirs.append(stage_root)
-        clip_path = clip_root / f"{_safe_path_name(view_name, default='view')}_{start_frame}_{end_frame}.mp4"
-        _cut_video_segment_by_frame(
-            source_path=source_path,
-            output_path=clip_path,
-            start_frame=start_frame,
-            end_frame=end_frame,
-            fps=segment.get("fps"),
-        )
+        safe_view_name = _safe_path_name(view_name, default="view")
+        segment_mode = ""
+        start_frame = segment.get("start_frame")
+        end_frame = segment.get("end_frame")
+        start_time = segment.get("start_time")
+        end_time = segment.get("end_time")
+        if _has_segment_pair(segment, "start_frame", "end_frame") and not _is_full_video_pair(
+            segment, "start_frame", "end_frame"
+        ):
+            start_frame = int(segment["start_frame"])
+            end_frame = int(segment["end_frame"])
+            clip_path = clip_root / f"{safe_view_name}_frames_{start_frame}_{end_frame}.mp4"
+            _cut_video_segment_by_frame(
+                source_path=source_path,
+                output_path=clip_path,
+                start_frame=start_frame,
+                end_frame=end_frame,
+                fps=segment.get("fps"),
+            )
+            segment_mode = "frame"
+        elif _has_segment_pair(segment, "start_time", "end_time") and not _is_full_video_pair(
+            segment, "start_time", "end_time"
+        ):
+            start_time = float(segment["start_time"])
+            end_time = float(segment["end_time"])
+            time_name = f"{start_time:.6f}_{end_time:.6f}".replace(".", "p")
+            clip_path = clip_root / f"{safe_view_name}_time_{time_name}.mp4"
+            _cut_video_segment_by_time(
+                source_path=source_path,
+                output_path=clip_path,
+                start_time=start_time,
+                end_time=end_time,
+                fps=segment.get("fps"),
+            )
+            segment_mode = "time"
+        else:
+            raise StageRunnerError(
+                f"input.video_segments[{view_name!r}] must provide start_frame/end_frame or start_time/end_time"
+            )
         clip_paths.append(clip_path)
         stage_video_path[view_name] = str(clip_path)
         clip_meta.append(
@@ -336,12 +521,13 @@ def _prepare_stage_video_input(
                 "view_name": view_name,
                 "source_video_path": str(source_path),
                 "temporary_clip_path": str(clip_path),
-                "start_time": segment.get("start_time"),
-                "end_time": segment.get("end_time"),
+                "start_time": start_time,
+                "end_time": end_time,
                 "start_frame": start_frame,
                 "end_frame": end_frame,
                 "fps": segment.get("fps"),
                 "used_full_video": False,
+                "segment_mode": segment_mode,
                 "deleted_after_pipeline": True,
             }
         )
@@ -556,6 +742,11 @@ def run_stage(
             video_meta["processed_output_path"] = str(processed_output_path)
         current_video_layout = build_video_layout_description(video_cfg, video_meta)
         context["current_video_layout"] = current_video_layout
+        episode_context = _prepare_episode_context(context, _stage_episode_fields(stage_cfg))
+        if episode_context is None:
+            context.pop("episode", None)
+        else:
+            context["episode"] = episode_context
         extra_vars = resolve_input_fields(context, stage_cfg.get("input_fields"))
         system_template, user_template = load_stage_prompt(stage_cfg, stage_name=stage_name)
         prompt_cfg = stage_cfg.get("prompt") or {}

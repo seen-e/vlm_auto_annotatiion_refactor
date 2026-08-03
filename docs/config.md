@@ -81,6 +81,34 @@ prompt 内可使用：
 {{ prompt.common.JSON_ONLY_RULE }}
 ```
 
+## stages.<stage_name>.episode_fields
+
+可选。用于把输入任务 JSON 中的 episode 字段显式传入当前 stage，并挂到 `ctx.episode` 下。
+
+```yaml
+scene:
+  episode_fields:
+    - fps
+    - length
+    - video_path.camera_front
+```
+
+prompt 中即可使用：
+
+```text
+{{ ctx.episode.fps }}
+{{ ctx.episode.length }}
+{{ ctx.episode.video_path.camera_front }}
+```
+
+规则：
+
+1. 每个 stage 独立配置；未配置 `episode_fields` 的 stage 不会继承上一个 stage 的 `ctx.episode`。
+2. 可以一次传入多个字段；字段值为 JSON `null` 时，prompt 中渲染为 `null`。
+3. 支持多级字段路径，例如 `video_path.camera_front`。
+4. 对 key 本身包含点号的输入，例如 `video_path.observation.images.image_0`，runner 会优先匹配真实 key，再将其展开到 `ctx.episode.video_path.observation.images.image_0` 供 prompt 使用。
+5. `episode_fields: true` 或 `episode_fields: "*"` 会传入整条 episode。
+
 ## stages.<stage_name>.video
 
 | 参数 | 类型 | 可填写内容 | 说明 |
