@@ -9,8 +9,6 @@ For a quick pipeline check without calling the VLM:
     python examples/main.py --dry-run --limit 1
 
 Per-task outputs are saved under ``examples/vlm_annotation_batch_predictions``.
-After refinement completes, a standardized trajectory JSON is saved to each
-task's ``trajectory_path`` when present, otherwise to ``--summary``.
 """
 
 from __future__ import annotations
@@ -43,20 +41,13 @@ PACKAGE_NAME = PACKAGE_DIR.name
 DEFAULT_TASKS_PATH = "/home/xuchacha/vlm_auto_annotation_refactor/examples/data/dual_arm/robogene_twoArm_franka_adjust_black_computer_stand.json"
 
 
-def _ensure_imports() -> tuple[Any, Any, Any, Any, Any]:
+def _ensure_imports() -> Any:
     """Import pipeline helpers from the current package directory name."""
     if str(PACKAGE_PARENT) not in sys.path:
         sys.path.insert(0, str(PACKAGE_PARENT))
 
     pipeline_module = importlib.import_module(f"{PACKAGE_NAME}.pipeline")
-    trajectory_module = importlib.import_module(f"{PACKAGE_NAME}.trajectory_summary")
-    return (
-        pipeline_module.run_pipeline,
-        trajectory_module.build_trajectory,
-        trajectory_module.resolve_summary_output_path,
-        trajectory_module.save_trajectory,
-        trajectory_module.register_unique_output_path,
-    )
+    return pipeline_module.run_pipeline
 
 
 def _load_json_list(path: Path) -> list[dict[str, Any]]:
@@ -156,11 +147,6 @@ def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> 
     }
 
 
-def _refinement_record(context: dict[str, Any]) -> dict[str, Any] | None:
-    record = context.get("stages", {}).get("refinement")
-    return record if isinstance(record, dict) else None
-
-
 def _run_one_task_worker(
     *,
     item: dict[str, Any],
@@ -169,11 +155,10 @@ def _run_one_task_worker(
     task_base_dir: str,
     config: dict[str, Any],
     output_dir: str,
-    summary_path: str,
     run_options: dict[str, Any],
 ) -> dict[str, Any]:
     """Run one episode pipeline in a worker process."""
-    run_pipeline, build_trajectory, resolve_summary_output_path, _save_trajectory, _register_unique_output_path = _ensure_imports()
+    run_pipeline = _ensure_imports()
     started_at = time.perf_counter()
 
     dataset_name = _infer_dataset_name(item.get("video_path"))
@@ -193,49 +178,17 @@ def _run_one_task_worker(
         save_results=True,
     )
 
-    trajectory = None
-    trajectory_path = None
-    refinement_record = _refinement_record(context)
-    if refinement_record is not None:
-        trajectory = build_trajectory(
-            task=item,
-            refinement_output=refinement_record.get("output"),
-            video_meta=refinement_record.get("video_meta"),
-        )
-        trajectory_path = resolve_summary_output_path(
-            item,
-            Path(summary_path),
-            task_base_dir=Path(task_base_dir),
-        )
-
     return {
         "index": index,
         "total_tasks": total_tasks,
         "episode_id": episode_id,
         "run_name": run_name,
         "run_dir": context.get("run_dir"),
-        "trajectory": trajectory,
-        "trajectory_path": str(trajectory_path) if trajectory_path is not None else None,
         "elapsed_seconds": time.perf_counter() - started_at,
     }
 
 
-def _handle_task_success(
-    result: dict[str, Any],
-    *,
-    register_unique_output_path: Any,
-    save_trajectory: Any,
-    used_trajectory_paths: dict[str, str],
-) -> None:
-    trajectory = result.get("trajectory")
-    trajectory_path = result.get("trajectory_path")
-    if trajectory is not None and trajectory_path is not None:
-        register_unique_output_path(trajectory_path, str(result["episode_id"]), used_trajectory_paths)
-        save_trajectory(trajectory, trajectory_path)
-        print(f"  trajectory -> {trajectory_path}")
-    else:
-        print("  trajectory skipped -> refinement stage was not completed")
-
+def _handle_task_success(result: dict[str, Any]) -> None:
     elapsed_seconds = result.get("elapsed_seconds")
     if elapsed_seconds is not None:
         print(f"  elapsed -> {float(elapsed_seconds):.2f}s")
@@ -247,7 +200,6 @@ def _print_batch_progress(
     ok_count: int,
     error_count: int,
     selected_count: int,
-    trajectory_count: int,
     total_started_at: float,
 ) -> None:
     processed_count = ok_count + error_count
@@ -255,7 +207,7 @@ def _print_batch_progress(
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0
     print(
         f"  progress -> processed={processed_count}/{selected_count}, "
-        f"trajectories={trajectory_count}, ok={ok_count}, error={error_count}, "
+        f"ok={ok_count}, error={error_count}, "
         f"total_elapsed={total_elapsed:.2f}s, avg_per_finished={average_elapsed:.2f}s"
     )
 
@@ -276,7 +228,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--summary",
         default=str(SCRIPT_DIR / "trajectory.json"),
-        help="Path for aggregate summary JSON.",
+        help="Deprecated compatibility option; trajectory.json is no longer written.",
     )
     parser.add_argument("--dry-run", action="store_true", help="Run video/prompt pipeline without real model calls.")
     parser.add_argument("--start-index", type=int, default=0, help="Start task index, inclusive.")
@@ -303,18 +255,11 @@ def main() -> None:
     if args.workers < 1:
         raise ValueError("--workers must be >= 1")
 
-    (
-        run_pipeline,
-        build_trajectory,
-        resolve_summary_output_path,
-        save_trajectory,
-        register_unique_output_path,
-    ) = _ensure_imports()
+    _ensure_imports()
 
     config_path = Path(args.config)
     tasks_path = Path(args.tasks)
     output_dir = Path(args.output_dir)
-    summary_path = Path(args.summary)
 
     config = yaml.safe_load(config_path.read_text(encoding="utf-8"))
     tasks = _load_json_list(tasks_path)
@@ -322,14 +267,12 @@ def main() -> None:
     selected_tasks = _slice_tasks(tasks, start_index=args.start_index, limit=args.limit)
 
     output_dir.mkdir(parents=True, exist_ok=True)
-    used_trajectory_paths: dict[str, str] = {}
     ok_count = 0
     error_count = 0
 
     print(f"Loaded config: {config_path}")
     print(f"Loaded tasks: {tasks_path} ({len(tasks)} total, {len(selected_tasks)} selected)")
     print(f"Saving per-task outputs to: {output_dir}")
-    print(f"Default trajectory output: {summary_path}")
     print(f"Workers: {args.workers}")
 
     run_options = {
@@ -353,7 +296,6 @@ def main() -> None:
             "task_base_dir": str(task_base_dir),
             "config": config,
             "output_dir": str(output_dir),
-            "summary_path": str(summary_path),
             "run_options": run_options,
         }
 
@@ -362,18 +304,12 @@ def main() -> None:
             print_task_header(index, item)
             try:
                 result = _run_one_task_worker(**build_worker_kwargs(index, item))
-                _handle_task_success(
-                    result,
-                    register_unique_output_path=register_unique_output_path,
-                    save_trajectory=save_trajectory,
-                    used_trajectory_paths=used_trajectory_paths,
-                )
+                _handle_task_success(result)
                 ok_count += 1
                 _print_batch_progress(
                     ok_count=ok_count,
                     error_count=error_count,
                     selected_count=len(selected_tasks),
-                    trajectory_count=len(used_trajectory_paths),
                     total_started_at=total_started_at,
                 )
             except Exception as exc:
@@ -384,7 +320,6 @@ def main() -> None:
                     ok_count=ok_count,
                     error_count=error_count,
                     selected_count=len(selected_tasks),
-                    trajectory_count=len(used_trajectory_paths),
                     total_started_at=total_started_at,
                 )
                 if args.fail_fast:
@@ -404,18 +339,12 @@ def main() -> None:
                 print_task_header(index, item)
                 try:
                     result = future.result()
-                    _handle_task_success(
-                        result,
-                        register_unique_output_path=register_unique_output_path,
-                        save_trajectory=save_trajectory,
-                        used_trajectory_paths=used_trajectory_paths,
-                    )
+                    _handle_task_success(result)
                     ok_count += 1
                     _print_batch_progress(
                         ok_count=ok_count,
                         error_count=error_count,
                         selected_count=len(selected_tasks),
-                        trajectory_count=len(used_trajectory_paths),
                         total_started_at=total_started_at,
                     )
                 except Exception as exc:
@@ -426,7 +355,6 @@ def main() -> None:
                         ok_count=ok_count,
                         error_count=error_count,
                         selected_count=len(selected_tasks),
-                        trajectory_count=len(used_trajectory_paths),
                         total_started_at=total_started_at,
                     )
                     if args.fail_fast:
@@ -438,11 +366,9 @@ def main() -> None:
     total_elapsed = time.perf_counter() - total_started_at
     processed_count = ok_count + error_count
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0
-    trajectory_count = len(used_trajectory_paths)
     print(
-        f"\nDone. ok={ok_count}, error={error_count}, trajectories={trajectory_count}, "
-        f"total_elapsed={total_elapsed:.2f}s, avg_per_episode={average_elapsed:.2f}s, "
-        f"default_trajectory={summary_path}"
+        f"\nDone. ok={ok_count}, error={error_count}, "
+        f"total_elapsed={total_elapsed:.2f}s, avg_per_episode={average_elapsed:.2f}s"
     )
 
 
