@@ -21,7 +21,7 @@ import re
 import sys
 import time
 import traceback
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -124,6 +124,115 @@ def _slice_tasks(tasks: list[dict[str, Any]], *, start_index: int, limit: int | 
     return list(enumerate(tasks[start_index:end_index], start=start_index))
 
 
+def _build_run_name(item: dict[str, Any], index: int) -> str:
+    dataset_name = _infer_dataset_name(item.get("video_path"))
+    episode_id = str(item.get("episode_id") or f"item_{index:05d}")
+    return _safe_name(f"{index:05d}_{dataset_name}_{episode_id}")
+
+
+def _selected_stage_names(config: dict[str, Any], *, start_from: str | None, stop_after: str | None) -> list[str]:
+    workflow = config.get("workflow")
+    if not isinstance(workflow, list) or not workflow:
+        raise ValueError("config workflow must be a non-empty list")
+
+    start = 0
+    end = len(workflow)
+    if start_from is not None:
+        if start_from not in workflow:
+            raise ValueError(f"start_from stage not in workflow: {start_from!r}")
+        start = workflow.index(start_from)
+    if stop_after is not None:
+        if stop_after not in workflow:
+            raise ValueError(f"stop_after stage not in workflow: {stop_after!r}")
+        end = workflow.index(stop_after) + 1
+    if start >= end:
+        raise ValueError(f"Invalid pipeline range: start_from={start_from!r}, stop_after={stop_after!r}")
+    return list(workflow[start:end])
+
+
+def _existing_stage_outputs(run_dir: Path, stage_names: list[str]) -> list[str]:
+    existing: list[str] = []
+    for stage_name in stage_names:
+        output_path = run_dir / "stages" / stage_name / "output.json"
+        if output_path.exists() and output_path.stat().st_size > 0:
+            existing.append(stage_name)
+    return existing
+
+
+def _load_existing_stage_outputs(context: dict[str, Any], run_dir: Path, stage_names: list[str]) -> None:
+    if not stage_names:
+        return
+    result_io_module = importlib.import_module(f"{PACKAGE_NAME}.result_io")
+    result_io_module.load_outputs_into_context(context, run_dir, stage_names)
+
+
+def _scan_task_resume_state(
+    *,
+    item: dict[str, Any],
+    index: int,
+    config: dict[str, Any],
+    output_dir: str,
+    run_options: dict[str, Any],
+) -> dict[str, Any]:
+    episode_id = str(item.get("episode_id") or f"item_{index:05d}")
+    run_name = _build_run_name(item, index)
+    run_dir = Path(output_dir) / run_name
+    selected_stage_names = _selected_stage_names(
+        config,
+        start_from=run_options.get("start_from"),
+        stop_after=run_options.get("stop_after"),
+    )
+    existing_stage_names = _existing_stage_outputs(run_dir, selected_stage_names)
+    return {
+        "index": index,
+        "episode_id": episode_id,
+        "run_name": run_name,
+        "run_dir": str(run_dir),
+        "selected_stage_names": selected_stage_names,
+        "existing_stage_names": existing_stage_names,
+        "is_complete": bool(selected_stage_names) and len(existing_stage_names) == len(selected_stage_names),
+    }
+
+
+def _scan_selected_tasks(
+    selected_tasks: list[tuple[int, dict[str, Any]]],
+    *,
+    config: dict[str, Any],
+    output_dir: str,
+    run_options: dict[str, Any],
+    scan_workers: int,
+) -> tuple[list[tuple[int, dict[str, Any]]], list[dict[str, Any]]]:
+    if not selected_tasks or not bool(run_options.get("skip_existing", False)):
+        return selected_tasks, []
+
+    executable_tasks: list[tuple[int, dict[str, Any]]] = []
+    skipped_complete: list[dict[str, Any]] = []
+    max_workers = max(1, min(scan_workers, len(selected_tasks)))
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_task = {
+            executor.submit(
+                _scan_task_resume_state,
+                item=item,
+                index=index,
+                config=config,
+                output_dir=output_dir,
+                run_options=run_options,
+            ): (index, item)
+            for index, item in selected_tasks
+        }
+        for future in as_completed(future_to_task):
+            index, item = future_to_task[future]
+            state = future.result()
+            if state["is_complete"]:
+                skipped_complete.append(state)
+            else:
+                executable_tasks.append((index, item))
+
+    executable_tasks.sort(key=lambda pair: pair[0])
+    skipped_complete.sort(key=lambda state: state["index"])
+    return executable_tasks, skipped_complete
+
+
 def _build_context(item: dict[str, Any], index: int, *, task_base_dir: Path) -> dict[str, Any]:
     if "video_path" not in item:
         raise ValueError(f"Task item #{index} missing 'video_path'")
@@ -158,14 +267,40 @@ def _run_one_task_worker(
     run_options: dict[str, Any],
 ) -> dict[str, Any]:
     """Run one episode pipeline in a worker process."""
-    run_pipeline = _ensure_imports()
     started_at = time.perf_counter()
 
-    dataset_name = _infer_dataset_name(item.get("video_path"))
     episode_id = str(item.get("episode_id") or f"item_{index:05d}")
-    run_name = _safe_name(f"{index:05d}_{dataset_name}_{episode_id}")
-    context = _build_context(item, index, task_base_dir=Path(task_base_dir))
+    run_name = _build_run_name(item, index)
+    run_dir = Path(output_dir) / run_name
+    selected_stage_names = _selected_stage_names(
+        config,
+        start_from=run_options.get("start_from"),
+        stop_after=run_options.get("stop_after"),
+    )
+    existing_stage_names = (
+        _existing_stage_outputs(run_dir, selected_stage_names)
+        if bool(run_options.get("skip_existing", False))
+        else []
+    )
 
+    if existing_stage_names and len(existing_stage_names) == len(selected_stage_names):
+        return {
+            "index": index,
+            "total_tasks": total_tasks,
+            "episode_id": episode_id,
+            "run_name": run_name,
+            "run_dir": str(run_dir),
+            "elapsed_seconds": time.perf_counter() - started_at,
+            "status": "skipped_complete",
+            "existing_stage_names": existing_stage_names,
+            "executed_stage_names": [],
+        }
+
+    context = _build_context(item, index, task_base_dir=Path(task_base_dir))
+    if existing_stage_names:
+        _load_existing_stage_outputs(context, run_dir, existing_stage_names)
+
+    run_pipeline = _ensure_imports()
     run_pipeline(
         context,
         config,
@@ -185,6 +320,9 @@ def _run_one_task_worker(
         "run_name": run_name,
         "run_dir": context.get("run_dir"),
         "elapsed_seconds": time.perf_counter() - started_at,
+        "status": "completed",
+        "existing_stage_names": existing_stage_names,
+        "executed_stage_names": context.get("pipeline", {}).get("executed_stages", []),
     }
 
 
@@ -192,6 +330,13 @@ def _handle_task_success(result: dict[str, Any]) -> None:
     elapsed_seconds = result.get("elapsed_seconds")
     if elapsed_seconds is not None:
         print(f"  elapsed -> {float(elapsed_seconds):.2f}s")
+    existing_stage_names = result.get("existing_stage_names") or []
+    if result.get("status") == "skipped_complete":
+        print(f"  skipped complete -> {result.get('run_dir')}")
+        print(f"  existing stages -> {existing_stage_names}")
+        return
+    if existing_stage_names:
+        print(f"  resumed from existing stages -> {existing_stage_names}")
     print(f"  ok -> {result.get('run_dir')}")
 
 
@@ -199,15 +344,16 @@ def _print_batch_progress(
     *,
     ok_count: int,
     error_count: int,
+    skipped_count: int,
     selected_count: int,
     total_started_at: float,
 ) -> None:
-    processed_count = ok_count + error_count
+    processed_count = ok_count + error_count + skipped_count
     total_elapsed = time.perf_counter() - total_started_at
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0
     print(
         f"  progress -> processed={processed_count}/{selected_count}, "
-        f"ok={ok_count}, error={error_count}, "
+        f"ok={ok_count}, skipped={skipped_count}, error={error_count}, "
         f"total_elapsed={total_elapsed:.2f}s, avg_per_finished={average_elapsed:.2f}s"
     )
 
@@ -235,8 +381,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=None, help="Maximum number of tasks to process.")
     parser.add_argument("--start-from", default=None, help="Optional pipeline start stage.")
     parser.add_argument("--stop-after", default=None, help="Optional pipeline stop stage.")
-    parser.add_argument("--skip-existing", action="store_true", help="Skip stages already present in context.")
+    parser.add_argument(
+        "--skip-existing",
+        action="store_true",
+        help=(
+            "Resume from output-dir: skip an episode when all selected stages already have output.json, "
+            "or load completed stages and run only missing stages."
+        ),
+    )
     parser.add_argument("--workers", type=int, default=4, help="Number of episode processes to run concurrently.")
+    parser.add_argument(
+        "--scan-workers",
+        type=int,
+        default=32,
+        help="Number of threads used to scan existing stage output.json files when --skip-existing is enabled.",
+    )
     parser.add_argument(
         "--fail-fast",
         action="store_true",
@@ -254,6 +413,8 @@ def main() -> None:
         raise ValueError("--limit must be >= 0")
     if args.workers < 1:
         raise ValueError("--workers must be >= 1")
+    if args.scan_workers < 1:
+        raise ValueError("--scan-workers must be >= 1")
 
     _ensure_imports()
 
@@ -265,13 +426,15 @@ def main() -> None:
     tasks = _load_json_list(tasks_path)
     task_base_dir = tasks_path.resolve().parent
     selected_tasks = _slice_tasks(tasks, start_index=args.start_index, limit=args.limit)
+    selected_count = len(selected_tasks)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     ok_count = 0
     error_count = 0
+    skipped_count = 0
 
     print(f"Loaded config: {config_path}")
-    print(f"Loaded tasks: {tasks_path} ({len(tasks)} total, {len(selected_tasks)} selected)")
+    print(f"Loaded tasks: {tasks_path} ({len(tasks)} total, {selected_count} selected)")
     print(f"Saving per-task outputs to: {output_dir}")
     print(f"Workers: {args.workers}")
 
@@ -282,10 +445,26 @@ def main() -> None:
         "skip_existing": args.skip_existing,
     }
 
+    if args.skip_existing:
+        scan_started_at = time.perf_counter()
+        selected_tasks, skipped_complete = _scan_selected_tasks(
+            selected_tasks,
+            config=config,
+            output_dir=str(output_dir),
+            run_options=run_options,
+            scan_workers=args.scan_workers,
+        )
+        skipped_count = len(skipped_complete)
+        scan_elapsed = time.perf_counter() - scan_started_at
+        print(
+            f"Resume scan: skipped_complete={skipped_count}, "
+            f"remaining={len(selected_tasks)}, scan_workers={args.scan_workers}, "
+            f"elapsed={scan_elapsed:.2f}s"
+        )
+
     def print_task_header(index: int, item: dict[str, Any]) -> None:
-        dataset_name = _infer_dataset_name(item.get("video_path"))
         episode_id = str(item.get("episode_id") or f"item_{index:05d}")
-        run_name = _safe_name(f"{index:05d}_{dataset_name}_{episode_id}")
+        run_name = _build_run_name(item, index)
         print(f"\n[{index + 1}/{len(tasks)}] {run_name}")
 
     def build_worker_kwargs(index: int, item: dict[str, Any]) -> dict[str, Any]:
@@ -309,7 +488,8 @@ def main() -> None:
                 _print_batch_progress(
                     ok_count=ok_count,
                     error_count=error_count,
-                    selected_count=len(selected_tasks),
+                    skipped_count=skipped_count,
+                    selected_count=selected_count,
                     total_started_at=total_started_at,
                 )
             except Exception as exc:
@@ -319,7 +499,8 @@ def main() -> None:
                 _print_batch_progress(
                     ok_count=ok_count,
                     error_count=error_count,
-                    selected_count=len(selected_tasks),
+                    skipped_count=skipped_count,
+                    selected_count=selected_count,
                     total_started_at=total_started_at,
                 )
                 if args.fail_fast:
@@ -344,7 +525,8 @@ def main() -> None:
                     _print_batch_progress(
                         ok_count=ok_count,
                         error_count=error_count,
-                        selected_count=len(selected_tasks),
+                        skipped_count=skipped_count,
+                        selected_count=selected_count,
                         total_started_at=total_started_at,
                     )
                 except Exception as exc:
@@ -354,7 +536,8 @@ def main() -> None:
                     _print_batch_progress(
                         ok_count=ok_count,
                         error_count=error_count,
-                        selected_count=len(selected_tasks),
+                        skipped_count=skipped_count,
+                        selected_count=selected_count,
                         total_started_at=total_started_at,
                     )
                     if args.fail_fast:
@@ -364,10 +547,10 @@ def main() -> None:
                         raise
 
     total_elapsed = time.perf_counter() - total_started_at
-    processed_count = ok_count + error_count
+    processed_count = ok_count + error_count + skipped_count
     average_elapsed = total_elapsed / processed_count if processed_count else 0.0
     print(
-        f"\nDone. ok={ok_count}, error={error_count}, "
+        f"\nDone. ok={ok_count}, skipped={skipped_count}, error={error_count}, "
         f"total_elapsed={total_elapsed:.2f}s, avg_per_episode={average_elapsed:.2f}s"
     )
 
