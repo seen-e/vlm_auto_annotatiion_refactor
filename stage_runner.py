@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import shutil
 import tempfile
@@ -414,6 +415,67 @@ def _register_stage_video_clip_cleanup(
     )
 
 
+def _video_segment_cache(context: dict[str, Any]) -> dict[str, Any]:
+    pipeline_state = context.setdefault("pipeline", {})
+    cache = pipeline_state.setdefault("video_segment_clip_cache", {})
+    if not isinstance(cache, dict):
+        cache = {}
+        pipeline_state["video_segment_clip_cache"] = cache
+    return cache
+
+
+def _shared_clip_root(context: dict[str, Any], run_dir: str | Path | None) -> tuple[Path, bool]:
+    pipeline_state = context.setdefault("pipeline", {})
+    if run_dir is not None:
+        return Path(run_dir) / "input_clips" / "video_segments", False
+
+    root = pipeline_state.get("temporary_video_segment_clip_root")
+    if root:
+        return Path(root), False
+
+    clip_root = Path(tempfile.mkdtemp(prefix="video_segment_input_clips_"))
+    pipeline_state["temporary_video_segment_clip_root"] = str(clip_root)
+    return clip_root, True
+
+
+def _cache_value(value: Any) -> Any:
+    if value is None:
+        return None
+    if isinstance(value, float):
+        return round(value, 9)
+    return value
+
+
+def _segment_clip_cache_key(
+    *,
+    source_path: str | Path,
+    view_name: str,
+    segment_mode: str,
+    start_frame: Any,
+    end_frame: Any,
+    start_time: Any,
+    end_time: Any,
+    fps: Any,
+) -> str:
+    payload = {
+        "source_path": str(source_path),
+        "view_name": str(view_name),
+        "segment_mode": str(segment_mode),
+        "start_frame": _cache_value(start_frame),
+        "end_frame": _cache_value(end_frame),
+        "start_time": _cache_value(start_time),
+        "end_time": _cache_value(end_time),
+        "fps": _cache_value(fps),
+    }
+    return json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False, default=str)
+
+
+def _clip_filename(view_name: str, segment_mode: str, cache_key: str) -> str:
+    digest = hashlib.sha1(cache_key.encode("utf-8")).hexdigest()[:16]
+    safe_view_name = _safe_path_name(view_name, default="view")
+    return f"{safe_view_name}_{segment_mode}_{digest}.mp4"
+
+
 def _prepare_stage_video_input(
     *,
     stage_name: str,
@@ -433,11 +495,11 @@ def _prepare_stage_video_input(
             f"stage {stage_name!r} requested view_names not present in input.video_segments: {missing}"
         )
 
-    clip_root: Path | None = None
     clip_paths: list[Path] = []
     cleanup_dirs: list[Path] = []
     stage_video_path: dict[str, str] = {}
     clip_meta: list[dict[str, Any]] = []
+    clip_cache = _video_segment_cache(context)
     for view_name in view_names:
         segment = video_segments[view_name]
         if not isinstance(segment, dict):
@@ -469,13 +531,6 @@ def _prepare_stage_video_input(
             )
             continue
 
-        if clip_root is None:
-            stage_root = _stage_dir(run_dir, stage_name)
-            clip_root = stage_root / "input_clips"
-            cleanup_dirs.append(clip_root)
-            if run_dir is None:
-                cleanup_dirs.append(stage_root)
-        safe_view_name = _safe_path_name(view_name, default="view")
         segment_mode = ""
         start_frame = segment.get("start_frame")
         end_frame = segment.get("end_frame")
@@ -486,41 +541,75 @@ def _prepare_stage_video_input(
         ):
             start_frame = int(segment["start_frame"])
             end_frame = int(segment["end_frame"])
-            clip_path = clip_root / f"{safe_view_name}_frames_{start_frame}_{end_frame}.mp4"
-            _cut_video_segment_by_frame(
-                source_path=source_path,
-                output_path=clip_path,
-                start_frame=start_frame,
-                end_frame=end_frame,
-                fps=segment.get("fps"),
-            )
             segment_mode = "frame"
         elif _has_segment_pair(segment, "start_time", "end_time") and not _is_full_video_pair(
             segment, "start_time", "end_time"
         ):
             start_time = float(segment["start_time"])
             end_time = float(segment["end_time"])
-            time_name = f"{start_time:.6f}_{end_time:.6f}".replace(".", "p")
-            clip_path = clip_root / f"{safe_view_name}_time_{time_name}.mp4"
-            _cut_video_segment_by_time(
-                source_path=source_path,
-                output_path=clip_path,
-                start_time=start_time,
-                end_time=end_time,
-                fps=segment.get("fps"),
-            )
             segment_mode = "time"
         else:
             raise StageRunnerError(
                 f"input.video_segments[{view_name!r}] must provide start_frame/end_frame or start_time/end_time"
             )
-        clip_paths.append(clip_path)
+
+        cache_key = _segment_clip_cache_key(
+            source_path=source_path,
+            view_name=view_name,
+            segment_mode=segment_mode,
+            start_frame=start_frame,
+            end_frame=end_frame,
+            start_time=start_time,
+            end_time=end_time,
+            fps=segment.get("fps"),
+        )
+        cached = clip_cache.get(cache_key)
+        reused_cached_clip = False
+        if isinstance(cached, dict) and cached.get("clip_path") and Path(cached["clip_path"]).exists():
+            clip_path = Path(cached["clip_path"])
+            reused_cached_clip = True
+        else:
+            clip_root, cleanup_root = _shared_clip_root(context, run_dir)
+            clip_path = clip_root / _clip_filename(view_name, segment_mode, cache_key)
+            if segment_mode == "frame":
+                _cut_video_segment_by_frame(
+                    source_path=source_path,
+                    output_path=clip_path,
+                    start_frame=int(start_frame),
+                    end_frame=int(end_frame),
+                    fps=segment.get("fps"),
+                )
+            else:
+                _cut_video_segment_by_time(
+                    source_path=source_path,
+                    output_path=clip_path,
+                    start_time=float(start_time),
+                    end_time=float(end_time),
+                    fps=segment.get("fps"),
+                )
+            clip_cache[cache_key] = {
+                "clip_path": str(clip_path),
+                "source_video_path": str(source_path),
+                "view_name": str(view_name),
+                "segment_mode": segment_mode,
+                "start_time": start_time,
+                "end_time": end_time,
+                "start_frame": start_frame,
+                "end_frame": end_frame,
+                "fps": segment.get("fps"),
+            }
+            clip_paths.append(clip_path)
+            if cleanup_root:
+                cleanup_dirs.append(clip_root)
+
         stage_video_path[view_name] = str(clip_path)
         clip_meta.append(
             {
                 "view_name": view_name,
                 "source_video_path": str(source_path),
                 "temporary_clip_path": str(clip_path),
+                "segment_cache_key": cache_key,
+                "reused_cached_clip": reused_cached_clip,
                 "start_time": start_time,
                 "end_time": end_time,
                 "start_frame": start_frame,

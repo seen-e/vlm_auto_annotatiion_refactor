@@ -60,9 +60,10 @@ def test_prepare_stage_video_input_supports_time_only_segments(tmp_path: Path, m
     assert calls[0]["fps"] == 5.0
     assert stage_video_path == {"camera_top": str(clip_paths[0])}
     assert clip_paths[0].exists()
-    assert cleanup_dirs == [tmp_path / "stages" / "scene" / "input_clips"]
+    assert cleanup_dirs == []
     assert clip_meta[0]["segment_mode"] == "time"
     assert clip_meta[0]["used_full_video"] is False
+    assert clip_meta[0]["reused_cached_clip"] is False
 
 
 def test_prepare_stage_video_input_uses_full_video_for_minus_one_time_pair(tmp_path: Path) -> None:
@@ -130,7 +131,7 @@ def test_prepare_stage_video_input_prefers_frame_segments_when_both_are_present(
     assert time_calls == []
     assert frame_calls[0]["start_frame"] == 5
     assert frame_calls[0]["end_frame"] == 20
-    assert clip_paths[0].name.endswith("_frames_5_20.mp4")
+    assert clip_paths[0].name.startswith("camera_top_frame_")
     assert clip_meta[0]["segment_mode"] == "frame"
 
 
@@ -169,3 +170,48 @@ def test_prepare_stage_video_input_uses_time_when_frame_pair_is_minus_one(tmp_pa
     assert calls[0]["start_time"] == 2.0
     assert calls[0]["end_time"] == 5.0
     assert clip_meta[0]["segment_mode"] == "time"
+
+
+def test_prepare_stage_video_input_reuses_cached_clip_across_stages(tmp_path: Path, monkeypatch) -> None:
+    calls: list[dict[str, Any]] = []
+
+    def fake_cut_by_frame(**kwargs: Any) -> None:
+        calls.append(kwargs)
+        output = Path(kwargs["output_path"])
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"clip")
+
+    monkeypatch.setattr(stage_runner, "_cut_video_segment_by_frame", fake_cut_by_frame)
+
+    context = _fake_context(
+        {
+            "camera_top": {
+                "video_path": "/data/big_camera_top.mp4",
+                "start_frame": 5,
+                "end_frame": 20,
+                "fps": 5.0,
+            }
+        }
+    )
+
+    first_video_path, first_clip_paths, _, first_meta = stage_runner._prepare_stage_video_input(
+        stage_name="scene",
+        context=context,
+        video_cfg={"view_names": ["camera_top"]},
+        run_dir=tmp_path,
+    )
+    second_video_path, second_clip_paths, second_cleanup_dirs, second_meta = stage_runner._prepare_stage_video_input(
+        stage_name="analysis",
+        context=context,
+        video_cfg={"view_names": ["camera_top"]},
+        run_dir=tmp_path,
+    )
+
+    assert len(calls) == 1
+    assert first_clip_paths
+    assert second_clip_paths == []
+    assert second_cleanup_dirs == []
+    assert first_video_path == second_video_path
+    assert first_meta[0]["temporary_clip_path"] == second_meta[0]["temporary_clip_path"]
+    assert first_meta[0]["reused_cached_clip"] is False
+    assert second_meta[0]["reused_cached_clip"] is True
