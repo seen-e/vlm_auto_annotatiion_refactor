@@ -215,3 +215,45 @@ def test_prepare_stage_video_input_reuses_cached_clip_across_stages(tmp_path: Pa
     assert first_meta[0]["temporary_clip_path"] == second_meta[0]["temporary_clip_path"]
     assert first_meta[0]["reused_cached_clip"] is False
     assert second_meta[0]["reused_cached_clip"] is True
+
+
+def test_prepare_stage_video_input_can_store_shared_clip_in_system_temp(tmp_path: Path, monkeypatch) -> None:
+    calls: list[dict[str, Any]] = []
+    temp_root = tmp_path / "system_temp_clips"
+
+    def fake_mkdtemp(**kwargs: Any) -> str:
+        temp_root.mkdir(parents=True, exist_ok=True)
+        return str(temp_root)
+
+    def fake_cut_by_frame(**kwargs: Any) -> None:
+        calls.append(kwargs)
+        output = Path(kwargs["output_path"])
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"clip")
+
+    monkeypatch.setattr(stage_runner.tempfile, "mkdtemp", fake_mkdtemp)
+    monkeypatch.setattr(stage_runner, "_cut_video_segment_by_frame", fake_cut_by_frame)
+
+    context = _fake_context(
+        {
+            "camera_top": {
+                "video_path": "/data/big_camera_top.mp4",
+                "start_frame": 5,
+                "end_frame": 20,
+                "fps": 5.0,
+            }
+        }
+    )
+    context["pipeline"] = {"video_segment_clip_storage": "temp"}
+
+    _, clip_paths, cleanup_dirs, _ = stage_runner._prepare_stage_video_input(
+        stage_name="scene",
+        context=context,
+        video_cfg={"view_names": ["camera_top"]},
+        run_dir=tmp_path / "outputs" / "episode",
+    )
+
+    assert calls
+    assert clip_paths[0].is_relative_to(temp_root)
+    assert not clip_paths[0].is_relative_to(tmp_path / "outputs" / "episode")
+    assert cleanup_dirs == [temp_root]

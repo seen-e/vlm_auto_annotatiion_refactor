@@ -426,7 +426,8 @@ def _video_segment_cache(context: dict[str, Any]) -> dict[str, Any]:
 
 def _shared_clip_root(context: dict[str, Any], run_dir: str | Path | None) -> tuple[Path, bool]:
     pipeline_state = context.setdefault("pipeline", {})
-    if run_dir is not None:
+    clip_storage = str(pipeline_state.get("video_segment_clip_storage") or "output-dir")
+    if clip_storage == "output-dir" and run_dir is not None:
         return Path(run_dir) / "input_clips" / "video_segments", False
 
     root = pipeline_state.get("temporary_video_segment_clip_root")

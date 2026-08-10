@@ -21,7 +21,7 @@ import re
 import sys
 import time
 import traceback
-from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -151,11 +151,19 @@ def _selected_stage_names(config: dict[str, Any], *, start_from: str | None, sto
 
 
 def _existing_stage_outputs(run_dir: Path, stage_names: list[str]) -> list[str]:
+    """Return the contiguous completed prefix of the configured workflow.
+
+    Resume must follow config.workflow order. If analysis is missing, any stale
+    refinement output is ignored and refinement will be regenerated after
+    analysis. This avoids mixing outputs from incompatible partial runs.
+    """
     existing: list[str] = []
     for stage_name in stage_names:
         output_path = run_dir / "stages" / stage_name / "output.json"
         if output_path.exists() and output_path.stat().st_size > 0:
             existing.append(stage_name)
+            continue
+        break
     return existing
 
 
@@ -194,6 +202,19 @@ def _scan_task_resume_state(
     }
 
 
+def _collect_resume_states_from_output_dir(output_dir: str, stage_names: list[str], queue: Any) -> None:
+    resume_states: dict[str, list[str]] = {}
+    output_root = Path(output_dir)
+    if output_root.exists():
+        for run_dir in output_root.iterdir():
+            if not run_dir.is_dir():
+                continue
+            existing_stage_names = _existing_stage_outputs(run_dir, stage_names)
+            if existing_stage_names:
+                resume_states[run_dir.name] = existing_stage_names
+    queue.put(resume_states)
+
+
 def _scan_selected_tasks(
     selected_tasks: list[tuple[int, dict[str, Any]]],
     *,
@@ -205,31 +226,76 @@ def _scan_selected_tasks(
     if not selected_tasks or not bool(run_options.get("skip_existing", False)):
         return selected_tasks, []
 
+    selected_stage_names = _selected_stage_names(
+        config,
+        start_from=run_options.get("start_from"),
+        stop_after=run_options.get("stop_after"),
+    )
+    if not selected_stage_names:
+        return selected_tasks, []
+
+    # Fast path for large datasets: scan only directories that already exist,
+    # then classify them using the configured workflow order. Missing run dirs
+    # are never stat'ed during the scan.
+    existing_run_states: dict[str, list[str]] = {}
+    scan_timeout_sec = 15.0
+    try:
+        import multiprocessing as mp
+
+        ctx = mp.get_context("fork") if "fork" in mp.get_all_start_methods() else mp.get_context()
+        queue = ctx.Queue(maxsize=1)
+        proc = ctx.Process(
+            target=_collect_resume_states_from_output_dir,
+            args=(output_dir, selected_stage_names, queue),
+        )
+        proc.start()
+        proc.join(scan_timeout_sec)
+        if proc.is_alive():
+            proc.terminate()
+            proc.join(2.0)
+            print(
+                f"Fast resume scan timed out after {scan_timeout_sec:.0f}s while listing {output_dir}; "
+                "workers will check per-run state during execution."
+            )
+        elif proc.exitcode == 0 and not queue.empty():
+            existing_run_states = queue.get()
+        else:
+            print(f"Fast resume scan found no resumable runs or exited with code {proc.exitcode}.")
+    except Exception as exc:
+        print(f"Fast resume scan failed ({type(exc).__name__}: {exc}); continuing without prefilter skips.")
+
+    output_root = Path(output_dir)
     executable_tasks: list[tuple[int, dict[str, Any]]] = []
     skipped_complete: list[dict[str, Any]] = []
-    max_workers = max(1, min(scan_workers, len(selected_tasks)))
-    with ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_task = {
-            executor.submit(
-                _scan_task_resume_state,
-                item=item,
-                index=index,
-                config=config,
-                output_dir=output_dir,
-                run_options=run_options,
-            ): (index, item)
-            for index, item in selected_tasks
-        }
-        for future in as_completed(future_to_task):
-            index, item = future_to_task[future]
-            state = future.result()
-            if state["is_complete"]:
-                skipped_complete.append(state)
-            else:
-                executable_tasks.append((index, item))
+    partial_count = 0
+    for index, item in selected_tasks:
+        episode_id = str(item.get("episode_id") or f"item_{index:05d}")
+        run_name = _build_run_name(item, index)
+        existing_stage_names = existing_run_states.get(run_name, [])
+        if existing_stage_names and len(existing_stage_names) == len(selected_stage_names):
+            skipped_complete.append(
+                {
+                    "index": index,
+                    "episode_id": episode_id,
+                    "run_name": run_name,
+                    "run_dir": str(output_root / run_name),
+                    "selected_stage_names": selected_stage_names,
+                    "existing_stage_names": existing_stage_names,
+                    "is_complete": True,
+                }
+            )
+        else:
+            if existing_stage_names:
+                partial_count += 1
+            executable_tasks.append((index, item))
 
     executable_tasks.sort(key=lambda pair: pair[0])
     skipped_complete.sort(key=lambda state: state["index"])
+    print(
+        f"Fast resume scan: existing_run_dirs={len(existing_run_states)}, "
+        f"complete={len(skipped_complete)}, partial={partial_count}, "
+        f"workflow={selected_stage_names!r}"
+    )
     return executable_tasks, skipped_complete
 
 
@@ -311,6 +377,7 @@ def _run_one_task_worker(
         output_dir=Path(output_dir),
         run_name=run_name,
         save_results=True,
+        video_segment_clip_storage=str(run_options.get("video_segment_clip_storage") or "output-dir"),
     )
 
     return {
@@ -394,7 +461,19 @@ def parse_args() -> argparse.Namespace:
         "--scan-workers",
         type=int,
         default=32,
-        help="Number of threads used to scan existing stage output.json files when --skip-existing is enabled.",
+        help=(
+            "Deprecated compatibility option. With --skip-existing, resume scan now lists existing run dirs "
+            "and workers verify each run's workflow state."
+        ),
+    )
+    parser.add_argument(
+        "--video-segment-clip-storage",
+        choices=("output-dir", "temp"),
+        default="output-dir",
+        help=(
+            "Where to store temporary clips cut from input.video_segments: "
+            "'output-dir' stores them under each run directory; 'temp' stores them in the system temp directory."
+        ),
     )
     parser.add_argument(
         "--fail-fast",
@@ -443,6 +522,7 @@ def main() -> None:
         "start_from": args.start_from,
         "stop_after": args.stop_after,
         "skip_existing": args.skip_existing,
+        "video_segment_clip_storage": args.video_segment_clip_storage,
     }
 
     if args.skip_existing:
@@ -484,7 +564,10 @@ def main() -> None:
             try:
                 result = _run_one_task_worker(**build_worker_kwargs(index, item))
                 _handle_task_success(result)
-                ok_count += 1
+                if result.get("status") == "skipped_complete":
+                    skipped_count += 1
+                else:
+                    ok_count += 1
                 _print_batch_progress(
                     ok_count=ok_count,
                     error_count=error_count,
@@ -521,7 +604,10 @@ def main() -> None:
                 try:
                     result = future.result()
                     _handle_task_success(result)
-                    ok_count += 1
+                    if result.get("status") == "skipped_complete":
+                        skipped_count += 1
+                    else:
+                        ok_count += 1
                     _print_batch_progress(
                         ok_count=ok_count,
                         error_count=error_count,

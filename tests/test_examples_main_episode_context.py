@@ -113,6 +113,7 @@ def test_run_one_task_resumes_from_existing_stage_outputs(tmp_path: Path, monkey
         calls.append({"context": context, "kwargs": kwargs})
         assert context["stages"]["scene"]["output"] == {"loaded": True}
         assert kwargs["skip_existing"] is True
+        assert kwargs["video_segment_clip_storage"] == "temp"
         context.setdefault("pipeline", {})["executed_stages"] = ["analysis"]
         context["run_dir"] = str(run_dir)
         context.setdefault("stages", {})["analysis"] = {"output": {"new": True}}
@@ -132,6 +133,7 @@ def test_run_one_task_resumes_from_existing_stage_outputs(tmp_path: Path, monkey
             "start_from": None,
             "stop_after": None,
             "skip_existing": True,
+            "video_segment_clip_storage": "temp",
         },
     )
 

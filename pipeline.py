@@ -53,15 +53,22 @@ def run_pipeline(
     output_dir: str | Path | None = None,
     run_name: str | None = None,
     save_results: bool = False,
+    video_segment_clip_storage: str = "output-dir",
 ) -> dict[str, Any]:
     """Run configured stages sequentially and return the updated context."""
     try:
+        if video_segment_clip_storage not in {"output-dir", "temp"}:
+            raise PipelineError(
+                "video_segment_clip_storage must be 'output-dir' or 'temp', "
+                f"got {video_segment_clip_storage!r}"
+            )
         all_stages = _get_workflow(config, workflow)
         selected_stages = _slice_workflow(all_stages, start_from, stop_after)
         context.setdefault("stages", {})
         context.setdefault("pipeline", {})
         context["pipeline"]["workflow"] = all_stages
         context["pipeline"]["selected_stages"] = selected_stages
+        context["pipeline"]["video_segment_clip_storage"] = video_segment_clip_storage
 
         run_dir: Path | None = None
         if save_results:
